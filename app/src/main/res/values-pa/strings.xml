@@ -243,7 +243,7 @@
 
     <!-- ਸਮੱਗਰੀ ਵਰਣਨ (ਸਾਂਝੇ ਕੀਤੇ ਗਏ) -->
     <string name="cd_message">ਸੁਨੇਹਾ</string>
-    <string name="cd_show_on_map">"ਨਕਸ਼ੇ \'ਤੇ ਦਿਖਾਓ"</string>
+
     <string name="cd_more_options">ਹੋਰ ਵਿਕਲਪ</string>
 
     <!-- ── ਸੰਪਰਕ ਸਕ੍ਰੀਨ ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">ਇਹ ਬੈਕਅੱਪ LocaPeer ਦੇ ਨਵੇਂ ਸੰਸਕਰਣ ਨਾਲ ਬਣਾਇਆ ਗਿਆ ਹੈ। ਬਹਾਲ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਐਪ ਨੂੰ ਅੱਪਡੇਟ ਕਰੋ।</string>
     <string name="notif_geofence_inside_title">%1$s %2$s ਦੇ ਅੰਦਰ ਹੈ</string>
     <string name="notif_tracking_geofence_unnamed">%1$s ਨੂੰ ਸੂਚਨਾ ਮਿਲੀ ਕਿ ਤੁਸੀਂ ਜੀਓਫੈਂਸ ਵਿੱਚ ਦਾਖਲ ਹੋਏ ਜਾਂ ਬਾਹਰ ਨਿਕਲੇ ਹੋ</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">ਆਕਾਰ</string>
+    <string name="geo_shape_circle">ਗੋਲ</string>
+    <string name="geo_shape_polygon">ਬਹੁਭੁਜ</string>
+    <string name="geo_polygon_summary">ਬਹੁਭੁਜ • %1$d ਬਿੰਦੂ</string>
+    <string name="geo_polygon_hint">ਬਿੰਦੂ ਜੋੜਨ ਲਈ ਨਕਸ਼ੇ \'ਤੇ ਟੈਪ ਕਰੋ</string>
+    <string name="geo_polygon_min_points">ਘੱਟੋ-ਘੱਟ 3 ਬਿੰਦੂ ਜੋੜੋ</string>
+    <string name="geo_polygon_edges_cross">ਕਿਨਾਰੇ ਇੱਕ ਦੂਜੇ ਨੂੰ ਨਹੀਂ ਕੱਟ ਸਕਦੇ</string>
+    <string name="geo_polygon_undo">ਵਾਪਸ ਕਰੋ</string>
+    <string name="geo_polygon_clear">ਸਾਫ਼ ਕਰੋ</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s \'ਤੇ · ਬਹੁਭੁਜ ਖੇਤਰ</string>
 </resources>

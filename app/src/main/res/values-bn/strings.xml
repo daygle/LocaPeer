@@ -243,7 +243,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">বার্তা</string>
-    <string name="cd_show_on_map">ম্যাপে দেখান</string>
+
     <string name="cd_more_options">আরও বিকল্প</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">এই ব্যাকআপটি LocaPeer-এর একটি নতুন সংস্করণে তৈরি করা হয়েছে। পুনরুদ্ধার করার আগে অ্যাপটি আপডেট করুন।</string>
     <string name="notif_geofence_inside_title">%1$s %2$s-এর ভিতরে আছে</string>
     <string name="notif_tracking_geofence_unnamed">%1$s একটি সতর্কতা পেয়েছে যে আপনি একটি জিওফেন্সে প্রবেশ বা প্রস্থান করেছেন</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">আকৃতি</string>
+    <string name="geo_shape_circle">বৃত্ত</string>
+    <string name="geo_shape_polygon">বহুভুজ</string>
+    <string name="geo_polygon_summary">বহুভুজ • %1$dটি বিন্দু</string>
+    <string name="geo_polygon_hint">একটি বিন্দু যোগ করতে ম্যাপে ট্যাপ করুন</string>
+    <string name="geo_polygon_min_points">কমপক্ষে ৩টি বিন্দু যোগ করুন</string>
+    <string name="geo_polygon_edges_cross">প্রান্তগুলি পরস্পরকে ছেদ করতে পারবে না</string>
+    <string name="geo_polygon_undo">পূর্বাবস্থায় ফেরান</string>
+    <string name="geo_polygon_clear">মুছুন</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s-এ · বহুভুজ এলাকা</string>
 </resources>

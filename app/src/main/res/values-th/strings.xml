@@ -242,7 +242,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">ข้อความ</string>
-    <string name="cd_show_on_map">แสดงบนแผนที่</string>
+
     <string name="cd_more_options">ตัวเลือกเพิ่มเติม</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -971,14 +971,14 @@
     <string name="backup_newer_version">ไฟล์สำรองนี้สร้างโดย LocaPeer เวอร์ชันใหม่กว่า โปรดอัปเดตแอปก่อนกู้คืน</string>
     <string name="notif_geofence_inside_title">%1$s อยู่ภายใน %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s ได้รับการแจ้งเตือนว่าคุณเข้าหรือออกจากพื้นที่ภูมิศาสตร์</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">รูปร่าง</string>
+    <string name="geo_shape_circle">วงกลม</string>
+    <string name="geo_shape_polygon">รูปหลายเหลี่ยม</string>
+    <string name="geo_polygon_summary">รูปหลายเหลี่ยม • %1$d จุด</string>
+    <string name="geo_polygon_hint">แตะแผนที่เพื่อเพิ่มจุด</string>
+    <string name="geo_polygon_min_points">เพิ่มอย่างน้อย 3 จุด</string>
+    <string name="geo_polygon_edges_cross">ขอบต้องไม่ตัดกัน</string>
+    <string name="geo_polygon_undo">เลิกทำ</string>
+    <string name="geo_polygon_clear">ล้าง</string>
+    <string name="notif_geofence_subtitle_polygon">ที่ %1$s · พื้นที่รูปหลายเหลี่ยม</string>
 </resources>

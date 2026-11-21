@@ -243,7 +243,7 @@
 
     <!-- Мазмұн сипаттамалары (бөлісілген) -->
     <string name="cd_message">Хабарлама</string>
-    <string name="cd_show_on_map">Картада көрсету</string>
+
     <string name="cd_more_options">Қосымша опциялар</string>
 
     <!-- ── Контактілер экраны ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">Бұл сақтық көшірме LocaPeer бағдарламасының жаңа нұсқасымен жасалған. Қалпына келтіру алдында қолданбаны жаңартыңыз.</string>
     <string name="notif_geofence_inside_title">%1$s %2$s ішінде</string>
     <string name="notif_tracking_geofence_unnamed">%1$s сіздің геоқоршауға кіргеніңіз немесе шыққаныңыз туралы ескерту алды</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">Пішін</string>
+    <string name="geo_shape_circle">Шеңбер</string>
+    <string name="geo_shape_polygon">Көпбұрыш</string>
+    <string name="geo_polygon_summary">Көпбұрыш • %1$d нүкте</string>
+    <string name="geo_polygon_hint">Нүкте қосу үшін картаны түртіңіз</string>
+    <string name="geo_polygon_min_points">Кемінде 3 нүкте қосыңыз</string>
+    <string name="geo_polygon_edges_cross">Қырлар қиылыспауы керек</string>
+    <string name="geo_polygon_undo">Болдырмау</string>
+    <string name="geo_polygon_clear">Тазалау</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s нүктесінде · көпбұрыш аймағы</string>
 </resources>

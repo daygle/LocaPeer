@@ -243,7 +243,7 @@
 
     <!-- ഉള്ളടക്ക വിവരണങ്ങൾ (പങ്കിട്ടവ) -->
     <string name="cd_message">സന്ദേശം</string>
-    <string name="cd_show_on_map">മാപ്പിൽ കാണിക്കുക</string>
+
     <string name="cd_more_options">കൂടുതൽ ഓപ്ഷനുകൾ</string>
 
     <!-- ── കോൺടാക്റ്റുകൾ സ്ക്രീൻ ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">ഈ ബാക്കപ്പ് LocaPeer-ന്റെ പുതിയ പതിപ്പിൽ നിർമ്മിച്ചതാണ്. പുനഃസ്ഥാപിക്കുന്നതിന് മുമ്പ് ആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
     <string name="notif_geofence_inside_title">%1$s %2$s-നുള്ളിൽ ഉണ്ട്</string>
     <string name="notif_tracking_geofence_unnamed">നിങ്ങൾ ഒരു ജിയോഫെൻസിൽ പ്രവേശിച്ചു അല്ലെങ്കിൽ പുറത്തുകടന്നു എന്ന മുന്നറിയിപ്പ് %1$s-ന് ലഭിച്ചു</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">രൂപം</string>
+    <string name="geo_shape_circle">വൃത്തം</string>
+    <string name="geo_shape_polygon">ബഹുഭുജം</string>
+    <string name="geo_polygon_summary">ബഹുഭുജം • %1$d പോയിന്റുകൾ</string>
+    <string name="geo_polygon_hint">പോയിന്റ് ചേർക്കാൻ മാപ്പിൽ ടാപ്പ് ചെയ്യുക</string>
+    <string name="geo_polygon_min_points">കുറഞ്ഞത് 3 പോയിന്റുകൾ ചേർക്കുക</string>
+    <string name="geo_polygon_edges_cross">വശങ്ങൾ പരസ്പരം കടക്കരുത്</string>
+    <string name="geo_polygon_undo">പഴയപടിയാക്കുക</string>
+    <string name="geo_polygon_clear">മായ്ക്കുക</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s-ൽ · ബഹുഭുജ മേഖല</string>
 </resources>

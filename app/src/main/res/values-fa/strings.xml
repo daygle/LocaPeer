@@ -243,7 +243,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">پیام</string>
-    <string name="cd_show_on_map">نمایش روی نقشه</string>
+
     <string name="cd_more_options">گزینه‌های بیشتر</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">این پشتیبان با نسخه جدیدتری از LocaPeer ساخته شده است. پیش از بازیابی، برنامه را به‌روزرسانی کنید.</string>
     <string name="notif_geofence_inside_title">%1$s داخل %2$s است</string>
     <string name="notif_tracking_geofence_unnamed">%1$s هشداری دریافت کرد که شما وارد یک محدوده جغرافیایی شده‌اید یا از آن خارج شده‌اید</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">شکل</string>
+    <string name="geo_shape_circle">دایره</string>
+    <string name="geo_shape_polygon">چندضلعی</string>
+    <string name="geo_polygon_summary">چندضلعی • %1$d نقطه</string>
+    <string name="geo_polygon_hint">برای افزودن نقطه روی نقشه بزنید</string>
+    <string name="geo_polygon_min_points">حداقل ۳ نقطه اضافه کنید</string>
+    <string name="geo_polygon_edges_cross">لبه‌ها نباید یکدیگر را قطع کنند</string>
+    <string name="geo_polygon_undo">واگرد</string>
+    <string name="geo_polygon_clear">پاک کردن</string>
+    <string name="notif_geofence_subtitle_polygon">در %1$s · ناحیه چندضلعی</string>
 </resources>

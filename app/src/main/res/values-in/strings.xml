@@ -242,7 +242,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">Pesan</string>
-    <string name="cd_show_on_map">Tampilkan di peta</string>
+
     <string name="cd_more_options">Opsi lainnya</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -971,14 +971,14 @@
     <string name="backup_newer_version">Cadangan ini dibuat oleh versi LocaPeer yang lebih baru. Perbarui aplikasi sebelum memulihkannya.</string>
     <string name="notif_geofence_inside_title">%1$s berada di dalam %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s menerima peringatan bahwa Anda masuk atau keluar dari geofence</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">Bentuk</string>
+    <string name="geo_shape_circle">Lingkaran</string>
+    <string name="geo_shape_polygon">Poligon</string>
+    <string name="geo_polygon_summary">Poligon • %1$d titik</string>
+    <string name="geo_polygon_hint">Ketuk peta untuk menambah titik</string>
+    <string name="geo_polygon_min_points">Tambahkan minimal 3 titik</string>
+    <string name="geo_polygon_edges_cross">Sisi tidak boleh saling bersilangan</string>
+    <string name="geo_polygon_undo">Urungkan</string>
+    <string name="geo_polygon_clear">Hapus</string>
+    <string name="notif_geofence_subtitle_polygon">di %1$s · area poligon</string>
 </resources>

@@ -243,7 +243,7 @@
 
     <!-- محتوا تفصيل (شریک شوي) -->
     <string name="cd_message">پیغام</string>
-    <string name="cd_show_on_map">په نقشه کې ښودل</string>
+
     <string name="cd_more_options">نور انتخابونه</string>
 
     <!-- ── د اړیکو سکرین ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">دا بیک اپ د LocaPeer په نوي نسخه جوړ شوی. د بیا بحالولو دمخه اپلیکیشن تازه کړئ.</string>
     <string name="notif_geofence_inside_title">%1$s د %2$s دننه دی</string>
     <string name="notif_tracking_geofence_unnamed">%1$s خبرتیا ترلاسه کړه چې تاسو جیوفینس ته ننوتئ یا ترې ووتئ</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">بڼه</string>
+    <string name="geo_shape_circle">دایره</string>
+    <string name="geo_shape_polygon">څو اړخیز</string>
+    <string name="geo_polygon_summary">څو اړخیز • %1$d نقطې</string>
+    <string name="geo_polygon_hint">د نقطې د اضافه کولو لپاره نقشې ته ټایپ وکړئ</string>
+    <string name="geo_polygon_min_points">لږ تر لږه 3 نقطې اضافه کړئ</string>
+    <string name="geo_polygon_edges_cross">څنډې باید یو بل ته نه ننوزي</string>
+    <string name="geo_polygon_undo">بیرته راګرځول</string>
+    <string name="geo_polygon_clear">پاکول</string>
+    <string name="notif_geofence_subtitle_polygon">په %1$s کې · څو اړخیزه سیمه</string>
 </resources>

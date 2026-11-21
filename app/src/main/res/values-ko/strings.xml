@@ -242,7 +242,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">메시지</string>
-    <string name="cd_show_on_map">지도에서 보기</string>
+
     <string name="cd_more_options">더 보기</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -971,14 +971,14 @@
     <string name="backup_newer_version">이 백업은 최신 버전의 LocaPeer에서 만들어졌습니다. 복원하기 전에 앱을 업데이트하세요.</string>
     <string name="notif_geofence_inside_title">%1$s이(가) %2$s 안에 있습니다</string>
     <string name="notif_tracking_geofence_unnamed">%1$s이(가) 지오펜스에 진입하거나 벗어났다는 알림을 받았습니다</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">도형</string>
+    <string name="geo_shape_circle">원</string>
+    <string name="geo_shape_polygon">다각형</string>
+    <string name="geo_polygon_summary">다각형 • 점 %1$d개</string>
+    <string name="geo_polygon_hint">지도를 탭하여 점 추가</string>
+    <string name="geo_polygon_min_points">점을 3개 이상 추가하세요</string>
+    <string name="geo_polygon_edges_cross">변이 서로 교차해서는 안 됩니다</string>
+    <string name="geo_polygon_undo">실행 취소</string>
+    <string name="geo_polygon_clear">지우기</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s · 다각형 영역</string>
 </resources>

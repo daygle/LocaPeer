@@ -245,7 +245,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">Повідомлення</string>
-    <string name="cd_show_on_map">Показати на мапі</string>
+
     <string name="cd_more_options">Більше</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -1014,14 +1014,14 @@
     <string name="backup_newer_version">Цю резервну копію створено новішою версією LocaPeer. Оновіть застосунок перед відновленням.</string>
     <string name="notif_geofence_inside_title">%1$s перебуває всередині %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s отримав сповіщення про те, що ви ввійшли в геозону або вийшли з неї</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">Форма</string>
+    <string name="geo_shape_circle">Коло</string>
+    <string name="geo_shape_polygon">Багатокутник</string>
+    <string name="geo_polygon_summary">Багатокутник • %1$d точок</string>
+    <string name="geo_polygon_hint">Натисніть на мапу, щоб додати точку</string>
+    <string name="geo_polygon_min_points">Додайте щонайменше 3 точки</string>
+    <string name="geo_polygon_edges_cross">Сторони не повинні перетинатися</string>
+    <string name="geo_polygon_undo">Скасувати</string>
+    <string name="geo_polygon_clear">Очистити</string>
+    <string name="notif_geofence_subtitle_polygon">о %1$s · область багатокутника</string>
 </resources>

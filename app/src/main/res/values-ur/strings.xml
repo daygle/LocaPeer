@@ -243,7 +243,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">پیغام</string>
-    <string name="cd_show_on_map">نقشے پر دکھائیں</string>
+
     <string name="cd_more_options">مزید اختیارات</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">یہ بیک اپ LocaPeer کے نئے ورژن سے بنایا گیا ہے۔ بحال کرنے سے پہلے ایپ کو اپ ڈیٹ کریں۔</string>
     <string name="notif_geofence_inside_title">%1$s %2$s کے اندر ہے</string>
     <string name="notif_tracking_geofence_unnamed">%1$s کو اطلاع ملی کہ آپ نے جیو فینس میں داخلہ یا اس سے اخراج کیا</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">شکل</string>
+    <string name="geo_shape_circle">دائرہ</string>
+    <string name="geo_shape_polygon">کثیر الاضلاع</string>
+    <string name="geo_polygon_summary">کثیر الاضلاع • %1$d نقاط</string>
+    <string name="geo_polygon_hint">نقطہ شامل کرنے کے لیے نقشے پر ٹیپ کریں</string>
+    <string name="geo_polygon_min_points">کم از کم 3 نقاط شامل کریں</string>
+    <string name="geo_polygon_edges_cross">کنارے ایک دوسرے کو نہیں کاٹ سکتے</string>
+    <string name="geo_polygon_undo">واپس کریں</string>
+    <string name="geo_polygon_clear">صاف کریں</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s پر · کثیر الاضلاع علاقہ</string>
 </resources>

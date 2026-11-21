@@ -242,7 +242,7 @@
 
     <!-- Nkọwa ọdịnaya (ekerịta) -->
     <string name="cd_message">Ozi</string>
-    <string name="cd_show_on_map">Gosi na map</string>
+
     <string name="cd_more_options">Nhọrọ ndị ọzọ</string>
 
     <!-- ── Kọntaktị ihuenyo ────────────────────────────────────────────────── -->
@@ -971,14 +971,14 @@
     <string name="backup_newer_version">Otu ụdị LocaPeer ọhụrụ mere nchekwa a. Melite ngwa ahụ tupu iweghachi ya.</string>
     <string name="notif_geofence_inside_title">%1$s dị n\'ime %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s nwetara ọkwa na ị banyere ma ọ bụ pụọ na geofence</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
+    <string name="geo_shape">Ụdị</string>
+    <string name="geo_shape_circle">Okirikiri</string>
     <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_polygon_summary">Polygon • isi %1$d</string>
+    <string name="geo_polygon_hint">Pịa map ka itinye isi</string>
+    <string name="geo_polygon_min_points">Tinye opekata mpe isi 3</string>
+    <string name="geo_polygon_edges_cross">Akụkụ agaghị agafe ibe ya</string>
+    <string name="geo_polygon_undo">Weghachi azụ</string>
+    <string name="geo_polygon_clear">Hichapụ</string>
+    <string name="notif_geofence_subtitle_polygon">na %1$s · mpaghara polygon</string>
 </resources>

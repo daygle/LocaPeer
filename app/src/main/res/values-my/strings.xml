@@ -242,7 +242,7 @@
 
     <!-- အကြောင်းအရာ ဖော်ပြချက်များ (မျှဝေထားသည်) -->
     <string name="cd_message">မက်ဆေ့ဂျ်</string>
-    <string name="cd_show_on_map">မြေပုံပေါ်တွင် ပြရန်</string>
+
     <string name="cd_more_options">နောက်ထပ် ရွေးချယ်စရာများ</string>
 
     <!-- ── အဆက်အသွယ်များ မျက်နှာပြင် ────────────────────────────────────────────────── -->
@@ -971,14 +971,14 @@
     <string name="backup_newer_version">ဤအရန်သိမ်းကို LocaPeer ဗားရှင်းအသစ်ဖြင့် ပြုလုပ်ထားသည်။ ပြန်လည်ရယူမီ အက်ပ်ကို အပ်ဒိတ်လုပ်ပါ။</string>
     <string name="notif_geofence_inside_title">%1$s သည် %2$s အတွင်းတွင် ရှိသည်</string>
     <string name="notif_tracking_geofence_unnamed">သင်သည် ဘူမိစည်းမျဉ်း အတွင်းသို့ ဝင်ခြင်း သို့မဟုတ် ထွက်ခြင်းရှိကြောင်း သတိပေးချက်ကို %1$s ရရှိခဲ့သည်</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">ပုံသဏ္ဌာန်</string>
+    <string name="geo_shape_circle">စက်ဝိုင်း</string>
+    <string name="geo_shape_polygon">ဗဟုဂံ</string>
+    <string name="geo_polygon_summary">ဗဟုဂံ • အမှတ် %1$d ခု</string>
+    <string name="geo_polygon_hint">အမှတ်ထည့်ရန် မြေပုံကို နှိပ်ပါ</string>
+    <string name="geo_polygon_min_points">အနည်းဆုံး အမှတ် 3 ခု ထည့်ပါ</string>
+    <string name="geo_polygon_edges_cross">အနားများ ဖြတ်မကျသင့်ပါ</string>
+    <string name="geo_polygon_undo">နောက်ပြန်</string>
+    <string name="geo_polygon_clear">ရှင်းလင်း</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s တွင် · ဗဟုဂံဧရိယာ</string>
 </resources>

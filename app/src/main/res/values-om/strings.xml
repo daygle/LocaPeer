@@ -243,7 +243,7 @@
 
     <!-- Ibsa qabiyyee (qoodame) -->
     <string name="cd_message">Ergaa</string>
-    <string name="cd_show_on_map">Kaartaa irratti agarsiisi</string>
+
     <string name="cd_more_options">Filannoo dabalataa</string>
 
     <!-- ── Quunnamtiiwwan ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">Kuusaan kun LocaPeer vershinii haaraadhaan hojjetame. Dura appii haaromsi.</string>
     <string name="notif_geofence_inside_title">%1$s %2$s keessa jira</string>
     <string name="notif_tracking_geofence_unnamed">%1$s akeekkachiisa argate: ati geofence seenaa ykn keessaa baate</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">Boca</string>
+    <string name="geo_shape_circle">Geengoo</string>
+    <string name="geo_shape_polygon">Pooligoonii</string>
+    <string name="geo_polygon_summary">Pooligoonii • tuqaa %1$d</string>
+    <string name="geo_polygon_hint">Tuqaa dabaluuf kaartaa tuqi</string>
+    <string name="geo_polygon_min_points">Yoo xiqqaate tuqaa 3 dabali</string>
+    <string name="geo_polygon_edges_cross">Qarreen wal hin qaxxaamuruu qabu</string>
+    <string name="geo_polygon_undo">Deebisi</string>
+    <string name="geo_polygon_clear">Haqi</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s irratti · naannoo pooligoonii</string>
 </resources>

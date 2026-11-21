@@ -243,7 +243,7 @@
 
     <!-- የይዘት መግለጫዎች (የተጋሩ) -->
     <string name="cd_message">መልእክት</string>
-    <string name="cd_show_on_map">በካርታ ላይ አሳይ</string>
+
     <string name="cd_more_options">ተጨማሪ አማራጮች</string>
 
     <!-- ── የእውቂያዎች ማያ ገጽ ────────────────────────────────────────────────── -->
@@ -988,14 +988,14 @@
     <string name="backup_newer_version">ይህ መጠባበቂያ በአዲስ የLocaPeer ስሪት የተሰራ ነው። ከመመለስዎ በፊት መተግበሪያውን ያሻሽሉ።</string>
     <string name="notif_geofence_inside_title">%1$s በ%2$s ውስጥ ነው</string>
     <string name="notif_tracking_geofence_unnamed">%1$s ወደ ጂኦፌንስ መግባትዎን ወይም መውጣትዎን የሚገልጽ ማንቂያ ተቀብሏል</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">ቅርጽ</string>
+    <string name="geo_shape_circle">ክብ</string>
+    <string name="geo_shape_polygon">ፖሊጎን</string>
+    <string name="geo_polygon_summary">ፖሊጎን • %1$d ነጥቦች</string>
+    <string name="geo_polygon_hint">ነጥብ ለመጨመር ካርታውን ይንኩ</string>
+    <string name="geo_polygon_min_points">ቢያንስ 3 ነጥቦችን ይጨምሩ</string>
+    <string name="geo_polygon_edges_cross">ጠርዞች መገናኘት የለባቸውም</string>
+    <string name="geo_polygon_undo">ቀልብስ</string>
+    <string name="geo_polygon_clear">አጽዳ</string>
+    <string name="notif_geofence_subtitle_polygon">በ%1$s · የፖሊጎን አካባቢ</string>
 </resources>

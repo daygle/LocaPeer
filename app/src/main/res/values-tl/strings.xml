@@ -243,7 +243,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">Mensahe</string>
-    <string name="cd_show_on_map">Ipakita sa mapa</string>
+
     <string name="cd_more_options">Higit pang opsyon</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">Ang backup na ito ay ginawa ng mas bagong bersyon ng LocaPeer. I-update ang app bago ito i-restore.</string>
     <string name="notif_geofence_inside_title">Nasa loob ng %2$s ang %1$s</string>
     <string name="notif_tracking_geofence_unnamed">Nakatanggap ang %1$s ng alerto na pumasok o lumabas ka sa isang geofence</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">Hugis</string>
+    <string name="geo_shape_circle">Bilog</string>
+    <string name="geo_shape_polygon">Poligono</string>
+    <string name="geo_polygon_summary">Poligono • %1$d puntos</string>
+    <string name="geo_polygon_hint">I-tap ang mapa para magdagdag ng punto</string>
+    <string name="geo_polygon_min_points">Magdagdag ng hindi bababa sa 3 puntos</string>
+    <string name="geo_polygon_edges_cross">Hindi dapat magsalubong ang mga gilid</string>
+    <string name="geo_polygon_undo">I-undo</string>
+    <string name="geo_polygon_clear">I-clear</string>
+    <string name="notif_geofence_subtitle_polygon">sa %1$s · lugar na poligono</string>
 </resources>

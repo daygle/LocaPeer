@@ -243,7 +243,7 @@
 
     <!-- Descrizioni dei contenuti (condivise) -->
     <string name="cd_message">Messaggio</string>
-    <string name="cd_show_on_map">Mostra sulla mappa</string>
+
     <string name="cd_more_options">Altre opzioni</string>
 
     <!-- ── Schermata contatti ────────────────────────────────────────────────── -->
@@ -981,14 +981,14 @@
     <string name="backup_newer_version">Questo backup è stato creato da una versione più recente di LocaPeer. Aggiorna l\'app prima di ripristinarlo.</string>
     <string name="notif_geofence_inside_title">%1$s si trova all\'interno di %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s ha ricevuto un avviso che sei entrato o uscito da una geofence</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">Forma</string>
+    <string name="geo_shape_circle">Cerchio</string>
+    <string name="geo_shape_polygon">Poligono</string>
+    <string name="geo_polygon_summary">Poligono • %1$d punti</string>
+    <string name="geo_polygon_hint">Tocca la mappa per aggiungere un punto</string>
+    <string name="geo_polygon_min_points">Aggiungi almeno 3 punti</string>
+    <string name="geo_polygon_edges_cross">I bordi non devono incrociarsi</string>
+    <string name="geo_polygon_undo">Annulla</string>
+    <string name="geo_polygon_clear">Cancella</string>
+    <string name="notif_geofence_subtitle_polygon">presso %1$s · area poligonale</string>
 </resources>

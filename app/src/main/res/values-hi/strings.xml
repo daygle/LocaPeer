@@ -243,7 +243,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">संदेश</string>
-    <string name="cd_show_on_map">नक्शे पर दिखाएँ</string>
+
     <string name="cd_more_options">अधिक विकल्प</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">यह बैकअप LocaPeer के नए संस्करण से बनाया गया है। इसे पुनर्स्थापित करने से पहले ऐप अपडेट करें।</string>
     <string name="notif_geofence_inside_title">%1$s %2$s के अंदर है</string>
     <string name="notif_tracking_geofence_unnamed">%1$s को सूचना मिली है कि आपने जियोफ़ेंस में प्रवेश किया या उससे बाहर निकले</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">आकृति</string>
+    <string name="geo_shape_circle">वृत्त</string>
+    <string name="geo_shape_polygon">बहुभुज</string>
+    <string name="geo_polygon_summary">बहुभुज • %1$d बिंदु</string>
+    <string name="geo_polygon_hint">बिंदु जोड़ने के लिए नक्शे पर टैप करें</string>
+    <string name="geo_polygon_min_points">कम से कम 3 बिंदु जोड़ें</string>
+    <string name="geo_polygon_edges_cross">किनारे एक-दूसरे को नहीं काटने चाहिए</string>
+    <string name="geo_polygon_undo">पूर्ववत करें</string>
+    <string name="geo_polygon_clear">साफ़ करें</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s पर · बहुभुज क्षेत्र</string>
 </resources>

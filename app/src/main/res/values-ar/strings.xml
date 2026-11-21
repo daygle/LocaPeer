@@ -247,7 +247,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">رسالة</string>
-    <string name="cd_show_on_map">عرض على الخريطة</string>
+
     <string name="cd_more_options">خيارات إضافية</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -1047,14 +1047,14 @@
     <string name="backup_newer_version">أُنشئ هذا النسخ الاحتياطي بإصدار أحدث من LocaPeer. حدّث التطبيق قبل استعادته.</string>
     <string name="notif_geofence_inside_title">%1$s داخل %2$s</string>
     <string name="notif_tracking_geofence_unnamed">تلقّى %1$s تنبيهًا بدخولك أو خروجك من سياج جغرافي</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">الشكل</string>
+    <string name="geo_shape_circle">دائرة</string>
+    <string name="geo_shape_polygon">مضلع</string>
+    <string name="geo_polygon_summary">مضلع • %1$d نقاط</string>
+    <string name="geo_polygon_hint">انقر على الخريطة لإضافة نقطة</string>
+    <string name="geo_polygon_min_points">أضف 3 نقاط على الأقل</string>
+    <string name="geo_polygon_edges_cross">يجب ألا تتقاطع الحواف</string>
+    <string name="geo_polygon_undo">تراجع</string>
+    <string name="geo_polygon_clear">مسح</string>
+    <string name="notif_geofence_subtitle_polygon">عند %1$s · منطقة مضلعة</string>
 </resources>

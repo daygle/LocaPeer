@@ -243,7 +243,7 @@
 
     <!-- Bayanin abun ciki (an raba) -->
     <string name="cd_message">Saƙo</string>
-    <string name="cd_show_on_map">Nuna a taswira</string>
+
     <string name="cd_more_options">Ƙarin zaɓuɓɓuka</string>
 
     <!-- ── Lambobi allo ────────────────────────────────────────────────── -->
@@ -988,14 +988,14 @@
     <string name="backup_newer_version">An yi wannan ajiyar da sabon sigar LocaPeer. Sabunta manhajar kafin mayar da ita.</string>
     <string name="notif_geofence_inside_title">%1$s yana cikin %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s ya sami sanarwa cewa ka shiga ko ka fita daga yankin geofence</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
+    <string name="geo_shape">Siffa</string>
+    <string name="geo_shape_circle">Da\'ira</string>
     <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_polygon_summary">Polygon • maki %1$d</string>
+    <string name="geo_polygon_hint">Danna taswira don ƙara maki</string>
+    <string name="geo_polygon_min_points">Ƙara aƙalla maki 3</string>
+    <string name="geo_polygon_edges_cross">Gefuna ba su kamata su tsallaka ba</string>
+    <string name="geo_polygon_undo">Mayar da baya</string>
+    <string name="geo_polygon_clear">Share</string>
+    <string name="notif_geofence_subtitle_polygon">a %1$s · yankin polygon</string>
 </resources>

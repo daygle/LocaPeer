@@ -244,7 +244,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">Mesaj</string>
-    <string name="cd_show_on_map">Afișați pe hartă</string>
+
     <string name="cd_more_options">Mai multe opțiuni</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -1003,14 +1003,14 @@
     <string name="backup_newer_version">Această copie de siguranță a fost creată de o versiune mai nouă a LocaPeer. Actualizează aplicația înainte de a o restaura.</string>
     <string name="notif_geofence_inside_title">%1$s se află în interiorul %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s a primit o alertă că ai intrat sau ai ieșit dintr-o zonă geografică</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">Formă</string>
+    <string name="geo_shape_circle">Cerc</string>
+    <string name="geo_shape_polygon">Poligon</string>
+    <string name="geo_polygon_summary">Poligon • %1$d puncte</string>
+    <string name="geo_polygon_hint">Atingeți harta pentru a adăuga un punct</string>
+    <string name="geo_polygon_min_points">Adăugați cel puțin 3 puncte</string>
+    <string name="geo_polygon_edges_cross">Marginile nu trebuie să se intersecteze</string>
+    <string name="geo_polygon_undo">Anulează</string>
+    <string name="geo_polygon_clear">Golește</string>
+    <string name="notif_geofence_subtitle_polygon">la %1$s · zonă poligonală</string>
 </resources>

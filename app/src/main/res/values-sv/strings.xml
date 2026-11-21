@@ -243,7 +243,7 @@
 
     <!-- Content descriptions (shared) -->
     <string name="cd_message">Meddelande</string>
-    <string name="cd_show_on_map">Visa på kartan</string>
+
     <string name="cd_more_options">Fler alternativ</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
@@ -982,14 +982,14 @@
     <string name="backup_newer_version">Säkerhetskopien skapades av en nyare version av LocaPeer. Uppdatera appen innan du återställer den.</string>
     <string name="notif_geofence_inside_title">%1$s är inne i %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s fick en varning om att du gick in i eller lämnade ett geofence</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
+    <string name="geo_shape">Form</string>
+    <string name="geo_shape_circle">Cirkel</string>
     <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_polygon_summary">Polygon • %1$d punkter</string>
+    <string name="geo_polygon_hint">Tryck på kartan för att lägga till en punkt</string>
+    <string name="geo_polygon_min_points">Lägg till minst 3 punkter</string>
+    <string name="geo_polygon_edges_cross">Kanter får inte korsa varandra</string>
+    <string name="geo_polygon_undo">Ångra</string>
+    <string name="geo_polygon_clear">Rensa</string>
+    <string name="notif_geofence_subtitle_polygon">vid %1$s · polygonområde</string>
 </resources>

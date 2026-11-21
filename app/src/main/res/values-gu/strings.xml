@@ -243,7 +243,7 @@
 
     <!-- સામગ્રી વર્ણન (શેર કરેલ) -->
     <string name="cd_message">સંદેશ</string>
-    <string name="cd_show_on_map">નકશા પર બતાવો</string>
+
     <string name="cd_more_options">વધુ વિકલ્પો</string>
 
     <!-- ── સંપર્કો સ્ક્રીન ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">આ બેકઅપ LocaPeer ના નવા સંસ્કરણ દ્વારા બનાવવામાં આવ્યું છે. તેને પુનઃસ્થાપિત કરતા પહેલા એપ અપડેટ કરો.</string>
     <string name="notif_geofence_inside_title">%1$s %2$s ની અંદર છે</string>
     <string name="notif_tracking_geofence_unnamed">%1$s ને ચેતવણી મળી છે કે તમે જિયોફેન્સમાં પ્રવેશ્યા છો અથવા બહાર નીકળ્યા છો</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">આકાર</string>
+    <string name="geo_shape_circle">વર્તુળ</string>
+    <string name="geo_shape_polygon">બહુકોણ</string>
+    <string name="geo_polygon_summary">બહુકોણ • %1$d બિંદુઓ</string>
+    <string name="geo_polygon_hint">બિંદુ ઉમેરવા માટે નકશા પર ટેપ કરો</string>
+    <string name="geo_polygon_min_points">ઓછામાં ઓછા 3 બિંદુઓ ઉમેરો</string>
+    <string name="geo_polygon_edges_cross">કિનારીઓ એકબીજાને છેદી ન શકે</string>
+    <string name="geo_polygon_undo">પૂર્વવત્ કરો</string>
+    <string name="geo_polygon_clear">સાફ કરો</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s પર · બહુકોણીય વિસ્તાર</string>
 </resources>

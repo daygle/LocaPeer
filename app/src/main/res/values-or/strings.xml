@@ -243,7 +243,7 @@
 
     <!-- ବିଷୟବସ୍ତୁ ବର୍ଣ୍ଣନା (ଅଂଶୀଦାରିତ) -->
     <string name="cd_message">ବାର୍ତ୍ତା</string>
-    <string name="cd_show_on_map">ମାନଚିତ୍ରରେ ଦେଖାନ୍ତୁ</string>
+
     <string name="cd_more_options">ଅଧିକ ବିକଳ୍ପ</string>
 
     <!-- ── ସମ୍ପର୍କ ସ୍କ୍ରିନ୍ ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">ଏହି ବ୍ୟାକଅପ୍ LocaPeer ର ଏକ ନୂତନ ସଂସ୍କରଣ ଦ୍ୱାରା ତିଆରି ହୋଇଛି। ପୁନଃସ୍ଥାପିତ କରିବା ପୂର୍ବରୁ ଆପ୍ ଅପଡେଟ୍ କରନ୍ତୁ।</string>
     <string name="notif_geofence_inside_title">%1$s %2$s ମଧ୍ୟରେ ଅଛନ୍ତି</string>
     <string name="notif_tracking_geofence_unnamed">%1$s ଏକ ସତର୍କତା ପାଇଛନ୍ତି ଯେ ଆପଣ ଏକ ଜିଓଫେନ୍ସରେ ପ୍ରବେଶ କିମ୍ବା ବାହାରକୁ ଯାଇଛନ୍ତି</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">ଆକୃତି</string>
+    <string name="geo_shape_circle">ବୃତ୍ତ</string>
+    <string name="geo_shape_polygon">ବହୁଭୁଜ</string>
+    <string name="geo_polygon_summary">ବହୁଭୁଜ • %1$d ବିନ୍ଦୁ</string>
+    <string name="geo_polygon_hint">ବିନ୍ଦୁ ଯୋଡ଼ିବା ପାଇଁ ମାନଚିତ୍ରରେ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="geo_polygon_min_points">ଅତି କମରେ 3 ବିନ୍ଦୁ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="geo_polygon_edges_cross">କିନାରାଗୁଡ଼ିକ ପରସ୍ପରକୁ ଛେଦ କରିବା ଉଚିତ ନୁହେଁ</string>
+    <string name="geo_polygon_undo">ପୂର୍ବବତ୍ କରନ୍ତୁ</string>
+    <string name="geo_polygon_clear">ସଫା କରନ୍ତୁ</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s ରେ · ବହୁଭୁଜ ଅଞ୍ଚଳ</string>
 </resources>

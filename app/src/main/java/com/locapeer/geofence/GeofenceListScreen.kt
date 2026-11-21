@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.PointF
+import android.view.MotionEvent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -45,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.android.gms.location.LocationServices
@@ -680,6 +683,12 @@ private fun GeofenceAreaDialog(
                                 lngText = formatCoord(ln)
                             }
                         },
+                        onVertexMoved = { index, la, ln ->
+                            if (index in polygonPoints.indices) {
+                                polygonPoints = polygonPoints.toMutableList()
+                                    .also { it[index] = la to ln }
+                            }
+                        },
                         modifier = Modifier
                             .fillMaxSize()
                             .clipToBounds()
@@ -1201,11 +1210,34 @@ private fun isNearExistingVertex(
     radiusPx: Float
 ): Boolean {
     val projection = controller?.map?.projection ?: return false
-    val tapPoint = projection.toScreenLocation(tap)
-    return vertices.any { (lat, lng) ->
-        val vertex = projection.toScreenLocation(LatLng(lat, lng))
-        hypot((vertex.x - tapPoint.x).toDouble(), (vertex.y - tapPoint.y).toDouble()) <= radiusPx
+    val screen = projection.toScreenLocation(tap)
+    return nearestVertexIndex(controller, vertices, screen.x, screen.y, radiusPx) != null
+}
+
+/**
+ * Index of the nearest vertex within [radiusPx] of a map-view point (x, y), or null when the
+ * touch starts clear of every vertex. Ties go to the first match, which is what a tap on a
+ * shared point should do.
+ */
+private fun nearestVertexIndex(
+    controller: LocaMapController?,
+    vertices: List<Pair<Double, Double>>,
+    x: Float,
+    y: Float,
+    radiusPx: Float
+): Int? {
+    val projection = controller?.map?.projection ?: return null
+    var best: Int? = null
+    var bestDistance = radiusPx
+    vertices.forEachIndexed { index, (lat, lng) ->
+        val point = projection.toScreenLocation(LatLng(lat, lng))
+        val distance = hypot((point.x - x).toDouble(), (point.y - y).toDouble()).toFloat()
+        if (distance <= bestDistance) {
+            best = index
+            bestDistance = distance
+        }
     }
+    return best
 }
 
 private const val MIN_RADIUS_M = 50
@@ -1227,9 +1259,10 @@ private fun stepRadius(current: Int, up: Boolean): Int {
 /**
  * A map for picking a geofence:
  * - circle mode: tap or long-press sets the centre, with the radius drawn around it,
- * - polygon mode: tap or long-press adds a vertex, with the ring drawn point by point.
+ * - polygon mode: tap or long-press adds a vertex, and dragging an existing vertex moves it.
  * Pinch zooms the map in both modes.
  */
+@SuppressLint("ClickableViewAccessibility")
 @Composable
 private fun GeofencePickerMap(
     lat: Double?,
@@ -1241,6 +1274,7 @@ private fun GeofencePickerMap(
     recenterTo: LatLng?,
     onRecentered: () -> Unit,
     onPointSelected: (Double, Double) -> Unit,
+    onVertexMoved: (index: Int, lat: Double, lng: Double) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -1253,6 +1287,17 @@ private fun GeofencePickerMap(
             onPointSelected(point.latitude, point.longitude)
         }
     }
+
+    // Vertex dragging is handled at the MapView touch level instead of with a Compose overlay:
+    // returning false lets MapLibre handle taps, pans and pinch exactly as before, and true is
+    // returned only for a gesture that began on a vertex (so that drag moves the point instead
+    // of the map). The updated-state holders keep the listener - which LocaMap creates once with
+    // the first composition's lambda - reading current values.
+    val currentPolygon by rememberUpdatedState(polygon)
+    val currentPolygonMode by rememberUpdatedState(polygonMode)
+    val currentTouchRadiusPx by rememberUpdatedState(vertexTouchRadiusPx)
+    val currentOnVertexMoved by rememberUpdatedState(onVertexMoved)
+    val draggedVertex = remember { intArrayOf(-1) }
 
     LaunchedEffect(recenterTo, map) {
         val mv = map ?: return@LaunchedEffect
@@ -1285,7 +1330,7 @@ private fun GeofencePickerMap(
     // density, and LocaMap assigns the screen density when it registers them.
     val vertexIcon = remember(strokeArgb) {
         val sizePx = 14
-        Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888).apply {
+        createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888).apply {
             val canvas = Canvas(this)
             val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 color = strokeArgb
@@ -1328,6 +1373,42 @@ private fun GeofencePickerMap(
         },
         onMapClick = { p -> addPointIfNew(p); true },
         onMapLongClick = { p -> addPointIfNew(p); true },
+        configureView = { view ->
+            view.setOnTouchListener { _, event ->
+                val controller = map
+                if (!currentPolygonMode || controller == null) {
+                    draggedVertex[0] = -1
+                    return@setOnTouchListener false
+                }
+                val vertices = currentPolygon
+                when (event.actionMasked) {
+                    MotionEvent.ACTION_DOWN -> {
+                        draggedVertex[0] = nearestVertexIndex(
+                            controller, vertices, event.x, event.y, currentTouchRadiusPx
+                        ) ?: -1
+                        draggedVertex[0] >= 0
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        val index = draggedVertex[0]
+                        if (index !in vertices.indices) {
+                            false
+                        } else {
+                            val point = controller.map.projection
+                                .fromScreenLocation(PointF(event.x, event.y))
+                            currentOnVertexMoved(index, point.latitude, point.longitude)
+                            true
+                        }
+                    }
+                    MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                        val wasDragging = draggedVertex[0] >= 0
+                        draggedVertex[0] = -1
+                        wasDragging
+                    }
+                    // Pointer add/remove mid-drag must not tilt the map under the finger.
+                    else -> draggedVertex[0] >= 0
+                }
+            }
+        },
         onReady = { controller ->
             map = controller
             // Frame the whole area rather than a fixed zoom, so a large radius/polygon

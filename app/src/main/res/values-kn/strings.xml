@@ -243,7 +243,7 @@
 
     <!-- ವಿಷಯ ವಿವರಣೆಗಳು (ಹಂಚಿಕೆಯಾಗಿದೆ) -->
     <string name="cd_message">ಸಂದೇಶ</string>
-    <string name="cd_show_on_map">ನಕ್ಷೆಯಲ್ಲಿ ತೋರಿಸಿ</string>
+
     <string name="cd_more_options">ಹೆಚ್ಚಿನ ಆಯ್ಕೆಗಳು</string>
 
     <!-- ── ಸಂಪರ್ಕಗಳ ಪರದೆ ────────────────────────────────────────────────── -->
@@ -987,14 +987,14 @@
     <string name="backup_newer_version">ಈ ಬ್ಯಾಕಪ್ LocaPeer ನ ಹೊಸ ಆವೃತ್ತಿಯಿಂದ ರಚಿಸಲಾಗಿದೆ. ಮರುಸ್ಥಾಪಿಸುವ ಮೊದಲು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ನವೀಕರಿಸಿ.</string>
     <string name="notif_geofence_inside_title">%1$s %2$s ಒಳಗೆ ಇದೆ</string>
     <string name="notif_tracking_geofence_unnamed">ನೀವು ಜಿಯೋಫೆನ್ಸ್ ಪ್ರವೇಶಿಸಿದ್ದೀರಿ ಅಥವಾ ನಿರ್ಗಮಿಸಿದ್ದೀರಿ ಎಂಬ ಎಚ್ಚರಿಕೆ %1$s ಗೆ ಬಂದಿದೆ</string>
-    <string name="geo_shape">Shape</string>
-    <string name="geo_shape_circle">Circle</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • %1$d points</string>
-    <string name="geo_polygon_hint">Tap the map to add a point</string>
-    <string name="geo_polygon_min_points">Add at least 3 points</string>
-    <string name="geo_polygon_edges_cross">Edges must not cross</string>
-    <string name="geo_polygon_undo">Undo</string>
-    <string name="geo_polygon_clear">Clear</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
+    <string name="geo_shape">ಆಕಾರ</string>
+    <string name="geo_shape_circle">ವೃತ್ತ</string>
+    <string name="geo_shape_polygon">ಬಹುಭುಜ</string>
+    <string name="geo_polygon_summary">ಬಹುಭುಜ • %1$d ಬಿಂದುಗಳು</string>
+    <string name="geo_polygon_hint">ಬಿಂದು ಸೇರಿಸಲು ನಕ್ಷೆಯನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
+    <string name="geo_polygon_min_points">ಕನಿಷ್ಠ 3 ಬಿಂದುಗಳನ್ನು ಸೇರಿಸಿ</string>
+    <string name="geo_polygon_edges_cross">ಅಂಚುಗಳು ಒಂದನ್ನೊಂದು ದಾಟಬಾರದು</string>
+    <string name="geo_polygon_undo">ರದ್ದುಮಾಡು</string>
+    <string name="geo_polygon_clear">ಅಳಿಸು</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s ನಲ್ಲಿ · ಬಹುಭುಜ ಪ್ರದೇಶ</string>
 </resources>
