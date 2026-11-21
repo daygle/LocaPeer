@@ -572,13 +572,6 @@ fun LocaPeerNavHost(
                     peerId = peerId,
                     peerName = peerName,
                     onNavigateBack = { navController.popBackStack() },
-                    onNavigateToMap = { lat, lng ->
-                        navController.navigate("${Screen.Map.route}?lat=$lat&lng=$lng&peerId=$peerId") {
-                            popUpTo(startDestination) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
                     onNavigateToControls = {
                         navController.navigate("peer-sharing/$peerId/$encodedName/controls")
                     },
