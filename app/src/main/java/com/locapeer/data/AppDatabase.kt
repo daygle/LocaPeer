@@ -20,7 +20,7 @@ import com.locapeer.data.entity.*
         CircleMemberEntity::class,
         ContactAddReceiptEntity::class
     ],
-    version = 15,
+    version = 16,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {

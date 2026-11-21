@@ -1,6 +1,9 @@
 package com.locapeer.geofence
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -32,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -60,8 +64,11 @@ import com.locapeer.ui.components.SettingsCard
 import com.locapeer.ui.theme.GeofenceBoth
 import com.locapeer.ui.theme.GeofenceEnter
 import com.locapeer.ui.theme.GeofenceExit
+import com.locapeer.util.GeoMath
 import com.locapeer.util.Geocoding
+import com.locapeer.util.GeofencePolygon
 import kotlinx.coroutines.launch
+import kotlin.math.hypot
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.maplibre.android.geometry.LatLng
@@ -70,6 +77,8 @@ import com.locapeer.map.LocaMapController
 import com.locapeer.map.MapCircle
 import com.locapeer.map.MapGeometry
 import com.locapeer.map.MapMarker
+import com.locapeer.map.MapPolygon
+import com.locapeer.map.MarkerAnchor
 import androidx.core.graphics.drawable.toBitmap
 import kotlin.math.roundToInt
 
@@ -184,12 +193,12 @@ private fun GlobalGeofencesScreen(
             existing = editingArea,
             addressSearchEnabled = addressSearchEnabled,
             onDismiss = { showCreateDialog = false; editingArea = null },
-            onSave = { name, lat, lng, radius ->
+            onSave = { name, lat, lng, radius, polygon ->
                 val current = editingArea
                 if (current != null) {
-                    vm.updateArea(current.copy(name = name, lat = lat, lng = lng, radiusMetres = radius))
+                    vm.updateArea(current.copy(name = name, lat = lat, lng = lng, radiusMetres = radius, polygon = polygon))
                 } else {
-                    vm.createArea(name, lat, lng, radius)
+                    vm.createArea(name, lat, lng, radius, polygon)
                 }
                 showCreateDialog = false
                 editingArea = null
@@ -354,9 +363,11 @@ private fun GeofenceAreaRow(
             Text(area.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
         },
         supportingContent = {
+            val ring = remember(area.polygon) { GeofencePolygon.decode(area.polygon) }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(
-                    stringResource(R.string.geo_radius_label, com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble())),
+                    if (ring != null) stringResource(R.string.geo_polygon_summary, ring.size)
+                    else stringResource(R.string.geo_radius_label, com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble())),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -401,6 +412,7 @@ private fun AssignmentRow(
     }
     val rules = remember(assignment.scheduleRules) { assignment.scheduleRules.toScheduleRules() }
     val hasSchedule = rules.isNotEmpty()
+    val ring = remember(assignment.polygon) { GeofencePolygon.decode(assignment.polygon) }
 
     ListItem(
         modifier = Modifier.clickable(onClick = onEdit),
@@ -436,7 +448,8 @@ private fun AssignmentRow(
                     )
                 }
                 Text(
-                    com.locapeer.util.DisplayFormat.distanceValue(assignment.radiusMetres.toDouble()),
+                    if (ring != null) stringResource(R.string.geo_polygon_summary, ring.size)
+                    else com.locapeer.util.DisplayFormat.distanceValue(assignment.radiusMetres.toDouble()),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -489,7 +502,15 @@ private fun RowOverflowMenu(
 private fun formatCoord(value: Double): String = "%.6f".format(java.util.Locale.US, value)
 
 /**
- * Full-screen editor for a shared geofence *area* (name + centre + radius).
+ * Which geometry an editor is drawing. Both shapes share the name, map and validation
+ * plumbing; the circle path keeps its centre + radius fields, the polygon path draws a
+ * ring point by point on the map.
+ */
+private enum class GeofenceShape { CIRCLE, POLYGON }
+
+/**
+ * Full-screen editor for a shared geofence *area*: a circle (centre + radius) or a
+ * polygon ring. Existing areas open in the shape they were saved as.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MissingPermission")
@@ -498,11 +519,15 @@ private fun GeofenceAreaDialog(
     existing: GeofenceEntity?,
     addressSearchEnabled: Boolean,
     onDismiss: () -> Unit,
-    onSave: (String, Double, Double, Int) -> Unit
+    onSave: (name: String, lat: Double, lng: Double, radiusMetres: Int, polygon: String?) -> Unit
 ) {
     val context = LocalContext.current
     val fusedLocation = remember { LocationServices.getFusedLocationProviderClient(context) }
     val scope = rememberCoroutineScope()
+
+    val existingRing = remember(existing?.id) { GeofencePolygon.decode(existing?.polygon) }
+    var shape by remember { mutableStateOf(if (existingRing != null) GeofenceShape.POLYGON else GeofenceShape.CIRCLE) }
+    var polygonPoints by remember { mutableStateOf(existingRing ?: emptyList()) }
 
     var name by remember { mutableStateOf(existing?.name ?: "") }
     var latText by remember { mutableStateOf(existing?.lat?.let { formatCoord(it) } ?: "") }
@@ -547,13 +572,42 @@ private fun GeofenceAreaDialog(
     val radiusValue = radiusText.toIntOrNull()
     val radiusForMap = (radiusValue ?: 500).coerceIn(MIN_RADIUS_M, MAX_RADIUS_M)
     val nameError = submitted && name.isBlank()
-    val latError = submitted && (lat == null || lat !in -90.0..90.0)
-    val lngError = submitted && (lng == null || lng !in -180.0..180.0)
-    val radiusError = submitted && (radiusValue == null || radiusValue !in MIN_RADIUS_M..MAX_RADIUS_M)
-    val isValid = name.isNotBlank() &&
-        lat != null && lat in -90.0..90.0 &&
-        lng != null && lng in -180.0..180.0 &&
-        radiusValue != null && radiusValue in MIN_RADIUS_M..MAX_RADIUS_M
+    val latError = submitted && shape == GeofenceShape.CIRCLE && (lat == null || lat !in -90.0..90.0)
+    val lngError = submitted && shape == GeofenceShape.CIRCLE && (lng == null || lng !in -180.0..180.0)
+    val radiusError = submitted && shape == GeofenceShape.CIRCLE &&
+        (radiusValue == null || radiusValue !in MIN_RADIUS_M..MAX_RADIUS_M)
+    val polygonValid = polygonPoints.size >= 3 && GeoMath.isRingSimple(polygonPoints)
+    val polygonError = submitted && shape == GeofenceShape.POLYGON && !polygonValid
+    val isValid = name.isNotBlank() && when (shape) {
+        GeofenceShape.CIRCLE ->
+            lat != null && lat in -90.0..90.0 &&
+                lng != null && lng in -180.0..180.0 &&
+                radiusValue != null && radiusValue in MIN_RADIUS_M..MAX_RADIUS_M
+        GeofenceShape.POLYGON -> polygonValid
+    }
+
+    /** Switching to a polygon keeps the user's circle intent by seeding a ring from it. */
+    fun circleToPolygon() {
+        if (polygonPoints.isNotEmpty()) return
+        val cLat = lat ?: return
+        val cLng = lng ?: return
+        // MapGeometry.circle repeats its first point to close the ring; the editor keeps
+        // rings open, with the closing edge implicit, so drop that duplicate.
+        polygonPoints = MapGeometry.circle(cLat, cLng, radiusForMap.toDouble(), segments = 12)
+            .dropLast(1)
+    }
+
+    /** Switching back to a circle uses the ring's centroid and bounding radius. */
+    fun polygonToCircle() {
+        if (polygonPoints.size < 3) return
+        val (cLat, cLng) = GeoMath.ringCentroid(polygonPoints)
+        latText = formatCoord(cLat)
+        lngText = formatCoord(cLng)
+        radiusText = GeoMath.ringBoundingRadiusMetres(polygonPoints)
+            .roundToInt()
+            .coerceIn(MIN_RADIUS_M, MAX_RADIUS_M)
+            .toString()
+    }
 
     val initialCamera = remember { existing?.let { LatLng(it.lat, it.lng) } }
 
@@ -575,7 +629,17 @@ private fun GeofenceAreaDialog(
                         Button(
                             onClick = {
                                 submitted = true
-                                if (isValid) onSave(name, lat, lng, radiusValue)
+                                if (!isValid) return@Button
+                                when (shape) {
+                                    GeofenceShape.CIRCLE -> onSave(name, lat!!, lng!!, radiusValue!!, null)
+                                    GeofenceShape.POLYGON -> {
+                                        val (cLat, cLng) = GeoMath.ringCentroid(polygonPoints)
+                                        val boundingRadius = GeoMath.ringBoundingRadiusMetres(polygonPoints)
+                                            .roundToInt()
+                                            .coerceIn(MIN_RADIUS_M, MAX_RADIUS_M)
+                                        onSave(name, cLat, cLng, boundingRadius, GeofencePolygon.encode(polygonPoints))
+                                    }
+                                }
                             },
                             modifier = Modifier.padding(end = 8.dp)
                         ) {
@@ -601,12 +665,20 @@ private fun GeofenceAreaDialog(
                         lat = lat,
                         lng = lng,
                         radiusMetres = radiusForMap,
+                        polygon = polygonPoints,
+                        polygonMode = shape == GeofenceShape.POLYGON,
                         initialCamera = initialCamera,
                         recenterTo = recenterTo,
                         onRecentered = { recenterTo = null },
                         onPointSelected = { la, ln ->
-                            latText = formatCoord(la)
-                            lngText = formatCoord(ln)
+                            if (shape == GeofenceShape.POLYGON) {
+                                if (polygonPoints.size < GeofencePolygon.MAX_POINTS) {
+                                    polygonPoints = polygonPoints + (la to ln)
+                                }
+                            } else {
+                                latText = formatCoord(la)
+                                lngText = formatCoord(ln)
+                            }
                         },
                         modifier = Modifier
                             .fillMaxSize()
@@ -620,17 +692,19 @@ private fun GeofenceAreaDialog(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                         horizontalAlignment = Alignment.End
                     ) {
-                        SmallFloatingActionButton(
-                            onClick = { radiusText = stepRadius(radiusForMap, up = true).toString() },
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer
-                        ) {
-                            Icon(Icons.Default.Add, stringResource(R.string.geo_cd_radius_increase))
-                        }
-                        SmallFloatingActionButton(
-                            onClick = { radiusText = stepRadius(radiusForMap, up = false).toString() },
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer
-                        ) {
-                            Icon(Icons.Default.Remove, stringResource(R.string.geo_cd_radius_decrease))
+                        if (shape == GeofenceShape.CIRCLE) {
+                            SmallFloatingActionButton(
+                                onClick = { radiusText = stepRadius(radiusForMap, up = true).toString() },
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer
+                            ) {
+                                Icon(Icons.Default.Add, stringResource(R.string.geo_cd_radius_increase))
+                            }
+                            SmallFloatingActionButton(
+                                onClick = { radiusText = stepRadius(radiusForMap, up = false).toString() },
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer
+                            ) {
+                                Icon(Icons.Default.Remove, stringResource(R.string.geo_cd_radius_decrease))
+                            }
                         }
                         SmallFloatingActionButton(
                             onClick = {
@@ -638,8 +712,10 @@ private fun GeofenceAreaDialog(
                                 fusedLocation.lastLocation.addOnSuccessListener { loc ->
                                     loadingMyLocation = false
                                     if (loc != null) {
-                                        latText = formatCoord(loc.latitude)
-                                        lngText = formatCoord(loc.longitude)
+                                        if (shape == GeofenceShape.CIRCLE) {
+                                            latText = formatCoord(loc.latitude)
+                                            lngText = formatCoord(loc.longitude)
+                                        }
                                         recenterTo = LatLng(loc.latitude, loc.longitude)
                                     }
                                 }.addOnFailureListener { loadingMyLocation = false }
@@ -654,12 +730,13 @@ private fun GeofenceAreaDialog(
                         }
                     }
 
-                    val hint = if (lat == null || lng == null) {
-                        stringResource(R.string.geo_hint_tap)
-                    } else {
-                        stringResource(R.string.geo_hint_move)
+                    val hint = when {
+                        shape == GeofenceShape.POLYGON -> stringResource(R.string.geo_polygon_hint)
+                        lat == null || lng == null -> stringResource(R.string.geo_hint_tap)
+                        else -> stringResource(R.string.geo_hint_move)
                     }
-                    val hintAlign = if (lat == null || lng == null) Alignment.TopCenter else Alignment.BottomCenter
+                    val showHintAtTop = shape == GeofenceShape.POLYGON || lat == null || lng == null
+                    val hintAlign = if (showHintAtTop) Alignment.TopCenter else Alignment.BottomCenter
                     Surface(
                         color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f),
                         shape = MaterialTheme.shapes.medium,
@@ -698,7 +775,31 @@ private fun GeofenceAreaDialog(
                         )
                     }
 
-                    if (showAddressSearch) {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(stringResource(R.string.geo_shape), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            FilterChip(
+                                selected = shape == GeofenceShape.CIRCLE,
+                                onClick = {
+                                    if (shape == GeofenceShape.POLYGON) polygonToCircle()
+                                    shape = GeofenceShape.CIRCLE
+                                },
+                                label = { Text(stringResource(R.string.geo_shape_circle)) },
+                                modifier = Modifier.weight(1f)
+                            )
+                            FilterChip(
+                                selected = shape == GeofenceShape.POLYGON,
+                                onClick = {
+                                    if (shape == GeofenceShape.CIRCLE) circleToPolygon()
+                                    shape = GeofenceShape.POLYGON
+                                },
+                                label = { Text(stringResource(R.string.geo_shape_polygon)) },
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
+
+                    if (shape == GeofenceShape.CIRCLE && showAddressSearch) {
                         HorizontalDivider(thickness = 0.5.dp)
 
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -758,76 +859,139 @@ private fun GeofenceAreaDialog(
                         }
                     }
 
-                    HorizontalDivider(thickness = 0.5.dp)
+                    if (shape == GeofenceShape.CIRCLE) {
+                        HorizontalDivider(thickness = 0.5.dp)
 
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text(stringResource(R.string.history_detail_coordinates), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            OutlinedTextField(
-                                value = latText,
-                                onValueChange = { latText = it },
-                                label = { Text(stringResource(R.string.geo_latitude)) },
-                                isError = latError,
-                                supportingText = if (latError) { { Text(stringResource(R.string.geo_lat_range)) } } else null,
-                                singleLine = true,
-                                modifier = Modifier.weight(1f),
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(stringResource(R.string.history_detail_coordinates), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                OutlinedTextField(
+                                    value = latText,
+                                    onValueChange = { latText = it },
+                                    label = { Text(stringResource(R.string.geo_latitude)) },
+                                    isError = latError,
+                                    supportingText = if (latError) { { Text(stringResource(R.string.geo_lat_range)) } } else null,
+                                    singleLine = true,
+                                    modifier = Modifier.weight(1f),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                                )
+                                OutlinedTextField(
+                                    value = lngText,
+                                    onValueChange = { lngText = it },
+                                    label = { Text(stringResource(R.string.geo_longitude)) },
+                                    isError = lngError,
+                                    supportingText = if (lngError) { { Text(stringResource(R.string.geo_lng_range)) } } else null,
+                                    singleLine = true,
+                                    modifier = Modifier.weight(1f),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                                )
+                            }
+                        }
+
+                        HorizontalDivider(thickness = 0.5.dp)
+
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(stringResource(R.string.geo_radius), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                                // Typing here updates radiusText, the same state the slider reads from,
+                                // so entering a value moves the slider (and vice versa) automatically.
+                                // Cap the digit count so a pasted value can't overflow Int and make
+                                // toIntOrNull() return null (which would snap the slider to the fallback).
+                                // One digit beyond MAX_RADIUS_M's width still lets an out-of-range entry
+                                // surface through normal validation.
+                                val maxRadiusDigits = MAX_RADIUS_M.toString().length + 1
+                                OutlinedTextField(
+                                    value = radiusText,
+                                    onValueChange = { input -> radiusText = input.filter { it.isDigit() }.take(maxRadiusDigits) },
+                                    label = { Text(stringResource(R.string.geo_radius)) },
+                                    isError = radiusError,
+                                    singleLine = true,
+                                    suffix = { Text("m") },
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    modifier = Modifier.width(160.dp)
+                                )
+                            }
+                            Slider(
+                                value = radiusForMap.toFloat(),
+                                onValueChange = { radiusText = it.roundToInt().toString() },
+                                valueRange = MIN_RADIUS_M.toFloat()..MAX_RADIUS_M.toFloat(),
+                                modifier = Modifier.fillMaxWidth()
                             )
-                            OutlinedTextField(
-                                value = lngText,
-                                onValueChange = { lngText = it },
-                                label = { Text(stringResource(R.string.geo_longitude)) },
-                                isError = lngError,
-                                supportingText = if (lngError) { { Text(stringResource(R.string.geo_lng_range)) } } else null,
-                                singleLine = true,
-                                modifier = Modifier.weight(1f),
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                            Text(
+                                if (radiusError)
+                                    stringResource(R.string.geo_radius_range, MIN_RADIUS_M, MAX_RADIUS_M)
+                                else
+                                    com.locapeer.util.DisplayFormat.distanceValue(radiusForMap.toDouble()),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = if (radiusError) MaterialTheme.colorScheme.error
+                                        else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-                    }
+                    } else {
+                        HorizontalDivider(thickness = 0.5.dp)
 
-                    HorizontalDivider(thickness = 0.5.dp)
-
-                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(stringResource(R.string.geo_radius), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-                            // Typing here updates radiusText, the same state the slider reads from,
-                            // so entering a value moves the slider (and vice versa) automatically.
-                            // Cap the digit count so a pasted value can't overflow Int and make
-                            // toIntOrNull() return null (which would snap the slider to the fallback).
-                            // One digit beyond MAX_RADIUS_M's width still lets an out-of-range entry
-                            // surface through normal validation.
-                            val maxRadiusDigits = MAX_RADIUS_M.toString().length + 1
-                            OutlinedTextField(
-                                value = radiusText,
-                                onValueChange = { input -> radiusText = input.filter { it.isDigit() }.take(maxRadiusDigits) },
-                                label = { Text(stringResource(R.string.geo_radius)) },
-                                isError = radiusError,
-                                singleLine = true,
-                                suffix = { Text("m") },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                modifier = Modifier.width(160.dp)
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(stringResource(R.string.geo_shape_polygon), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                            Text(
+                                stringResource(R.string.geo_polygon_summary, polygonPoints.size),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                OutlinedButton(
+                                    onClick = { polygonPoints = polygonPoints.dropLast(1) },
+                                    enabled = polygonPoints.isNotEmpty(),
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text(stringResource(R.string.geo_polygon_undo))
+                                }
+                                OutlinedButton(
+                                    onClick = { polygonPoints = emptyList() },
+                                    enabled = polygonPoints.isNotEmpty(),
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text(stringResource(R.string.geo_polygon_clear))
+                                }
+                            }
+                            if (polygonError) {
+                                Text(
+                                    stringResource(
+                                        if (polygonPoints.size < 3) R.string.geo_polygon_min_points
+                                        else R.string.geo_polygon_edges_cross
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            }
+                            polygonPoints.forEachIndexed { index, point ->
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Text(
+                                        "${index + 1}. ${formatCoord(point.first)}, ${formatCoord(point.second)}",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                    IconButton(
+                                        onClick = {
+                                            polygonPoints = polygonPoints.filterIndexed { i, _ -> i != index }
+                                        }
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Delete,
+                                            contentDescription = stringResource(R.string.common_remove),
+                                            tint = MaterialTheme.colorScheme.error,
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
+                                }
+                            }
                         }
-                        Slider(
-                            value = radiusForMap.toFloat(),
-                            onValueChange = { radiusText = it.roundToInt().toString() },
-                            valueRange = MIN_RADIUS_M.toFloat()..MAX_RADIUS_M.toFloat(),
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        Text(
-                            if (radiusError)
-                                stringResource(R.string.geo_radius_range, MIN_RADIUS_M, MAX_RADIUS_M)
-                            else
-                                com.locapeer.util.DisplayFormat.distanceValue(radiusForMap.toDouble()),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = if (radiusError) MaterialTheme.colorScheme.error
-                                    else MaterialTheme.colorScheme.onSurfaceVariant
-                        )
                     }
                 }
             }
@@ -919,7 +1083,9 @@ private fun AssignmentDialog(
                                 Column {
                                     Text(area.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
                                     Text(
-                                        com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble()),
+                                        GeofencePolygon.decode(area.polygon)?.let {
+                                            stringResource(R.string.geo_polygon_summary, it.size)
+                                        } ?: com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble()),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -1021,6 +1187,27 @@ private fun AssignmentDialog(
     }
 }
 
+/** Tap tolerance (dp) for reusing an existing polygon vertex instead of adding a new one. */
+private const val VERTEX_TOUCH_RADIUS_DP = 24
+
+/**
+ * Whether [tap] lands within [radiusPx] of an existing vertex. Uses the map projection so the
+ * tolerance stays constant on screen at any zoom; without a controller nothing is close.
+ */
+private fun isNearExistingVertex(
+    controller: LocaMapController?,
+    vertices: List<Pair<Double, Double>>,
+    tap: LatLng,
+    radiusPx: Float
+): Boolean {
+    val projection = controller?.map?.projection ?: return false
+    val tapPoint = projection.toScreenLocation(tap)
+    return vertices.any { (lat, lng) ->
+        val vertex = projection.toScreenLocation(LatLng(lat, lng))
+        hypot((vertex.x - tapPoint.x).toDouble(), (vertex.y - tapPoint.y).toDouble()) <= radiusPx
+    }
+}
+
 private const val MIN_RADIUS_M = 50
 private const val MAX_RADIUS_M = 50000
 
@@ -1038,15 +1225,18 @@ private fun stepRadius(current: Int, up: Boolean): Int {
 }
 
 /**
- * A map for picking a geofence centre:
- * - tap or long-press sets the centre,
- * - pinch zooms the map; the radius is edited via the field/slider below.
+ * A map for picking a geofence:
+ * - circle mode: tap or long-press sets the centre, with the radius drawn around it,
+ * - polygon mode: tap or long-press adds a vertex, with the ring drawn point by point.
+ * Pinch zooms the map in both modes.
  */
 @Composable
 private fun GeofencePickerMap(
     lat: Double?,
     lng: Double?,
     radiusMetres: Int,
+    polygon: List<Pair<Double, Double>>,
+    polygonMode: Boolean,
     initialCamera: LatLng?,
     recenterTo: LatLng?,
     onRecentered: () -> Unit,
@@ -1055,6 +1245,14 @@ private fun GeofencePickerMap(
 ) {
     val context = LocalContext.current
     var map by remember { mutableStateOf<LocaMapController?>(null) }
+    // A tap this close (in screen pixels) to an existing vertex is treated as hitting that
+    // vertex rather than adding a nearly identical point on top of it.
+    val vertexTouchRadiusPx = with(LocalDensity.current) { VERTEX_TOUCH_RADIUS_DP.dp.toPx() }
+    val addPointIfNew: (LatLng) -> Unit = { point ->
+        if (!polygonMode || !isNearExistingVertex(map, polygon, point, vertexTouchRadiusPx)) {
+            onPointSelected(point.latitude, point.longitude)
+        }
+    }
 
     LaunchedEffect(recenterTo, map) {
         val mv = map ?: return@LaunchedEffect
@@ -1083,24 +1281,69 @@ private fun GeofencePickerMap(
 
     val centreLat = lat
     val centreLng = lng
+    // A small dot per polygon vertex, tinted like the outline. MapLibre sizes images by
+    // density, and LocaMap assigns the screen density when it registers them.
+    val vertexIcon = remember(strokeArgb) {
+        val sizePx = 14
+        Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888).apply {
+            val canvas = Canvas(this)
+            val fill = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = strokeArgb
+                style = Paint.Style.FILL
+            }
+            canvas.drawCircle(sizePx / 2f, sizePx / 2f, sizePx / 2f - 3f, fill)
+            val outline = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = android.graphics.Color.WHITE
+                style = Paint.Style.STROKE
+                strokeWidth = 2f
+            }
+            canvas.drawCircle(sizePx / 2f, sizePx / 2f, sizePx / 2f - 3f, outline)
+        }
+    }
+    val showPolygon = polygonMode && polygon.size >= 3
     LocaMap(
         modifier = modifier,
-        circles = if (centreLat != null && centreLng != null) listOf(
+        circles = if (!polygonMode && centreLat != null && centreLng != null) listOf(
             MapCircle(centreLat, centreLng, radiusMetres.toDouble(), fillArgb = fillArgb, strokeArgb = strokeArgb, strokeWidthDp = 2f)
         ) else emptyList(),
-        markers = if (centreLat != null && centreLng != null && pin != null) listOf(
-            MapMarker(id = "centre", lat = centreLat, lng = centreLng, icon = pin, clickable = false)
+        polygons = if (showPolygon) listOf(
+            MapPolygon(polygon, fillArgb = fillArgb, strokeArgb = strokeArgb, strokeWidthDp = 2f)
         ) else emptyList(),
-        onMapClick = { p -> onPointSelected(p.latitude, p.longitude); true },
-        onMapLongClick = { p -> onPointSelected(p.latitude, p.longitude); true },
+        markers = when {
+            polygonMode -> polygon.mapIndexed { index, point ->
+                MapMarker(
+                    id = "vertex-$index",
+                    lat = point.first,
+                    lng = point.second,
+                    icon = vertexIcon,
+                    anchor = MarkerAnchor.CENTER,
+                    clickable = false,
+                    zIndex = 3f
+                )
+            }
+            centreLat != null && centreLng != null && pin != null -> listOf(
+                MapMarker(id = "centre", lat = centreLat, lng = centreLng, icon = pin, clickable = false)
+            )
+            else -> emptyList()
+        },
+        onMapClick = { p -> addPointIfNew(p); true },
+        onMapLongClick = { p -> addPointIfNew(p); true },
         onReady = { controller ->
             map = controller
-            if (initialCamera != null) {
-                // Frame the whole geofence circle rather than a fixed zoom, so a large radius
-                // isn't cut off.
-                val ring = MapGeometry.circle(initialCamera.latitude, initialCamera.longitude, radiusMetres.toDouble())
-                    .map { (la, ln) -> LatLng(la, ln) }
-                controller.fit(ring, MAP_FIT_PADDING_PX, animate = false, singlePointZoom = MapGeometry.fromLegacyZoom(15.0))
+            // Frame the whole area rather than a fixed zoom, so a large radius/polygon
+            // isn't cut off.
+            val fitRing = when {
+                polygon.isNotEmpty() -> polygon
+                initialCamera != null -> MapGeometry.circle(initialCamera.latitude, initialCamera.longitude, radiusMetres.toDouble())
+                else -> emptyList()
+            }
+            if (fitRing.isNotEmpty()) {
+                controller.fit(
+                    fitRing.map { (la, ln) -> LatLng(la, ln) },
+                    MAP_FIT_PADDING_PX,
+                    animate = false,
+                    singlePointZoom = MapGeometry.fromLegacyZoom(15.0)
+                )
             } else {
                 controller.moveTo(0.0, 0.0, MapGeometry.fromLegacyZoom(4.0))
             }

@@ -36,6 +36,7 @@ import com.locapeer.ui.components.RelayStatusChip
 import com.locapeer.util.DisplayFormat
 import com.locapeer.util.GeoMath
 import com.locapeer.util.Geocoding
+import com.locapeer.util.GeofencePolygon
 import com.locapeer.ui.theme.*
 import org.maplibre.android.camera.CameraUpdateFactory
 import org.maplibre.android.geometry.LatLng
@@ -693,14 +694,26 @@ private fun MainMapView(
     val fenceFillArgb = android.graphics.Color.argb(30, (geofenceStroke.red * 255).toInt(), (geofenceStroke.green * 255).toInt(), (geofenceStroke.blue * 255).toInt())
     val fenceStrokeArgb = android.graphics.Color.argb(200, (geofenceStroke.red * 255).toInt(), (geofenceStroke.green * 255).toInt(), (geofenceStroke.blue * 255).toInt())
     val circles = remember(geofences) {
-        geofences.map { MapCircle(it.fence.lat, it.fence.lng, it.fence.radiusMetres.toDouble(), fenceFillArgb, fenceStrokeArgb, strokeWidthDp = 1.5f) }
+        geofences.filter { GeofencePolygon.decode(it.fence.polygon) == null }.map {
+            MapCircle(it.fence.lat, it.fence.lng, it.fence.radiusMetres.toDouble(), fenceFillArgb, fenceStrokeArgb, strokeWidthDp = 1.5f)
+        }
+    }
+    val polygons = remember(geofences) {
+        geofences.mapNotNull { geofenceOnMap ->
+            GeofencePolygon.decode(geofenceOnMap.fence.polygon)?.let { ring ->
+                MapPolygon(ring, fenceFillArgb, fenceStrokeArgb, strokeWidthDp = 1.5f)
+            }
+        }
     }
     val pinMarkers = remember(pins, geofences) {
         val labels = geofences.mapIndexed { index, geofenceOnMap ->
             val fence = geofenceOnMap.fence
+            // Circles label above their top edge; a polygon's centroid is the natural spot.
+            val labelLat = if (GeofencePolygon.decode(fence.polygon) != null) fence.lat
+                           else GeoMath.offsetLatitude(fence.lat, fence.radiusMetres.toDouble())
             MapMarker(
                 id = "fence-$index",
-                lat = GeoMath.offsetLatitude(fence.lat, fence.radiusMetres.toDouble()),
+                lat = labelLat,
                 lng = fence.lng,
                 icon = MarkerIconFactory.createGeofenceLabel(context, fence.name, geofenceOnMap.assignedLabel, fenceStrokeArgb).bitmap,
                 clickable = false
@@ -749,6 +762,7 @@ private fun MainMapView(
         isDark = isDark,
         markers = if (myMarker != null) pinMarkers + myMarker else pinMarkers,
         circles = circles,
+        polygons = polygons,
         showScaleBar = true,
         showCompass = true,
         onMarkerClick = { id ->

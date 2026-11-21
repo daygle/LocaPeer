@@ -70,7 +70,7 @@ class GeofenceViewModel @Inject constructor(
 
     // --- Geofence areas ---
 
-    fun createArea(name: String, lat: Double, lng: Double, radiusMetres: Int) {
+    fun createArea(name: String, lat: Double, lng: Double, radiusMetres: Int, polygon: String? = null) {
         viewModelScope.launch {
             geofenceDao.upsert(
                 GeofenceEntity(
@@ -78,7 +78,8 @@ class GeofenceViewModel @Inject constructor(
                     name = name,
                     lat = lat,
                     lng = lng,
-                    radiusMetres = radiusMetres
+                    radiusMetres = radiusMetres,
+                    polygon = polygon
                 )
             )
         }

@@ -68,6 +68,17 @@ data class MapCircle(
     val strokeWidthDp: Float = 2f,
 )
 
+/**
+ * An arbitrary polygon area, drawn with the same fill/stroke styling as [MapCircle]. Points
+ * are (lat, lng) pairs; the ring is closed implicitly.
+ */
+data class MapPolygon(
+    val points: List<Pair<Double, Double>>,
+    val fillArgb: Int,
+    val strokeArgb: Int,
+    val strokeWidthDp: Float = 2f,
+)
+
 /** A polyline such as a history trail. */
 data class MapLine(val points: List<LatLng>, val argb: Int, val widthDp: Float = 3f)
 
@@ -156,6 +167,7 @@ fun LocaMap(
     isDark: Boolean = false,
     markers: List<MapMarker> = emptyList(),
     circles: List<MapCircle> = emptyList(),
+    polygons: List<MapPolygon> = emptyList(),
     lines: List<MapLine> = emptyList(),
     showScaleBar: Boolean = false,
     showCompass: Boolean = false,
@@ -288,9 +300,9 @@ fun LocaMap(
         registeredImages.removeAll(toRemove)
         toRemove.forEach { style.removeImage(it) }
     }
-    LaunchedEffect(loaded, circles) {
+    LaunchedEffect(loaded, circles, polygons) {
         val style = loaded?.second ?: return@LaunchedEffect
-        val features = circles.map { c ->
+        val circleFeatures = circles.map { c ->
             val ring = MapGeometry.circle(c.lat, c.lng, c.radiusMetres).map { (lat, lng) -> Point.fromLngLat(lng, lat) }
             Feature.fromGeometry(Polygon.fromLngLats(listOf(ring))).apply {
                 addStringProperty("fill", rgba(c.fillArgb))
@@ -298,7 +310,18 @@ fun LocaMap(
                 addNumberProperty("width", c.strokeWidthDp)
             }
         }
-        style.getSourceAs<GeoJsonSource>(CIRCLE_SOURCE)?.setGeoJson(FeatureCollection.fromFeatures(features))
+        val polygonFeatures = polygons.filter { it.points.size >= 3 }.map { p ->
+            // GeoJSON linear rings must repeat the first point at the end; stored rings don't.
+            val vertices = if (p.points.first() == p.points.last()) p.points else p.points + p.points.first()
+            val ring = vertices.map { (lat, lng) -> Point.fromLngLat(lng, lat) }
+            Feature.fromGeometry(Polygon.fromLngLats(listOf(ring))).apply {
+                addStringProperty("fill", rgba(p.fillArgb))
+                addStringProperty("stroke", rgba(p.strokeArgb))
+                addNumberProperty("width", p.strokeWidthDp)
+            }
+        }
+        style.getSourceAs<GeoJsonSource>(CIRCLE_SOURCE)
+            ?.setGeoJson(FeatureCollection.fromFeatures(circleFeatures + polygonFeatures))
     }
     LaunchedEffect(loaded, lines) {
         val style = loaded?.second ?: return@LaunchedEffect

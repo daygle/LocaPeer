@@ -113,6 +113,16 @@ class MigrationTest {
         helper.runMigrationsAndValidate(TEST_DB, 15, true, *DatabaseModule.ALL_MIGRATIONS)
     }
 
+    /** v15 -> v16: adds the optional polygon ring on geofences, validated against schemas/.../16.json. */
+    @Test
+    @Throws(IOException::class)
+    fun migrate15To16() {
+        helper.createDatabase(TEST_DB, 15).apply {
+            close()
+        }
+        helper.runMigrationsAndValidate(TEST_DB, 16, true, *DatabaseModule.ALL_MIGRATIONS)
+    }
+
     /** v13 -> v14: index changes only, validated against schemas/.../14.json. */
     @Test
     @Throws(IOException::class)

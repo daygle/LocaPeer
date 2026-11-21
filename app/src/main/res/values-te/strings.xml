@@ -987,4 +987,14 @@
     <string name="backup_newer_version">ఈ బ్యాకప్ LocaPeer యొక్క కొత్త వెర్షన్ ద్వారా సృష్టించబడింది. పునరుద్ధరించే ముందు యాప్‌ను అప్‌డేట్ చేయండి.</string>
     <string name="notif_geofence_inside_title">%1$s %2$s లోపల ఉంది</string>
     <string name="notif_tracking_geofence_unnamed">మీరు జియోఫెన్స్‌లోకి ప్రవేశించారు లేదా నిష్క్రమించారు అనే హెచ్చరిక %1$s కు అందింది</string>
+    <string name="geo_shape">Shape</string>
+    <string name="geo_shape_circle">Circle</string>
+    <string name="geo_shape_polygon">Polygon</string>
+    <string name="geo_polygon_summary">Polygon • %1$d points</string>
+    <string name="geo_polygon_hint">Tap the map to add a point</string>
+    <string name="geo_polygon_min_points">Add at least 3 points</string>
+    <string name="geo_polygon_edges_cross">Edges must not cross</string>
+    <string name="geo_polygon_undo">Undo</string>
+    <string name="geo_polygon_clear">Clear</string>
+    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
 </resources>

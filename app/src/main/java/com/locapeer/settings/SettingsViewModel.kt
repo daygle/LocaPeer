@@ -101,7 +101,9 @@ data class GeofenceBackup(
     val name: String,
     val lat: Double,
     val lng: Double,
-    val radiusMetres: Int
+    val radiusMetres: Int,
+    /** Polygon ring (`com.locapeer.util.GeofencePolygon`); absent/null for a circle. */
+    val polygon: String? = null
 )
 
 @Serializable
@@ -367,7 +369,7 @@ class SettingsViewModel @Inject constructor(
                     } else null,
                     geofences = if (BackupSection.GEOFENCES in sections)
                         geofenceDao.getAllGeofences().first().map { g ->
-                            GeofenceBackup(g.id, g.name, g.lat, g.lng, g.radiusMetres)
+                            GeofenceBackup(g.id, g.name, g.lat, g.lng, g.radiusMetres, polygon = g.polygon)
                         } else null,
                     geofenceAssignments = if (BackupSection.GEOFENCES in sections)
                         geofenceAssignmentDao.observeAll().first().map { a ->
@@ -672,7 +674,9 @@ class SettingsViewModel @Inject constructor(
                             Log.w(TAG, "Skipped ${backup.geofences.size - areas.size} invalid geofence(s) in backup")
                         }
                         areas.forEach { g ->
-                            geofenceDao.upsert(GeofenceEntity(g.id, g.name, g.lat, g.lng, g.radiusMetres))
+                            geofenceDao.upsert(
+                                GeofenceEntity(g.id, g.name, g.lat, g.lng, g.radiusMetres, polygon = g.polygon)
+                            )
                         }
                         // Restore merges, so an assignment may target an area this device
                         // already had.

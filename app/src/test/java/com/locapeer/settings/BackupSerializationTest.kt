@@ -46,7 +46,8 @@ class BackupSerializationTest {
             )
         ),
         geofences = listOf(
-            GeofenceBackup("g1", "Home", 51.5, -0.1, 150)
+            // A polygon fence, so the ring survives export/import unchanged.
+            GeofenceBackup("g1", "Home", 51.5, -0.1, 150, polygon = "51.5,-0.1;51.51,-0.1;51.51,-0.09")
         ),
         geofenceAssignments = listOf(
             GeofenceAssignmentBackup(

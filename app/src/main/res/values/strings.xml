@@ -1011,4 +1011,14 @@
     <string name="onboarding_bg_open_settings">Open system settings</string>
     <string name="onboarding_bg_skip">Skip for now</string>
     <string name="onboarding_bg_location_hint">On Android 11 and newer, background location is granted in system settings only - the app cannot ask for it directly.</string>
+    <string name="geo_shape">Shape</string>
+    <string name="geo_shape_circle">Circle</string>
+    <string name="geo_shape_polygon">Polygon</string>
+    <string name="geo_polygon_summary">Polygon • %1$d points</string>
+    <string name="geo_polygon_hint">Tap the map to add a point</string>
+    <string name="geo_polygon_min_points">Add at least 3 points</string>
+    <string name="geo_polygon_edges_cross">Edges must not cross</string>
+    <string name="geo_polygon_undo">Undo</string>
+    <string name="geo_polygon_clear">Clear</string>
+    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
 </resources>

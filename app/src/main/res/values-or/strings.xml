@@ -987,4 +987,14 @@
     <string name="backup_newer_version">ଏହି ବ୍ୟାକଅପ୍ LocaPeer ର ଏକ ନୂତନ ସଂସ୍କରଣ ଦ୍ୱାରା ତିଆରି ହୋଇଛି। ପୁନଃସ୍ଥାପିତ କରିବା ପୂର୍ବରୁ ଆପ୍ ଅପଡେଟ୍ କରନ୍ତୁ।</string>
     <string name="notif_geofence_inside_title">%1$s %2$s ମଧ୍ୟରେ ଅଛନ୍ତି</string>
     <string name="notif_tracking_geofence_unnamed">%1$s ଏକ ସତର୍କତା ପାଇଛନ୍ତି ଯେ ଆପଣ ଏକ ଜିଓଫେନ୍ସରେ ପ୍ରବେଶ କିମ୍ବା ବାହାରକୁ ଯାଇଛନ୍ତି</string>
+    <string name="geo_shape">Shape</string>
+    <string name="geo_shape_circle">Circle</string>
+    <string name="geo_shape_polygon">Polygon</string>
+    <string name="geo_polygon_summary">Polygon • %1$d points</string>
+    <string name="geo_polygon_hint">Tap the map to add a point</string>
+    <string name="geo_polygon_min_points">Add at least 3 points</string>
+    <string name="geo_polygon_edges_cross">Edges must not cross</string>
+    <string name="geo_polygon_undo">Undo</string>
+    <string name="geo_polygon_clear">Clear</string>
+    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
 </resources>

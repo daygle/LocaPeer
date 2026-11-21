@@ -980,4 +980,14 @@
     <string name="backup_newer_version">Esta cópia de segurança foi criada por uma versão mais recente do LocaPeer. Atualize a aplicação antes de a restaurar.</string>
     <string name="notif_geofence_inside_title">%1$s está dentro de %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s recebeu um alerta de que entrou ou saiu de uma cerca geográfica</string>
+    <string name="geo_shape">Shape</string>
+    <string name="geo_shape_circle">Circle</string>
+    <string name="geo_shape_polygon">Polygon</string>
+    <string name="geo_polygon_summary">Polygon • %1$d points</string>
+    <string name="geo_polygon_hint">Tap the map to add a point</string>
+    <string name="geo_polygon_min_points">Add at least 3 points</string>
+    <string name="geo_polygon_edges_cross">Edges must not cross</string>
+    <string name="geo_polygon_undo">Undo</string>
+    <string name="geo_polygon_clear">Clear</string>
+    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area</string>
 </resources>

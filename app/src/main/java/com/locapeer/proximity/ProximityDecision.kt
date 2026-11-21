@@ -21,7 +21,7 @@ internal fun isOwnFixFresh(fixAgeMs: Long): Boolean = fixAgeMs <= MAX_OWN_FIX_AG
  * Per-peer proximity state the engine keeps between evaluations. Persisted so a
  * process restart can't re-arm an alert that already fired.
  */
-internal data class ProximityPeerState(
+data class ProximityPeerState(
     val nearby: Boolean,
     val lastNotifiedAtMs: Long
 )

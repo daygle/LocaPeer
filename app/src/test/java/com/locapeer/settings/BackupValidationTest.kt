@@ -3,10 +3,12 @@ package com.locapeer.settings
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.sharing.ScheduleRule
+import com.locapeer.util.GeofencePolygon
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class BackupValidationTest {
@@ -16,8 +18,9 @@ class BackupValidationTest {
         name: String = "Home",
         lat: Double = 51.5,
         lng: Double = -0.1,
-        radius: Int = 150
-    ) = GeofenceBackup(id, name, lat, lng, radius)
+        radius: Int = 150,
+        polygon: String? = null
+    ) = GeofenceBackup(id, name, lat, lng, radius, polygon)
 
     private fun assignment(
         id: String = "a1",
@@ -47,6 +50,24 @@ class BackupValidationTest {
         assertNotNull(BackupValidation.geofence(area(radius = 50)))
         assertNotNull(BackupValidation.geofence(area(radius = 50_000)))
         assertNull(BackupValidation.geofence(area(id = "   ")))
+    }
+
+    @Test
+    fun `polygon area is normalised to its centroid and bounding radius`() {
+        val ring = "0.0,0.0;0.0,0.01;0.01,0.01;0.01,0.0"
+        val out = BackupValidation.geofence(area(lat = 0.0, lng = 0.0, polygon = ring))
+        assertNotNull(out)
+        assertEquals(0.005, out!!.lat, 1e-9)
+        assertEquals(0.005, out.lng, 1e-9)
+        assertTrue(out.radiusMetres in 50..50_000)
+        assertEquals(GeofencePolygon.encode(GeofencePolygon.decode(ring)!!), out.polygon)
+    }
+
+    @Test
+    fun `invalid polygon is dropped rather than becoming a circle`() {
+        assertNull(BackupValidation.geofence(area(polygon = "0,0;0,1")))
+        assertNull(BackupValidation.geofence(area(polygon = "0,0;1,1;1,0;0,1")))
+        assertNull(BackupValidation.geofence(area(polygon = "junk")))
     }
 
     @Test

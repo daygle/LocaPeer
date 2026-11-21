@@ -12,7 +12,9 @@ data class ActiveGeofence(
     val lng: Double,
     val radiusMetres: Int,
     val triggerOn: String,
-    val scheduleRules: String
+    val scheduleRules: String,
+    /** Encoded polygon ring; null for a circular area. */
+    val polygon: String? = null
 )
 
 /** An assignment joined with its area, for showing a contact's geofences in the UI. */
@@ -25,7 +27,9 @@ data class AssignmentWithArea(
     val radiusMetres: Int,
     val triggerOn: String,
     val active: Boolean,
-    val scheduleRules: String
+    val scheduleRules: String,
+    /** Encoded polygon ring; null for a circular area. */
+    val polygon: String? = null
 )
 
 @Dao
@@ -54,7 +58,7 @@ interface GeofenceAssignmentDao {
         """
         SELECT g.id AS id, g.name AS name, g.lat AS lat, g.lng AS lng,
                g.radiusMetres AS radiusMetres, a.triggerOn AS triggerOn,
-               a.scheduleRules AS scheduleRules
+               a.scheduleRules AS scheduleRules, g.polygon AS polygon
         FROM geofence_assignments a
         INNER JOIN geofences g ON g.id = a.geofenceId
         WHERE a.trackedDeviceId = :deviceId AND a.active = 1
@@ -68,7 +72,7 @@ interface GeofenceAssignmentDao {
         SELECT a.id AS assignmentId, a.geofenceId AS geofenceId, g.name AS name,
                g.lat AS lat, g.lng AS lng, g.radiusMetres AS radiusMetres,
                a.triggerOn AS triggerOn, a.active AS active,
-               a.scheduleRules AS scheduleRules
+               a.scheduleRules AS scheduleRules, g.polygon AS polygon
         FROM geofence_assignments a
         INNER JOIN geofences g ON g.id = a.geofenceId
         WHERE a.trackedDeviceId = :deviceId

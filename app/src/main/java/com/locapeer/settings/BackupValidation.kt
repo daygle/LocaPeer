@@ -3,6 +3,8 @@ package com.locapeer.settings
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.sharing.ScheduleRule
+import com.locapeer.util.GeoMath
+import com.locapeer.util.GeofencePolygon
 import kotlinx.serialization.json.Json
 
 /**
@@ -44,7 +46,27 @@ internal object BackupValidation {
         if (!backup.lat.isFinite() || backup.lat !in -90.0..90.0) return null
         if (!backup.lng.isFinite() || backup.lng !in -180.0..180.0) return null
         if (backup.radiusMetres !in MIN_GEOFENCE_RADIUS_M..MAX_GEOFENCE_RADIUS_M) return null
-        return backup.copy(id = id, name = backup.name.trim().take(MAX_NAME_CHARS))
+        // A polygon must be a usable ring. An invalid one would make the engine fall
+        // back to a circle around its centroid, silently changing the area the user
+        // drew, so the whole fence is rejected instead.
+        val ring = backup.polygon?.let { GeofencePolygon.decode(it) }
+        if (backup.polygon != null && ring == null) return null
+        val normalized = if (ring != null) {
+            val (lat, lng) = GeoMath.ringCentroid(ring)
+            backup.copy(
+                id = id,
+                name = backup.name.trim().take(MAX_NAME_CHARS),
+                lat = lat,
+                lng = lng,
+                radiusMetres = GeoMath.ringBoundingRadiusMetres(ring)
+                    .toInt()
+                    .coerceIn(MIN_GEOFENCE_RADIUS_M, MAX_GEOFENCE_RADIUS_M),
+                polygon = GeofencePolygon.encode(ring)
+            )
+        } else {
+            backup.copy(id = id, name = backup.name.trim().take(MAX_NAME_CHARS), polygon = null)
+        }
+        return normalized
     }
 
     /**

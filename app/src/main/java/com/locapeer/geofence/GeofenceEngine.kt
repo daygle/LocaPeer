@@ -23,6 +23,7 @@ import com.locapeer.sharing.SharingSchedule
 import com.locapeer.sharing.toScheduleRules
 import com.locapeer.subscriber.TrackingAlertPayload
 import com.locapeer.util.GeoMath
+import com.locapeer.util.GeofencePolygon
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -118,16 +119,22 @@ class GeofenceEngine @Inject constructor(
         }
         fences.forEach { fence ->
             val key = "${fence.id}:${current.deviceId}"
+            // A polygon's ring, or null for a circle. A malformed stored ring falls back
+            // to the circle fields (centroid + bounding radius) rather than failing closed.
+            val ring = GeofencePolygon.decode(fence.polygon)
             val wasInside = insideState[key]
                 ?: previous?.takeIf {
                     it.accuracy <= fence.radiusMetres.toFloat() &&
                         GeoMath.canSeedFromPrevious(current.timestamp, it.timestamp, SEED_MAX_GAP_MS)
-                }?.let {
-                    GeoMath.haversineMetres(it.lat, it.lng, fence.lat, fence.lng) <=
-                        fence.radiusMetres.toDouble()
+                }?.let { prev ->
+                    if (ring != null) {
+                        GeoMath.pointInRing(prev.lat, prev.lng, ring)
+                    } else {
+                        GeoMath.haversineMetres(prev.lat, prev.lng, fence.lat, fence.lng) <=
+                            fence.radiusMetres.toDouble()
+                    }
                 }
 
-            val dist = GeoMath.haversineMetres(current.lat, current.lng, fence.lat, fence.lng)
             // A coarse fix cannot place the person outside the fence any more precisely
             // than inside it, so the exit boundary is buffered by the fix's accuracy (never
             // less than the minimum). The old minimum-only buffer for EXIT/BOTH fences
@@ -135,7 +142,17 @@ class GeofenceEngine @Inject constructor(
             // opt-in and defaults off: a 500 m network fix could otherwise "leave" a 100 m
             // fence while the person was standing in it.
             val buffer = maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
-            val inNow = GeoMath.isInsideWithHysteresis(dist, fence.radiusMetres.toDouble(), buffer, wasInside == true)
+            val inNow = if (ring != null) {
+                GeoMath.isInsidePolygonWithHysteresis(
+                    inPolygon = GeoMath.pointInRing(current.lat, current.lng, ring),
+                    distanceToEdgeMetres = GeoMath.distanceToRingMetres(current.lat, current.lng, ring),
+                    bufferMetres = buffer,
+                    wasInside = wasInside == true
+                )
+            } else {
+                val dist = GeoMath.haversineMetres(current.lat, current.lng, fence.lat, fence.lng)
+                GeoMath.isInsideWithHysteresis(dist, fence.radiusMetres.toDouble(), buffer, wasInside == true)
+            }
 
             // A fix coarser than the fence itself can't reliably tell inside from outside -
             // this keeps suburb-precision peers from tripping street-sized fences. Fences
@@ -194,7 +211,11 @@ class GeofenceEngine @Inject constructor(
                     personName = current.displayName,
                     personDeviceId = current.deviceId,
                     title = title,
-                    subtitle = context.getString(R.string.notif_geofence_subtitle, formatTime(current.timestamp), com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble()))
+                    subtitle = if (ring != null) {
+                        context.getString(R.string.notif_geofence_subtitle_polygon, formatTime(current.timestamp))
+                    } else {
+                        context.getString(R.string.notif_geofence_subtitle, formatTime(current.timestamp), com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble()))
+                    }
                 )
                 // An "is inside" report follows a settings change, not a crossing, so the
                 // peer's "you entered or exited a fence" alert would be false.
