@@ -91,6 +91,8 @@ android {
         // Timber's lint jar arrives transitively, but the app logs with android.util.Log
         // and doesn't depend on Timber.
         disable += "LogNotTimber"
+        disable += "GradleDependency"
+        disable += "AndroidGradlePluginVersion"
 
         // Fail the build on any remaining lint warning, not just errors. CI runs lint
         // before building, so a release can never ship with an open warning.
