@@ -38,16 +38,6 @@ import javax.inject.Singleton
 import kotlin.coroutines.resume
 
 private const val COOLDOWN_MS = 10 * 60 * 1000L // 10 minutes per peer
-// Our own cached position older than this can't prove the peer is near *us* now.
-private const val MAX_OWN_FIX_AGE_MS = 10 * 60 * 1000L
-// Reuse a freshly fetched own position for this long before fetching again (cost
-// guard when several peers' heartbeats land in the same moment).
-private const val OWN_FIX_CACHE_MS = 30_000L
-// A passive (lastLocation) fix older than this is refreshed with one bounded active
-// fetch before proximity is judged on it; see getFreshOwnLocation.
-private const val OWN_FIX_STALE_MS = 60_000L
-// Minimum hysteresis buffer past the alert radius before the peer counts as gone.
-private const val MIN_EXIT_BUFFER_M = 100.0
 // Paired with a per-peer tag (notify(tag, id, ...)) since two peers' deviceId hashCodes can
 // collide and silently overwrite each other's notification.
 const val NOTIF_ID_PROXIMITY = 50000
@@ -56,6 +46,7 @@ const val NOTIF_ID_PROXIMITY = 50000
 class ProximityEngine @Inject constructor(
     @ApplicationContext private val context: Context,
     private val proximityAlertDao: ProximityAlertDao,
+    private val proximityStateStore: ProximityStateStore,
     private val notificationManager: NotificationManager,
     private val relayClient: NostrRelayClient,
     private val keyManager: KeyManager,
@@ -64,11 +55,11 @@ class ProximityEngine @Inject constructor(
 ) {
     private val scope = backgroundScope("ProximityEngine")
     private var fusedLocation = LocationServices.getFusedLocationProviderClient(context)
-    private val lastNotifiedAt = ConcurrentHashMap<String, Long>()
-    // Whether each peer is currently within their alert radius, with hysteresis.
-    // Alerts fire on the outside→inside transition only, so a peer who *stays*
-    // nearby doesn't re-alert every cooldown period; leaving re-arms the alert.
-    private val wasNearby = ConcurrentHashMap<String, Boolean>()
+    // Whether each peer is currently within their alert radius (with hysteresis), their
+    // notification cooldown, and both values' persistence. Alerts fire on the outside→inside
+    // transition only, so a peer who *stays* nearby doesn't re-alert every cooldown period;
+    // leaving re-arms the alert. The cache serializes saves against contact removal.
+    private val stateCache = ProximityStateCache(proximityStateStore)
 
     // Cache of proximity alerts per peer device ID. Wrapped because ConcurrentHashMap rejects
     // null values, and "this peer has no alert" (the common case) must be cached too.
@@ -82,7 +73,7 @@ class ProximityEngine @Inject constructor(
     // Serializes the nearby-state flip and the notification decision. Evaluations are
     // launched per heartbeat, and a live pulse can land while an earlier one is still
     // waiting on the own-location fetch; two interleaved evaluations would both read the
-    // old wasNearby/lastNotifiedAt before either wrote, double-alerting one arrival.
+    // old state before either wrote, double-alerting one arrival.
     private val decisionMutex = Mutex()
     // Whether each peer's alert was on at the last DB emission, so an alert switched back
     // on can report the visit already in progress.
@@ -98,12 +89,12 @@ class ProximityEngine @Inject constructor(
                 val present = alerts.mapTo(mutableSetOf()) { it.peerDeviceId }
                 // An alert deleted outright releases its peer's nearby/cooldown state, so it
                 // can't leak into a later alert or accumulate for peers without one.
-                alertWasActive.keys.filter { it !in present }.forEach { peer ->
+                val removed = alertWasActive.keys.filter { it !in present }
+                removed.forEach { peer ->
                     alertWasActive.remove(peer)
-                    wasNearby.remove(peer)
-                    lastNotifiedAt.remove(peer)
                     announceOnNextEvaluation.remove(peer)
                 }
+                removed.forEach { peer -> stateCache.remove(peer) }
                 alerts.forEach { alert ->
                     val before = alertWasActive.put(alert.peerDeviceId, alert.active)
                     if (before == false && alert.active) announceOnNextEvaluation += alert.peerDeviceId
@@ -124,9 +115,10 @@ class ProximityEngine @Inject constructor(
 
         val ownLocation = getFreshOwnLocation() ?: return
 
-        // A stale own position only proves where we *were*; skip rather than
-        // raise a "nearby" alert against it.
-        if (System.currentTimeMillis() - ownLocation.time > MAX_OWN_FIX_AGE_MS) return
+        // A stale own position only proves where we *were*; skip rather than raise or
+        // re-arm an alert against it. getFreshOwnLocation already refuses fixes past
+        // this age; the re-check covers the 30 s cache reuse window.
+        if (!isOwnFixFresh(System.currentTimeMillis() - ownLocation.time)) return
         // A peer fix is a position from the past, so its distance uncertainty grows with
         // age and with the speed the peer reported: a beat delayed by a relay backlog can't
         // assert a "nearby" that ended minutes ago. Both clock readings are used - the
@@ -152,43 +144,39 @@ class ProximityEngine @Inject constructor(
 
         decisionMutex.withLock {
             val peerId = peerHeartbeat.deviceId
-            val wasInside = wasNearby[peerId]
-            val buffer = maxOf(MIN_EXIT_BUFFER_M, uncertainty)
-            val inside = GeoMath.isInsideWithHysteresis(
-                distanceMetres, alert.radiusMetres.toDouble(), buffer, wasInside == true
-            )
-
-            // If the uncertainty is larger than the radius, we can't reliably confirm
-            // a NEW entry. However, if we are currently "outside" even with the buffer,
-            // we allow the state to update to "outside" so that future entry alerts
-            // can fire when accuracy improves. Exception: when the measured distance is
-            // so small that even the full uncertainty circle stays inside the radius,
-            // the peer is PROVABLY nearby - alert on this heartbeat instead of dropping
-            // every reading until a sharper fix happens to land (with a 300 m radius and
-            // network-grade fixes, the old gate could stay closed for an entire visit).
-            if (inside && wasInside != true &&
-                uncertainty > alert.radiusMetres.toDouble() &&
-                distanceMetres + uncertainty > alert.radiusMetres.toDouble()
-            ) return@withLock
-
-            wasNearby[peerId] = inside
+            // Loading the persisted state here (not at process start) keeps a restart
+            // from re-alerting an arrival that already fired or forgetting a cooldown.
+            val snapshot = stateCache.snapshot(peerId)
+            val wasInside = snapshot.nearby
             // Switching an existing alert back on shouldn't wait for the peer to leave and
             // return: report the visit that is already happening. A first-ever observation
             // (restart, brand-new alert) still seeds silently.
-            val announce = announceOnNextEvaluation.remove(peerId) == true
-            // First observation since process start: seed only. A peer who was already
-            // nearby shouldn't re-alert on every app restart; arrivals fire next beat.
-            if (wasInside == null && !announce) return@withLock
-
-            if (inside && (wasInside != true || announce)) {
-                // Schedule check: only notify if the current time matches the alert's schedule.
+            val announce = announceOnNextEvaluation.contains(peerId)
+            val decision = ProximityDecisionPolicy.decide(
+                distanceMetres = distanceMetres,
+                radiusMetres = alert.radiusMetres.toDouble(),
+                uncertaintyMetres = uncertainty,
+                wasNearby = wasInside,
+                announce = announce,
+                lastNotifiedAtMs = snapshot.lastNotifiedAtMs,
+                nowMs = System.currentTimeMillis(),
+                cooldownMs = COOLDOWN_MS,
+                // Only notify if the current time matches the alert's schedule.
                 // Empty schedule defaults to active (all days/times).
-                val rules = alert.scheduleRules.toScheduleRules()
-                if (!SharingSchedule.isActive(rules)) return@withLock
-
-                val now = System.currentTimeMillis()
-                if (now - (lastNotifiedAt[peerId] ?: 0L) < COOLDOWN_MS) return@withLock
-                lastNotifiedAt[peerId] = now
+                scheduleActive = SharingSchedule.isActive(alert.scheduleRules.toScheduleRules())
+            )
+            // Hold: this reading can't decide, so keep the state (and any pending
+            // re-enable announcement) for a sharper beat.
+            val nearby = decision.nearby ?: return@withLock
+            if (announce) announceOnNextEvaluation.remove(peerId)
+            val notifiedAtMs = if (decision.notify) decision.notifiedAtMs else snapshot.lastNotifiedAtMs
+            // Persist the transition (and a fresh cooldown) before acting on it, so a
+            // restart right after an alert can't re-arm it or forget the cooldown. The
+            // save is refused if the contact was removed while this evaluation ran.
+            if (nearby != wasInside || decision.notify) {
+                stateCache.save(peerId, snapshot, ProximityPeerState(nearby, notifiedAtMs))
+            }
+            if (decision.notify) {
                 sendNotification(peerHeartbeat.displayName, peerId, distanceMetres.toInt())
                 sendTrackingAlertToPeer(peerId)
             }
@@ -196,14 +184,16 @@ class ProximityEngine @Inject constructor(
     }
 
     /**
-     * Drop this peer's in-memory state so a contact removed and later re-added with
-     * the same pubkey starts from a clean seed instead of inheriting pre-removal
-     * nearby/cooldown state (which would suppress their first "nearby" alert after
-     * re-add). Called from [com.locapeer.peer.PeerManager] on every removal path.
+     * Drop this peer's state so a contact removed and later re-added with the same
+     * pubkey starts from a clean seed instead of inheriting pre-removal nearby/cooldown
+     * state (which would suppress their first "nearby" alert after re-add). Awaits the
+     * persisted clear, and [ProximityStateCache] refuses any save still in flight from an
+     * evaluation that started before this, so stale state can't be resurrected. Called
+     * from [com.locapeer.peer.PeerManager] on every removal path.
      */
-    fun onPeerRemoved(deviceId: String) {
-        wasNearby.remove(deviceId)
-        lastNotifiedAt.remove(deviceId)
+    suspend fun onPeerRemoved(deviceId: String) {
+        announceOnNextEvaluation.remove(deviceId)
+        stateCache.remove(deviceId)
     }
 
     private fun sendTrackingAlertToPeer(peerPubkey: String) {
@@ -306,27 +296,24 @@ class ProximityEngine @Inject constructor(
     private suspend fun getFreshOwnLocation(): android.location.Location? = ownLocationMutex.withLock {
         val now = SystemClock.elapsedRealtime()
         val cached = cachedOwnLocation
-        if (cached != null && now - lastOwnLocationFetchAt < OWN_FIX_CACHE_MS) {
+        if (cached != null && now - lastOwnLocationFetchAt < OWN_FIX_CACHE_MS &&
+            isOwnFixFresh(System.currentTimeMillis() - cached.time)
+        ) {
             return@withLock cached
         }
 
-        // Passive fused cache first (free). If it is missing or stale - common on a
-        // device whose own heartbeat service isn't broadcasting, where nothing else
-        // refreshes the cache - pay for one bounded active fetch so proximity is
-        // judged on a current position rather than skipped until some other app
-        // happens to update the cache.
-        val passive = fetchLastLocation()
-        val location = if (passive != null &&
-            System.currentTimeMillis() - passive.time <= OWN_FIX_STALE_MS
-        ) {
-            passive
-        } else {
-            fetchCurrentLocation() ?: passive
+        // Passive fused cache first (free). A fix too old to say where we are now is
+        // not a position at all: pay for one bounded active fetch, and if that fails
+        // too, return null so this beat is skipped rather than measured from an old
+        // place (which re-armed the alert while the user stood next to the peer).
+        val passive = fetchLastLocation()?.takeIf {
+            isOwnFixFresh(System.currentTimeMillis() - it.time)
         }
-        if (location != null) {
-            cachedOwnLocation = location
-            lastOwnLocationFetchAt = now
+        val location = passive ?: fetchCurrentLocation()?.takeIf {
+            isOwnFixFresh(System.currentTimeMillis() - it.time)
         }
+        cachedOwnLocation = location
+        if (location != null) lastOwnLocationFetchAt = now
         location
     }
 
