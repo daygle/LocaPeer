@@ -56,6 +56,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -662,11 +663,22 @@ class HeartbeatService : LifecycleService() {
         super.attachBaseContext(com.locapeer.util.AppLocale.wrap(newBase))
     }
 
+    /** Follows a language picked while the service runs (Android 8-12; see [com.locapeer.util.AppLocale]). */
+    override fun getResources(): android.content.res.Resources =
+        com.locapeer.util.AppLocale.resourcesOverride() ?: super.getResources()
+
     override fun onCreate() {
         super.onCreate()
         isRunning = true
         fusedLocation = LocationServices.getFusedLocationProviderClient(this)
         createNotificationChannel()
+        // A language change rebuilds the channel name and the ongoing notification's text.
+        lifecycleScope.launch {
+            com.locapeer.util.AppLocale.changes.drop(1).collect {
+                createNotificationChannel()
+                if (isStarted) updateServiceNotification()
+            }
+        }
         // Charger and battery-threshold events, so the low-battery profile engages and
         // releases promptly instead of waiting for the next (possibly distant) pulse.
         ContextCompat.registerReceiver(

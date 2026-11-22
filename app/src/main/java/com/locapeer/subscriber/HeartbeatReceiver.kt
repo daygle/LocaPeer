@@ -81,6 +81,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -257,6 +258,36 @@ internal fun isCircleReinvite(
         eventCreatedAt > left.leftAt
 }
 
+/** What a disband notice that arrived before its circle means for a message creating that circle. */
+internal enum class PendingDisbandOutcome {
+    /** The notice isn't from this circle's proven creator: keep it, deliver the message. */
+    NOT_APPLICABLE,
+    /** A newer message from the creator: the notice is stale, drop it and deliver. */
+    SUPERSEDED,
+    /** The creator disbanded this circle after the message: drop the message and the circle. */
+    APPLY
+}
+
+/**
+ * Decides a pending disband ([pending]: signed sender and event time) against a message that would
+ * create its circle. Only the circle's creator can disband it, and the creator is proven by a valid
+ * signature ([signedVersion] > 0) or by sending the message themselves; anything else leaves the
+ * notice unused, so a member can't pre-empt someone else's circle with one.
+ */
+internal fun pendingDisbandOutcome(
+    pending: LeftCircle,
+    claimedCreator: String,
+    senderPubkey: String,
+    eventCreatedAt: Long,
+    signedVersion: Long
+): PendingDisbandOutcome {
+    if (!claimedCreator.equals(pending.creatorPubkey, ignoreCase = true)) return PendingDisbandOutcome.NOT_APPLICABLE
+    val fromCreator = senderPubkey.equals(claimedCreator, ignoreCase = true)
+    if (signedVersion <= 0 && !fromCreator) return PendingDisbandOutcome.NOT_APPLICABLE
+    return if (fromCreator && eventCreatedAt > pending.leftAt) PendingDisbandOutcome.SUPERSEDED
+    else PendingDisbandOutcome.APPLY
+}
+
 /** Never turn receive-only access into outbound location sharing without consent. */
 internal fun shouldReviewTrackRequest(existingRole: String?, isRoleChange: Boolean): Boolean =
     if (isRoleChange) existingRole != null
@@ -393,6 +424,9 @@ class HeartbeatReceiver @Inject constructor(
      */
     @Volatile private var leftCircles: Map<String, LeftCircle> = emptyMap()
 
+    /** In-memory mirror of [AppPreferences.pendingCircleDisbands], kept fresh like [leftCircles]. */
+    @Volatile private var pendingDisbands: Map<String, LeftCircle> = emptyMap()
+
     /** Last time an approval dialog (unlock / disable request) was surfaced per sender.
      *  In-memory on purpose: the cooldown guards a burst within one session only, and a
      *  process restart must reset it (the user could legitimately retry immediately).
@@ -438,9 +472,14 @@ class HeartbeatReceiver @Inject constructor(
     fun start() {
         createAlertChannel()
         createMessageChannel()
+        // Channel names are user-visible: rebuild them when the app language changes.
+        com.locapeer.util.AppLocale.changes.drop(1)
+            .onEach { createAlertChannel(); createMessageChannel() }
+            .launchIn(scope)
         // Keep the left-circle cache warm so the DM hot path can suppress left circles without a
         // DataStore read per message.
         prefs.leftCircles.onEach { leftCircles = it }.launchIn(scope)
+        prefs.pendingCircleDisbands.onEach { pendingDisbands = it }.launchIn(scope)
         // Sync points only advance once a relay has actually replayed the catch-up (EOSE).
         // Saving them when the subscription is merely queued would skip everything sent in
         // the meantime if the app started offline and was killed before it ever connected.
@@ -1144,6 +1183,7 @@ class HeartbeatReceiver @Inject constructor(
             // could keep injecting messages into a thread the user believes is circle-private.
             // Circles that predate the creator field (blank creator) keep the old open behaviour.
             val knownCircle = circleDao.getCircle(group.gid)
+            if (knownCircle == null && applyPendingDisband(group, event, signedVersion)) return
             // The signer of a valid creator signature is the proven creator. If the recorded
             // creator is only another member's unconfirmed claim, let them through so their signed
             // state can replace it (see GroupControl.decide).
@@ -2127,25 +2167,68 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try {
             json.decodeFromString<com.locapeer.circles.CircleDisbandPayload>(plaintext)
         } catch (e: Exception) { return }
-        val circle = circleDao.getCircle(payload.gid) ?: return
+        if (!com.locapeer.messaging.GroupWire.isCircleId(payload.gid)) return
+        val circle = circleDao.getCircle(payload.gid)
+        if (circle == null) {
+            // Not here yet: the control catch-up can replay the notice before the message
+            // catch-up delivers the circle. Keep it, bound to its signed sender, so the circle is
+            // dropped on arrival if it turns out to be theirs (see [applyPendingDisband]).
+            val createdAt = minOf(event.createdAt, Instant.now().epochSecond)
+            prefs.addPendingCircleDisband(payload.gid, event.pubkey, createdAt)
+            pendingDisbands = pendingDisbands +
+                (payload.gid to LeftCircle(payload.gid, event.pubkey.lowercase(), createdAt))
+            return
+        }
         if (circle.creatorPubkey.isBlank() ||
             !circle.creatorPubkey.equals(event.pubkey, ignoreCase = true)
         ) return
-        prefs.addLeftCircle(payload.gid, circle.creatorPubkey)
-        // The DataStore collector refreshes [leftCircles] asynchronously; update the mirror now so
-        // a straggler that the ordered pipeline handles next (common during catch-up) is dropped
-        // instead of re-creating the circle we are about to delete.
-        leftCircles = leftCircles + (payload.gid to LeftCircle(
-            circleId = payload.gid,
-            creatorPubkey = circle.creatorPubkey.lowercase(),
-            leftAt = Instant.now().epochSecond
-        ))
+        recordCircleRemoved(payload.gid, circle.creatorPubkey)
         messageDao.deleteAllForGroup(payload.gid)
         messageReactionDao.deleteOrphans()
         circleDao.clearMembers(payload.gid)
         circleDao.deleteCircle(payload.gid)
         com.locapeer.messaging.MediaCache.clearDecryptedMedia(context)
         Log.d(TAG, "Removed circle ${payload.gid} after its creator disbanded it")
+    }
+
+    /**
+     * Records that a circle is gone (left or disbanded) so stragglers can't re-create it. The
+     * DataStore collector refreshes [leftCircles] asynchronously; the mirror is updated now so a
+     * straggler the ordered pipeline handles next (common during catch-up) is dropped.
+     */
+    private suspend fun recordCircleRemoved(circleId: String, creatorPubkey: String) {
+        prefs.addLeftCircle(circleId, creatorPubkey)
+        leftCircles = leftCircles + (circleId to LeftCircle(
+            circleId = circleId,
+            creatorPubkey = creatorPubkey.lowercase(),
+            leftAt = Instant.now().epochSecond
+        ))
+    }
+
+    /**
+     * Applies a disband notice that arrived before its circle. Returns true when [group] belongs to
+     * a circle its proven creator already disbanded, in which case the caller must drop the message
+     * instead of creating the circle. The creator is proven by a valid signature
+     * ([signedVersion] > 0) or by being the sender; a notice from anyone else never applies, so a
+     * member can't pre-empt another person's circle. A creator message newer than the notice
+     * supersedes it.
+     */
+    private suspend fun applyPendingDisband(
+        group: com.locapeer.messaging.GroupMessage,
+        event: NostrEvent,
+        signedVersion: Long
+    ): Boolean {
+        val pending = pendingDisbands[group.gid] ?: return false
+        val outcome = pendingDisbandOutcome(
+            pending, group.creator, event.pubkey, event.createdAt, signedVersion
+        )
+        if (outcome == PendingDisbandOutcome.NOT_APPLICABLE) return false
+        pendingDisbands = pendingDisbands - group.gid
+        prefs.removePendingCircleDisband(group.gid)
+        if (outcome == PendingDisbandOutcome.SUPERSEDED) return false
+        recordCircleRemoved(group.gid, group.creator)
+        Log.d(TAG, "Dropped circle ${group.gid}: its creator had already disbanded it")
+        return true
     }
 
     private suspend fun processTrackingAlert(event: NostrEvent) {

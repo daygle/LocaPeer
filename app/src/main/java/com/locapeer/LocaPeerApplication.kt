@@ -62,6 +62,14 @@ class LocaPeerApplication : Application(), Configuration.Provider {
         super.attachBaseContext(AppLocale.wrap(base))
     }
 
+    /**
+     * On Android 8-12 the base context keeps the language the process started with, so a language
+     * picked later would only reach notifications, workers and receivers after a restart.
+     * [AppLocale.resourcesOverride] follows the current choice (null on API 33+).
+     */
+    override fun getResources(): android.content.res.Resources =
+        AppLocale.resourcesOverride() ?: super.getResources()
+
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()
             .setWorkerFactory(workerFactory)

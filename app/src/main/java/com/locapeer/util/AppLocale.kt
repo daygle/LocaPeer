@@ -3,10 +3,14 @@ package com.locapeer.util
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Build
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.util.Locale
 
 /**
@@ -43,6 +47,26 @@ object AppLocale {
 
     private class Snapshot(val tag: String, val locale: Locale, val context: Context?)
 
+    private val _changes = MutableStateFlow(0)
+
+    /**
+     * Bumped each time the picker applies a different language while the process runs. Long-lived
+     * components that cache localized text (notification channels, the foreground notification)
+     * collect it to rebuild that text in the new language without a restart.
+     */
+    val changes: StateFlow<Int> = _changes.asStateFlow()
+
+    /**
+     * Resources in the app language, for an Application or Service to return from
+     * `getResources()` on Android 8-12, where the framework would otherwise keep the language
+     * they started with until the process restarts. Null on API 33+, where the framework already
+     * applies the per-app locale to every context, and before a snapshot exists. It never builds
+     * one, so calling it from `getResources()` can't recurse into [configuration].
+     */
+    fun resourcesOverride(): Resources? =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) null
+        else snapshot?.context?.resources
+
     /**
      * Registers the context every lookup resolves against. Called from
      * [com.locapeer.LocaPeerApplication] as soon as its base context exists, before any
@@ -76,7 +100,9 @@ object AppLocale {
         val app = appContext ?: return
         app.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             .edit { putString(KEY_TAG, tag) }
+        val previous = snapshot?.tag
         snapshot = build(app, tag)
+        if (previous != tag) _changes.value += 1
     }
 
     /**
@@ -106,9 +132,14 @@ object AppLocale {
     }
 
     private fun build(context: Context, tag: String): Snapshot {
-        val locale = if (tag.isEmpty()) Locale.getDefault() else Locale.forLanguageTag(tag)
+        // "Follow the system" resolves against the system configuration rather than
+        // Locale.getDefault(), which can still hold the previously chosen app language.
+        val locale = if (tag.isEmpty()) systemLocale() else Locale.forLanguageTag(tag)
         return Snapshot(tag, locale, context.createConfigurationContext(configuration(context, locale)))
     }
+
+    private fun systemLocale(): Locale =
+        Resources.getSystem().configuration.locales.takeIf { !it.isEmpty }?.get(0) ?: Locale.getDefault()
 
     private fun configuration(base: Context, locale: Locale): Configuration =
         Configuration(base.resources.configuration).apply {

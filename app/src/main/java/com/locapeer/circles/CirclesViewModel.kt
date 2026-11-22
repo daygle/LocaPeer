@@ -30,7 +30,8 @@ class CirclesViewModel @Inject constructor(
     private val messageDao: MessageDao,
     private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val keyManager: KeyManager,
-    private val prefs: AppPreferences
+    private val prefs: AppPreferences,
+    private val circleDisbandSender: CircleDisbandSender
 ) : ViewModel() {
 
     /** All contacts, used as the pool to pick circle members from. */
@@ -76,8 +77,29 @@ class CirclesViewModel @Inject constructor(
         viewModelScope.launch { circleDao.renameCircle(circleId, name.trim().ifBlank { "Circle" }) }
     }
 
+    /**
+     * Replaces the circle's membership. When the owner removes someone, the removed member is
+     * sent the creator's [com.locapeer.nostr.NostrEventKind.CIRCLE_DISBAND] notice, so their copy
+     * of the circle goes away instead of lingering as a live-looking circle that no longer
+     * reaches anyone. Re-adding them later works: the owner's next message is a newer creator
+     * message, which counts as a re-invite.
+     */
     fun setMembers(circleId: String, memberPubkeys: List<String>) {
-        viewModelScope.launch { circleDao.replaceMembers(circleId, memberPubkeys) }
+        viewModelScope.launch {
+            val removed = circleDao.getMemberPubkeys(circleId) - memberPubkeys.toSet()
+            circleDao.replaceMembers(circleId, memberPubkeys)
+            if (removed.isEmpty()) return@launch
+            val creator = circleDao.getCircle(circleId)?.creatorPubkey.orEmpty()
+            val (_, myPub) = keyManager.ensureKeypair()
+            // Only the recorded owner's notice is honoured; a legacy circle with no owner has
+            // nobody whose notice a member could verify.
+            if (creator.isBlank() || !creator.equals(myPub, ignoreCase = true)) return@launch
+            try {
+                circleDisbandSender.send(circleId, removed)
+            } catch (e: Exception) {
+                android.util.Log.e("CirclesViewModel", "removed-member notice failed", e)
+            }
+        }
     }
 
     /**

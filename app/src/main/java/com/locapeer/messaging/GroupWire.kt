@@ -52,6 +52,9 @@ object GroupWire {
     private val sigPattern = Regex("[0-9a-f]{128}")
 
     /** Circle IDs must stay in a separate namespace from 64-hex 1:1 peer thread IDs. */
+    /** Whether [id] has the shape of a circle id (a UUID), as every stored circle has. */
+    fun isCircleId(id: String): Boolean = circleIdPattern.matches(id)
+
     internal fun isValid(message: GroupMessage): Boolean =
         circleIdPattern.matches(message.gid) && message.members.size in 1..256 &&
             message.members.all { pubkeyPattern.matches(it) } &&

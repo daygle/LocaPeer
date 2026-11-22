@@ -307,6 +307,7 @@ class AppPreferences @Inject constructor(
     private val KEY_MAP_FIXED_LNG = doublePreferencesKey("map_fixed_lng")
     private val KEY_RECENT_EVENT_IDS = stringPreferencesKey("recent_event_ids")
     private val KEY_LEFT_CIRCLE_IDS = stringPreferencesKey("left_circle_ids")
+    private val KEY_PENDING_CIRCLE_DISBANDS = stringPreferencesKey("pending_circle_disbands")
     private val KEY_USE_IMPERIAL_SPEED = booleanPreferencesKey("use_imperial_speed")
     private val KEY_USE_24_HOUR_TIME = booleanPreferencesKey("use_24_hour_time")
     private val KEY_USE_IMPERIAL_ELEVATION = booleanPreferencesKey("use_imperial_elevation")
@@ -915,6 +916,35 @@ class AppPreferences @Inject constructor(
             val current = decodeLeftCircles(it[KEY_LEFT_CIRCLE_IDS]).toMutableMap()
             if (current.remove(circleId) != null) {
                 it[KEY_LEFT_CIRCLE_IDS] = encodeLeftCircles(current.values)
+            }
+        }
+    }
+
+    /**
+     * Disband notices that arrived for a circle this device did not hold yet (the control
+     * catch-up can replay one before the message catch-up delivers the circle). Same encoding as
+     * [leftCircles]: [LeftCircle.creatorPubkey] is the notice's signed sender and
+     * [LeftCircle.leftAt] its event time. The receiver applies one only when the circle turns out
+     * to be that sender's, so a member can't use a notice to block someone else's circle.
+     */
+    val pendingCircleDisbands: Flow<Map<String, LeftCircle>> = context.settingsStore.data
+        .catch { e -> if (e is IOException) emit(emptyPreferences()) else throw e }
+        .map { prefs -> decodeLeftCircles(prefs[KEY_PENDING_CIRCLE_DISBANDS]) }
+        .distinctUntilChanged()
+
+    suspend fun addPendingCircleDisband(circleId: String, senderPubkey: String, createdAt: Long) {
+        context.settingsStore.edit {
+            val current = decodeLeftCircles(it[KEY_PENDING_CIRCLE_DISBANDS]).toMutableMap()
+            current[circleId] = LeftCircle(circleId, senderPubkey.lowercase(), createdAt)
+            it[KEY_PENDING_CIRCLE_DISBANDS] = encodeLeftCircles(current.values)
+        }
+    }
+
+    suspend fun removePendingCircleDisband(circleId: String) {
+        context.settingsStore.edit {
+            val current = decodeLeftCircles(it[KEY_PENDING_CIRCLE_DISBANDS]).toMutableMap()
+            if (current.remove(circleId) != null) {
+                it[KEY_PENDING_CIRCLE_DISBANDS] = encodeLeftCircles(current.values)
             }
         }
     }
