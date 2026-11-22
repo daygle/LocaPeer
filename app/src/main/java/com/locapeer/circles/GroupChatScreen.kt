@@ -430,6 +430,7 @@ fun GroupChatScreen(
                 SwipeToDeleteGroupMessage(
                     msg = msg,
                     senderName = nameByPubkey[msg.senderPublicKeyHex] ?: stringResource(R.string.fallback_unknown),
+                    myPubkey = myPub,
                     // Both the swipe gesture (caught by SwipeToDeleteGroupMessage) and the
                     // long-press (caught by GroupMessageBubble.combinedClickable) call
                     // onLongPressRequest to flip pendingDeleteMsg, which surfaces the same
@@ -470,6 +471,7 @@ fun GroupChatScreen(
 private fun GroupMessageBubble(
     msg: MessageEntity,
     senderName: String,
+    myPubkey: String = "",
     bubbleColor: BubbleColor = BubbleColor.DEFAULT,
     reactions: List<MessageReactionWithName> = emptyList(),
     onNavigateToMap: (Double, Double) -> Unit,
@@ -572,6 +574,7 @@ private fun GroupMessageBubble(
                 if (reactions.isNotEmpty()) {
                     CircleReactionRow(
                         reactions = reactions,
+                        myPubkey = myPubkey,
                         onShowAll = { showAllReactions = true },
                         modifier = Modifier
                             .align(Alignment.End)
@@ -583,7 +586,11 @@ private fun GroupMessageBubble(
     }
 
     if (showAllReactions) {
-        CircleReactionsDialog(reactions = reactions, onDismiss = { showAllReactions = false })
+        CircleReactionsDialog(
+            reactions = reactions,
+            myPubkey = myPubkey,
+            onDismiss = { showAllReactions = false }
+        )
     }
 }
 
@@ -599,18 +606,28 @@ private fun formatTime(millis: Long): String =
 private fun CircleReactionRow(
     reactions: List<MessageReactionWithName>,
     onShowAll: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    myPubkey: String = ""
 ) {
     val byEmoji = reactions.groupBy { it.emoji }.toList()
     val shown = byEmoji.take(MAX_REACTION_CHIPS)
     val hidden = byEmoji.size - shown.size
+    val youLabel = stringResource(R.string.circles_owner_you)
     FlowRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         shown.forEach { (emoji, rows) ->
-            val names = rows.map { it.reactorName.ifBlank { it.reactorPubkey.take(6) } }
+            // This device's own reaction has no `peers` row (the join only covers contacts), so
+            // name it "You" instead of falling back to a pubkey prefix such as "e90423".
+            val names = rows.map { row ->
+                when {
+                    row.reactorPubkey == myPubkey -> youLabel
+                    row.reactorName.isNotBlank() -> row.reactorName
+                    else -> row.reactorPubkey.take(6)
+                }
+            }
             val label = if (names.size <= 2) {
                 names.joinToString(", ")
             } else {
@@ -638,8 +655,11 @@ private const val MAX_REACTION_CHIPS = 3
 @Composable
 private fun CircleReactionsDialog(
     reactions: List<MessageReactionWithName>,
+    myPubkey: String,
     onDismiss: () -> Unit
 ) {
+    // Same own-row handling as the chip row, so the expanded list names you too.
+    val youLabel = stringResource(R.string.circles_owner_you)
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.circle_reactions_title)) },
@@ -654,7 +674,11 @@ private fun CircleReactionsDialog(
                             Text(emoji, style = MaterialTheme.typography.bodyLarge)
                             Spacer(Modifier.width(8.dp))
                             Text(
-                                row.reactorName.ifBlank { row.reactorPubkey.take(6) },
+                                when {
+                                    row.reactorPubkey == myPubkey -> youLabel
+                                    row.reactorName.isNotBlank() -> row.reactorName
+                                    else -> row.reactorPubkey.take(6)
+                                },
                                 style = MaterialTheme.typography.bodyMedium
                             )
                         }
@@ -682,6 +706,7 @@ private fun CircleReactionsDialog(
 private fun SwipeToDeleteGroupMessage(
     msg: MessageEntity,
     senderName: String,
+    myPubkey: String = "",
     onLongPressRequest: () -> Unit,
     onNavigateToMap: (Double, Double) -> Unit,
     isPlaying: Boolean = false,
@@ -741,6 +766,7 @@ private fun SwipeToDeleteGroupMessage(
             GroupMessageBubble(
                 msg = msg,
                 senderName = senderName,
+                myPubkey = myPubkey,
                 bubbleColor = bubbleColor,
                 reactions = reactions,
                 onNavigateToMap = onNavigateToMap,
