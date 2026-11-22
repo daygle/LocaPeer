@@ -261,6 +261,7 @@ class MessagingViewModel @Inject constructor(
     fun deleteCircleAndConversation(circleId: String) {
         viewModelScope.launch {
             messageDao.deleteAllForGroup(circleId)
+            messageReactionDao.deleteOrphans()
             circleDao.clearMembers(circleId)
             circleDao.deleteCircle(circleId)
             MediaCache.clearDecryptedMedia(context)
@@ -308,6 +309,7 @@ class MessagingViewModel @Inject constructor(
                     // member's straggler would silently re-create a circle the user removed.
                     prefs.addLeftCircle(circleId, owner)
                     messageDao.deleteAllForGroup(circleId)
+                    messageReactionDao.deleteOrphans()
                     circleDao.clearMembers(circleId)
                     circleDao.deleteCircle(circleId)
                     MediaCache.clearDecryptedMedia(context)
@@ -338,6 +340,7 @@ class MessagingViewModel @Inject constructor(
                 prefs.addLeftCircle(circleId, circle.creatorPubkey)
                 // Drop our local copy of the circle, its membership and its messages.
                 messageDao.deleteAllForGroup(circleId)
+                messageReactionDao.deleteOrphans()
                 circleDao.clearMembers(circleId)
                 circleDao.deleteCircle(circleId)
                 MediaCache.clearDecryptedMedia(context)
@@ -728,6 +731,8 @@ class MessagingViewModel @Inject constructor(
     fun deleteConversation(peerId: String) {
         viewModelScope.launch {
             messageDao.deleteAllForPeer(peerId)
+            // Reactions on this thread's rows would otherwise linger as orphans.
+            messageReactionDao.deleteOrphans()
             // Purge any decrypted attachments/voice notes staged in the cache.
             MediaCache.clearDecryptedMedia(context)
         }

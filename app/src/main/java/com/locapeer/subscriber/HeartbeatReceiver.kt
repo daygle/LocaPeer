@@ -636,6 +636,8 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
         if (payload.deviceId != event.pubkey) return
         messageDao.deleteOlderThanFromSender(payload.deviceId, payload.deleteOlderThanMs)
+        // Reactions on the rows the peer asked us to purge would otherwise linger as orphans.
+        messageReactionDao.deleteOrphans()
         com.locapeer.messaging.MediaCache.clearDecryptedMedia(context)
         Log.d(TAG, "Purged messages from ${payload.deviceId} before ${payload.deleteOlderThanMs}ms")
     }

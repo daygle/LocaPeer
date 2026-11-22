@@ -195,6 +195,7 @@ class SettingsViewModel @Inject constructor(
     private val geofenceAssignmentDao: com.locapeer.data.dao.GeofenceAssignmentDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
+    private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
     private val qrGenerator: QrCodeGenerator,
     private val supervisedModeManager: SupervisedModeManager,
@@ -309,7 +310,11 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun clearMessageHistory() {
-        viewModelScope.launch { messageDao.deleteOlderThan(System.currentTimeMillis()) }
+        viewModelScope.launch {
+            messageDao.deleteOlderThan(System.currentTimeMillis())
+            // Reactions on the wiped rows would otherwise linger as orphans.
+            messageReactionDao.deleteOrphans()
+        }
     }
 
     fun exportPrivateKey(onKey: (String) -> Unit) {

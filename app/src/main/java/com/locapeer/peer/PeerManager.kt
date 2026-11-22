@@ -41,6 +41,7 @@ class PeerManager @Inject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
+    private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val sharingConfigDao: PeerSharingConfigDao,
     private val circleDao: CircleDao,
     private val geofenceAssignmentDao: GeofenceAssignmentDao,
@@ -88,6 +89,8 @@ class PeerManager @Inject constructor(
         peerDao.deletePeerById(deviceId)
         heartbeatDao.deleteAllForDevice(deviceId)
         messageDao.deleteAllForPeer(deviceId)
+        // Reactions on this contact's rows would otherwise linger as orphans.
+        messageReactionDao.deleteOrphans()
         sharingConfigDao.deleteForPeer(deviceId)
         // Drop them from every circle too, or future circle messages / circle location
         // shares would keep fanning out individually-encrypted copies to their pubkey.

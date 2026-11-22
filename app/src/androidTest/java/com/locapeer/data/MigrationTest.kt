@@ -123,6 +123,20 @@ class MigrationTest {
         helper.runMigrationsAndValidate(TEST_DB, 16, true, *DatabaseModule.ALL_MIGRATIONS)
     }
 
+    /**
+     * v16 -> v17: the reaction columns on `messages` plus the per-member `message_reactions` table
+     * and its index, validated against schemas/.../17.json. This is the check that the migration
+     * produces exactly the schema Room expects, so opening a v17 database can't crash.
+     */
+    @Test
+    @Throws(IOException::class)
+    fun migrate16To17() {
+        helper.createDatabase(TEST_DB, 16).apply {
+            close()
+        }
+        helper.runMigrationsAndValidate(TEST_DB, 17, true, *DatabaseModule.ALL_MIGRATIONS)
+    }
+
     /** v13 -> v14: index changes only, validated against schemas/.../14.json. */
     @Test
     @Throws(IOException::class)

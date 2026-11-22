@@ -66,14 +66,15 @@ data class MessageEntity(
     val mediaMimeType: String? = null,
     /**
      * A single emoji the local user attached to this message (e.g. "👍"), or null.
-     * Stored per message on this device only: reactions are a local annotation and are not
-     * published to the contact or the relay.
+     * Published to the other side as a [com.locapeer.messaging.ReactionPayload]; this column keeps
+     * this device's own choice, and in a circle it also lets the long-press sheet show the emoji
+     * already picked (the per-member rows live in `message_reactions`).
      */
     val reaction: String? = null,
     /**
-     * Emoji reaction the OTHER participant put on this message, delivered over the wire as a
-     * [com.locapeer.messaging.ReactionPayload]. In a circle the last received reaction wins, so
-     * this holds one emoji rather than a per-member map.
+     * Emoji reaction the other participant put on a 1:1 message, delivered over the wire as a
+     * [com.locapeer.messaging.ReactionPayload]. Circle reactions do not use this column: they are
+     * stored per member in `message_reactions` so several people can react at once.
      */
     val peerReaction: String? = null,
     /**
