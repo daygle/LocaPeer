@@ -731,8 +731,8 @@ class MessagingViewModel @Inject constructor(
     fun deleteConversation(peerId: String) {
         viewModelScope.launch {
             messageDao.deleteAllForPeer(peerId)
-            // Reactions on this thread's rows would otherwise linger as orphans.
-            messageReactionDao.deleteOrphans()
+            // No reaction sweep here: `message_reactions` only ever holds circle rows, and a 1:1
+            // thread's rows are not referenced by any of them.
             // Purge any decrypted attachments/voice notes staged in the cache.
             MediaCache.clearDecryptedMedia(context)
         }

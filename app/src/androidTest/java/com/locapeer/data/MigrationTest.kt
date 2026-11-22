@@ -64,12 +64,14 @@ class MigrationTest {
     @Test
     @Throws(IOException::class)
     fun migrateAll() {
-        // Earliest committed schema is v2; run all migrations forward to the current
-        // latest (v6), validating the schema after the last one.
+        // Earliest committed schema is v2; run every migration forward to the current
+        // latest (v17), validating the schema after the last one. This is the chain an
+        // installed device actually walks, so it also proves no intermediate step leaves
+        // a table or index missing.
         helper.createDatabase(TEST_DB, 2).apply {
             close()
         }
-        helper.runMigrationsAndValidate(TEST_DB, 6, true, *DatabaseModule.ALL_MIGRATIONS)
+        helper.runMigrationsAndValidate(TEST_DB, 17, true, *DatabaseModule.ALL_MIGRATIONS)
     }
 
     @Test
