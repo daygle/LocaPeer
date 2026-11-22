@@ -71,6 +71,27 @@ class GeofenceEngineTest {
         polygon = polygon
     )
 
+    /**
+     * Replays a stored row for fence-1 before the engine starts. The engine's startup
+     * collector prunes inside/notification state for areas it does not know about, and the
+     * geofence flow is empty by default here, so that first emission could otherwise wipe
+     * the very bookkeeping these tests assert on mid-test - including the inside state that
+     * turns a sharp fix into an arrival instead of a first-ever (silent) observation.
+     * Seeding the row makes the prune harmless whenever the emission lands.
+     */
+    private fun seedGeofenceRow() {
+        geofenceFlow.value = listOf(
+            GeofenceEntity(
+                id = "fence-1",
+                name = "Square",
+                lat = 0.005,
+                lng = 0.005,
+                radiusMetres = 628,
+                polygon = squareRing
+            )
+        )
+    }
+
     private fun heartbeat(
         lat: Double,
         lng: Double,
@@ -138,6 +159,7 @@ class GeofenceEngineTest {
     @Test
     fun `a coarse fix inside a polygon is gated until a sharper arrival fix`() {
         activeFences = listOf(fence())
+        seedGeofenceRow()
         val engine = engine()
 
         runBlocking {
@@ -167,6 +189,7 @@ class GeofenceEngineTest {
     @Test
     fun `a coarse fix just outside a polygon still fires an exit`() {
         activeFences = listOf(fence())
+        seedGeofenceRow()
         val engine = engine()
 
         runBlocking {
@@ -184,6 +207,7 @@ class GeofenceEngineTest {
     @Test
     fun `a stored recent heartbeat inside the polygon seeds the inside state`() {
         activeFences = listOf(fence())
+        seedGeofenceRow()
         val engine = engine()
         val now = System.currentTimeMillis()
 
@@ -202,6 +226,7 @@ class GeofenceEngineTest {
     @Test
     fun `a stored heartbeat older than the seeding window does not seed`() {
         activeFences = listOf(fence())
+        seedGeofenceRow()
         val engine = engine()
         val now = System.currentTimeMillis()
 
