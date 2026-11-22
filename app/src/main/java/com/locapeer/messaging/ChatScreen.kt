@@ -595,9 +595,15 @@ internal fun MessageActionsSheet(
 
 /** Small emoji badge shown at the bottom of a bubble for a reaction. */
 @Composable
-internal fun ReactionChip(emoji: String, contentDescription: String? = null) {
+internal fun ReactionChip(
+    emoji: String,
+    contentDescription: String? = null,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null
+) {
     val padding = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
     Surface(
+        modifier = if (onClick != null) modifier.clickable(onClick = onClick) else modifier,
         shape = RoundedCornerShape(10.dp),
         color = MaterialTheme.colorScheme.surface,
         tonalElevation = 2.dp

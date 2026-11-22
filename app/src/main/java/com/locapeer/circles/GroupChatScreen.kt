@@ -7,6 +7,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -481,6 +483,8 @@ private fun GroupMessageBubble(
     // Body and timestamp share this colour so both stay readable on the user-picked
     // bubble colours as well as the theme default.
     val contentColor = bubbleContent(msg.isMine, bubbleColor)
+    // Opened by the "+N" chip: the capped chip row never hides who reacted with what.
+    var showAllReactions by remember(msg.id) { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = alignment) {
         Box(
@@ -568,6 +572,7 @@ private fun GroupMessageBubble(
                 if (reactions.isNotEmpty()) {
                     CircleReactionRow(
                         reactions = reactions,
+                        onShowAll = { showAllReactions = true },
                         modifier = Modifier
                             .align(Alignment.End)
                             .padding(top = 4.dp)
@@ -575,6 +580,10 @@ private fun GroupMessageBubble(
                 }
             }
         }
+    }
+
+    if (showAllReactions) {
+        CircleReactionsDialog(reactions = reactions, onDismiss = { showAllReactions = false })
     }
 }
 
@@ -589,6 +598,7 @@ private fun formatTime(millis: Long): String =
 @Composable
 private fun CircleReactionRow(
     reactions: List<MessageReactionWithName>,
+    onShowAll: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val byEmoji = reactions.groupBy { it.emoji }.toList()
@@ -609,13 +619,56 @@ private fun CircleReactionRow(
             ReactionChip(emoji = "$emoji $label")
         }
         if (hidden > 0) {
-            ReactionChip(emoji = "+$hidden")
+            ReactionChip(
+                emoji = "+$hidden",
+                contentDescription = stringResource(R.string.chat_cd_show_all_reactions),
+                onClick = onShowAll
+            )
         }
     }
 }
 
 /** Distinct emoji shown before the remaining ones fold into a single "+N" chip. */
 private const val MAX_REACTION_CHIPS = 3
+
+/**
+ * Every reactor and their emoji for one message, opened from the "+N" chip so the capped chip row
+ * never hides who reacted with what.
+ */
+@Composable
+private fun CircleReactionsDialog(
+    reactions: List<MessageReactionWithName>,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.circle_reactions_title)) },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                reactions.groupBy { it.emoji }.forEach { (emoji, rows) ->
+                    rows.forEach { row ->
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(emoji, style = MaterialTheme.typography.bodyLarge)
+                            Spacer(Modifier.width(8.dp))
+                            Text(
+                                row.reactorName.ifBlank { row.reactorPubkey.take(6) },
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.circle_reactions_close))
+            }
+        }
+    )
+}
 
 /**
  * Wraps a [GroupMessageBubble] with `SwipeToDismissBox` (left-only) plus the bubble's own

@@ -619,6 +619,9 @@
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
     <string name="chat_cd_options">Options</string>
+    <string name="chat_cd_show_all_reactions">Show all reactions</string>
+    <string name="circle_reactions_title">Reactions</string>
+    <string name="circle_reactions_close">Close</string>
     <string name="chat_typing">%1$s is typing…</string>
     <string name="chat_blocked_banner">You have blocked messages from %1$s. Go to Contacts to unblock.</string>
     <string name="chat_delete_msg_title">Delete message?</string>
