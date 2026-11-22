@@ -24,6 +24,7 @@ class CirclesViewModel @Inject constructor(
     private val circleDao: CircleDao,
     private val peerDao: PeerDao,
     private val messageDao: MessageDao,
+    private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val keyManager: KeyManager,
     private val prefs: AppPreferences
 ) : ViewModel() {
@@ -88,6 +89,8 @@ class CirclesViewModel @Inject constructor(
             // The thread must go with the circle: orphaned rows would be invisible in the UI
             // (group lists join on the circles table) yet keep message content on disk.
             messageDao.deleteAllForGroup(circleId)
+            // Reactions on the circle's rows would otherwise linger as orphans.
+            messageReactionDao.deleteOrphans()
         }
     }
 }

@@ -283,6 +283,16 @@ fun LocaPeerNavHost(
                     onNavigateToChat = { peerId, peerName ->
                         navController.navigate("chat/$peerId/${Uri.encode(peerName.ifBlank { "Chat" })}")
                     },
+                    onNavigateToMap = { peerId ->
+                        // Switch tabs the way the bottom nav does (pop back to the start tab,
+                        // reuse the map entry) instead of pushing a second map on top, so back
+                        // doesn't walk Map -> Contacts -> Map. The peerId argument still reaches
+                        // the map, which selects that pin, follows it and centres the camera.
+                        navController.navigate("${Screen.Map.route}?peerId=${Uri.encode(peerId)}") {
+                            popUpTo(startDestination) { saveState = true }
+                            launchSingleTop = true
+                        }
+                    },
                     onNavigateToSharingSettings = { peerId, peerName ->
                         navController.navigate("peer-sharing/$peerId/${Uri.encode(peerName.ifBlank { "Contact" })}")
                     },

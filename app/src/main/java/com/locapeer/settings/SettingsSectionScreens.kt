@@ -1010,12 +1010,21 @@ fun AppearanceSettingsScreen(
 
     var showThemeDialog by remember { mutableStateOf(false) }
     var showStartPageDialog by remember { mutableStateOf(false) }
+    var showBubbleColorDialog by remember { mutableStateOf(false) }
 
     SettingsSubScreen(stringResource(R.string.settings_section_appearance), onNavigateBack) {
         val currentThemeLabel = when (settings.themeMode) {
             "LIGHT" -> stringResource(R.string.settings_theme_light)
             "DARK" -> stringResource(R.string.settings_theme_dark)
             else -> stringResource(R.string.settings_theme_system)
+        }
+        val currentBubbleColorLabel = when (settings.bubbleColor) {
+            "BLUE" -> stringResource(R.string.settings_bubble_color_blue)
+            "GREEN" -> stringResource(R.string.settings_bubble_color_green)
+            "PURPLE" -> stringResource(R.string.settings_bubble_color_purple)
+            "ORANGE" -> stringResource(R.string.settings_bubble_color_orange)
+            "PINK" -> stringResource(R.string.settings_bubble_color_pink)
+            else -> stringResource(R.string.settings_bubble_color_default)
         }
         SettingsCard(
             headerIcon = Icons.Default.Palette,
@@ -1032,6 +1041,12 @@ fun AppearanceSettingsScreen(
                 subtitle = stringResource(R.string.settings_dynamic_color_subtitle),
                 checked = settings.useDynamicColor,
                 onCheckedChange = { vm.setUseDynamicColor(it) }
+            )
+            CardDivider()
+            SettingsRow(
+                title = stringResource(R.string.settings_bubble_color),
+                value = currentBubbleColorLabel,
+                onClick = { showBubbleColorDialog = true }
             )
             CardDivider()
             SettingsRow(
@@ -1060,6 +1075,24 @@ fun AppearanceSettingsScreen(
             isSelected = { settings.themeMode == it.name },
             onSelected = { vm.setThemeMode(it); showThemeDialog = false },
             onDismiss = { showThemeDialog = false }
+        )
+    }
+
+    if (showBubbleColorDialog) {
+        val options = listOf(
+            ChoiceOption("DEFAULT", stringResource(R.string.settings_bubble_color_default)),
+            ChoiceOption("BLUE", stringResource(R.string.settings_bubble_color_blue)),
+            ChoiceOption("GREEN", stringResource(R.string.settings_bubble_color_green)),
+            ChoiceOption("PURPLE", stringResource(R.string.settings_bubble_color_purple)),
+            ChoiceOption("ORANGE", stringResource(R.string.settings_bubble_color_orange)),
+            ChoiceOption("PINK", stringResource(R.string.settings_bubble_color_pink)),
+        )
+        SingleChoiceDialog(
+            title = stringResource(R.string.settings_bubble_color),
+            options = options,
+            isSelected = { settings.bubbleColor == it },
+            onSelected = { vm.setBubbleColor(it); showBubbleColorDialog = false },
+            onDismiss = { showBubbleColorDialog = false }
         )
     }
 

@@ -300,6 +300,7 @@
     <string name="contacts_cd_qr_invite">QR / Invite</string>
     <string name="contacts_add_contact">Add contact</string>
     <string name="contacts_cd_pending_requests">Pending Requests</string>
+    <string name="contacts_cd_show_on_map">Show on map</string>
     <string name="contacts_supervisor_locked">You can\'t remove your supervisor while supervised mode is on. Turn off supervised mode first.</string>
     <string name="peer_sharing_supervisor_locked">Supervised mode is on, so location sharing with your supervisor can\'t be turned off here.</string>
     <string name="contacts_sort_last_seen">Last Seen</string>
@@ -556,6 +557,13 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_dynamic_color">Material You Colours</string>
     <string name="settings_dynamic_color_subtitle">Use colours from your wallpaper (Android 12+)</string>
+    <string name="settings_bubble_color">Bubble Colour</string>
+    <string name="settings_bubble_color_default">Theme Default</string>
+    <string name="settings_bubble_color_blue">Blue</string>
+    <string name="settings_bubble_color_green">Green</string>
+    <string name="settings_bubble_color_purple">Purple</string>
+    <string name="settings_bubble_color_orange">Orange</string>
+    <string name="settings_bubble_color_pink">Pink</string>
 
     <!-- Queued messages (relay outbox) -->
     <string name="settings_queued_messages">Queued Messages</string>
@@ -611,6 +619,9 @@
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
     <string name="chat_cd_options">Options</string>
+    <string name="chat_cd_show_all_reactions">Show all reactions</string>
+    <string name="circle_reactions_title">Reactions</string>
+    <string name="circle_reactions_close">Close</string>
     <string name="chat_typing">%1$s is typing…</string>
     <string name="chat_blocked_banner">You have blocked messages from %1$s. Go to Contacts to unblock.</string>
     <string name="chat_delete_msg_title">Delete message?</string>
@@ -621,6 +632,10 @@
     <string name="chat_cd_share_location">Share Location</string>
     <string name="chat_input_placeholder">Message…</string>
     <string name="chat_cd_send">Send</string>
+    <string name="chat_react_title">React</string>
+    <string name="chat_react_with">React with %1$s</string>
+    <string name="chat_remove_reaction">Remove reaction</string>
+    <string name="chat_cd_reaction_from_contact">Reaction from contact</string>
 
     <string name="common_close">Close</string>
 

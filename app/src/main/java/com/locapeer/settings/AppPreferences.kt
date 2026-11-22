@@ -222,6 +222,11 @@ data class AppSettings(
     /** Use Material You / dynamic color on Android 12+. Independent of [themeMode]. */
     val useDynamicColor: Boolean = true,
     /**
+     * Colour of the user's own chat bubbles: "DEFAULT" follows the theme, otherwise a
+     * [com.locapeer.ui.theme.BubbleColor] id (BLUE, GREEN, PURPLE, ORANGE, PINK).
+     */
+    val bubbleColor: String = "DEFAULT",
+    /**
      * Set of relay URLs (built-in or custom) that the user has explicitly disabled.
      * If a URL is not in this set, it is considered enabled.
      */
@@ -314,6 +319,7 @@ class AppPreferences @Inject constructor(
     private val KEY_APP_LOCK_TIMEOUT_SECONDS = intPreferencesKey("app_lock_timeout_seconds")
     private val KEY_THEME_MODE = stringPreferencesKey("theme_mode")
     private val KEY_USE_DYNAMIC_COLOR = booleanPreferencesKey("use_dynamic_color")
+    private val KEY_BUBBLE_COLOR = stringPreferencesKey("bubble_color")
     private val KEY_DISABLED_RELAY_URLS = stringPreferencesKey("disabled_relay_urls")
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
     private val KEY_ALLOW_LIVE_BOOST = booleanPreferencesKey("allow_live_boost")
@@ -383,6 +389,7 @@ class AppPreferences @Inject constructor(
                 appLockTimeoutSeconds = prefs[KEY_APP_LOCK_TIMEOUT_SECONDS] ?: 0,
                 themeMode = prefs[KEY_THEME_MODE] ?: "SYSTEM",
                 useDynamicColor = prefs[KEY_USE_DYNAMIC_COLOR] ?: true,
+                bubbleColor = prefs[KEY_BUBBLE_COLOR] ?: "DEFAULT",
                 disabledRelayUrls = prefs[KEY_DISABLED_RELAY_URLS]
                     ?.split(",")
                     ?.filter { it.isNotBlank() }
@@ -589,6 +596,12 @@ class AppPreferences @Inject constructor(
     suspend fun setUseDynamicColor(use: Boolean) {
         context.settingsStore.edit {
             if (it[KEY_USE_DYNAMIC_COLOR] != use) it[KEY_USE_DYNAMIC_COLOR] = use
+        }
+    }
+
+    suspend fun setBubbleColor(id: String) {
+        context.settingsStore.edit {
+            if (it[KEY_BUBBLE_COLOR] != id) it[KEY_BUBBLE_COLOR] = id
         }
     }
 

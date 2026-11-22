@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d terület importálva</string>
     <string name="geo_file_failed">A fájl nem olvasható vagy írható</string>
     <string name="notif_geofence_subtitle_polygon">itt: %1$s · sokszögterület · %2$s</string>
+    <string name="contacts_cd_show_on_map">Megjelenítés a térképen</string>
+    <string name="settings_bubble_color">Buborékszín</string>
+    <string name="settings_bubble_color_default">Téma alapértelmezett</string>
+    <string name="settings_bubble_color_blue">Kék</string>
+    <string name="settings_bubble_color_green">Zöld</string>
+    <string name="settings_bubble_color_purple">Lila</string>
+    <string name="settings_bubble_color_orange">Narancssárga</string>
+    <string name="settings_bubble_color_pink">Rózsaszín</string>
+    <string name="chat_cd_show_all_reactions">Összes reakció megjelenítése</string>
+    <string name="circle_reactions_title">Reakciók</string>
+    <string name="circle_reactions_close">Bezárás</string>
+    <string name="chat_react_title">Reagálás</string>
+    <string name="chat_react_with">Reagálás ezzel: %1$s</string>
+    <string name="chat_remove_reaction">Reakció eltávolítása</string>
+    <string name="chat_cd_reaction_from_contact">Reakció a névjegytől</string>
 </resources>

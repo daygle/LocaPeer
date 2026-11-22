@@ -1002,4 +1002,19 @@
     <string name="geo_import_done">%1$d zones importées</string>
     <string name="geo_file_failed">Impossible de lire ou d\'écrire ce fichier</string>
     <string name="notif_geofence_subtitle_polygon">à %1$s · zone polygonale · %2$s</string>
+    <string name="contacts_cd_show_on_map">Afficher sur la carte</string>
+    <string name="settings_bubble_color">Couleur de la bulle</string>
+    <string name="settings_bubble_color_default">Thème par défaut</string>
+    <string name="settings_bubble_color_blue">Bleu</string>
+    <string name="settings_bubble_color_green">Vert</string>
+    <string name="settings_bubble_color_purple">Violet</string>
+    <string name="settings_bubble_color_orange">Orange</string>
+    <string name="settings_bubble_color_pink">Rose</string>
+    <string name="chat_cd_show_all_reactions">Afficher toutes les réactions</string>
+    <string name="circle_reactions_title">Réactions</string>
+    <string name="circle_reactions_close">Fermer</string>
+    <string name="chat_react_title">Réagir</string>
+    <string name="chat_react_with">Réagir avec %1$s</string>
+    <string name="chat_remove_reaction">Supprimer la réaction</string>
+    <string name="chat_cd_reaction_from_contact">Réaction du contact</string>
 </resources>

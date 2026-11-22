@@ -57,7 +57,14 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.withLink
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
+import com.locapeer.ui.theme.BubbleColor
+import com.locapeer.ui.theme.bubbleBackground
+import com.locapeer.ui.theme.bubbleContent
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
@@ -84,6 +91,11 @@ fun ChatScreen(
     val isPeerTyping = typingPeers.containsKey(peerId)
     val peerFlow = remember(peerId) { vm.observePeer(peerId) }
     val peer by peerFlow.collectAsStateWithLifecycle(initialValue = null)
+    // Latest fix from this contact, shown as "last seen" under their name in the top bar.
+    val lastHeartbeat by remember(peerId) { vm.observeLastHeartbeat(peerId) }
+        .collectAsStateWithLifecycle(initialValue = null)
+    val appSettings by vm.appSettings.collectAsStateWithLifecycle()
+    val bubbleColor = BubbleColor.fromId(appSettings?.bubbleColor)
     val messagingEnabled = peer?.messagingEnabled ?: true
     val isArchived = peer?.isArchived ?: false
     val mutedConversations by vm.mutedConversations.collectAsStateWithLifecycle()
@@ -208,7 +220,29 @@ fun ChatScreen(
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                         }
-                        Text(peerName, fontWeight = FontWeight.SemiBold)
+                        Column {
+                            Text(
+                                peerName,
+                                fontWeight = FontWeight.SemiBold,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            val hb = lastHeartbeat
+                            Text(
+                                text = if (hb != null) {
+                                    stringResource(
+                                        R.string.contacts_last_seen,
+                                        com.locapeer.util.DisplayFormat.relativeTimestamp(hb.timestamp)
+                                    )
+                                } else {
+                                    stringResource(R.string.contacts_no_location_yet)
+                                },
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
                     }
                 },
                 navigationIcon = {
@@ -343,7 +377,12 @@ fun ChatScreen(
                     isPlaying = playingMessageId == msg.id,
                     onToggleAudio = { b64 -> vm.toggleAudioPlayback(msg.id, b64) },
                     onViewImage = { b64 -> fullscreenImage = b64 },
-                    onOpenFile = { vm.openFile(msg) }
+                    onOpenFile = { vm.openFile(msg) },
+                    bubbleColor = bubbleColor,
+                    // Tapping the emoji that is already set clears the reaction.
+                    onReact = { emoji ->
+                        vm.setReaction(msg, if (msg.reaction == emoji) null else emoji)
+                    }
                 )
             }
         }
@@ -360,12 +399,16 @@ private fun SwipeToDeleteMessage(
     isPlaying: Boolean = false,
     onToggleAudio: (String) -> Unit = {},
     onViewImage: (String) -> Unit = {},
-    onOpenFile: () -> Unit = {}
+    onOpenFile: () -> Unit = {},
+    bubbleColor: BubbleColor = BubbleColor.DEFAULT,
+    onReact: (String) -> Unit = {}
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
     )
     var showDeleteDialog by remember { mutableStateOf(false) }
+    // Long-press opens the reaction/actions sheet; the delete dialog is one of its actions.
+    var showActions by remember { mutableStateOf(false) }
 
     LaunchedEffect(dismissState.currentValue) {
         if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
@@ -423,6 +466,15 @@ private fun SwipeToDeleteMessage(
         )
     }
 
+    if (showActions) {
+        MessageActionsSheet(
+            currentReaction = msg.reaction,
+            onReact = { emoji -> onReact(emoji); showActions = false },
+            onDelete = { showActions = false; showDeleteDialog = true },
+            onDismiss = { showActions = false }
+        )
+    }
+
     SwipeToDismissBox(
         state = dismissState,
         enableDismissFromStartToEnd = false,
@@ -453,11 +505,12 @@ private fun SwipeToDeleteMessage(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .combinedClickable(onClick = {}, onLongClick = { showDeleteDialog = true })
+                .combinedClickable(onClick = {}, onLongClick = { showActions = true })
                 .background(MaterialTheme.colorScheme.surface)
         ) {
             MessageBubble(
                 msg,
+                bubbleColor = bubbleColor,
                 onNavigateToMap = onNavigateToMap,
                 isPlaying = isPlaying,
                 onToggleAudio = onToggleAudio,
@@ -468,10 +521,110 @@ private fun SwipeToDeleteMessage(
     }
 }
 
+/** Emoji offered in the long-press reaction bar. */
+private val CHAT_REACTIONS = listOf("👍", "❤️", "😂", "😮", "😢", "🙏")
+
+/**
+ * Long-press menu for a message bubble: pick an emoji reaction or delete the message.
+ * Shared with the circle chat, so the gesture behaves identically on both surfaces. The chosen
+ * emoji is stored locally and published to the contact (or every circle member).
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun MessageActionsSheet(
+    currentReaction: String?,
+    onReact: (String) -> Unit,
+    onDelete: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
+        Column(modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp)) {
+            Text(
+                stringResource(R.string.chat_react_title),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                CHAT_REACTIONS.forEach { emoji ->
+                    val selected = emoji == currentReaction
+                    Box(
+                        modifier = Modifier
+                            .size(44.dp)
+                            .clip(CircleShape)
+                            .background(
+                                if (selected) MaterialTheme.colorScheme.primaryContainer
+                                else MaterialTheme.colorScheme.surfaceVariant
+                            )
+                            .clickable(
+                                onClickLabel = stringResource(R.string.chat_react_with, emoji)
+                            ) { onReact(emoji) },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(emoji, fontSize = 22.sp)
+                    }
+                }
+            }
+            HorizontalDivider()
+            if (currentReaction != null) {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.chat_remove_reaction)) },
+                    modifier = Modifier.clickable { onReact(currentReaction) },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
+            }
+            ListItem(
+                headlineContent = {
+                    Text(
+                        stringResource(R.string.common_delete),
+                        color = MaterialTheme.colorScheme.error
+                    )
+                },
+                modifier = Modifier.clickable(onClick = onDelete),
+                colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+            )
+        }
+    }
+}
+
+/** Small emoji badge shown at the bottom of a bubble for a reaction. */
+@Composable
+internal fun ReactionChip(
+    emoji: String,
+    modifier: Modifier = Modifier,
+    contentDescription: String? = null,
+    onClick: (() -> Unit)? = null
+) {
+    val padding = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
+    Surface(
+        modifier = if (onClick != null) modifier.clickable(onClick = onClick) else modifier,
+        shape = RoundedCornerShape(10.dp),
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 2.dp
+    ) {
+        Text(
+            emoji,
+            style = MaterialTheme.typography.bodySmall,
+            modifier = if (contentDescription != null) {
+                padding.semantics { this.contentDescription = contentDescription }
+            } else {
+                padding
+            }
+        )
+    }
+}
+
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 private fun MessageBubble(
     msg: MessageEntity,
+    bubbleColor: BubbleColor = BubbleColor.DEFAULT,
     onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
     isPlaying: Boolean = false,
     onToggleAudio: (String) -> Unit = {},
@@ -479,10 +632,10 @@ private fun MessageBubble(
     onOpenFile: () -> Unit = {}
 ) {
     val alignment = if (msg.isMine) Alignment.End else Alignment.Start
-    val bubbleColor = if (msg.isMine)
-        MaterialTheme.colorScheme.primaryContainer
-    else
-        MaterialTheme.colorScheme.surfaceVariant
+    val bubbleBg = bubbleBackground(msg.isMine, bubbleColor)
+    // Body, timestamp and delivery icons all share this colour so they stay readable on
+    // every bubble background, including the user-picked custom colours.
+    val contentColor = bubbleContent(msg.isMine, bubbleColor)
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -498,7 +651,7 @@ private fun MessageBubble(
                 // the delivery-row long-press (delivery status sheet) keep their own nested
                 // gesture modifiers.
                 .background(
-                    bubbleColor,
+                    bubbleBg,
                     RoundedCornerShape(
                         topStart = 16.dp,
                         topEnd = 16.dp,
@@ -509,8 +662,6 @@ private fun MessageBubble(
                 .padding(horizontal = 12.dp, vertical = 8.dp)
         ) {
             Column {
-                val contentColor = if (msg.isMine) MaterialTheme.colorScheme.onPrimaryContainer
-                    else MaterialTheme.colorScheme.onSurfaceVariant
                 when (msg.contentType) {
                     MessageType.IMAGE -> ImageMessageContent(
                         base64 = msg.mediaBase64,
@@ -565,17 +716,17 @@ private fun MessageBubble(
                         Text(
                             formatTime(msg.timestamp),
                             style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = contentColor.copy(alpha = 0.75f)
                         )
                         val (statusIcon, statusTint) = when (msg.deliveryState) {
                             DeliveryState.SENDING.name ->
-                                Icons.Default.AccessTime to MaterialTheme.colorScheme.onSurfaceVariant
+                                Icons.Default.AccessTime to contentColor.copy(alpha = 0.75f)
                             DeliveryState.SENT.name ->
-                                Icons.Default.Done to MaterialTheme.colorScheme.onSurfaceVariant
+                                Icons.Default.Done to contentColor.copy(alpha = 0.75f)
                             DeliveryState.READ.name ->
-                                Icons.Default.DoneAll to MaterialTheme.colorScheme.primary
+                                Icons.Default.DoneAll to contentColor
                             else -> // DELIVERED
-                                Icons.Default.DoneAll to MaterialTheme.colorScheme.onSurfaceVariant
+                                Icons.Default.DoneAll to contentColor.copy(alpha = 0.75f)
                         }
                         Icon(
                             statusIcon,
@@ -591,9 +742,26 @@ private fun MessageBubble(
                     Text(
                         formatTime(msg.timestamp),
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = contentColor.copy(alpha = 0.75f),
                         modifier = Modifier.align(Alignment.End)
                     )
+                }
+                // Reactions at the bubble's bottom corner: the contact's, then this device's.
+                if (msg.reaction != null || msg.peerReaction != null) {
+                    Row(
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(top = 4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        msg.peerReaction?.let { emoji ->
+                            ReactionChip(
+                                emoji = emoji,
+                                contentDescription = stringResource(R.string.chat_cd_reaction_from_contact)
+                            )
+                        }
+                        msg.reaction?.let { emoji -> ReactionChip(emoji = emoji) }
+                    }
                 }
             }
         }

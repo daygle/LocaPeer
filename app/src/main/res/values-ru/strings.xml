@@ -1034,4 +1034,19 @@
     <string name="geo_import_done">Импортировано областей: %1$d</string>
     <string name="geo_file_failed">Не удалось прочитать или записать этот файл</string>
     <string name="notif_geofence_subtitle_polygon">в %1$s · область многоугольника · %2$s</string>
+    <string name="contacts_cd_show_on_map">Показать на карте</string>
+    <string name="settings_bubble_color">Цвет пузыря</string>
+    <string name="settings_bubble_color_default">Тема по умолчанию</string>
+    <string name="settings_bubble_color_blue">Синий</string>
+    <string name="settings_bubble_color_green">Зелёный</string>
+    <string name="settings_bubble_color_purple">Фиолетовый</string>
+    <string name="settings_bubble_color_orange">Оранжевый</string>
+    <string name="settings_bubble_color_pink">Розовый</string>
+    <string name="chat_cd_show_all_reactions">Показать все реакции</string>
+    <string name="circle_reactions_title">Реакции</string>
+    <string name="circle_reactions_close">Закрыть</string>
+    <string name="chat_react_title">Реакция</string>
+    <string name="chat_react_with">Реакция %1$s</string>
+    <string name="chat_remove_reaction">Удалить реакцию</string>
+    <string name="chat_cd_reaction_from_contact">Реакция от контакта</string>
 </resources>

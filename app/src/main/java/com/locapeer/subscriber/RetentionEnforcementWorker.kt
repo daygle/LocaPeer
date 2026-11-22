@@ -43,6 +43,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
+    private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val pendingRequestDao: PendingRequestDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
@@ -78,6 +79,8 @@ class RetentionEnforcementWorker @AssistedInject constructor(
             if (settings.localMessageRetentionDays > 0) {
                 val cutoffMs = System.currentTimeMillis() - settings.localMessageRetentionDays * 86_400_000L
                 messageDao.deleteOlderThan(cutoffMs)
+                // Reactions on the purged rows would otherwise linger as orphans.
+                messageReactionDao.deleteOrphans()
                 // Purge decrypted media staged in the cache for any now-deleted message.
                 MediaCache.clearDecryptedMedia(applicationContext)
                 Log.d(TAG, "Purged local messages older than ${settings.localMessageRetentionDays} days")

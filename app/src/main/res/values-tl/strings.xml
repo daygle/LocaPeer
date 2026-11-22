@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">Na-import ang %1$d area</string>
     <string name="geo_file_failed">Hindi mabasa o maisulat ang file na iyon</string>
     <string name="notif_geofence_subtitle_polygon">sa %1$s · lugar na poligono · %2$s</string>
+    <string name="contacts_cd_show_on_map">Ipakita sa mapa</string>
+    <string name="settings_bubble_color">Kulay ng bula</string>
+    <string name="settings_bubble_color_default">Karaniwang tema</string>
+    <string name="settings_bubble_color_blue">Asul</string>
+    <string name="settings_bubble_color_green">Berde</string>
+    <string name="settings_bubble_color_purple">Lila</string>
+    <string name="settings_bubble_color_orange">Kahel</string>
+    <string name="settings_bubble_color_pink">Rosas</string>
+    <string name="chat_cd_show_all_reactions">Ipakita ang lahat ng reaksyon</string>
+    <string name="circle_reactions_title">Mga reaksyon</string>
+    <string name="circle_reactions_close">Isara</string>
+    <string name="chat_react_title">Mag-react</string>
+    <string name="chat_react_with">Mag-react gamit ang %1$s</string>
+    <string name="chat_remove_reaction">Alisin ang reaksyon</string>
+    <string name="chat_cd_reaction_from_contact">Reaksyon mula sa contact</string>
 </resources>

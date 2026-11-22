@@ -1034,4 +1034,19 @@
     <string name="geo_import_done">Імпортовано областей: %1$d</string>
     <string name="geo_file_failed">Не вдалося прочитати або записати цей файл</string>
     <string name="notif_geofence_subtitle_polygon">о %1$s · область багатокутника · %2$s</string>
+    <string name="contacts_cd_show_on_map">Показати на карті</string>
+    <string name="settings_bubble_color">Колір бульбашки</string>
+    <string name="settings_bubble_color_default">Тема за замовчуванням</string>
+    <string name="settings_bubble_color_blue">Синій</string>
+    <string name="settings_bubble_color_green">Зелений</string>
+    <string name="settings_bubble_color_purple">Фіолетовий</string>
+    <string name="settings_bubble_color_orange">Помаранчевий</string>
+    <string name="settings_bubble_color_pink">Рожевий</string>
+    <string name="chat_cd_show_all_reactions">Показати всі реакції</string>
+    <string name="circle_reactions_title">Реакції</string>
+    <string name="circle_reactions_close">Закрити</string>
+    <string name="chat_react_title">Реакція</string>
+    <string name="chat_react_with">Реакція %1$s</string>
+    <string name="chat_remove_reaction">Видалити реакцію</string>
+    <string name="chat_cd_reaction_from_contact">Реакція від контакту</string>
 </resources>

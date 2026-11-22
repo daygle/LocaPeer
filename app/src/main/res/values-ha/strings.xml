@@ -1008,4 +1008,19 @@
     <string name="geo_import_done">An shigo da yankuna %1$d</string>
     <string name="geo_file_failed">Ba a iya karanta ko rubuta wannan fayil ɗin ba</string>
     <string name="notif_geofence_subtitle_polygon">a %1$s · yankin polygon · %2$s</string>
+    <string name="contacts_cd_show_on_map">Nuna a taswira</string>
+    <string name="settings_bubble_color">Launin kumfa</string>
+    <string name="settings_bubble_color_default">Jigon asali</string>
+    <string name="settings_bubble_color_blue">Shuɗi</string>
+    <string name="settings_bubble_color_green">Kore</string>
+    <string name="settings_bubble_color_purple">Shuɗi mai ja</string>
+    <string name="settings_bubble_color_orange">Lemu</string>
+    <string name="settings_bubble_color_pink">Ruwan hoda</string>
+    <string name="chat_cd_show_all_reactions">Nuna duk martani</string>
+    <string name="circle_reactions_title">Martani</string>
+    <string name="circle_reactions_close">Rufe</string>
+    <string name="chat_react_title">Martani</string>
+    <string name="chat_react_with">Martani da %1$s</string>
+    <string name="chat_remove_reaction">Cire martani</string>
+    <string name="chat_cd_reaction_from_contact">Martani daga lamba</string>
 </resources>

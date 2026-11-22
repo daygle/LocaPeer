@@ -1023,4 +1023,19 @@
     <string name="geo_import_done">%1$d zone importate</string>
     <string name="geo_file_failed">Fișierul nu a putut fi citit sau scris</string>
     <string name="notif_geofence_subtitle_polygon">la %1$s · zonă poligonală · %2$s</string>
+    <string name="contacts_cd_show_on_map">Afișează pe hartă</string>
+    <string name="settings_bubble_color">Culoarea bulei</string>
+    <string name="settings_bubble_color_default">Tema implicită</string>
+    <string name="settings_bubble_color_blue">Albastru</string>
+    <string name="settings_bubble_color_green">Verde</string>
+    <string name="settings_bubble_color_purple">Violet</string>
+    <string name="settings_bubble_color_orange">Portocaliu</string>
+    <string name="settings_bubble_color_pink">Roz</string>
+    <string name="chat_cd_show_all_reactions">Afișează toate reacțiile</string>
+    <string name="circle_reactions_title">Reacții</string>
+    <string name="circle_reactions_close">Închideți</string>
+    <string name="chat_react_title">Reacționează</string>
+    <string name="chat_react_with">Reacționează cu %1$s</string>
+    <string name="chat_remove_reaction">Elimină reacția</string>
+    <string name="chat_cd_reaction_from_contact">Reacție de la contact</string>
 </resources>

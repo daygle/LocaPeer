@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d ప్రాంతాలు దిగుమతి అయ్యాయి</string>
     <string name="geo_file_failed">ఆ ఫైల్‌ను చదవడం లేదా రాయడం సాధ్యపడలేదు</string>
     <string name="notif_geofence_subtitle_polygon">%1$s వద్ద · బహుభుజి ప్రాంతం · %2$s</string>
+    <string name="contacts_cd_show_on_map">మ్యాప్‌లో చూపించు</string>
+    <string name="settings_bubble_color">బబుల్ రంగు</string>
+    <string name="settings_bubble_color_default">థీమ్ డిఫాల్ట్</string>
+    <string name="settings_bubble_color_blue">నీలం</string>
+    <string name="settings_bubble_color_green">ఆకుపచ్చ</string>
+    <string name="settings_bubble_color_purple">ఊదా</string>
+    <string name="settings_bubble_color_orange">నారింజ</string>
+    <string name="settings_bubble_color_pink">గులాబీ</string>
+    <string name="chat_cd_show_all_reactions">అన్ని ప్రతిస్పందనలను చూపించు</string>
+    <string name="circle_reactions_title">ప్రతిస్పందనలు</string>
+    <string name="circle_reactions_close">మూసివేయి</string>
+    <string name="chat_react_title">ప్రతిస్పందించు</string>
+    <string name="chat_react_with">%1$s తో ప్రతిస్పందించు</string>
+    <string name="chat_remove_reaction">ప్రతిస్పందనను తీసివేయి</string>
+    <string name="chat_cd_reaction_from_contact">పరిచయం నుండి ప్రతిస్పందన</string>
 </resources>

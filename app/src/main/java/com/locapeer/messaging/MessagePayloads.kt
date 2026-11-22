@@ -16,3 +16,25 @@ data class ReadReceiptPayload(val eventIds: List<String>) {
 
 @Serializable
 data class DeliveryAckPayload(val eventId: String)
+
+/**
+ * Emoji reaction to an existing message, delivered as an encrypted [NostrEventKind.MESSAGE_REACTION]
+ * event.
+ *
+ * [targetId] identifies the target on the recipient's side: for a 1:1 message it is the target's
+ * Nostr event id, and for a circle message it is the author's logical message id (carried as
+ * [com.locapeer.messaging.GroupMessage.mid]). An empty [emoji] clears the reaction.
+ */
+@Serializable
+data class ReactionPayload(
+    val targetId: String,
+    val emoji: String,
+    /** Circle id when the target belongs to a circle thread; null for a 1:1 message. */
+    val groupId: String? = null
+) {
+    companion object {
+        /** A reaction is one emoji (plus optional modifiers); cap it so a hostile payload can't
+         *  bloat a row or the bubble layout. */
+        const val MAX_EMOJI_CHARS = 16
+    }
+}

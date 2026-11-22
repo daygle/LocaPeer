@@ -991,4 +991,19 @@
     <string name="geo_import_done">E bubatara mpaghara %1$d</string>
     <string name="geo_file_failed">Enweghị ike ịgụ ma ọ bụ dee faịlụ ahụ</string>
     <string name="notif_geofence_subtitle_polygon">na %1$s · mpaghara poligọn · %2$s</string>
+    <string name="contacts_cd_show_on_map">Gosi na map</string>
+    <string name="settings_bubble_color">Agba afụ</string>
+    <string name="settings_bubble_color_default">Isiokwu ndabara</string>
+    <string name="settings_bubble_color_blue">Anụnụ</string>
+    <string name="settings_bubble_color_green">Akwụkwọ ndụ</string>
+    <string name="settings_bubble_color_purple">Pọpụl</string>
+    <string name="settings_bubble_color_orange">Oroma</string>
+    <string name="settings_bubble_color_pink">Pịnkị</string>
+    <string name="chat_cd_show_all_reactions">Gosi mmeghachi omume niile</string>
+    <string name="circle_reactions_title">Mmeghachi omume</string>
+    <string name="circle_reactions_close">Mechie</string>
+    <string name="chat_react_title">Meghachi omume</string>
+    <string name="chat_react_with">Jiri %1$s meghachi omume</string>
+    <string name="chat_remove_reaction">Wepu mmeghachi omume</string>
+    <string name="chat_cd_reaction_from_contact">Mmeghachi omume site na kọntaktị</string>
 </resources>

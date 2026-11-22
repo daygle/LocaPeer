@@ -73,6 +73,11 @@ object NostrEventKind {
     /** Device -> supervisor (kind 1069): batched summary of settings changes the supervised
      *  device made while under an approved unlock, so "what changed" is always visible. */
     const val SETTINGS_CHANGE_SUMMARY = 1069
+
+    /** Contact -> contact (kind 1070): an emoji reaction to an existing message. The content is a
+     *  NIP-44 encrypted [com.locapeer.messaging.ReactionPayload]; circle reactions are fanned out
+     *  per member like circle messages. */
+    const val MESSAGE_REACTION = 1070
 }
 
 @Serializable

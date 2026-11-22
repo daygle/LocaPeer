@@ -991,4 +991,19 @@
     <string name="geo_import_done">%1$d개 영역을 가져왔습니다</string>
     <string name="geo_file_failed">파일을 읽거나 쓸 수 없습니다</string>
     <string name="notif_geofence_subtitle_polygon">%1$s · 다각형 영역 · %2$s</string>
+    <string name="contacts_cd_show_on_map">지도에서 보기</string>
+    <string name="settings_bubble_color">말풍선 색상</string>
+    <string name="settings_bubble_color_default">테마 기본값</string>
+    <string name="settings_bubble_color_blue">파랑</string>
+    <string name="settings_bubble_color_green">초록</string>
+    <string name="settings_bubble_color_purple">보라</string>
+    <string name="settings_bubble_color_orange">주황</string>
+    <string name="settings_bubble_color_pink">분홍</string>
+    <string name="chat_cd_show_all_reactions">모든 반응 보기</string>
+    <string name="circle_reactions_title">반응</string>
+    <string name="circle_reactions_close">닫기</string>
+    <string name="chat_react_title">반응하기</string>
+    <string name="chat_react_with">%1$s(으)로 반응</string>
+    <string name="chat_remove_reaction">반응 삭제</string>
+    <string name="chat_cd_reaction_from_contact">연락처의 반응</string>
 </resources>

@@ -38,6 +38,7 @@ private enum class BulkAction { REMOVE, DELETE_MESSAGES, DELETE_LOCATION }
 @Composable
 fun ContactsScreen(
     onNavigateToChat: (peerId: String, peerName: String) -> Unit,
+    onNavigateToMap: (peerId: String) -> Unit = {},
     onNavigateToSharingSettings: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToPendingRequests: () -> Unit = {},
     onNavigateToHistory: (peerId: String) -> Unit = {},
@@ -258,6 +259,7 @@ fun ContactsScreen(
                             isSelectionMode = isSelectionMode,
                             formatLastSeen = vm::formatLastSeen,
                             onMessage = { onNavigateToChat(item.peer.deviceId, item.peer.displayName) },
+                            onShowOnMap = { onNavigateToMap(item.peer.deviceId) },
                             onShowHistory = { onNavigateToHistory(item.peer.deviceId) },
                             onRename = { nameInput = item.peer.displayName; editingContact = item },
                             onDeleteContact = { confirmAction = item to DataAction.REMOVE_CONTACT },
@@ -414,6 +416,7 @@ private fun ContactRow(
     isSelectionMode: Boolean,
     formatLastSeen: (Long) -> String,
     onMessage: () -> Unit,
+    onShowOnMap: () -> Unit,
     onShowHistory: () -> Unit,
     onRename: () -> Unit,
     onDeleteContact: () -> Unit,
@@ -484,6 +487,17 @@ private fun ContactRow(
                                 modifier = Modifier.size(22.dp)
                             )
                         }
+                    }
+                    // Jump straight to this contact's pin on the map. Disabled (dimmed) until
+                    // the contact has shared a location, so the button never opens an empty map.
+                    IconButton(onClick = onShowOnMap, enabled = hb != null) {
+                        Icon(
+                            Icons.Default.PinDrop,
+                            contentDescription = stringResource(R.string.contacts_cd_show_on_map),
+                            tint = if (hb != null) MaterialTheme.colorScheme.primary
+                            else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f),
+                            modifier = Modifier.size(22.dp)
+                        )
                     }
                     Box {
                         IconButton(onClick = { showOverflow = true }) {

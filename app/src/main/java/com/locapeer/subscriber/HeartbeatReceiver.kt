@@ -30,6 +30,7 @@ import com.locapeer.data.entity.PendingRequestEntity
 import com.locapeer.data.entity.scheduleRules
 import com.locapeer.geofence.GeofenceEngine
 import com.locapeer.messaging.DeliveryAckPayload
+import com.locapeer.messaging.ReactionPayload
 import com.locapeer.messaging.ReadReceiptPayload
 import com.locapeer.proximity.ProximityEngine
 import com.locapeer.peer.PeerManager
@@ -293,6 +294,7 @@ private val MESSAGE_KINDS = listOf(
     NostrEventKind.ENCRYPTED_DM,
     NostrEventKind.DELIVERY_ACK,
     NostrEventKind.READ_RECEIPT,
+    NostrEventKind.MESSAGE_REACTION,
     NostrEventKind.PURGE_REQUEST,
     NostrEventKind.MESSAGE_PURGE_REQUEST
 )
@@ -340,6 +342,7 @@ class HeartbeatReceiver @Inject constructor(
     private val crypto: CryptoUtils,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
+    private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val peerDao: PeerDao,
     private val circleDao: CircleDao,
     private val sharingConfigDao: PeerSharingConfigDao,
@@ -477,6 +480,7 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.ENCRYPTED_DM,
                         NostrEventKind.READ_RECEIPT,
                         NostrEventKind.DELIVERY_ACK,
+                        NostrEventKind.MESSAGE_REACTION,
                         NostrEventKind.SUPERVISED_UNLOCK_REQUEST,
                         NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
                         NostrEventKind.SUPERVISED_REGISTER,
@@ -572,6 +576,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.ENCRYPTED_DM -> processDmInBackground(event)
                     NostrEventKind.READ_RECEIPT -> processReadReceiptInBackground(event)
                     NostrEventKind.DELIVERY_ACK -> processDeliveryAckInBackground(event)
+                    NostrEventKind.MESSAGE_REACTION -> processReaction(event)
                     NostrEventKind.SUPERVISED_UNLOCK_REQUEST -> scope.launch { processUnlockRequest(event) }
                     NostrEventKind.SUPERVISED_UNLOCK_RESPONSE -> scope.launch { processUnlockResponse(event) }
                     NostrEventKind.SUPERVISED_REGISTER -> scope.launch { processRegisterRequest(event) }
@@ -631,6 +636,8 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
         if (payload.deviceId != event.pubkey) return
         messageDao.deleteOlderThanFromSender(payload.deviceId, payload.deleteOlderThanMs)
+        // Reactions on the rows the peer asked us to purge would otherwise linger as orphans.
+        messageReactionDao.deleteOrphans()
         com.locapeer.messaging.MediaCache.clearDecryptedMedia(context)
         Log.d(TAG, "Purged messages from ${payload.deviceId} before ${payload.deleteOlderThanMs}ms")
     }
@@ -1206,6 +1213,7 @@ class HeartbeatReceiver @Inject constructor(
                         mediaDurationMs = innerMedia.durationMs,
                         mediaFilename = innerMedia.filename,
                         mediaMimeType = innerMedia.mimeType,
+                        remoteMessageId = group.mid.ifBlank { null },
                     )
                 )
                 sendGroupMessageNotification(group.gname, sender.displayName, preview, group.gid)
@@ -1228,7 +1236,8 @@ class HeartbeatReceiver @Inject constructor(
                     isMine = false,
                     deliveryState = DeliveryState.DELIVERED.name,
                     nostrEventId = event.id,
-                    groupId = group.gid
+                    groupId = group.gid,
+                    remoteMessageId = group.mid.ifBlank { null }
                 )
             )
             sendGroupMessageNotification(group.gname, sender.displayName, content, group.gid)
@@ -1347,6 +1356,46 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
         messageDao.markDeliveredForPeer(payload.eventId, event.pubkey)
+    }
+
+    /**
+     * Emoji reaction (kind 1070). Only a known contact may react, a circle reaction only applies
+     * while the sender is still a member of that circle, and the target row must belong to the
+     * thread the payload claims. An empty emoji clears the reaction.
+     */
+    private suspend fun processReaction(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<ReactionPayload>(plaintext)
+        } catch (e: Exception) { return }
+        if (payload.emoji.length > ReactionPayload.MAX_EMOJI_CHARS) return
+        val target = messageDao.findByWireTarget(payload.targetId) ?: return
+        val groupId = payload.groupId
+        if (groupId == null) {
+            // 1:1: the target must be a 1:1 row in the sender's own thread.
+            if (target.groupId != null || target.peerId != event.pubkey) return
+            messageDao.setPeerReaction(target.id, payload.emoji.ifBlank { null })
+        } else {
+            // Circle: one row per member, so every reactor keeps their own emoji.
+            if (target.groupId != groupId) return
+            if (!circleDao.getMemberPubkeys(groupId).contains(event.pubkey)) return
+            if (payload.emoji.isBlank()) {
+                messageReactionDao.delete(target.id, event.pubkey)
+            } else {
+                messageReactionDao.upsert(
+                    com.locapeer.data.entity.MessageReactionEntity(
+                        messageId = target.id,
+                        reactorPubkey = event.pubkey,
+                        emoji = payload.emoji,
+                        updatedAt = System.currentTimeMillis()
+                    )
+                )
+            }
+        }
     }
 
     private suspend fun processUnlockRequest(event: NostrEvent) {

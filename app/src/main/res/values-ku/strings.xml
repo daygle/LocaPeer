@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d dever hatin têxistin</string>
     <string name="geo_file_failed">Ew pel nehat xwendin an nivîsandin</string>
     <string name="notif_geofence_subtitle_polygon">li %1$s · herêma pirgoşe · %2$s</string>
+    <string name="contacts_cd_show_on_map">Li ser nexşeyê nîşan bide</string>
+    <string name="settings_bubble_color">Rengê bilbilan</string>
+    <string name="settings_bubble_color_default">Temaya berdest</string>
+    <string name="settings_bubble_color_blue">Şîn</string>
+    <string name="settings_bubble_color_green">Kesk</string>
+    <string name="settings_bubble_color_purple">Mor</string>
+    <string name="settings_bubble_color_orange">Pirteqalî</string>
+    <string name="settings_bubble_color_pink">Pembe</string>
+    <string name="chat_cd_show_all_reactions">Hemû bertekan nîşan bide</string>
+    <string name="circle_reactions_title">Bertek</string>
+    <string name="circle_reactions_close">Bigire</string>
+    <string name="chat_react_title">Bertek nîşan bide</string>
+    <string name="chat_react_with">Bi %1$s bertek nîşan bide</string>
+    <string name="chat_remove_reaction">Bertêkê rake</string>
+    <string name="chat_cd_reaction_from_contact">Berteka ji têkiliyê</string>
 </resources>

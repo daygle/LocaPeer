@@ -12,6 +12,7 @@ import com.locapeer.data.dao.GeofenceAssignmentDao
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
+import com.locapeer.data.dao.MessageReactionDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.dao.PendingMessageDao
@@ -292,10 +293,37 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v17: emoji reactions plus the wire target they need. `reaction` is this device's own
+     * reaction, `peerReaction` the one received from the contact, and `remoteMessageId` the
+     * author's logical id of a received circle message (what a reaction on it targets). All
+     * nullable and additive: existing rows start with no reaction.
+     */
+    private val MIGRATION_16_17 = object : Migration(16, 17) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE messages ADD COLUMN reaction TEXT DEFAULT NULL")
+            db.execSQL("ALTER TABLE messages ADD COLUMN peerReaction TEXT DEFAULT NULL")
+            db.execSQL("ALTER TABLE messages ADD COLUMN remoteMessageId TEXT DEFAULT NULL")
+            // Circle reactions: one row per (message, member) so several people can react to the
+            // same message and the bubble can name them.
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `message_reactions` (" +
+                    "`messageId` TEXT NOT NULL, `reactorPubkey` TEXT NOT NULL, " +
+                    "`emoji` TEXT NOT NULL, `updatedAt` INTEGER NOT NULL, " +
+                    "PRIMARY KEY(`messageId`, `reactorPubkey`))"
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS `index_message_reactions_messageId` " +
+                    "ON `message_reactions` (`messageId`)"
+            )
+        }
+    }
+
     val ALL_MIGRATIONS = arrayOf(
         MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6,
         MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11,
-        MIGRATION_11_12, MIGRATION_12_13, MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16
+        MIGRATION_11_12, MIGRATION_12_13, MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16,
+        MIGRATION_16_17
     )
 
     @Provides
@@ -320,6 +348,7 @@ object DatabaseModule {
     @Provides fun providePeerDao(db: AppDatabase): PeerDao = db.peerDao()
     @Provides fun provideHeartbeatDao(db: AppDatabase): HeartbeatDao = db.heartbeatDao()
     @Provides fun provideMessageDao(db: AppDatabase): MessageDao = db.messageDao()
+    @Provides fun provideMessageReactionDao(db: AppDatabase): MessageReactionDao = db.messageReactionDao()
     @Provides fun provideGeofenceDao(db: AppDatabase): GeofenceDao = db.geofenceDao()
     @Provides fun provideGeofenceAssignmentDao(db: AppDatabase): GeofenceAssignmentDao = db.geofenceAssignmentDao()
     @Provides fun provideProximityAlertDao(db: AppDatabase): ProximityAlertDao = db.proximityAlertDao()

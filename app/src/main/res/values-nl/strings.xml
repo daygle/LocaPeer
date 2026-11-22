@@ -1002,4 +1002,19 @@
     <string name="geo_import_done">%1$d gebieden geïmporteerd</string>
     <string name="geo_file_failed">Dat bestand kon niet worden gelezen of geschreven</string>
     <string name="notif_geofence_subtitle_polygon">om %1$s · veelhoekgebied · %2$s</string>
+    <string name="contacts_cd_show_on_map">Op kaart tonen</string>
+    <string name="settings_bubble_color">Ballonkleur</string>
+    <string name="settings_bubble_color_default">Standaardthema</string>
+    <string name="settings_bubble_color_blue">Blauw</string>
+    <string name="settings_bubble_color_green">Groen</string>
+    <string name="settings_bubble_color_purple">Paars</string>
+    <string name="settings_bubble_color_orange">Oranje</string>
+    <string name="settings_bubble_color_pink">Roze</string>
+    <string name="chat_cd_show_all_reactions">Alle reacties tonen</string>
+    <string name="circle_reactions_title">Reacties</string>
+    <string name="circle_reactions_close">Sluiten</string>
+    <string name="chat_react_title">Reageren</string>
+    <string name="chat_react_with">Reageren met %1$s</string>
+    <string name="chat_remove_reaction">Reactie verwijderen</string>
+    <string name="chat_cd_reaction_from_contact">Reactie van contact</string>
 </resources>

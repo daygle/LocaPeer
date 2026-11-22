@@ -991,4 +991,19 @@
     <string name="geo_import_done">Đã nhập %1$d vùng</string>
     <string name="geo_file_failed">Không thể đọc hoặc ghi tệp đó</string>
     <string name="notif_geofence_subtitle_polygon">lúc %1$s · vùng đa giác · %2$s</string>
+    <string name="contacts_cd_show_on_map">Hiển thị trên bản đồ</string>
+    <string name="settings_bubble_color">Màu bong bóng</string>
+    <string name="settings_bubble_color_default">Chủ đề mặc định</string>
+    <string name="settings_bubble_color_blue">Xanh dương</string>
+    <string name="settings_bubble_color_green">Xanh lá</string>
+    <string name="settings_bubble_color_purple">Tím</string>
+    <string name="settings_bubble_color_orange">Cam</string>
+    <string name="settings_bubble_color_pink">Hồng</string>
+    <string name="chat_cd_show_all_reactions">Hiển thị tất cả cảm xúc</string>
+    <string name="circle_reactions_title">Cảm xúc</string>
+    <string name="circle_reactions_close">Đóng</string>
+    <string name="chat_react_title">Bày tỏ cảm xúc</string>
+    <string name="chat_react_with">Bày tỏ cảm xúc bằng %1$s</string>
+    <string name="chat_remove_reaction">Xóa cảm xúc</string>
+    <string name="chat_cd_reaction_from_contact">Cảm xúc từ liên hệ</string>
 </resources>

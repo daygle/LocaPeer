@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d વિસ્તાર આયાત થયા</string>
     <string name="geo_file_failed">એ ફાઇલ વાંચી કે લખી શકાઈ નથી</string>
     <string name="notif_geofence_subtitle_polygon">%1$s પર · બહુકોણીય વિસ્તાર · %2$s</string>
+    <string name="contacts_cd_show_on_map">નકશા પર બતાવો</string>
+    <string name="settings_bubble_color">બબલ રંગ</string>
+    <string name="settings_bubble_color_default">થીમ ડિફોલ્ટ</string>
+    <string name="settings_bubble_color_blue">ભૂરો</string>
+    <string name="settings_bubble_color_green">લીલો</string>
+    <string name="settings_bubble_color_purple">જાંબલી</string>
+    <string name="settings_bubble_color_orange">નારંગી</string>
+    <string name="settings_bubble_color_pink">ગુલાબી</string>
+    <string name="chat_cd_show_all_reactions">બધી પ્રતિક્રિયાઓ બતાવો</string>
+    <string name="circle_reactions_title">પ્રતિક્રિયાઓ</string>
+    <string name="circle_reactions_close">બંધ કરો</string>
+    <string name="chat_react_title">પ્રતિક્રિયા આપો</string>
+    <string name="chat_react_with">%1$s સાથે પ્રતિક્રિયા આપો</string>
+    <string name="chat_remove_reaction">પ્રતિક્રિયા દૂર કરો</string>
+    <string name="chat_cd_reaction_from_contact">સંપર્ક તરફથી પ્રતિક્રિયા</string>
 </resources>

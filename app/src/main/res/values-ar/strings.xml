@@ -1067,4 +1067,19 @@
     <string name="geo_import_done">تم استيراد %1$d مناطق</string>
     <string name="geo_file_failed">تعذر قراءة ذلك الملف أو كتابته</string>
     <string name="notif_geofence_subtitle_polygon">عند %1$s · منطقة مضلعة · %2$s</string>
+    <string name="contacts_cd_show_on_map">إظهار على الخريطة</string>
+    <string name="settings_bubble_color">لون الفقاعة</string>
+    <string name="settings_bubble_color_default">السمة الافتراضية</string>
+    <string name="settings_bubble_color_blue">أزرق</string>
+    <string name="settings_bubble_color_green">أخضر</string>
+    <string name="settings_bubble_color_purple">بنفسجي</string>
+    <string name="settings_bubble_color_orange">برتقالي</string>
+    <string name="settings_bubble_color_pink">وردي</string>
+    <string name="chat_cd_show_all_reactions">إظهار كل التفاعلات</string>
+    <string name="circle_reactions_title">التفاعلات</string>
+    <string name="circle_reactions_close">إغلاق</string>
+    <string name="chat_react_title">تفاعل</string>
+    <string name="chat_react_with">تفاعل باستخدام %1$s</string>
+    <string name="chat_remove_reaction">إزالة التفاعل</string>
+    <string name="chat_cd_reaction_from_contact">تفاعل من جهة اتصال</string>
 </resources>

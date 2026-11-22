@@ -1034,4 +1034,19 @@
     <string name="geo_import_done">Importováno %1$d oblastí</string>
     <string name="geo_file_failed">Soubor se nepodařilo přečíst ani zapsat</string>
     <string name="notif_geofence_subtitle_polygon">v %1$s · oblast mnohoúhelníku · %2$s</string>
+    <string name="contacts_cd_show_on_map">Zobrazit na mapě</string>
+    <string name="settings_bubble_color">Barva bubliny</string>
+    <string name="settings_bubble_color_default">Výchozí motiv</string>
+    <string name="settings_bubble_color_blue">Modrá</string>
+    <string name="settings_bubble_color_green">Zelená</string>
+    <string name="settings_bubble_color_purple">Fialová</string>
+    <string name="settings_bubble_color_orange">Oranžová</string>
+    <string name="settings_bubble_color_pink">Růžová</string>
+    <string name="chat_cd_show_all_reactions">Zobrazit všechny reakce</string>
+    <string name="circle_reactions_title">Reakce</string>
+    <string name="circle_reactions_close">Zavřít</string>
+    <string name="chat_react_title">Reagovat</string>
+    <string name="chat_react_with">Reagovat pomocí %1$s</string>
+    <string name="chat_remove_reaction">Odebrat reakci</string>
+    <string name="chat_cd_reaction_from_contact">Reakce od kontaktu</string>
 </resources>
