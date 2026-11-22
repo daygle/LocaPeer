@@ -1010,10 +1010,10 @@
     <string name="notif_geofence_subtitle_polygon">a %1$s · yankin polygon · %2$s</string>
     <string name="contacts_cd_show_on_map">Nuna a taswira</string>
     <string name="settings_bubble_color">Launin kumfa</string>
-    <string name="settings_bubble_color_default">Tsohon jigo</string>
+    <string name="settings_bubble_color_default">Jigon asali</string>
     <string name="settings_bubble_color_blue">Shuɗi</string>
     <string name="settings_bubble_color_green">Kore</string>
-    <string name="settings_bubble_color_purple">Purple</string>
+    <string name="settings_bubble_color_purple">Shuɗi mai ja</string>
     <string name="settings_bubble_color_orange">Lemu</string>
     <string name="settings_bubble_color_pink">Ruwan hoda</string>
     <string name="chat_cd_show_all_reactions">Nuna duk martani</string>

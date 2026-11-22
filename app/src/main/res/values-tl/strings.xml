@@ -1009,7 +1009,7 @@
     <string name="notif_geofence_subtitle_polygon">sa %1$s · lugar na poligono · %2$s</string>
     <string name="contacts_cd_show_on_map">Ipakita sa mapa</string>
     <string name="settings_bubble_color">Kulay ng bula</string>
-    <string name="settings_bubble_color_default">Default na tema</string>
+    <string name="settings_bubble_color_default">Karaniwang tema</string>
     <string name="settings_bubble_color_blue">Asul</string>
     <string name="settings_bubble_color_green">Berde</string>
     <string name="settings_bubble_color_purple">Lila</string>
