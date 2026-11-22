@@ -71,14 +71,14 @@ interface MessageDao {
     /**
      * The circle message a member's reaction targets, addressed by the author's logical id -
      * either the row's own id (author's copy) or [MessageEntity.remoteMessageId] (everyone else's
-     * copy) - and only within that circle (uses the groupId index). The logical id is chosen by
-     * the sender, so on a clash the author's own row, then the earliest copy, wins: a member
-     * reusing another message's id cannot redirect reactions meant for the original.
+     * copy) - and only within that circle (uses the groupId index). The receiver refuses a
+     * logical id the circle already holds, so at most one row matches; the author's own row is
+     * still preferred should older data hold a clash.
      */
     @Query(
         "SELECT * FROM messages WHERE groupId = :groupId " +
             "AND (id = :targetId OR remoteMessageId = :targetId) " +
-            "ORDER BY (id = :targetId) DESC, timestamp ASC LIMIT 1"
+            "ORDER BY (id = :targetId) DESC LIMIT 1"
     )
     suspend fun findCircleReactionTarget(targetId: String, groupId: String): MessageEntity?
 

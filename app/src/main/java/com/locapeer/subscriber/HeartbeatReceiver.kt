@@ -1191,6 +1191,11 @@ class HeartbeatReceiver @Inject constructor(
                     circleDao.unarchive(group.gid)
                 }
             }
+            // The logical id is what circle reactions target. It is sender-chosen, so a member
+            // reusing an id already held in this circle (to capture reactions meant for another
+            // message) has it dropped: the first message to claim an id keeps it.
+            val logicalId = group.mid.ifBlank { null }
+                ?.takeIf { messageDao.findCircleReactionTarget(it, group.gid) == null }
             val innerMedia = com.locapeer.messaging.MediaWire.decode(group.text)
             // Validate `kind` against the recognised union before consuming the media branch.
             // An unknown kind (a future type, hand-crafted garbage, etc.) returns null here and
@@ -1216,7 +1221,7 @@ class HeartbeatReceiver @Inject constructor(
                         mediaDurationMs = innerMedia.durationMs,
                         mediaFilename = innerMedia.filename,
                         mediaMimeType = innerMedia.mimeType,
-                        remoteMessageId = group.mid.ifBlank { null },
+                        remoteMessageId = logicalId,
                     )
                 )
                 sendGroupMessageNotification(group.gname, sender.displayName, preview, group.gid)
@@ -1240,7 +1245,7 @@ class HeartbeatReceiver @Inject constructor(
                     deliveryState = DeliveryState.DELIVERED.name,
                     nostrEventId = event.id,
                     groupId = group.gid,
-                    remoteMessageId = group.mid.ifBlank { null }
+                    remoteMessageId = logicalId
                 )
             )
             sendGroupMessageNotification(group.gname, sender.displayName, content, group.gid)
