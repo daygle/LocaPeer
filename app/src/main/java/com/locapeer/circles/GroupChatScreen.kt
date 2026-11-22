@@ -613,6 +613,7 @@ private fun CircleReactionRow(
     val shown = byEmoji.take(MAX_REACTION_CHIPS)
     val hidden = byEmoji.size - shown.size
     val youLabel = stringResource(R.string.circles_owner_you)
+    val unknownLabel = stringResource(R.string.fallback_unknown)
     FlowRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
@@ -620,18 +621,22 @@ private fun CircleReactionRow(
     ) {
         shown.forEach { (emoji, rows) ->
             // This device's own reaction has no `peers` row (the join only covers contacts), so
-            // name it "You" instead of falling back to a pubkey prefix such as "e90423".
+            // name it "You". Anyone else we can no longer name (contact removed since they
+            // reacted, or an empty display name) reads as the same localized "Unknown" the
+            // bubble header uses - a raw pubkey prefix such as "e90423" means nothing to a
+            // reader. Duplicate labels collapse so a chip never says "Unknown, Unknown".
             val names = rows.map { row ->
                 when {
                     row.reactorPubkey == myPubkey -> youLabel
                     row.reactorName.isNotBlank() -> row.reactorName
-                    else -> row.reactorPubkey.take(6)
+                    else -> unknownLabel
                 }
-            }
-            val label = if (names.size <= 2) {
+            }.distinct()
+            // Count reactors, not labels: names shared by two people still fold into "+N".
+            val label = if (rows.size <= 2) {
                 names.joinToString(", ")
             } else {
-                names.take(2).joinToString(", ") + " +" + (names.size - 2)
+                names.take(2).joinToString(", ") + " +" + (rows.size - 2)
             }
             ReactionChip(emoji = "$emoji $label")
         }
@@ -658,8 +663,9 @@ private fun CircleReactionsDialog(
     myPubkey: String,
     onDismiss: () -> Unit
 ) {
-    // Same own-row handling as the chip row, so the expanded list names you too.
+    // Same label rules as the chip row, so the expanded list names you too.
     val youLabel = stringResource(R.string.circles_owner_you)
+    val unknownLabel = stringResource(R.string.fallback_unknown)
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.circle_reactions_title)) },
@@ -677,7 +683,7 @@ private fun CircleReactionsDialog(
                                 when {
                                     row.reactorPubkey == myPubkey -> youLabel
                                     row.reactorName.isNotBlank() -> row.reactorName
-                                    else -> row.reactorPubkey.take(6)
+                                    else -> unknownLabel
                                 },
                                 style = MaterialTheme.typography.bodyMedium
                             )
