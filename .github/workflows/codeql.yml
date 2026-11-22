@@ -70,7 +70,7 @@ jobs:
         exit 1
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v4
+      uses: github/codeql-action/init@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4.39.4
       with:
         languages: ${{ matrix.language }}
         # Track the latest CodeQL bundle so new Kotlin support arrives as soon as it ships
@@ -89,6 +89,6 @@ jobs:
         ./gradlew clean assembleDebug --no-daemon --no-build-cache
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v4
+      uses: github/codeql-action/analyze@1bd86f2fdb4b86187fa4059f16f31a3202acc9ea # v4.39.4
       with:
         category: "/language:${{matrix.language}}"
