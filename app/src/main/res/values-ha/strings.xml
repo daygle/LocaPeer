@@ -996,6 +996,16 @@
     <string name="geo_polygon_min_points">Ƙara aƙalla ayoyi 3</string>
     <string name="geo_polygon_edges_cross">Gefuna ba su kamata su tsallaka juna ba</string>
     <string name="geo_polygon_undo">Mayar da baya</string>
+    <string name="geo_polygon_redo">Sake yi</string>
+    <string name="geo_polygon_insert_point">Saka aya</string>
+    <string name="geo_polygon_max_points">Mafi yawan maki %1$d</string>
     <string name="geo_polygon_clear">Share</string>
-    <string name="notif_geofence_subtitle_polygon">a %1$s · yankin polygon</string>
+    <string name="geo_import">Shigo da</string>
+    <string name="geo_export">Fitarwa</string>
+    <string name="geo_export_geojson">Fitarwa a matsayin GeoJSON</string>
+    <string name="geo_export_kml">Fitarwa a matsayin KML</string>
+    <string name="geo_import_empty">Ba a sami yankunan geofence a wannan fayil ɗin ba</string>
+    <string name="geo_import_done">An shigo da yankuna %1$d</string>
+    <string name="geo_file_failed">Ba a iya karanta ko rubuta wannan fayil ɗin ba</string>
+    <string name="notif_geofence_subtitle_polygon">a %1$s · yankin polygon · %2$s</string>
 </resources>

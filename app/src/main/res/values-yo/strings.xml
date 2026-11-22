@@ -979,6 +979,16 @@
     <string name="geo_polygon_min_points">Fi ó kere ju ojúami 3 kún</string>
     <string name="geo_polygon_edges_cross">Àwọn ẹ̀gbẹ́ kò gbọdọ̀ kọjá ara wọn</string>
     <string name="geo_polygon_undo">Dá padà</string>
+    <string name="geo_polygon_redo">Tún ṣe</string>
+    <string name="geo_polygon_insert_point">Fi ojúami sí</string>
+    <string name="geo_polygon_max_points">Ojúami tó pọ̀ jù: %1$d</string>
     <string name="geo_polygon_clear">Paarẹ</string>
-    <string name="notif_geofence_subtitle_polygon">ní %1$s · àgbègbè poligoni</string>
+    <string name="geo_import">Gbe wọle</string>
+    <string name="geo_export">Gbé jáde</string>
+    <string name="geo_export_geojson">Gbé jáde bi GeoJSON</string>
+    <string name="geo_export_kml">Gbé jáde bi KML</string>
+    <string name="geo_import_empty">A kò rí agbègbè geofence kankan nínú fáìlì yẹn</string>
+    <string name="geo_import_done">A gbé agbègbè %1$d wọlé</string>
+    <string name="geo_file_failed">A kò lè kà tàbí kọ fáìlì yẹn</string>
+    <string name="notif_geofence_subtitle_polygon">ní %1$s · àgbègbè poligoni · %2$s</string>
 </resources>

@@ -979,6 +979,16 @@
     <string name="geo_polygon_min_points">Tambah sekurang-kurangnya 3 titik</string>
     <string name="geo_polygon_edges_cross">Tepi tidak boleh bersilang</string>
     <string name="geo_polygon_undo">Buat asal</string>
+    <string name="geo_polygon_redo">Buat semula</string>
+    <string name="geo_polygon_insert_point">Sisip titik</string>
+    <string name="geo_polygon_max_points">Maksimum %1$d titik</string>
     <string name="geo_polygon_clear">Kosongkan</string>
-    <string name="notif_geofence_subtitle_polygon">di %1$s · kawasan poligon</string>
+    <string name="geo_import">Import</string>
+    <string name="geo_export">Eksport</string>
+    <string name="geo_export_geojson">Eksport sebagai GeoJSON</string>
+    <string name="geo_export_kml">Eksport sebagai KML</string>
+    <string name="geo_import_empty">Tiada kawasan geofence ditemui dalam fail itu</string>
+    <string name="geo_import_done">%1$d kawasan diimport</string>
+    <string name="geo_file_failed">Fail itu tidak dapat dibaca atau ditulis</string>
+    <string name="notif_geofence_subtitle_polygon">di %1$s · kawasan poligon · %2$s</string>
 </resources>

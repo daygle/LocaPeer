@@ -47,6 +47,7 @@ import org.maplibre.android.geometry.LatLng
 fun MapScreen(
     onNavigateToChat: (peerId: String, peerName: String) -> Unit,
     onNavigateToHistory: (peerId: String) -> Unit = {},
+    onEditGeofence: (areaId: String) -> Unit = {},
     vm: MapViewModel = hiltViewModel()
 ) {
     val uiState by vm.uiState.collectAsStateWithLifecycle()
@@ -180,6 +181,7 @@ fun MapScreen(
                 onCenteredOnUser = { },
                 onCenteredOnPin = { centerOnPin = null; isFollowingUser = false },
                 onPinTapped = { selectedPin = it; followSelected = true; isFollowingUser = false },
+                onFenceTapped = onEditGeofence,
                 isWatched = watcherNames.isNotEmpty(),
                 onMyLocationTapped = { showWatchers = true },
                 // A hand drag means the user wants to look around: stop both follow modes so
@@ -596,12 +598,13 @@ private fun MainMapView(
     onCenteredOnUser: () -> Unit,
     onCenteredOnPin: () -> Unit,
     onPinTapped: (PinData) -> Unit,
+    modifier: Modifier = Modifier,
+    onFenceTapped: ((String) -> Unit)? = null,
     onUserCameraMove: () -> Unit,
     isWatched: Boolean,
     onMyLocationTapped: () -> Unit,
     onSaveMapPosition: (Double, Double, Double) -> Unit,
     context: android.content.Context,
-    modifier: Modifier = Modifier,
     myPinColor: String = "",
     isSosActive: Boolean = false,
     mapStartZoom: Double = 16.0,
@@ -693,30 +696,32 @@ private fun MainMapView(
     val geofenceStroke = GeofenceBoth
     val fenceFillArgb = android.graphics.Color.argb(30, (geofenceStroke.red * 255).toInt(), (geofenceStroke.green * 255).toInt(), (geofenceStroke.blue * 255).toInt())
     val fenceStrokeArgb = android.graphics.Color.argb(200, (geofenceStroke.red * 255).toInt(), (geofenceStroke.green * 255).toInt(), (geofenceStroke.blue * 255).toInt())
-    val circles = remember(geofences) {
-        geofences.filter { GeofencePolygon.decode(it.fence.polygon) == null }.map {
-            MapCircle(it.fence.lat, it.fence.lng, it.fence.radiusMetres.toDouble(), fenceFillArgb, fenceStrokeArgb, strokeWidthDp = 1.5f)
+    // Decode each stored ring once per geofence emission, not again for every layer.
+    val decodedFences = remember(geofences) {
+        geofences.map { it to GeofencePolygon.decode(it.fence.polygon) }
+    }
+    val circles = remember(decodedFences) {
+        decodedFences.filter { it.second == null }.map { (onMap, _) ->
+            MapCircle(onMap.fence.lat, onMap.fence.lng, onMap.fence.radiusMetres.toDouble(), fenceFillArgb, fenceStrokeArgb, strokeWidthDp = 1.5f)
         }
     }
-    val polygons = remember(geofences) {
-        geofences.mapNotNull { geofenceOnMap ->
-            GeofencePolygon.decode(geofenceOnMap.fence.polygon)?.let { ring ->
-                MapPolygon(ring, fenceFillArgb, fenceStrokeArgb, strokeWidthDp = 1.5f)
-            }
+    val polygons = remember(decodedFences) {
+        decodedFences.mapNotNull { (_, ring) ->
+            ring?.let { MapPolygon(it, fenceFillArgb, fenceStrokeArgb, strokeWidthDp = 1.5f) }
         }
     }
-    val pinMarkers = remember(pins, geofences) {
-        val labels = geofences.mapIndexed { index, geofenceOnMap ->
+    val pinMarkers = remember(pins, decodedFences) {
+        val labels = decodedFences.mapIndexed { index, (geofenceOnMap, ring) ->
             val fence = geofenceOnMap.fence
-            // Circles label above their top edge; a polygon's centroid is the natural spot.
-            val labelLat = if (GeofencePolygon.decode(fence.polygon) != null) fence.lat
-                           else GeoMath.offsetLatitude(fence.lat, fence.radiusMetres.toDouble())
+            // Circles label above their top edge; a polygon labels at a point that is
+            // actually inside it (the vertex-mean centroid can fall outside a concave ring).
+            val label = ring?.let { GeoMath.ringLabelPoint(it) }
             MapMarker(
                 id = "fence-$index",
-                lat = labelLat,
-                lng = fence.lng,
+                lat = label?.first ?: GeoMath.offsetLatitude(fence.lat, fence.radiusMetres.toDouble()),
+                lng = label?.second ?: fence.lng,
                 icon = MarkerIconFactory.createGeofenceLabel(context, fence.name, geofenceOnMap.assignedLabel, fenceStrokeArgb).bitmap,
-                clickable = false
+                clickable = onFenceTapped != null
             )
         }
         val contacts = pins.mapNotNull { pinData ->
@@ -766,8 +771,14 @@ private fun MainMapView(
         showScaleBar = true,
         showCompass = true,
         onMarkerClick = { id ->
-            if (id == "me") onMyLocationTapped()
-            else currentPins.firstOrNull { "pin-${it.peer.deviceId}" == id }?.let(onPinTapped)
+            when {
+                id == "me" -> onMyLocationTapped()
+                id.startsWith("fence-") -> {
+                    val index = id.removePrefix("fence-").toIntOrNull()
+                    geofences.getOrNull(index ?: -1)?.let { onFenceTapped?.invoke(it.fence.id) }
+                }
+                else -> currentPins.firstOrNull { "pin-${it.peer.deviceId}" == id }?.let(onPinTapped)
+            }
         },
         onCameraIdle = { target, zoom ->
             lastCamera[0] = Triple(target.latitude, target.longitude, MapGeometry.toLegacyZoom(zoom))

@@ -996,6 +996,16 @@
     <string name="geo_polygon_min_points">ቢያንስ 3 ነጥቦችን ይጨምሩ</string>
     <string name="geo_polygon_edges_cross">ጠርዞች መገናኘት የለባቸውም</string>
     <string name="geo_polygon_undo">ቀልብስ</string>
+    <string name="geo_polygon_redo">ድገም</string>
+    <string name="geo_polygon_insert_point">ነጥብ አስገባ</string>
+    <string name="geo_polygon_max_points">ከፍተኛው %1$d ነጥቦች</string>
     <string name="geo_polygon_clear">አጽዳ</string>
-    <string name="notif_geofence_subtitle_polygon">በ%1$s · የፖሊጎን አካባቢ</string>
+    <string name="geo_import">አስገባ</string>
+    <string name="geo_export">ላክ</string>
+    <string name="geo_export_geojson">እንደ GeoJSON ላክ</string>
+    <string name="geo_export_kml">እንደ KML ላክ</string>
+    <string name="geo_import_empty">በዚህ ፋይል ውስጥ የጂኦፌንስ አካባቢዎች አልተገኙም</string>
+    <string name="geo_import_done">%1$d አካባቢዎች ገብተዋል</string>
+    <string name="geo_file_failed">ያን ፋይል ማንበብ ወይም መጻፍ አልተቻለም</string>
+    <string name="notif_geofence_subtitle_polygon">በ%1$s · የፖሊጎን አካባቢ · %2$s</string>
 </resources>

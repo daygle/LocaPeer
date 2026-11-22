@@ -978,6 +978,16 @@
     <string name="geo_polygon_min_points">3 個以上の点を追加してください</string>
     <string name="geo_polygon_edges_cross">辺が交差してはいけません</string>
     <string name="geo_polygon_undo">元に戻す</string>
+    <string name="geo_polygon_redo">やり直す</string>
+    <string name="geo_polygon_insert_point">点を挿入</string>
+    <string name="geo_polygon_max_points">最大 %1$d 個の点</string>
     <string name="geo_polygon_clear">クリア</string>
-    <string name="notif_geofence_subtitle_polygon">%1$sにて · 多角形エリア</string>
+    <string name="geo_import">インポート</string>
+    <string name="geo_export">エクスポート</string>
+    <string name="geo_export_geojson">GeoJSON としてエクスポート</string>
+    <string name="geo_export_kml">KML としてエクスポート</string>
+    <string name="geo_import_empty">このファイルにジオフェンスエリアが見つかりません</string>
+    <string name="geo_import_done">%1$d 件のエリアをインポートしました</string>
+    <string name="geo_file_failed">ファイルを読み書きできませんでした</string>
+    <string name="notif_geofence_subtitle_polygon">%1$sにて · 多角形エリア · %2$s</string>
 </resources>

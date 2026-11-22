@@ -1,5 +1,6 @@
 package com.locapeer.util
 
+import kotlin.math.abs
 import kotlin.math.asin
 import kotlin.math.cos
 import kotlin.math.sin
@@ -94,13 +95,24 @@ object GeoMath {
      */
     fun pointInRing(lat: Double, lng: Double, ring: List<Pair<Double, Double>>): Boolean {
         if (ring.size < 3) return false
+        // Project to metres in a plane centred on the ring, unwrapping longitudes, so a
+        // ring drawn across the antimeridian and a high-latitude fence both ray-cast the
+        // same shape the user sees instead of jumping at +/-180 or stretching with latitude.
+        val (cLat, cLng) = ringCentroid(ring)
+        val metresPerDegLng = METRES_PER_DEGREE_LAT * cos(Math.toRadians(cLat))
+        fun x(lngDeg: Double) = normaliseLngDelta(lngDeg - cLng) * metresPerDegLng
+        fun y(latDeg: Double) = (latDeg - cLat) * METRES_PER_DEGREE_LAT
+        val px = x(lng)
+        val py = y(lat)
         var inside = false
         var j = ring.lastIndex
         for (i in ring.indices) {
-            val (latI, lngI) = ring[i]
-            val (latJ, lngJ) = ring[j]
-            if ((lngI > lng) != (lngJ > lng) &&
-                lat < (latJ - latI) * (lng - lngI) / (lngJ - lngI) + latI
+            val xi = x(ring[i].second)
+            val yi = y(ring[i].first)
+            val xj = x(ring[j].second)
+            val yj = y(ring[j].first)
+            if ((yi > py) != (yj > py) &&
+                px < (xj - xi) * (py - yi) / (yj - yi) + xi
             ) {
                 inside = !inside
             }
@@ -108,6 +120,9 @@ object GeoMath {
         }
         return inside
     }
+
+    /** Longitude delta wrapped into (-180, 180], so a ring can cross the antimeridian. */
+    private fun normaliseLngDelta(delta: Double): Double = ((delta + 540.0) % 360.0) - 180.0
 
     /**
      * Shortest distance in metres from ([lat], [lng]) to the ring's edges (0 when the
@@ -118,7 +133,7 @@ object GeoMath {
         if (ring.isEmpty()) return Double.POSITIVE_INFINITY
         if (ring.size == 1) return haversineMetres(lat, lng, ring[0].first, ring[0].second)
         val metresPerDegLng = METRES_PER_DEGREE_LAT * cos(Math.toRadians(lat))
-        fun x(p: Pair<Double, Double>) = (p.second - lng) * metresPerDegLng
+        fun x(p: Pair<Double, Double>) = normaliseLngDelta(p.second - lng) * metresPerDegLng
         fun y(p: Pair<Double, Double>) = (p.first - lat) * METRES_PER_DEGREE_LAT
         var best = Double.POSITIVE_INFINITY
         for (i in ring.indices) {
@@ -153,10 +168,109 @@ object GeoMath {
         wasInside: Boolean
     ): Boolean = inPolygon || (wasInside && distanceToEdgeMetres <= bufferMetres)
 
-    /** Area centroid of the ring as the mean of its vertices; good enough for a label point. */
+    /**
+     * Vertex-mean centroid with longitudes unwrapped around the first vertex, so a ring
+     * straddling the antimeridian has its centroid near the ring instead of at lng 0.
+     */
     fun ringCentroid(ring: List<Pair<Double, Double>>): Pair<Double, Double> {
         require(ring.isNotEmpty()) { "A ring needs at least one point" }
-        return ring.map { it.first }.average() to ring.map { it.second }.average()
+        val baseLng = ring.first().second
+        val lngs = ring.map { baseLng + normaliseLngDelta(it.second - baseLng) }
+        val meanLng = ((lngs.average() + 540.0) % 360.0) - 180.0
+        return ring.map { it.first }.average() to meanLng
+    }
+
+    /** Planar area in square metres, computed with the same local projection as containment. */
+    fun ringAreaSquareMetres(ring: List<Pair<Double, Double>>): Double {
+        if (ring.size < 3) return 0.0
+        val (cLat, cLng) = ringCentroid(ring)
+        val metresPerDegLng = METRES_PER_DEGREE_LAT * cos(Math.toRadians(cLat))
+        fun x(p: Pair<Double, Double>) = normaliseLngDelta(p.second - cLng) * metresPerDegLng
+        fun y(p: Pair<Double, Double>) = (p.first - cLat) * METRES_PER_DEGREE_LAT
+        var twiceArea = 0.0
+        for (i in ring.indices) {
+            val a = ring[i]
+            val b = ring[(i + 1) % ring.size]
+            twiceArea += x(a) * y(b) - x(b) * y(a)
+        }
+        return abs(twiceArea) / 2.0
+    }
+
+    /**
+     * Radius of the circle with the ring's area. Fence-size comparisons (the accuracy gate
+     * and seeding) should use this rather than the bounding radius: a long thin polygon's
+     * bounding radius badly overstates how big the area actually is.
+     */
+    fun ringEffectiveRadiusMetres(ring: List<Pair<Double, Double>>): Double {
+        val area = ringAreaSquareMetres(ring)
+        return if (area <= 0.0) 0.0 else sqrt(area / Math.PI)
+    }
+
+    /** Perimeter in metres along the ring's edges. */
+    fun ringPerimeterMetres(ring: List<Pair<Double, Double>>): Double {
+        if (ring.size < 2) return 0.0
+        var total = 0.0
+        for (i in ring.indices) {
+            val a = ring[i]
+            val b = ring[(i + 1) % ring.size]
+            total += haversineMetres(a.first, a.second, b.first, b.second)
+        }
+        return total
+    }
+
+    /**
+     * A point guaranteed to be inside the ring, for labels: the best of a coarse grid of
+     * candidate interior points, maximising distance to the nearest edge. Falls back to the
+     * centroid for concave rings whose centroid is outside and whose grid finds nothing.
+     */
+    fun ringLabelPoint(ring: List<Pair<Double, Double>>): Pair<Double, Double> {
+        if (ring.size < 3) return ringCentroid(ring)
+        val (cLat, cLng) = ringCentroid(ring)
+        val lats = ring.map { it.first }
+        val lngOffsets = ring.map { normaliseLngDelta(it.second - cLng) }
+        val minOffset = lngOffsets.min()
+        val lngSpan = (lngOffsets.max() - minOffset).coerceAtLeast(1e-9)
+        val latSpan = (lats.max() - lats.min()).coerceAtLeast(1e-9)
+        var best: Pair<Double, Double>? = null
+        var bestDistance = -1.0
+        val steps = 12
+        for (row in 0..steps) {
+            val lat = lats.min() + latSpan * row / steps
+            for (col in 0..steps) {
+                val lng = cLng + minOffset + lngSpan * col / steps
+                if (!pointInRing(lat, lng, ring)) continue
+                val distance = distanceToRingMetres(lat, lng, ring)
+                if (distance > bestDistance) {
+                    bestDistance = distance
+                    best = lat to lng
+                }
+            }
+        }
+        return best ?: (cLat to cLng)
+    }
+
+    /**
+     * Indices of ring edges that cross another, non-adjacent edge: the pairs the editor
+     * highlights while drawing. Empty for a valid ring.
+     */
+    fun crossingEdgeIndices(ring: List<Pair<Double, Double>>): Set<Int> {
+        val n = ring.size
+        if (n < 4) return emptySet()
+        val crossing = mutableSetOf<Int>()
+        for (i in 0 until n) {
+            val a1 = ring[i]
+            val a2 = ring[(i + 1) % n]
+            for (j in i + 1 until n) {
+                if (j == i + 1 || (i == 0 && j == n - 1)) continue
+                val b1 = ring[j]
+                val b2 = ring[(j + 1) % n]
+                if (segmentsCross(a1, a2, b1, b2)) {
+                    crossing += i
+                    crossing += j
+                }
+            }
+        }
+        return crossing
     }
 
     /** Greatest distance from [ring]'s centroid to any vertex: the circle that bounds it. */

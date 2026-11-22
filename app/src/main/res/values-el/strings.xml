@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">Προσθέστε τουλάχιστον 3 σημεία</string>
     <string name="geo_polygon_edges_cross">Οι ακμές δεν πρέπει να τέμνονται</string>
     <string name="geo_polygon_undo">Αναίρεση</string>
+    <string name="geo_polygon_redo">Επανάληψη</string>
+    <string name="geo_polygon_insert_point">Εισαγωγή σημείου</string>
+    <string name="geo_polygon_max_points">Μέγιστο %1$d σημεία</string>
     <string name="geo_polygon_clear">Εκκαθάριση</string>
-    <string name="notif_geofence_subtitle_polygon">στις %1$s · πολυγωνική περιοχή</string>
+    <string name="geo_import">Εισαγωγή</string>
+    <string name="geo_export">Εξαγωγή</string>
+    <string name="geo_export_geojson">Εξαγωγή ως GeoJSON</string>
+    <string name="geo_export_kml">Εξαγωγή ως KML</string>
+    <string name="geo_import_empty">Δεν βρέθηκαν περιοχές γεωφράχτη σε αυτό το αρχείο</string>
+    <string name="geo_import_done">Εισήχθησαν %1$d περιοχές</string>
+    <string name="geo_file_failed">Δεν ήταν δυνατή η ανάγνωση ή εγγραφή του αρχείου</string>
+    <string name="notif_geofence_subtitle_polygon">στις %1$s · πολυγωνική περιοχή · %2$s</string>
 </resources>

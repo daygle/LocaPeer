@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">Kamida 3 nuqta qo\'shing</string>
     <string name="geo_polygon_edges_cross">Tomonlar bir-birini kesib o\'tmasligi kerak</string>
     <string name="geo_polygon_undo">Bekor qilish</string>
+    <string name="geo_polygon_redo">Qaytarish</string>
+    <string name="geo_polygon_insert_point">Nuqta qo\'shish</string>
+    <string name="geo_polygon_max_points">Ko\'pi bilan %1$d nuqta</string>
     <string name="geo_polygon_clear">Tozalash</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s nuqtasida · ko\'pburchak hududi</string>
+    <string name="geo_import">Import qilish</string>
+    <string name="geo_export">Eksport qilish</string>
+    <string name="geo_export_geojson">GeoJSON sifatida eksport qilish</string>
+    <string name="geo_export_kml">KML sifatida eksport qilish</string>
+    <string name="geo_import_empty">Bu faylda geofence hududlari topilmadi</string>
+    <string name="geo_import_done">%1$d hudud import qilindi</string>
+    <string name="geo_file_failed">Bu faylni o\'qish yoki yozish imkoni bo\'lmadi</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s nuqtasida · ko\'pburchak hududi · %2$s</string>
 </resources>

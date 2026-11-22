@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">Yoo xiqqaate tuqaawwan 3 dabali</string>
     <string name="geo_polygon_edges_cross">Qarreen wal hin qaxxaamuran</string>
     <string name="geo_polygon_undo">Deebisi</string>
+    <string name="geo_polygon_redo">Irra deebi\'i</string>
+    <string name="geo_polygon_insert_point">Tuqaa galchi</string>
+    <string name="geo_polygon_max_points">%1$d tuqaa ol\'aanaa</string>
     <string name="geo_polygon_clear">Haqi</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s irratti · naannoo pooligoonii</string>
+    <string name="geo_import">Galchi</string>
+    <string name="geo_export">Baasi</string>
+    <string name="geo_export_geojson">Akka GeoJSON baasi</string>
+    <string name="geo_export_kml">Akka KML baasi</string>
+    <string name="geo_import_empty">Faayilii kana keessatti naannoo geofence hin argamne</string>
+    <string name="geo_import_done">Naannoo %1$d galcheera</string>
+    <string name="geo_file_failed">Faayilii sana dubbisuu ykn barreessuu hin dandeenye</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s irratti · naannoo pooligoonii · %2$s</string>
 </resources>

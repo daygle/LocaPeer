@@ -1055,6 +1055,16 @@
     <string name="geo_polygon_min_points">أضف 3 نقاط على الأقل</string>
     <string name="geo_polygon_edges_cross">يجب ألا تتقاطع الحواف</string>
     <string name="geo_polygon_undo">تراجع</string>
+    <string name="geo_polygon_redo">إعادة</string>
+    <string name="geo_polygon_insert_point">إدراج نقطة</string>
+    <string name="geo_polygon_max_points">الحد الأقصى %1$d نقطة</string>
     <string name="geo_polygon_clear">مسح</string>
-    <string name="notif_geofence_subtitle_polygon">عند %1$s · منطقة مضلعة</string>
+    <string name="geo_import">استيراد</string>
+    <string name="geo_export">تصدير</string>
+    <string name="geo_export_geojson">تصدير بصيغة GeoJSON</string>
+    <string name="geo_export_kml">تصدير بصيغة KML</string>
+    <string name="geo_import_empty">لم يتم العثور على مناطق سياج جغرافي في هذا الملف</string>
+    <string name="geo_import_done">تم استيراد %1$d مناطق</string>
+    <string name="geo_file_failed">تعذر قراءة ذلك الملف أو كتابته</string>
+    <string name="notif_geofence_subtitle_polygon">عند %1$s · منطقة مضلعة · %2$s</string>
 </resources>

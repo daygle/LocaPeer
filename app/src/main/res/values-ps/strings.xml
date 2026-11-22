@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">لږ تر لږه 3 نقطې اضافه کړئ</string>
     <string name="geo_polygon_edges_cross">څنډې باید یو له بل سره نه تېرېږي</string>
     <string name="geo_polygon_undo">بیرته راګرځول</string>
+    <string name="geo_polygon_redo">بیا تکرار کړئ</string>
+    <string name="geo_polygon_insert_point">نقطه ورننوځه</string>
+    <string name="geo_polygon_max_points">اعظمي %1$d نقطې</string>
     <string name="geo_polygon_clear">پاکول</string>
-    <string name="notif_geofence_subtitle_polygon">په %1$s کې · څو اړخیزه سیمه</string>
+    <string name="geo_import">واردول</string>
+    <string name="geo_export">صادرول</string>
+    <string name="geo_export_geojson">د GeoJSON په توګه صادرول</string>
+    <string name="geo_export_kml">د KML په توګه صادرول</string>
+    <string name="geo_import_empty">په دې فایل کې د جیوفینس سیمې ونه موندل شوې</string>
+    <string name="geo_import_done">%1$d سیمې واردې شوې</string>
+    <string name="geo_file_failed">هغه فایل ونه لوستل شو یا ونه لیکل شو</string>
+    <string name="notif_geofence_subtitle_polygon">په %1$s کې · څو اړخیزه سیمه · %2$s</string>
 </resources>

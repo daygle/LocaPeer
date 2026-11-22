@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">কমপক্ষে ৩টি বিন্দু যোগ করুন</string>
     <string name="geo_polygon_edges_cross">প্রান্তগুলি পরস্পরকে ছেদ করতে পারবে না</string>
     <string name="geo_polygon_undo">পূর্বাবস্থায় ফেরান</string>
+    <string name="geo_polygon_redo">পুনরায় করুন</string>
+    <string name="geo_polygon_insert_point">বিন্দু সন্নিবেশ করুন</string>
+    <string name="geo_polygon_max_points">সর্বোচ্চ %1$dটি বিন্দু</string>
     <string name="geo_polygon_clear">মুছুন</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s-এ · বহুভুজ এলাকা</string>
+    <string name="geo_import">আমদানি</string>
+    <string name="geo_export">রপ্তানি</string>
+    <string name="geo_export_geojson">GeoJSON হিসেবে রপ্তানি</string>
+    <string name="geo_export_kml">KML হিসেবে রপ্তানি</string>
+    <string name="geo_import_empty">এই ফাইলে কোনো জিওফেন্স এলাকা পাওয়া যায়নি</string>
+    <string name="geo_import_done">%1$dটি এলাকা আমদানি হয়েছে</string>
+    <string name="geo_file_failed">ফাইলটি পড়া বা লেখা যায়নি</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s-এ · বহুভুজ এলাকা · %2$s</string>
 </resources>

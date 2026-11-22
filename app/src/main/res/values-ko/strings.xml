@@ -979,6 +979,16 @@
     <string name="geo_polygon_min_points">점을 3개 이상 추가하세요</string>
     <string name="geo_polygon_edges_cross">변이 서로 교차해서는 안 됩니다</string>
     <string name="geo_polygon_undo">실행 취소</string>
+    <string name="geo_polygon_redo">다시 실행</string>
+    <string name="geo_polygon_insert_point">점 삽입</string>
+    <string name="geo_polygon_max_points">최대 %1$d개 점</string>
     <string name="geo_polygon_clear">지우기</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s · 다각형 영역</string>
+    <string name="geo_import">가져오기</string>
+    <string name="geo_export">내보내기</string>
+    <string name="geo_export_geojson">GeoJSON으로 내보내기</string>
+    <string name="geo_export_kml">KML로 내보내기</string>
+    <string name="geo_import_empty">이 파일에서 지오펜스 영역을 찾을 수 없습니다</string>
+    <string name="geo_import_done">%1$d개 영역을 가져왔습니다</string>
+    <string name="geo_file_failed">파일을 읽거나 쓸 수 없습니다</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s · 다각형 영역 · %2$s</string>
 </resources>

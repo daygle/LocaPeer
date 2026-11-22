@@ -1022,6 +1022,16 @@
     <string name="geo_polygon_min_points">Přidejte alespoň 3 body</string>
     <string name="geo_polygon_edges_cross">Hrany se nesmí křížit</string>
     <string name="geo_polygon_undo">Zpět</string>
+    <string name="geo_polygon_redo">Znovu</string>
+    <string name="geo_polygon_insert_point">Vložit bod</string>
+    <string name="geo_polygon_max_points">Maximálně %1$d bodů</string>
     <string name="geo_polygon_clear">Vymazat</string>
-    <string name="notif_geofence_subtitle_polygon">v %1$s · oblast mnohoúhelníku</string>
+    <string name="geo_import">Importovat</string>
+    <string name="geo_export">Exportovat</string>
+    <string name="geo_export_geojson">Exportovat jako GeoJSON</string>
+    <string name="geo_export_kml">Exportovat jako KML</string>
+    <string name="geo_import_empty">V souboru nebyly nalezeny žádné oblasti geofence</string>
+    <string name="geo_import_done">Importováno %1$d oblastí</string>
+    <string name="geo_file_failed">Soubor se nepodařilo přečíst ani zapsat</string>
+    <string name="notif_geofence_subtitle_polygon">v %1$s · oblast mnohoúhelníku · %2$s</string>
 </resources>

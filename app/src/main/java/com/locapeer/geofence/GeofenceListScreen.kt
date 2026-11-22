@@ -1,11 +1,16 @@
 package com.locapeer.geofence
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PointF
+import android.net.Uri
+import android.provider.OpenableColumns
 import android.view.MotionEvent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,6 +27,8 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Fence
+import androidx.compose.material.icons.filled.FileDownload
+import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MyLocation
@@ -70,8 +77,13 @@ import com.locapeer.ui.theme.GeofenceExit
 import com.locapeer.util.GeoMath
 import com.locapeer.util.Geocoding
 import com.locapeer.util.GeofencePolygon
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.math.PI
 import kotlin.math.hypot
+import kotlin.math.sin
+import kotlin.math.sqrt
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.maplibre.android.geometry.LatLng
@@ -79,6 +91,7 @@ import com.locapeer.map.LocaMap
 import com.locapeer.map.LocaMapController
 import com.locapeer.map.MapCircle
 import com.locapeer.map.MapGeometry
+import com.locapeer.map.MapLine
 import com.locapeer.map.MapMarker
 import com.locapeer.map.MapPolygon
 import com.locapeer.map.MarkerAnchor
@@ -88,6 +101,7 @@ import kotlin.math.roundToInt
 @Composable
 fun GeofenceListScreen(
     peerId: String? = null,
+    initialAreaId: String? = null,
     onNavigateBack: () -> Unit,
     vm: GeofenceViewModel = hiltViewModel()
 ) {
@@ -106,7 +120,11 @@ fun GeofenceListScreen(
     }
 
     if (peerId == null) {
-        GlobalGeofencesScreen(vm = vm, onNavigateBack = onNavigateBack)
+        GlobalGeofencesScreen(
+            vm = vm,
+            onNavigateBack = onNavigateBack,
+            initialAreaId = initialAreaId
+        )
     } else {
         ContactGeofencesScreen(peerId = peerId, vm = vm, onNavigateBack = onNavigateBack)
     }
@@ -117,7 +135,8 @@ fun GeofenceListScreen(
 @Composable
 private fun GlobalGeofencesScreen(
     vm: GeofenceViewModel,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    initialAreaId: String? = null
 ) {
     val areas by vm.geofences.collectAsStateWithLifecycle()
     val assignments by vm.allAssignments.collectAsStateWithLifecycle()
@@ -127,9 +146,75 @@ private fun GlobalGeofencesScreen(
     var showCreateDialog by remember { mutableStateOf(false) }
     var editingArea by remember { mutableStateOf<GeofenceEntity?>(null) }
     var pendingDelete by remember { mutableStateOf<GeofenceEntity?>(null) }
+    // A map tap on a fence label navigates here with that area id; open its editor once
+    // the areas have loaded, and never re-open it after the user dismisses the dialog.
+    var consumedInitialAreaId by remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(areas, initialAreaId) {
+        val id = initialAreaId ?: return@LaunchedEffect
+        if (id == consumedInitialAreaId) return@LaunchedEffect
+        areas.firstOrNull { it.id == id }?.let {
+            editingArea = it
+            consumedInitialAreaId = id
+        }
+    }
 
     val nameByDevice = broadcasters.associate { it.peer.deviceId to it.peer.displayName }
     val assignmentsByFence = assignments.groupBy { it.geofenceId }
+
+    // Import/export. Both formats are plain text, so the picker accepts any file and the
+    // parser decides by content - a GeoJSON file named .txt (or vice versa) still works.
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    var exchangeMessage by remember { mutableStateOf<ExchangeMessage?>(null) }
+    var exportMenuOpen by remember { mutableStateOf(false) }
+
+    fun readText(uri: Uri): String? = runCatching {
+        context.contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() }
+    }.getOrNull()
+
+    fun writeText(uri: Uri, payload: String) {
+        scope.launch {
+            val written = withContext(Dispatchers.IO) {
+                runCatching {
+                    context.contentResolver.openOutputStream(uri)
+                        ?.bufferedWriter()?.use { it.write(payload) } != null
+                }.getOrDefault(false)
+            }
+            if (!written) exchangeMessage = ExchangeMessage.FileError
+        }
+    }
+
+    val importLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri != null) {
+            scope.launch {
+                val fileName = withContext(Dispatchers.IO) { displayName(context, uri) }
+                val text = withContext(Dispatchers.IO) { readText(uri) }
+                val imported = text?.let {
+                    runCatching { GeofenceExchange.parse(it, fileName) }.getOrNull()
+                }
+                when {
+                    imported == null -> exchangeMessage = ExchangeMessage.FileError
+                    imported.isEmpty() -> exchangeMessage = ExchangeMessage.NoAreas
+                    else -> {
+                        imported.forEach {
+                            vm.createArea(it.name, it.lat, it.lng, it.radiusMetres, it.polygon)
+                        }
+                        exchangeMessage = ExchangeMessage.Imported(imported.size)
+                    }
+                }
+            }
+        }
+    }
+
+    val exportGeoJsonLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/geo+json")
+    ) { uri -> if (uri != null) writeText(uri, GeofenceExchange.exportGeoJson(areas)) }
+
+    val exportKmlLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/vnd.google-earth.kml+xml")
+    ) { uri -> if (uri != null) writeText(uri, GeofenceExchange.exportKml(areas)) }
 
     Scaffold(
         topBar = {
@@ -139,6 +224,41 @@ private fun GlobalGeofencesScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
+                    }
+                },
+                actions = {
+                    IconButton(onClick = { importLauncher.launch(arrayOf("*/*")) }) {
+                        Icon(
+                            Icons.Default.FileUpload,
+                            contentDescription = stringResource(R.string.geo_import)
+                        )
+                    }
+                    Box {
+                        IconButton(onClick = { exportMenuOpen = true }) {
+                            Icon(
+                                Icons.Default.FileDownload,
+                                contentDescription = stringResource(R.string.geo_export)
+                            )
+                        }
+                        DropdownMenu(
+                            expanded = exportMenuOpen,
+                            onDismissRequest = { exportMenuOpen = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.geo_export_geojson)) },
+                                onClick = {
+                                    exportMenuOpen = false
+                                    exportGeoJsonLauncher.launch("locapeer-geofences.json")
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.geo_export_kml)) },
+                                onClick = {
+                                    exportMenuOpen = false
+                                    exportKmlLauncher.launch("locapeer-geofences.kml")
+                                }
+                            )
+                        }
                     }
                 }
             )
@@ -205,6 +325,24 @@ private fun GlobalGeofencesScreen(
                 }
                 showCreateDialog = false
                 editingArea = null
+            }
+        )
+    }
+
+    exchangeMessage?.let { message ->
+        val text = when (message) {
+            ExchangeMessage.FileError -> stringResource(R.string.geo_file_failed)
+            ExchangeMessage.NoAreas -> stringResource(R.string.geo_import_empty)
+            is ExchangeMessage.Imported ->
+                stringResource(R.string.geo_import_done, message.count)
+        }
+        AlertDialog(
+            onDismissRequest = { exchangeMessage = null },
+            text = { Text(text) },
+            confirmButton = {
+                TextButton(onClick = { exchangeMessage = null }) {
+                    Text(stringResource(R.string.common_ok))
+                }
             }
         )
     }
@@ -511,6 +649,25 @@ private fun formatCoord(value: Double): String = "%.6f".format(java.util.Locale.
  */
 private enum class GeofenceShape { CIRCLE, POLYGON }
 
+/** One undoable editor state: the shape, the ring and the circle fields as they were. */
+private data class PolygonEditorSnapshot(
+    val shape: GeofenceShape,
+    val points: List<Pair<Double, Double>>,
+    val latText: String,
+    val lngText: String,
+    val radiusText: String
+)
+
+/** Cap on undo depth: enough for a drawing session, bounded so state stays small. */
+private const val MAX_UNDO_STEPS = 50
+
+/** Result of an import or export, resolved to text during composition. */
+private sealed interface ExchangeMessage {
+    data object FileError : ExchangeMessage
+    data object NoAreas : ExchangeMessage
+    data class Imported(val count: Int) : ExchangeMessage
+}
+
 /**
  * Full-screen editor for a shared geofence *area*: a circle (centre + radius) or a
  * polygon ring. Existing areas open in the shape they were saved as.
@@ -539,6 +696,41 @@ private fun GeofenceAreaDialog(
     var submitted by remember { mutableStateOf(false) }
     var loadingMyLocation by remember { mutableStateOf(false) }
     var recenterTo by remember { mutableStateOf<LatLng?>(null) }
+    var capReached by remember { mutableStateOf(false) }
+    var editingPointIndex by remember { mutableStateOf<Int?>(null) }
+    var undoStack by remember { mutableStateOf<List<PolygonEditorSnapshot>>(emptyList()) }
+    var redoStack by remember { mutableStateOf<List<PolygonEditorSnapshot>>(emptyList()) }
+
+    fun snapshot() = PolygonEditorSnapshot(shape, polygonPoints, latText, lngText, radiusText)
+
+    fun recordEdit() {
+        undoStack = (undoStack + snapshot()).takeLast(MAX_UNDO_STEPS)
+        redoStack = emptyList()
+    }
+
+    fun restoreSnapshot(value: PolygonEditorSnapshot) {
+        shape = value.shape
+        polygonPoints = value.points
+        latText = value.latText
+        lngText = value.lngText
+        radiusText = value.radiusText
+    }
+
+    fun undoEdit() {
+        val previous = undoStack.lastOrNull() ?: return
+        redoStack = (redoStack + snapshot()).takeLast(MAX_UNDO_STEPS)
+        undoStack = undoStack.dropLast(1)
+        restoreSnapshot(previous)
+        capReached = false
+    }
+
+    fun redoEdit() {
+        val next = redoStack.lastOrNull() ?: return
+        undoStack = (undoStack + snapshot()).takeLast(MAX_UNDO_STEPS)
+        redoStack = redoStack.dropLast(1)
+        restoreSnapshot(next)
+        capReached = false
+    }
 
     // Address search (forward geocoding). Hidden while the "Look Up Addresses" opt-in
     // is off (queries go to the OS geocoding backend) and when the device has no
@@ -589,24 +781,36 @@ private fun GeofenceAreaDialog(
         GeofenceShape.POLYGON -> polygonValid
     }
 
-    /** Switching to a polygon keeps the user's circle intent by seeding a ring from it. */
+    /**
+     * Switching to a polygon keeps the user's circle intent by seeding a ring from it.
+     * The 24-gon is scaled so its area matches the circle's: an inscribed polygon is
+     * slightly smaller than the circle it approximates.
+     */
     fun circleToPolygon() {
         if (polygonPoints.isNotEmpty()) return
         val cLat = lat ?: return
         val cLng = lng ?: return
+        val segments = 24
+        val areaPreservingFactor = sqrt(
+            2 * PI / (segments * sin(2 * PI / segments))
+        )
         // MapGeometry.circle repeats its first point to close the ring; the editor keeps
         // rings open, with the closing edge implicit, so drop that duplicate.
-        polygonPoints = MapGeometry.circle(cLat, cLng, radiusForMap.toDouble(), segments = 12)
-            .dropLast(1)
+        polygonPoints = MapGeometry.circle(
+            cLat, cLng, radiusForMap * areaPreservingFactor, segments = segments
+        ).dropLast(1)
     }
 
-    /** Switching back to a circle uses the ring's centroid and bounding radius. */
+    /**
+     * Switching back to a circle uses the ring's centroid and the radius of a circle with
+     * the same area. The bounding radius would almost double a long, thin area.
+     */
     fun polygonToCircle() {
         if (polygonPoints.size < 3) return
         val (cLat, cLng) = GeoMath.ringCentroid(polygonPoints)
         latText = formatCoord(cLat)
         lngText = formatCoord(cLng)
-        radiusText = GeoMath.ringBoundingRadiusMetres(polygonPoints)
+        radiusText = GeoMath.ringEffectiveRadiusMetres(polygonPoints)
             .roundToInt()
             .coerceIn(MIN_RADIUS_M, MAX_RADIUS_M)
             .toString()
@@ -676,7 +880,11 @@ private fun GeofenceAreaDialog(
                         onPointSelected = { la, ln ->
                             if (shape == GeofenceShape.POLYGON) {
                                 if (polygonPoints.size < GeofencePolygon.MAX_POINTS) {
+                                    recordEdit()
                                     polygonPoints = polygonPoints + (la to ln)
+                                    capReached = false
+                                } else {
+                                    capReached = true
                                 }
                             } else {
                                 latText = formatCoord(la)
@@ -689,6 +897,7 @@ private fun GeofenceAreaDialog(
                                     .also { it[index] = la to ln }
                             }
                         },
+                        onVertexDragStart = { recordEdit() },
                         modifier = Modifier
                             .fillMaxSize()
                             .clipToBounds()
@@ -790,8 +999,11 @@ private fun GeofenceAreaDialog(
                             FilterChip(
                                 selected = shape == GeofenceShape.CIRCLE,
                                 onClick = {
-                                    if (shape == GeofenceShape.POLYGON) polygonToCircle()
-                                    shape = GeofenceShape.CIRCLE
+                                    if (shape != GeofenceShape.CIRCLE) {
+                                        recordEdit()
+                                        if (shape == GeofenceShape.POLYGON) polygonToCircle()
+                                        shape = GeofenceShape.CIRCLE
+                                    }
                                 },
                                 label = { Text(stringResource(R.string.geo_shape_circle)) },
                                 modifier = Modifier.weight(1f)
@@ -799,8 +1011,11 @@ private fun GeofenceAreaDialog(
                             FilterChip(
                                 selected = shape == GeofenceShape.POLYGON,
                                 onClick = {
-                                    if (shape == GeofenceShape.CIRCLE) circleToPolygon()
-                                    shape = GeofenceShape.POLYGON
+                                    if (shape != GeofenceShape.POLYGON) {
+                                        recordEdit()
+                                        if (shape == GeofenceShape.CIRCLE) circleToPolygon()
+                                        shape = GeofenceShape.POLYGON
+                                    }
                                 },
                                 label = { Text(stringResource(R.string.geo_shape_polygon)) },
                                 modifier = Modifier.weight(1f)
@@ -808,7 +1023,7 @@ private fun GeofenceAreaDialog(
                         }
                     }
 
-                    if (shape == GeofenceShape.CIRCLE && showAddressSearch) {
+                    if (showAddressSearch) {
                         HorizontalDivider(thickness = 0.5.dp)
 
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -839,8 +1054,17 @@ private fun GeofenceAreaDialog(
                             searchResults.forEach { match ->
                                 Surface(
                                     onClick = {
-                                        latText = formatCoord(match.lat)
-                                        lngText = formatCoord(match.lng)
+                                        if (shape == GeofenceShape.CIRCLE) {
+                                            latText = formatCoord(match.lat)
+                                            lngText = formatCoord(match.lng)
+                                        } else if (polygonPoints.size < GeofencePolygon.MAX_POINTS) {
+                                            // A place picked in polygon mode becomes the next vertex.
+                                            recordEdit()
+                                            polygonPoints = polygonPoints + (match.lat to match.lng)
+                                            capReached = false
+                                        } else {
+                                            capReached = true
+                                        }
                                         recenterTo = LatLng(match.lat, match.lng)
                                         addressQuery = match.label
                                         searchResults = emptyList()
@@ -950,16 +1174,38 @@ private fun GeofenceAreaDialog(
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
+                            val polygonArea = remember(polygonPoints) { GeoMath.ringAreaSquareMetres(polygonPoints) }
+                            val polygonPerimeter = remember(polygonPoints) { GeoMath.ringPerimeterMetres(polygonPoints) }
+                            if (polygonPoints.size >= 3) {
+                                Text(
+                                    "${com.locapeer.util.DisplayFormat.areaValue(polygonArea)} · " +
+                                        com.locapeer.util.DisplayFormat.distanceValue(polygonPerimeter),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = if (polygonValid) MaterialTheme.colorScheme.onSurfaceVariant
+                                            else MaterialTheme.colorScheme.error
+                                )
+                            }
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 OutlinedButton(
-                                    onClick = { polygonPoints = polygonPoints.dropLast(1) },
-                                    enabled = polygonPoints.isNotEmpty(),
+                                    onClick = { undoEdit() },
+                                    enabled = undoStack.isNotEmpty(),
                                     modifier = Modifier.weight(1f)
                                 ) {
                                     Text(stringResource(R.string.geo_polygon_undo))
                                 }
                                 OutlinedButton(
-                                    onClick = { polygonPoints = emptyList() },
+                                    onClick = { redoEdit() },
+                                    enabled = redoStack.isNotEmpty(),
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text(stringResource(R.string.geo_polygon_redo))
+                                }
+                                OutlinedButton(
+                                    onClick = {
+                                        recordEdit()
+                                        polygonPoints = emptyList()
+                                        capReached = false
+                                    },
                                     enabled = polygonPoints.isNotEmpty(),
                                     modifier = Modifier.weight(1f)
                                 ) {
@@ -976,9 +1222,23 @@ private fun GeofenceAreaDialog(
                                     color = MaterialTheme.colorScheme.error
                                 )
                             }
+                            if (capReached) {
+                                Text(
+                                    stringResource(
+                                        R.string.geo_polygon_max_points,
+                                        GeofencePolygon.MAX_POINTS
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            }
                             polygonPoints.forEachIndexed { index, point ->
                                 Row(
-                                    modifier = Modifier.fillMaxWidth(),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable(
+                                            onClickLabel = stringResource(R.string.common_edit)
+                                        ) { editingPointIndex = index },
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Text(
@@ -988,7 +1248,29 @@ private fun GeofenceAreaDialog(
                                     )
                                     IconButton(
                                         onClick = {
+                                            if (polygonPoints.size >= GeofencePolygon.MAX_POINTS) {
+                                                capReached = true
+                                            } else {
+                                                recordEdit()
+                                                val next = polygonPoints[(index + 1) % polygonPoints.size]
+                                                val middle = GeoMath.ringCentroid(listOf(point, next))
+                                                polygonPoints = polygonPoints.toMutableList()
+                                                    .also { it.add(index + 1, middle) }
+                                                capReached = false
+                                            }
+                                        }
+                                    ) {
+                                        Icon(
+                                            Icons.Default.Add,
+                                            contentDescription = stringResource(R.string.geo_polygon_insert_point),
+                                            modifier = Modifier.size(18.dp)
+                                        )
+                                    }
+                                    IconButton(
+                                        onClick = {
+                                            recordEdit()
                                             polygonPoints = polygonPoints.filterIndexed { i, _ -> i != index }
+                                            capReached = false
                                         }
                                     ) {
                                         Icon(
@@ -1004,6 +1286,66 @@ private fun GeofenceAreaDialog(
                     }
                 }
             }
+        }
+    }
+
+    // Tapping a point row opens numeric editing: an accessible, precise alternative to
+    // dragging the vertex on the map.
+    editingPointIndex?.let { index ->
+        val point = polygonPoints.getOrNull(index)
+        if (point != null) {
+            var editLat by remember(index) { mutableStateOf(formatCoord(point.first)) }
+            var editLng by remember(index) { mutableStateOf(formatCoord(point.second)) }
+            val parsedLat = editLat.toDoubleOrNull()
+            val parsedLng = editLng.toDoubleOrNull()
+            val valuesValid = parsedLat != null && parsedLat in -90.0..90.0 &&
+                parsedLng != null && parsedLng in -180.0..180.0
+            AlertDialog(
+                onDismissRequest = { editingPointIndex = null },
+                title = { Text(stringResource(R.string.common_edit)) },
+                text = {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedTextField(
+                            value = editLat,
+                            onValueChange = { editLat = it },
+                            label = { Text(stringResource(R.string.geo_latitude)) },
+                            isError = parsedLat == null || parsedLat !in -90.0..90.0,
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        OutlinedTextField(
+                            value = editLng,
+                            onValueChange = { editLng = it },
+                            label = { Text(stringResource(R.string.geo_longitude)) },
+                            isError = parsedLng == null || parsedLng !in -180.0..180.0,
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                },
+                confirmButton = {
+                    TextButton(
+                        onClick = {
+                            if (valuesValid) {
+                                recordEdit()
+                                polygonPoints = polygonPoints.toMutableList()
+                                    .also { it[index] = parsedLat to parsedLng }
+                                editingPointIndex = null
+                            }
+                        },
+                        enabled = valuesValid
+                    ) {
+                        Text(stringResource(R.string.common_save))
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { editingPointIndex = null }) {
+                        Text(stringResource(R.string.common_cancel))
+                    }
+                }
+            )
         }
     }
 }
@@ -1196,6 +1538,12 @@ private fun AssignmentDialog(
     }
 }
 
+/** Display name of a picked document, used as the fallback name for imported areas. */
+private fun displayName(context: Context, uri: Uri): String? = runCatching {
+    context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
+        ?.use { cursor -> if (cursor.moveToFirst()) cursor.getString(0) else null }
+}.getOrNull()
+
 /** Tap tolerance (dp) for reusing an existing polygon vertex instead of adding a new one. */
 private const val VERTEX_TOUCH_RADIUS_DP = 24
 
@@ -1275,6 +1623,7 @@ private fun GeofencePickerMap(
     onRecentered: () -> Unit,
     onPointSelected: (Double, Double) -> Unit,
     onVertexMoved: (index: Int, lat: Double, lng: Double) -> Unit,
+    onVertexDragStart: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -1297,6 +1646,7 @@ private fun GeofencePickerMap(
     val currentPolygonMode by rememberUpdatedState(polygonMode)
     val currentTouchRadiusPx by rememberUpdatedState(vertexTouchRadiusPx)
     val currentOnVertexMoved by rememberUpdatedState(onVertexMoved)
+    val currentOnVertexDragStart by rememberUpdatedState(onVertexDragStart)
     val draggedVertex = remember { intArrayOf(-1) }
 
     LaunchedEffect(recenterTo, map) {
@@ -1346,8 +1696,21 @@ private fun GeofencePickerMap(
         }
     }
     val showPolygon = polygonMode && polygon.size >= 3
+    // Highlight the edges that make the ring invalid, so the problem is visible while
+    // drawing rather than only in the error text under the form.
+    val crossingEdges = remember(polygon) { GeoMath.crossingEdgeIndices(polygon) }
+    val crossingLines = if (crossingEdges.isEmpty()) emptyList() else crossingEdges.map { index ->
+        val a = polygon[index]
+        val b = polygon[(index + 1) % polygon.size]
+        MapLine(
+            points = listOf(LatLng(a.first, a.second), LatLng(b.first, b.second)),
+            argb = 0xFFFF3B30.toInt(),
+            widthDp = 3f
+        )
+    }
     LocaMap(
         modifier = modifier,
+        lines = crossingLines,
         circles = if (!polygonMode && centreLat != null && centreLng != null) listOf(
             MapCircle(centreLat, centreLng, radiusMetres.toDouble(), fillArgb = fillArgb, strokeArgb = strokeArgb, strokeWidthDp = 2f)
         ) else emptyList(),
@@ -1386,6 +1749,7 @@ private fun GeofencePickerMap(
                         draggedVertex[0] = nearestVertexIndex(
                             controller, vertices, event.x, event.y, currentTouchRadiusPx
                         ) ?: -1
+                        if (draggedVertex[0] >= 0) currentOnVertexDragStart()
                         draggedVertex[0] >= 0
                     }
                     MotionEvent.ACTION_MOVE -> {

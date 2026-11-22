@@ -68,6 +68,23 @@ object DisplayFormat {
     }
 
     /**
+     * Area in the user's unit: "850 m²"/"9,150 ft²" for small areas and
+     * "1.2 km²"/"0.5 mi²" once large. Used for polygon fences, where a radius would be
+     * meaningless.
+     */
+    fun areaValue(squareMetres: Double): String {
+        val safe = squareMetres.coerceAtLeast(0.0)
+        return if (useImperialDistance) {
+            val squareFeet = safe * 10.7639
+            if (squareFeet < 43_560) "${Math.round(squareFeet)} ft²"
+            else "${"%.1f".format(squareFeet / 27_878_400.0)} mi²"
+        } else {
+            if (safe < 1_000_000) "${Math.round(safe)} m²"
+            else "${"%.1f".format(safe / 1_000_000.0)} km²"
+        }
+    }
+
+    /**
      * Linear distance (accuracy, geofence/proximity radius, thinning threshold) converted from
      * metres to the user's unit. Small values stay in feet/metres for precision and roll up to
      * miles/kilometres once large: e.g. "42 m"/"138 ft", "1.2 km"/"1.2 mi".

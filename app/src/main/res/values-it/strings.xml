@@ -989,6 +989,16 @@
     <string name="geo_polygon_min_points">Aggiungi almeno 3 punti</string>
     <string name="geo_polygon_edges_cross">I bordi non devono incrociarsi</string>
     <string name="geo_polygon_undo">Annulla</string>
+    <string name="geo_polygon_redo">Ripeti</string>
+    <string name="geo_polygon_insert_point">Inserisci punto</string>
+    <string name="geo_polygon_max_points">Massimo %1$d punti</string>
     <string name="geo_polygon_clear">Cancella</string>
-    <string name="notif_geofence_subtitle_polygon">presso %1$s · area poligonale</string>
+    <string name="geo_import">Importa</string>
+    <string name="geo_export">Esporta</string>
+    <string name="geo_export_geojson">Esporta come GeoJSON</string>
+    <string name="geo_export_kml">Esporta come KML</string>
+    <string name="geo_import_empty">Nessuna area geofence trovata in quel file</string>
+    <string name="geo_import_done">%1$d aree importate</string>
+    <string name="geo_file_failed">Impossibile leggere o scrivere quel file</string>
+    <string name="notif_geofence_subtitle_polygon">presso %1$s · area poligonale · %2$s</string>
 </resources>

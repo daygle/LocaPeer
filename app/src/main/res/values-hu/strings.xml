@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">Adjon hozzá legalább 3 pontot</string>
     <string name="geo_polygon_edges_cross">Az élek nem keresztezhetik egymást</string>
     <string name="geo_polygon_undo">Visszavonás</string>
+    <string name="geo_polygon_redo">Újra</string>
+    <string name="geo_polygon_insert_point">Pont beszúrása</string>
+    <string name="geo_polygon_max_points">Legfeljebb %1$d pont</string>
     <string name="geo_polygon_clear">Törlés</string>
-    <string name="notif_geofence_subtitle_polygon">itt: %1$s · sokszögterület</string>
+    <string name="geo_import">Importálás</string>
+    <string name="geo_export">Exportálás</string>
+    <string name="geo_export_geojson">Exportálás GeoJSONként</string>
+    <string name="geo_export_kml">Exportálás KML-ként</string>
+    <string name="geo_import_empty">Ebben a fájlban nem találhatók geokerítés-területek</string>
+    <string name="geo_import_done">%1$d terület importálva</string>
+    <string name="geo_file_failed">A fájl nem olvasható vagy írható</string>
+    <string name="notif_geofence_subtitle_polygon">itt: %1$s · sokszögterület · %2$s</string>
 </resources>

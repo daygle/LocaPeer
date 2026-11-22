@@ -979,6 +979,16 @@
     <string name="geo_polygon_min_points">เพิ่มอย่างน้อย 3 จุด</string>
     <string name="geo_polygon_edges_cross">ขอบต้องไม่ตัดกัน</string>
     <string name="geo_polygon_undo">เลิกทำ</string>
+    <string name="geo_polygon_redo">ทำซ้ำ</string>
+    <string name="geo_polygon_insert_point">แทรกจุด</string>
+    <string name="geo_polygon_max_points">สูงสุด %1$d จุด</string>
     <string name="geo_polygon_clear">ล้าง</string>
-    <string name="notif_geofence_subtitle_polygon">ที่ %1$s · พื้นที่รูปหลายเหลี่ยม</string>
+    <string name="geo_import">นำเข้า</string>
+    <string name="geo_export">ส่งออก</string>
+    <string name="geo_export_geojson">ส่งออกเป็น GeoJSON</string>
+    <string name="geo_export_kml">ส่งออกเป็น KML</string>
+    <string name="geo_import_empty">ไม่พบพื้นที่ geofence ในไฟล์นั้น</string>
+    <string name="geo_import_done">นำเข้า %1$d พื้นที่แล้ว</string>
+    <string name="geo_file_failed">ไม่สามารถอ่านหรือเขียนไฟล์นั้นได้</string>
+    <string name="notif_geofence_subtitle_polygon">ที่ %1$s · พื้นที่รูปหลายเหลี่ยม · %2$s</string>
 </resources>

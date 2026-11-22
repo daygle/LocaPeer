@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">کم از کم 3 نقاط شامل کریں</string>
     <string name="geo_polygon_edges_cross">کنارے ایک دوسرے کو نہیں کاٹ سکتے</string>
     <string name="geo_polygon_undo">واپس کریں</string>
+    <string name="geo_polygon_redo">دوبارہ کریں</string>
+    <string name="geo_polygon_insert_point">نقطہ شامل کریں</string>
+    <string name="geo_polygon_max_points">زیادہ سے زیادہ %1$d نقطے</string>
     <string name="geo_polygon_clear">صاف کریں</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s پر · کثیر الاضلاع علاقہ</string>
+    <string name="geo_import">درآمد کریں</string>
+    <string name="geo_export">برآمد کریں</string>
+    <string name="geo_export_geojson">GeoJSON کے طور پر برآمد کریں</string>
+    <string name="geo_export_kml">KML کے طور پر برآمد کریں</string>
+    <string name="geo_import_empty">اس فائل میں کوئی جیوفنس علاقہ نہیں ملا</string>
+    <string name="geo_import_done">%1$d علاقے درآمد ہوئے</string>
+    <string name="geo_file_failed">وہ فائل پڑھی یا لکھی نہیں جا سکی</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s پر · کثیر الاضلاع علاقہ · %2$s</string>
 </resources>

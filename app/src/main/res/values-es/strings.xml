@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">Añade al menos 3 puntos</string>
     <string name="geo_polygon_edges_cross">Los bordes no deben cruzarse</string>
     <string name="geo_polygon_undo">Deshacer</string>
+    <string name="geo_polygon_redo">Rehacer</string>
+    <string name="geo_polygon_insert_point">Insertar punto</string>
+    <string name="geo_polygon_max_points">Máximo %1$d puntos</string>
     <string name="geo_polygon_clear">Borrar</string>
-    <string name="notif_geofence_subtitle_polygon">en %1$s · área poligonal</string>
+    <string name="geo_import">Importar</string>
+    <string name="geo_export">Exportar</string>
+    <string name="geo_export_geojson">Exportar como GeoJSON</string>
+    <string name="geo_export_kml">Exportar como KML</string>
+    <string name="geo_import_empty">No se encontraron áreas de geocerca en ese archivo</string>
+    <string name="geo_import_done">Se importaron %1$d áreas</string>
+    <string name="geo_file_failed">No se pudo leer ni escribir ese archivo</string>
+    <string name="notif_geofence_subtitle_polygon">en %1$s · área poligonal · %2$s</string>
 </resources>

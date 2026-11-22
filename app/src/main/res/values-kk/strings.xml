@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">Кемінде 3 нүкте қосыңыз</string>
     <string name="geo_polygon_edges_cross">Қырлар қиылыспауы керек</string>
     <string name="geo_polygon_undo">Болдырмау</string>
+    <string name="geo_polygon_redo">Қайталау</string>
+    <string name="geo_polygon_insert_point">Нүкте қою</string>
+    <string name="geo_polygon_max_points">Ең көбі %1$d нүкте</string>
     <string name="geo_polygon_clear">Тазалау</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s нүктесінде · көпбұрыш аймағы</string>
+    <string name="geo_import">Импорттау</string>
+    <string name="geo_export">Экспорттау</string>
+    <string name="geo_export_geojson">GeoJSON ретінде экспорттау</string>
+    <string name="geo_export_kml">KML ретінде экспорттау</string>
+    <string name="geo_import_empty">Бұл файлдан геоқоршау аймақтары табылмады</string>
+    <string name="geo_import_done">%1$d аймақ импортталды</string>
+    <string name="geo_file_failed">Бұл файлды оқу немесе жазу мүмкін болмады</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s нүктесінде · көпбұрыш аймағы · %2$s</string>
 </resources>

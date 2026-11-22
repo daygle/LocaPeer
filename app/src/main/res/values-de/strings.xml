@@ -989,6 +989,16 @@
     <string name="geo_polygon_min_points">Mindestens 3 Punkte hinzufügen</string>
     <string name="geo_polygon_edges_cross">Kanten dürfen sich nicht kreuzen</string>
     <string name="geo_polygon_undo">Rückgängig</string>
+    <string name="geo_polygon_redo">Wiederholen</string>
+    <string name="geo_polygon_insert_point">Punkt einfügen</string>
+    <string name="geo_polygon_max_points">Maximal %1$d Punkte</string>
     <string name="geo_polygon_clear">Löschen</string>
-    <string name="notif_geofence_subtitle_polygon">bei %1$s · Polygonbereich</string>
+    <string name="geo_import">Importieren</string>
+    <string name="geo_export">Exportieren</string>
+    <string name="geo_export_geojson">Als GeoJSON exportieren</string>
+    <string name="geo_export_kml">Als KML exportieren</string>
+    <string name="geo_import_empty">In dieser Datei wurden keine Geofence-Bereiche gefunden</string>
+    <string name="geo_import_done">%1$d Bereiche importiert</string>
+    <string name="geo_file_failed">Die Datei konnte nicht gelesen oder geschrieben werden</string>
+    <string name="notif_geofence_subtitle_polygon">bei %1$s · Polygonbereich · %2$s</string>
 </resources>

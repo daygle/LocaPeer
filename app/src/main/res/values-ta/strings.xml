@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">குறைந்தது 3 புள்ளிகளைச் சேர்க்கவும்</string>
     <string name="geo_polygon_edges_cross">விளிம்புகள் ஒன்றையொன்று கடக்கக்கூடாது</string>
     <string name="geo_polygon_undo">செயல்தவிர்</string>
+    <string name="geo_polygon_redo">மீண்டும் செய்</string>
+    <string name="geo_polygon_insert_point">புள்ளியைச் செருகு</string>
+    <string name="geo_polygon_max_points">அதிகபட்சம் %1$d புள்ளிகள்</string>
     <string name="geo_polygon_clear">அழி</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s இல் · பலகோணப் பகுதி</string>
+    <string name="geo_import">இறக்குமதி</string>
+    <string name="geo_export">ஏற்றுமதி</string>
+    <string name="geo_export_geojson">GeoJSON ஆக ஏற்றுமதி</string>
+    <string name="geo_export_kml">KML ஆக ஏற்றுமதி</string>
+    <string name="geo_import_empty">இந்தக் கோப்பில் புவிவேலி பகுதிகள் எதுவும் கிடைக்கவில்லை</string>
+    <string name="geo_import_done">%1$d பகுதிகள் இறக்குமதி செய்யப்பட்டன</string>
+    <string name="geo_file_failed">அந்தக் கோப்பைப் படிக்கவோ எழுதவோ முடியவில்லை</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s இல் · பலகோணப் பகுதி · %2$s</string>
 </resources>

@@ -979,6 +979,16 @@
     <string name="geo_polygon_min_points">Tinye opekata mpe ntụpọ 3</string>
     <string name="geo_polygon_edges_cross">Akụkụ agaghị agafere ibe ha</string>
     <string name="geo_polygon_undo">Weghachi azụ</string>
+    <string name="geo_polygon_redo">Mee ọzọ</string>
+    <string name="geo_polygon_insert_point">Tinye ntụpọ</string>
+    <string name="geo_polygon_max_points">%1$d ntụpọ kacha</string>
     <string name="geo_polygon_clear">Hichapụ</string>
-    <string name="notif_geofence_subtitle_polygon">na %1$s · mpaghara poligọn</string>
+    <string name="geo_import">Bubata</string>
+    <string name="geo_export">Bupụ</string>
+    <string name="geo_export_geojson">Bupụ dị ka GeoJSON</string>
+    <string name="geo_export_kml">Bupụ dị ka KML</string>
+    <string name="geo_import_empty">Ahụghị mpaghara geofence na faịlụ a</string>
+    <string name="geo_import_done">E bubatara mpaghara %1$d</string>
+    <string name="geo_file_failed">Enweghị ike ịgụ ma ọ bụ dee faịlụ ahụ</string>
+    <string name="notif_geofence_subtitle_polygon">na %1$s · mpaghara poligọn · %2$s</string>
 </resources>

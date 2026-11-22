@@ -1010,6 +1010,16 @@
     <string name="geo_polygon_min_points">הוסף לפחות 3 נקודות</string>
     <string name="geo_polygon_edges_cross">הקצוות לא יכולים להצטלב</string>
     <string name="geo_polygon_undo">ביטול</string>
+    <string name="geo_polygon_redo">ביצוע חוזר</string>
+    <string name="geo_polygon_insert_point">הוסף נקודה</string>
+    <string name="geo_polygon_max_points">עד %1$d נקודות</string>
     <string name="geo_polygon_clear">ניקוי</string>
-    <string name="notif_geofence_subtitle_polygon">ב-%1$s · אזור מצולע</string>
+    <string name="geo_import">ייבוא</string>
+    <string name="geo_export">ייצוא</string>
+    <string name="geo_export_geojson">ייצוא כ-GeoJSON</string>
+    <string name="geo_export_kml">ייצוא כ-KML</string>
+    <string name="geo_import_empty">לא נמצאו אזורי גדר גאוגרפית בקובץ הזה</string>
+    <string name="geo_import_done">יובאו %1$d אזורים</string>
+    <string name="geo_file_failed">לא ניתן לקרוא או לכתוב את הקובץ</string>
+    <string name="notif_geofence_subtitle_polygon">ב-%1$s · אזור מצולע · %2$s</string>
 </resources>

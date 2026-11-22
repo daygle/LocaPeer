@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">कम से कम 3 बिंदु जोड़ें</string>
     <string name="geo_polygon_edges_cross">किनारे एक-दूसरे को नहीं काटने चाहिए</string>
     <string name="geo_polygon_undo">पूर्ववत करें</string>
+    <string name="geo_polygon_redo">फिर से करें</string>
+    <string name="geo_polygon_insert_point">बिंदु डालें</string>
+    <string name="geo_polygon_max_points">अधिकतम %1$d बिंदु</string>
     <string name="geo_polygon_clear">साफ़ करें</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s पर · बहुभुज क्षेत्र</string>
+    <string name="geo_import">आयात करें</string>
+    <string name="geo_export">निर्यात करें</string>
+    <string name="geo_export_geojson">GeoJSON के रूप में निर्यात करें</string>
+    <string name="geo_export_kml">KML के रूप में निर्यात करें</string>
+    <string name="geo_import_empty">इस फ़ाइल में कोई जियोफ़ेंस क्षेत्र नहीं मिला</string>
+    <string name="geo_import_done">%1$d क्षेत्र आयात किए गए</string>
+    <string name="geo_file_failed">वह फ़ाइल पढ़ी या लिखी नहीं जा सकी</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s पर · बहुभुज क्षेत्र · %2$s</string>
 </resources>

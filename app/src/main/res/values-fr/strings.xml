@@ -990,6 +990,16 @@
     <string name="geo_polygon_min_points">Ajoutez au moins 3 points</string>
     <string name="geo_polygon_edges_cross">Les bords ne doivent pas se croiser</string>
     <string name="geo_polygon_undo">Annuler</string>
+    <string name="geo_polygon_redo">Rétablir</string>
+    <string name="geo_polygon_insert_point">Insérer un point</string>
+    <string name="geo_polygon_max_points">Maximum %1$d points</string>
     <string name="geo_polygon_clear">Effacer</string>
-    <string name="notif_geofence_subtitle_polygon">à %1$s · zone polygonale</string>
+    <string name="geo_import">Importer</string>
+    <string name="geo_export">Exporter</string>
+    <string name="geo_export_geojson">Exporter en GeoJSON</string>
+    <string name="geo_export_kml">Exporter en KML</string>
+    <string name="geo_import_empty">Aucune zone de géorepérage trouvée dans ce fichier</string>
+    <string name="geo_import_done">%1$d zones importées</string>
+    <string name="geo_file_failed">Impossible de lire ou d\'écrire ce fichier</string>
+    <string name="notif_geofence_subtitle_polygon">à %1$s · zone polygonale · %2$s</string>
 </resources>

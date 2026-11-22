@@ -74,6 +74,9 @@ class GeofenceEngine @Inject constructor(
 
     // Cache of active geofences per tracked device ID.
     private val fencesCache = ConcurrentHashMap<String, List<ActiveGeofence>>()
+    // Decoded polygon rings per area id. Rings are immutable and areas are few, so this
+    // avoids re-parsing the stored string on every heartbeat for every fence.
+    private val ringCache = ConcurrentHashMap<String, List<Pair<Double, Double>>>()
     // Whether each fence+person assignment was on at the last DB emission, so an
     // assignment switched back on can report the visit already in progress.
     private val wasActiveAssignment = ConcurrentHashMap<String, Boolean>()
@@ -87,6 +90,7 @@ class GeofenceEngine @Inject constructor(
             // turned back on so their current state can be reported.
             geofenceAssignmentDao.observeAll().collect { assignments ->
                 fencesCache.clear()
+                ringCache.clear()
                 val present = assignments.mapTo(mutableSetOf()) { "${it.geofenceId}:${it.trackedDeviceId}" }
                 assignments.forEach { a ->
                     val key = "${a.geofenceId}:${a.trackedDeviceId}"
@@ -105,6 +109,7 @@ class GeofenceEngine @Inject constructor(
             // that table too - and drop state for areas that no longer exist.
             geofenceDao.getAllGeofences().collect { fences ->
                 fencesCache.clear()
+                ringCache.clear()
                 val ids = fences.mapTo(HashSet()) { it.id }
                 insideState.keys.removeIf { it.substringBefore(':') !in ids }
                 lastNotifiedAt.keys.removeIf { it.substringBefore(':') !in ids }
@@ -119,12 +124,25 @@ class GeofenceEngine @Inject constructor(
         }
         fences.forEach { fence ->
             val key = "${fence.id}:${current.deviceId}"
-            // A polygon's ring, or null for a circle. A malformed stored ring falls back
-            // to the circle fields (centroid + bounding radius) rather than failing closed.
-            val ring = GeofencePolygon.decode(fence.polygon)
+            // A polygon's ring, or null for a circle. A malformed stored ring is cached as
+            // empty and falls back to the circle fields (centroid + bounding radius) rather
+            // than failing closed.
+            val cachedRing: List<Pair<Double, Double>> = ringCache[fence.id]
+                ?: (GeofencePolygon.decode(fence.polygon) ?: emptyList()).also {
+                    ringCache[fence.id] = it
+                }
+            val ring = cachedRing.ifEmpty { null }
+            // Circle fences size themselves by radius. A polygon's bounding radius badly
+            // overstates a long, thin area, so use the area-equivalent radius instead for
+            // "is this fix good enough to mean inside" decisions.
+            val fenceSizeMetres = if (ring != null) {
+                GeoMath.ringEffectiveRadiusMetres(ring).coerceAtLeast(1.0)
+            } else {
+                fence.radiusMetres.toDouble()
+            }
             val wasInside = insideState[key]
                 ?: previous?.takeIf {
-                    it.accuracy <= fence.radiusMetres.toFloat() &&
+                    it.accuracy <= fenceSizeMetres.toFloat() &&
                         GeoMath.canSeedFromPrevious(current.timestamp, it.timestamp, SEED_MAX_GAP_MS)
                 }?.let { prev ->
                     if (ring != null) {
@@ -163,7 +181,7 @@ class GeofenceEngine @Inject constructor(
             // even during poor GPS reception.
             if (inNow && wasInside != true &&
                 current.accuracy > maxOf(
-                    fence.radiusMetres * ENTER_ACCURACY_FACTOR,
+                    fenceSizeMetres * ENTER_ACCURACY_FACTOR,
                     ENTER_ACCURACY_FLOOR_M
                 )
             ) return@forEach
@@ -212,7 +230,13 @@ class GeofenceEngine @Inject constructor(
                     personDeviceId = current.deviceId,
                     title = title,
                     subtitle = if (ring != null) {
-                        context.getString(R.string.notif_geofence_subtitle_polygon, formatTime(current.timestamp))
+                        context.getString(
+                            R.string.notif_geofence_subtitle_polygon,
+                            formatTime(current.timestamp),
+                            com.locapeer.util.DisplayFormat.areaValue(
+                                GeoMath.ringAreaSquareMetres(ring)
+                            )
+                        )
                     } else {
                         context.getString(R.string.notif_geofence_subtitle, formatTime(current.timestamp), com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble()))
                     }

@@ -979,6 +979,16 @@
     <string name="geo_polygon_min_points">Thêm ít nhất 3 điểm</string>
     <string name="geo_polygon_edges_cross">Các cạnh không được cắt nhau</string>
     <string name="geo_polygon_undo">Hoàn tác</string>
+    <string name="geo_polygon_redo">Làm lại</string>
+    <string name="geo_polygon_insert_point">Chèn điểm</string>
+    <string name="geo_polygon_max_points">Tối đa %1$d điểm</string>
     <string name="geo_polygon_clear">Xóa</string>
-    <string name="notif_geofence_subtitle_polygon">lúc %1$s · vùng đa giác</string>
+    <string name="geo_import">Nhập</string>
+    <string name="geo_export">Xuất</string>
+    <string name="geo_export_geojson">Xuất dưới dạng GeoJSON</string>
+    <string name="geo_export_kml">Xuất dưới dạng KML</string>
+    <string name="geo_import_empty">Không tìm thấy vùng hàng rào địa lý nào trong tệp đó</string>
+    <string name="geo_import_done">Đã nhập %1$d vùng</string>
+    <string name="geo_file_failed">Không thể đọc hoặc ghi tệp đó</string>
+    <string name="notif_geofence_subtitle_polygon">lúc %1$s · vùng đa giác · %2$s</string>
 </resources>

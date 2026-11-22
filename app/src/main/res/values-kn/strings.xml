@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">ಕನಿಷ್ಠ 3 ಬಿಂದುಗಳನ್ನು ಸೇರಿಸಿ</string>
     <string name="geo_polygon_edges_cross">ಅಂಚುಗಳು ಒಂದನ್ನೊಂದು ದಾಟಬಾರದು</string>
     <string name="geo_polygon_undo">ರದ್ದುಮಾಡು</string>
+    <string name="geo_polygon_redo">ಮತ್ತೆ ಮಾಡು</string>
+    <string name="geo_polygon_insert_point">ಬಿಂದು ಸೇರಿಸು</string>
+    <string name="geo_polygon_max_points">ಗರಿಷ್ಠ %1$d ಬಿಂದುಗಳು</string>
     <string name="geo_polygon_clear">ಅಳಿಸು</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s ನಲ್ಲಿ · ಬಹುಭುಜ ಪ್ರದೇಶ</string>
+    <string name="geo_import">ಆಮದಿಸಿ</string>
+    <string name="geo_export">ರಫ್ತು ಮಾಡಿ</string>
+    <string name="geo_export_geojson">GeoJSON ಆಗಿ ರಫ್ತು ಮಾಡಿ</string>
+    <string name="geo_export_kml">KML ಆಗಿ ರಫ್ತು ಮಾಡಿ</string>
+    <string name="geo_import_empty">ಈ ಫೈಲ್‌ನಲ್ಲಿ ಯಾವುದೇ ಜಿಯೋಫೆನ್ಸ್ ಪ್ರದೇಶಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="geo_import_done">%1$d ಪ್ರದೇಶಗಳನ್ನು ಆಮದಿಸಲಾಗಿದೆ</string>
+    <string name="geo_file_failed">ಆ ಫೈಲ್ ಓದಲು ಅಥವಾ ಬರೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s ನಲ್ಲಿ · ಬಹುಭುಜ ಪ್ರದೇಶ · %2$s</string>
 </resources>

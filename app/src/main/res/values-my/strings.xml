@@ -979,6 +979,16 @@
     <string name="geo_polygon_min_points">အနည်းဆုံး အမှတ် 3 ခု ထည့်ပါ</string>
     <string name="geo_polygon_edges_cross">အနားများ အချင်းချင်း ဖြတ်မကျရပါ</string>
     <string name="geo_polygon_undo">နောက်ပြန်</string>
+    <string name="geo_polygon_redo">ပြန်လုပ်ရန်</string>
+    <string name="geo_polygon_insert_point">အမှတ်ထည့်ရန်</string>
+    <string name="geo_polygon_max_points">အများဆုံး အမှတ် %1$d ခု</string>
     <string name="geo_polygon_clear">ရှင်းလင်း</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s တွင် · ဗဟုဂံဧရိယာ</string>
+    <string name="geo_import">တင်သွင်း</string>
+    <string name="geo_export">တင်ပို့</string>
+    <string name="geo_export_geojson">GeoJSON အဖြစ် တင်ပို့</string>
+    <string name="geo_export_kml">KML အဖြစ် တင်ပို့</string>
+    <string name="geo_import_empty">ဤဖိုင်တွင် ဂျီအိုဖဲန်စ် ဧရိယာ မတွေ့ပါ</string>
+    <string name="geo_import_done">ဧရိယာ %1$d ခု တင်သွင်းပြီး</string>
+    <string name="geo_file_failed">ထိုဖိုင်ကို ဖတ်၍ မရပါ</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s တွင် · ဗဟုဂံဧရိယာ · %2$s</string>
 </resources>

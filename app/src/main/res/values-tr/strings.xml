@@ -994,6 +994,16 @@
     <string name="geo_polygon_min_points">En az 3 nokta ekleyin</string>
     <string name="geo_polygon_edges_cross">Kenarlar birbirini kesmemeli</string>
     <string name="geo_polygon_undo">Geri al</string>
+    <string name="geo_polygon_redo">Yinele</string>
+    <string name="geo_polygon_insert_point">Nokta ekle</string>
+    <string name="geo_polygon_max_points">En fazla %1$d nokta</string>
     <string name="geo_polygon_clear">Temizle</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s · çokgen alanı</string>
+    <string name="geo_import">İçe aktar</string>
+    <string name="geo_export">Dışa aktar</string>
+    <string name="geo_export_geojson">GeoJSON olarak dışa aktar</string>
+    <string name="geo_export_kml">KML olarak dışa aktar</string>
+    <string name="geo_import_empty">Bu dosyada geofence alanı bulunamadı</string>
+    <string name="geo_import_done">%1$d alan içe aktarıldı</string>
+    <string name="geo_file_failed">Bu dosya okunamadı veya yazılamadı</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s · çokgen alanı · %2$s</string>
 </resources>

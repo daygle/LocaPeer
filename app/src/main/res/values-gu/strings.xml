@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">ઓછામાં ઓછા 3 બિંદુઓ ઉમેરો</string>
     <string name="geo_polygon_edges_cross">કિનારીઓ એકબીજાને છેદવી જોઈએ નહીં</string>
     <string name="geo_polygon_undo">પૂર્વવત્ કરો</string>
+    <string name="geo_polygon_redo">ફરી કરો</string>
+    <string name="geo_polygon_insert_point">બિંદુ દાખલ કરો</string>
+    <string name="geo_polygon_max_points">વધુમાં વધુ %1$d બિંદુઓ</string>
     <string name="geo_polygon_clear">સાફ કરો</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s પર · બહુકોણીય વિસ્તાર</string>
+    <string name="geo_import">આયાત કરો</string>
+    <string name="geo_export">નિકાસ કરો</string>
+    <string name="geo_export_geojson">GeoJSON તરીકે નિકાસ કરો</string>
+    <string name="geo_export_kml">KML તરીકે નિકાસ કરો</string>
+    <string name="geo_import_empty">આ ફાઇલમાં કોઈ જિયોફેન્સ વિસ્તાર મળ્યો નથી</string>
+    <string name="geo_import_done">%1$d વિસ્તાર આયાત થયા</string>
+    <string name="geo_file_failed">એ ફાઇલ વાંચી કે લખી શકાઈ નથી</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s પર · બહુકોણીય વિસ્તાર · %2$s</string>
 </resources>

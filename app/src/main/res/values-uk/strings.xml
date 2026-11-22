@@ -1022,6 +1022,16 @@
     <string name="geo_polygon_min_points">Додайте щонайменше 3 точки</string>
     <string name="geo_polygon_edges_cross">Сторони не повинні перетинатися</string>
     <string name="geo_polygon_undo">Скасувати</string>
+    <string name="geo_polygon_redo">Повторити</string>
+    <string name="geo_polygon_insert_point">Вставити точку</string>
+    <string name="geo_polygon_max_points">Щонайбільше %1$d точок</string>
     <string name="geo_polygon_clear">Очистити</string>
-    <string name="notif_geofence_subtitle_polygon">о %1$s · область багатокутника</string>
+    <string name="geo_import">Імпорт</string>
+    <string name="geo_export">Експорт</string>
+    <string name="geo_export_geojson">Експорт у GeoJSON</string>
+    <string name="geo_export_kml">Експорт у KML</string>
+    <string name="geo_import_empty">У цьому файлі не знайдено областей геозон</string>
+    <string name="geo_import_done">Імпортовано областей: %1$d</string>
+    <string name="geo_file_failed">Не вдалося прочитати або записати цей файл</string>
+    <string name="notif_geofence_subtitle_polygon">о %1$s · область багатокутника · %2$s</string>
 </resources>

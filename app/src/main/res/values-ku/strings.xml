@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">Herî kêm 3 xalan zêde bike</string>
     <string name="geo_polygon_edges_cross">Divê kenar xwe qut nekin</string>
     <string name="geo_polygon_undo">Vegerîne</string>
+    <string name="geo_polygon_redo">Dîsa pêk bîne</string>
+    <string name="geo_polygon_insert_point">Xal têxe</string>
+    <string name="geo_polygon_max_points">Herî zêde %1$d xal</string>
     <string name="geo_polygon_clear">Paqij bike</string>
-    <string name="notif_geofence_subtitle_polygon">li %1$s · herêma pirgoşe</string>
+    <string name="geo_import">Têxe</string>
+    <string name="geo_export">Derxe</string>
+    <string name="geo_export_geojson">Wek GeoJSON derxe</string>
+    <string name="geo_export_kml">Wek KML derxe</string>
+    <string name="geo_import_empty">Di vê pelê de tu çemberên erdnîgarî nehatin dîtin</string>
+    <string name="geo_import_done">%1$d dever hatin têxistin</string>
+    <string name="geo_file_failed">Ew pel nehat xwendin an nivîsandin</string>
+    <string name="notif_geofence_subtitle_polygon">li %1$s · herêma pirgoşe · %2$s</string>
 </resources>

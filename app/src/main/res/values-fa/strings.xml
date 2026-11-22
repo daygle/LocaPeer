@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">حداقل ۳ نقطه اضافه کنید</string>
     <string name="geo_polygon_edges_cross">لبه‌ها نباید یکدیگر را قطع کنند</string>
     <string name="geo_polygon_undo">واگرد</string>
+    <string name="geo_polygon_redo">انجام مجدد</string>
+    <string name="geo_polygon_insert_point">افزودن نقطه</string>
+    <string name="geo_polygon_max_points">حداکثر %1$d نقطه</string>
     <string name="geo_polygon_clear">پاک کردن</string>
-    <string name="notif_geofence_subtitle_polygon">در %1$s · ناحیه چندضلعی</string>
+    <string name="geo_import">درون‌ریزی</string>
+    <string name="geo_export">برون‌بری</string>
+    <string name="geo_export_geojson">برون‌بری به‌صورت GeoJSON</string>
+    <string name="geo_export_kml">برون‌بری به‌صورت KML</string>
+    <string name="geo_import_empty">هیچ ناحیه ژئوفنسی در این فایل یافت نشد</string>
+    <string name="geo_import_done">%1$d ناحیه درون‌ریزی شد</string>
+    <string name="geo_file_failed">خواندن یا نوشتن آن فایل ممکن نشد</string>
+    <string name="notif_geofence_subtitle_polygon">در %1$s · ناحیه چندضلعی · %2$s</string>
 </resources>

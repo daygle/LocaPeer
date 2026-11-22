@@ -263,6 +263,9 @@ fun LocaPeerNavHost(
                     },
                     onNavigateToHistory = { peerId ->
                         navController.navigate("history-report?peerId=$peerId")
+                    },
+                    onEditGeofence = { areaId ->
+                        navController.navigate("geofences?areaId=$areaId")
                     }
                 )
             }
@@ -513,8 +516,11 @@ fun LocaPeerNavHost(
                 )
             }
             composable(
-                "geofences?peerId={peerId}",
-                arguments = listOf(navArgument("peerId") { type = NavType.StringType; nullable = true; defaultValue = null }),
+                "geofences?peerId={peerId}&areaId={areaId}",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType; nullable = true; defaultValue = null },
+                    navArgument("areaId") { type = NavType.StringType; nullable = true; defaultValue = null }
+                ),
                 enterTransition = { slideEnter },
                 exitTransition = { slideExit },
                 popEnterTransition = { slidePopEnter },
@@ -522,6 +528,7 @@ fun LocaPeerNavHost(
             ) { entry ->
                 GeofenceListScreen(
                     peerId = entry.arguments?.getString("peerId"),
+                    initialAreaId = entry.arguments?.getString("areaId"),
                     onNavigateBack = { navController.popBackStack() }
                 )
             }

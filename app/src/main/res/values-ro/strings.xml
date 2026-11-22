@@ -1011,6 +1011,16 @@
     <string name="geo_polygon_min_points">Adăugați cel puțin 3 puncte</string>
     <string name="geo_polygon_edges_cross">Marginile nu trebuie să se intersecteze</string>
     <string name="geo_polygon_undo">Anulează</string>
+    <string name="geo_polygon_redo">Refă</string>
+    <string name="geo_polygon_insert_point">Inserați punct</string>
+    <string name="geo_polygon_max_points">Maximum %1$d puncte</string>
     <string name="geo_polygon_clear">Golește</string>
-    <string name="notif_geofence_subtitle_polygon">la %1$s · zonă poligonală</string>
+    <string name="geo_import">Importați</string>
+    <string name="geo_export">Exportați</string>
+    <string name="geo_export_geojson">Exportați ca GeoJSON</string>
+    <string name="geo_export_kml">Exportați ca KML</string>
+    <string name="geo_import_empty">Nu s-au găsit zone de geofence în acel fișier</string>
+    <string name="geo_import_done">%1$d zone importate</string>
+    <string name="geo_file_failed">Fișierul nu a putut fi citit sau scris</string>
+    <string name="notif_geofence_subtitle_polygon">la %1$s · zonă poligonală · %2$s</string>
 </resources>

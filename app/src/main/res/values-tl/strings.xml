@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">Magdagdag ng hindi bababa sa 3 puntos</string>
     <string name="geo_polygon_edges_cross">Hindi dapat magsalubong ang mga gilid</string>
     <string name="geo_polygon_undo">I-undo</string>
+    <string name="geo_polygon_redo">I-redo</string>
+    <string name="geo_polygon_insert_point">Magpasok ng punto</string>
+    <string name="geo_polygon_max_points">Maximum %1$d puntos</string>
     <string name="geo_polygon_clear">I-clear</string>
-    <string name="notif_geofence_subtitle_polygon">sa %1$s · lugar na poligono</string>
+    <string name="geo_import">I-import</string>
+    <string name="geo_export">I-export</string>
+    <string name="geo_export_geojson">I-export bilang GeoJSON</string>
+    <string name="geo_export_kml">I-export bilang KML</string>
+    <string name="geo_import_empty">Walang nahanap na geofence area sa file na iyon</string>
+    <string name="geo_import_done">Na-import ang %1$d area</string>
+    <string name="geo_file_failed">Hindi mabasa o maisulat ang file na iyon</string>
+    <string name="notif_geofence_subtitle_polygon">sa %1$s · lugar na poligono · %2$s</string>
 </resources>

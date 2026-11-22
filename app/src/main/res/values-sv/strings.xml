@@ -990,6 +990,16 @@
     <string name="geo_polygon_min_points">Lägg till minst 3 punkter</string>
     <string name="geo_polygon_edges_cross">Kanter får inte korsa varandra</string>
     <string name="geo_polygon_undo">Ångra</string>
+    <string name="geo_polygon_redo">Gör om</string>
+    <string name="geo_polygon_insert_point">Infoga punkt</string>
+    <string name="geo_polygon_max_points">Högst %1$d punkter</string>
     <string name="geo_polygon_clear">Rensa</string>
-    <string name="notif_geofence_subtitle_polygon">vid %1$s · polygonområde</string>
+    <string name="geo_import">Importera</string>
+    <string name="geo_export">Exportera</string>
+    <string name="geo_export_geojson">Exportera som GeoJSON</string>
+    <string name="geo_export_kml">Exportera som KML</string>
+    <string name="geo_import_empty">Inga geofence-områden hittades i filen</string>
+    <string name="geo_import_done">%1$d områden importerades</string>
+    <string name="geo_file_failed">Filen kunde inte läsas eller skrivas</string>
+    <string name="notif_geofence_subtitle_polygon">vid %1$s · polygonområde · %2$s</string>
 </resources>

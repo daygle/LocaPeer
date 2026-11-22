@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">किमान 3 बिंदू जोडा</string>
     <string name="geo_polygon_edges_cross">कडा एकमेकांना छेदू नयेत</string>
     <string name="geo_polygon_undo">पूर्ववत करा</string>
+    <string name="geo_polygon_redo">पुन्हा करा</string>
+    <string name="geo_polygon_insert_point">बिंदू घाला</string>
+    <string name="geo_polygon_max_points">कमाल %1$d बिंदू</string>
     <string name="geo_polygon_clear">साफ करा</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s वर · बहुभुज क्षेत्र</string>
+    <string name="geo_import">आयात करा</string>
+    <string name="geo_export">निर्यात करा</string>
+    <string name="geo_export_geojson">GeoJSON म्हणून निर्यात करा</string>
+    <string name="geo_export_kml">KML म्हणून निर्यात करा</string>
+    <string name="geo_import_empty">या फाइलमध्ये जिओफेन्स क्षेत्रे आढळली नाहीत</string>
+    <string name="geo_import_done">%1$d क्षेत्रे आयात झाली</string>
+    <string name="geo_file_failed">ती फाइल वाचता किंवा लिहिता आली नाही</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s वर · बहुभुज क्षेत्र · %2$s</string>
 </resources>

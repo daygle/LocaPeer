@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">ਘੱਟੋ-ਘੱਟ 3 ਬਿੰਦੂ ਜੋੜੋ</string>
     <string name="geo_polygon_edges_cross">ਕਿਨਾਰੇ ਇੱਕ ਦੂਜੇ ਨੂੰ ਨਹੀਂ ਕੱਟ ਸਕਦੇ</string>
     <string name="geo_polygon_undo">ਵਾਪਸ ਕਰੋ</string>
+    <string name="geo_polygon_redo">ਦੁਬਾਰਾ ਕਰੋ</string>
+    <string name="geo_polygon_insert_point">ਬਿੰਦੂ ਪਾਓ</string>
+    <string name="geo_polygon_max_points">ਵੱਧ ਤੋਂ ਵੱਧ %1$d ਬਿੰਦੂ</string>
     <string name="geo_polygon_clear">ਸਾਫ਼ ਕਰੋ</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s \'ਤੇ · ਬਹੁਭੁਜ ਖੇਤਰ</string>
+    <string name="geo_import">ਆਯਾਤ ਕਰੋ</string>
+    <string name="geo_export">ਨਿਰਯਾਤ ਕਰੋ</string>
+    <string name="geo_export_geojson">GeoJSON ਵਜੋਂ ਨਿਰਯਾਤ ਕਰੋ</string>
+    <string name="geo_export_kml">KML ਵਜੋਂ ਨਿਰਯਾਤ ਕਰੋ</string>
+    <string name="geo_import_empty">ਇਸ ਫਾਈਲ ਵਿੱਚ ਕੋਈ ਜੀਓਫੈਂਸ ਖੇਤਰ ਨਹੀਂ ਮਿਲਿਆ</string>
+    <string name="geo_import_done">%1$d ਖੇਤਰ ਆਯਾਤ ਕੀਤੇ ਗਏ</string>
+    <string name="geo_file_failed">ਉਹ ਫਾਈਲ ਪੜ੍ਹੀ ਜਾਂ ਲਿਖੀ ਨਹੀਂ ਜਾ ਸਕੀ</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s \'ਤੇ · ਬਹੁਭੁਜ ਖੇਤਰ · %2$s</string>
 </resources>

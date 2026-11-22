@@ -978,6 +978,16 @@
     <string name="geo_polygon_min_points">至少添加 3 个点</string>
     <string name="geo_polygon_edges_cross">边不能相交</string>
     <string name="geo_polygon_undo">撤销</string>
+    <string name="geo_polygon_redo">重做</string>
+    <string name="geo_polygon_insert_point">插入点</string>
+    <string name="geo_polygon_max_points">最多 %1$d 个点</string>
     <string name="geo_polygon_clear">清除</string>
-    <string name="notif_geofence_subtitle_polygon">于 %1$s · 多边形区域</string>
+    <string name="geo_import">导入</string>
+    <string name="geo_export">导出</string>
+    <string name="geo_export_geojson">导出为 GeoJSON</string>
+    <string name="geo_export_kml">导出为 KML</string>
+    <string name="geo_import_empty">该文件中未找到地理围栏区域</string>
+    <string name="geo_import_done">已导入 %1$d 个区域</string>
+    <string name="geo_file_failed">无法读取或写入该文件</string>
+    <string name="notif_geofence_subtitle_polygon">于 %1$s · 多边形区域 · %2$s</string>
 </resources>

@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">കുറഞ്ഞത് 3 പോയിന്റുകൾ ചേർക്കുക</string>
     <string name="geo_polygon_edges_cross">വശങ്ങൾ പരസ്പരം കടക്കരുത്</string>
     <string name="geo_polygon_undo">പഴയപടിയാക്കുക</string>
+    <string name="geo_polygon_redo">വീണ്ടും ചെയ്യുക</string>
+    <string name="geo_polygon_insert_point">പോയിന്റ് ചേർക്കുക</string>
+    <string name="geo_polygon_max_points">പരമാവധി %1$d പോയിന്റുകൾ</string>
     <string name="geo_polygon_clear">മായ്ക്കുക</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s-ൽ · ബഹുഭുജ മേഖല</string>
+    <string name="geo_import">ഇറക്കുമതി</string>
+    <string name="geo_export">കയറ്റുമതി</string>
+    <string name="geo_export_geojson">GeoJSON ആയി കയറ്റുമതി</string>
+    <string name="geo_export_kml">KML ആയി കയറ്റുമതി</string>
+    <string name="geo_import_empty">ഈ ഫയലിൽ ജിയോഫെൻസ് മേഖലകളൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="geo_import_done">%1$d മേഖലകൾ ഇറക്കുമതി ചെയ്തു</string>
+    <string name="geo_file_failed">ആ ഫയൽ വായിക്കാനോ എഴുതാനോ കഴിഞ്ഞില്ല</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s-ൽ · ബഹുഭുജ മേഖല · %2$s</string>
 </resources>

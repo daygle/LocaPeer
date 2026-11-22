@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">ଅତି କମରେ 3 ବିନ୍ଦୁ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="geo_polygon_edges_cross">କିନାରାଗୁଡ଼ିକ ପରସ୍ପରକୁ ଛେଦ କରିବା ଉଚିତ ନୁହେଁ</string>
     <string name="geo_polygon_undo">ପୂର୍ବବତ୍ କରନ୍ତୁ</string>
+    <string name="geo_polygon_redo">ପୁନଃ କରନ୍ତୁ</string>
+    <string name="geo_polygon_insert_point">ବିନ୍ଦୁ ଭର୍ତ୍ତି କରନ୍ତୁ</string>
+    <string name="geo_polygon_max_points">ସର୍ବାଧିକ %1$d ବିନ୍ଦୁ</string>
     <string name="geo_polygon_clear">ସଫା କରନ୍ତୁ</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s ରେ · ବହୁଭୁଜ ଅଞ୍ଚଳ</string>
+    <string name="geo_import">ଆମଦାନି</string>
+    <string name="geo_export">ରପ୍ତାନି</string>
+    <string name="geo_export_geojson">GeoJSON ଭାବେ ରପ୍ତାନି</string>
+    <string name="geo_export_kml">KML ଭାବେ ରପ୍ତାନି</string>
+    <string name="geo_import_empty">ଏହି ଫାଇଲରେ କୌଣସି ଜିଓଫେନ୍ସ କ୍ଷେତ୍ର ମିଳିଲା ନାହିଁ</string>
+    <string name="geo_import_done">%1$d କ୍ଷେତ୍ର ଆମଦାନି ହେଲା</string>
+    <string name="geo_file_failed">ସେ ଫାଇଲ ପଢ଼ିବା କିମ୍ବା ଲେଖିବା ସମ୍ଭବ ହେଲା ନାହିଁ</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s ରେ · ବହୁଭୁଜ ଅଞ୍ଚଳ · %2$s</string>
 </resources>

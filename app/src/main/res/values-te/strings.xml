@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">కనీసం 3 పాయింట్లు జోడించండి</string>
     <string name="geo_polygon_edges_cross">అంచులు ఒకదానికొకటి దాటకూడదు</string>
     <string name="geo_polygon_undo">ఉపసంహరించు</string>
+    <string name="geo_polygon_redo">మళ్లీ చేయి</string>
+    <string name="geo_polygon_insert_point">పాయింట్ చొప్పించు</string>
+    <string name="geo_polygon_max_points">గరిష్ఠం %1$d పాయింట్లు</string>
     <string name="geo_polygon_clear">తొలగించు</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s వద్ద · బహుభుజి ప్రాంతం</string>
+    <string name="geo_import">దిగుమతి</string>
+    <string name="geo_export">ఎగుమతి</string>
+    <string name="geo_export_geojson">GeoJSONగా ఎగుమతి</string>
+    <string name="geo_export_kml">KMLగా ఎగుమతి</string>
+    <string name="geo_import_empty">ఈ ఫైల్‌లో జియోఫెన్స్ ప్రాంతాలు ఏవీ కనుగొనబడలేదు</string>
+    <string name="geo_import_done">%1$d ప్రాంతాలు దిగుమతి అయ్యాయి</string>
+    <string name="geo_file_failed">ఆ ఫైల్‌ను చదవడం లేదా రాయడం సాధ్యపడలేదు</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s వద్ద · బహుభుజి ప్రాంతం · %2$s</string>
 </resources>

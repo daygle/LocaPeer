@@ -995,6 +995,16 @@
     <string name="geo_polygon_min_points">Ongeza angalau pointi 3</string>
     <string name="geo_polygon_edges_cross">Kingo hazipaswi kuvukana</string>
     <string name="geo_polygon_undo">Tendua</string>
+    <string name="geo_polygon_redo">Rudia</string>
+    <string name="geo_polygon_insert_point">Weka pointi</string>
+    <string name="geo_polygon_max_points">Kiwango cha juu cha pointi %1$d</string>
     <string name="geo_polygon_clear">Futa</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s · eneo la poligoni</string>
+    <string name="geo_import">Ingiza</string>
+    <string name="geo_export">Hamisha</string>
+    <string name="geo_export_geojson">Hamisha kama GeoJSON</string>
+    <string name="geo_export_kml">Hamisha kama KML</string>
+    <string name="geo_import_empty">Hakuna maeneo ya geofence yaliyopatikana kwenye faili hiyo</string>
+    <string name="geo_import_done">Maeneo %1$d yameingizwa</string>
+    <string name="geo_file_failed">Faili hiyo haikuweza kusomwa au kuandikwa</string>
+    <string name="notif_geofence_subtitle_polygon">%1$s · eneo la poligoni · %2$s</string>
 </resources>

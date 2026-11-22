@@ -5,6 +5,7 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import kotlin.math.abs
 
 class GeofencePolygonTest {
 
@@ -93,6 +94,86 @@ class GeofencePolygonTest {
         assertEquals(square(), GeofencePolygon.decode(GeofencePolygon.encode(closed)))
         assertEquals(GeofencePolygon.encode(square()), GeofencePolygon.encode(closed))
         assertEquals(4, GeofencePolygon.decode(GeofencePolygon.encode(closed))!!.size)
+    }
+
+    @Test
+    fun `area and perimeter describe the square`() {
+        // 0.01° of latitude is ~1113 m, and at the equator so is 0.01° of longitude.
+        assertEquals(1_239_000.0, GeoMath.ringAreaSquareMetres(square()), 5_000.0)
+        assertEquals(4_447.8, GeoMath.ringPerimeterMetres(square()), 2.0)
+        assertEquals(628.0, GeoMath.ringEffectiveRadiusMetres(square()), 3.0)
+    }
+
+    @Test
+    fun `effective radius is much smaller than bounding radius for a thin ring`() {
+        val strip = listOf(0.0 to 0.0, 0.0 to 0.05, 0.0005 to 0.05, 0.0005 to 0.0)
+        assertTrue(
+            GeoMath.ringEffectiveRadiusMetres(strip) <
+                GeoMath.ringBoundingRadiusMetres(strip) / 3
+        )
+    }
+
+    @Test
+    fun `label point lies inside a concave ring`() {
+        val lShape = listOf(
+            0.0 to 0.0,
+            0.0 to 0.02,
+            0.01 to 0.02,
+            0.01 to 0.01,
+            0.02 to 0.01,
+            0.02 to 0.0
+        )
+        val (lat, lng) = GeoMath.ringLabelPoint(lShape)
+        assertTrue(GeoMath.pointInRing(lat, lng, lShape))
+        assertTrue(GeoMath.distanceToRingMetres(lat, lng, lShape) > 100.0)
+    }
+
+    @Test
+    fun `label point is found inside a ring whose centroid sits in a hollow`() {
+        // Two legs joined by a top bar: the centroid falls in the empty gap between the
+        // legs, at a longitude where the ring has no interior at all.
+        val uShape = listOf(
+            0.0 to 0.0,
+            0.0 to 0.04,
+            0.03 to 0.04,
+            0.03 to 0.0,
+            0.02 to 0.0,
+            0.02 to 0.03,
+            0.01 to 0.03,
+            0.01 to 0.0
+        )
+        val (centroidLat, centroidLng) = GeoMath.ringCentroid(uShape)
+        assertFalse(GeoMath.pointInRing(centroidLat, centroidLng, uShape))
+
+        val (lat, lng) = GeoMath.ringLabelPoint(uShape)
+        assertTrue(GeoMath.pointInRing(lat, lng, uShape))
+        assertTrue(GeoMath.distanceToRingMetres(lat, lng, uShape) > 300.0)
+    }
+
+    @Test
+    fun `crossing edges are reported for the editor highlight`() {
+        assertTrue(GeoMath.crossingEdgeIndices(square()).isEmpty())
+        val bowTie = listOf(0.0 to 0.0, 0.01 to 0.01, 0.01 to 0.0, 0.0 to 0.01)
+        assertEquals(setOf(0, 2), GeoMath.crossingEdgeIndices(bowTie))
+    }
+
+    @Test
+    fun `a ring across the antimeridian keeps its shape`() {
+        val ring = listOf(
+            0.0 to 179.95,
+            0.0 to -179.95,
+            0.01 to -179.95,
+            0.01 to 179.95
+        )
+        assertTrue(GeoMath.pointInRing(0.005, 180.0, ring))
+        assertFalse(GeoMath.pointInRing(0.005, 179.9, ring))
+        assertFalse(GeoMath.pointInRing(0.005, -179.9, ring))
+        // The centroid must sit near the ring, not at lng 0.
+        val (_, centroidLng) = GeoMath.ringCentroid(ring)
+        assertTrue(abs(centroidLng) > 179.9)
+        // 0.1° of longitude at the equator is ~11.1 km, so the ring is ~12.4 km².
+        assertEquals(12_390_000.0, GeoMath.ringAreaSquareMetres(ring), 50_000.0)
+        assertEquals(24_463.0, GeoMath.ringPerimeterMetres(ring), 5.0)
     }
 
     @Test
