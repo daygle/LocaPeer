@@ -7,14 +7,16 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+# A new push to a PR supersedes its running build. Runs on main are never cancelled, so
+# every merged commit keeps its own result.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
+# checks: write is for the unit-test report check run; nothing here writes to PRs.
 permissions:
   contents: read
   checks: write
-  pull-requests: write
 
 jobs:
   build:
@@ -73,11 +75,13 @@ jobs:
       - name: Run Lint
         run: ./gradlew lintDebug lintRelease --warning-mode=fail
 
-      # One Gradle invocation for both, so configuration runs once. The bundle is
-      # unsigned here (no signing secrets on PRs); it validates R8 and resource
-      # shrinking on every change, i.e. the same build the release ships.
+      # One Gradle invocation, so configuration runs once. The bundle is unsigned here
+      # (no signing secrets on PRs); it validates R8 and resource shrinking on every
+      # change, i.e. the same build the release ships. The instrumented tests (e.g. the
+      # Room MigrationTest) need a device, but compiling them catches a change that
+      # breaks them, which would otherwise surface only when someone runs them locally.
       - name: Run Unit Tests & Build Release Bundle
-        run: ./gradlew testDebugUnitTest bundleRelease --warning-mode=fail
+        run: ./gradlew testDebugUnitTest compileDebugAndroidTestKotlin bundleRelease --warning-mode=fail
 
       # Room's KSP step rewrites app/schemas on every build. A diff here means a schema
       # change was made without committing its exported JSON (needed for migrations).

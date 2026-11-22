@@ -56,7 +56,8 @@ class MessagingViewModel @Inject constructor(
     private val relayClient: NostrRelayClient,
     private val peerManager: com.locapeer.peer.PeerManager,
     private val heartbeatDao: com.locapeer.data.dao.HeartbeatDao,
-    private val prefs: com.locapeer.settings.AppPreferences
+    private val prefs: com.locapeer.settings.AppPreferences,
+    private val circleDisbandSender: com.locapeer.circles.CircleDisbandSender
 ) : ViewModel() {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -273,26 +274,9 @@ class MessagingViewModel @Inject constructor(
             // Notify first: the recipients come from the membership rows the teardown below drops.
             if (circle != null && creator.isNotBlank()) {
                 try {
-                    val (privHex, pubHex) = keyManager.ensureKeypair()
+                    val (_, pubHex) = keyManager.ensureKeypair()
                     if (creator.equals(pubHex, ignoreCase = true)) {
-                        val privBytes = crypto.hexToBytes(privHex)
-                        val payload = json.encodeToString(com.locapeer.circles.CircleDisbandPayload(circleId))
-                        circleDao.getMemberPubkeys(circleId).filter { it != pubHex }.forEach { memberPub ->
-                            try {
-                                val encrypted = crypto.nip44Encrypt(privBytes, memberPub, payload)
-                                val event = NostrEvent.build(
-                                    privKeyHex = privHex,
-                                    pubKeyHex = pubHex,
-                                    kind = NostrEventKind.CIRCLE_DISBAND,
-                                    content = encrypted,
-                                    tags = listOf(listOf("p", memberPub)),
-                                    crypto = crypto
-                                )
-                                relayClient.publishEvent(event)
-                            } catch (e: Exception) {
-                                Log.e("MessagingViewModel", "circle disband notify to $memberPub failed", e)
-                            }
-                        }
+                        circleDisbandSender.send(circleId, circleDao.getMemberPubkeys(circleId))
                     }
                 } catch (e: Exception) {
                     Log.e("MessagingViewModel", "circle disband notify failed", e)

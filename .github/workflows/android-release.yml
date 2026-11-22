@@ -77,13 +77,11 @@ jobs:
           echo "::error::Could not fetch the Gradle distribution after 3 attempts."
           exit 1
 
-      # Lint gates the release: warningsAsErrors is on, so any lint warning stops the
-      # workflow here, before the keystore is touched or anything is published.
-      - name: Run Lint
-        run: ./gradlew lintRelease --warning-mode=fail
-
-      - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest --warning-mode=fail
+      # Lint and the unit tests gate the release: warningsAsErrors is on, so any lint
+      # warning or failing test stops the workflow here, before the keystore is touched
+      # or anything is published. One invocation, so the build configures once.
+      - name: Run Lint & Unit Tests
+        run: ./gradlew lintRelease testDebugUnitTest --warning-mode=fail
 
       # The keystore is stored base64-encoded in a repository secret and decoded to a
       # throwaway path on the runner, so it never lands in the workspace or an artifact.
