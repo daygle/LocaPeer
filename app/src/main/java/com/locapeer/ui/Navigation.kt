@@ -283,6 +283,11 @@ fun LocaPeerNavHost(
                     onNavigateToChat = { peerId, peerName ->
                         navController.navigate("chat/$peerId/${Uri.encode(peerName.ifBlank { "Chat" })}")
                     },
+                    onNavigateToMap = { peerId ->
+                        // Same route shape as the notification deep link: the map screen selects
+                        // the contact's pin, starts following it and centres the camera.
+                        navController.navigate("${Screen.Map.route}?peerId=${Uri.encode(peerId)}")
+                    },
                     onNavigateToSharingSettings = { peerId, peerName ->
                         navController.navigate("peer-sharing/$peerId/${Uri.encode(peerName.ifBlank { "Contact" })}")
                     },

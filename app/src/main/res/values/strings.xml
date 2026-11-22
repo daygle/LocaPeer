@@ -300,6 +300,7 @@
     <string name="contacts_cd_qr_invite">QR / Invite</string>
     <string name="contacts_add_contact">Add contact</string>
     <string name="contacts_cd_pending_requests">Pending Requests</string>
+    <string name="contacts_cd_show_on_map">Show on map</string>
     <string name="contacts_supervisor_locked">You can\'t remove your supervisor while supervised mode is on. Turn off supervised mode first.</string>
     <string name="peer_sharing_supervisor_locked">Supervised mode is on, so location sharing with your supervisor can\'t be turned off here.</string>
     <string name="contacts_sort_last_seen">Last Seen</string>
