@@ -1034,4 +1034,19 @@
     <string name="geo_import_done">Zaimportowano %1$d obszarów</string>
     <string name="geo_file_failed">Nie udało się odczytać ani zapisać tego pliku</string>
     <string name="notif_geofence_subtitle_polygon">w %1$s · obszar wielokąta · %2$s</string>
+    <string name="contacts_cd_show_on_map">Pokaż na mapie</string>
+    <string name="settings_bubble_color">Kolor dymka</string>
+    <string name="settings_bubble_color_default">Domyślny motyw</string>
+    <string name="settings_bubble_color_blue">Niebieski</string>
+    <string name="settings_bubble_color_green">Zielony</string>
+    <string name="settings_bubble_color_purple">Fioletowy</string>
+    <string name="settings_bubble_color_orange">Pomarańczowy</string>
+    <string name="settings_bubble_color_pink">Różowy</string>
+    <string name="chat_cd_show_all_reactions">Pokaż wszystkie reakcje</string>
+    <string name="circle_reactions_title">Reakcje</string>
+    <string name="circle_reactions_close">Zamknij</string>
+    <string name="chat_react_title">Zareaguj</string>
+    <string name="chat_react_with">Zareaguj za pomocą %1$s</string>
+    <string name="chat_remove_reaction">Usuń reakcję</string>
+    <string name="chat_cd_reaction_from_contact">Reakcja od kontaktu</string>
 </resources>

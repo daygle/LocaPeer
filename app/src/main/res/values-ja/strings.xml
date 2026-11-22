@@ -990,4 +990,19 @@
     <string name="geo_import_done">%1$d 件のエリアをインポートしました</string>
     <string name="geo_file_failed">ファイルを読み書きできませんでした</string>
     <string name="notif_geofence_subtitle_polygon">%1$sにて · 多角形エリア · %2$s</string>
+    <string name="contacts_cd_show_on_map">地図で表示</string>
+    <string name="settings_bubble_color">吹き出しの色</string>
+    <string name="settings_bubble_color_default">テーマの既定</string>
+    <string name="settings_bubble_color_blue">青</string>
+    <string name="settings_bubble_color_green">緑</string>
+    <string name="settings_bubble_color_purple">紫</string>
+    <string name="settings_bubble_color_orange">オレンジ</string>
+    <string name="settings_bubble_color_pink">ピンク</string>
+    <string name="chat_cd_show_all_reactions">すべてのリアクションを表示</string>
+    <string name="circle_reactions_title">リアクション</string>
+    <string name="circle_reactions_close">閉じる</string>
+    <string name="chat_react_title">リアクションする</string>
+    <string name="chat_react_with">%1$s でリアクション</string>
+    <string name="chat_remove_reaction">リアクションを削除</string>
+    <string name="chat_cd_reaction_from_contact">連絡先からのリアクション</string>
 </resources>

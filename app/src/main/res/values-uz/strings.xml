@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d hudud import qilindi</string>
     <string name="geo_file_failed">Bu faylni o\'qish yoki yozish imkoni bo\'lmadi</string>
     <string name="notif_geofence_subtitle_polygon">%1$s nuqtasida · ko\'pburchak hududi · %2$s</string>
+    <string name="contacts_cd_show_on_map">Xaritada koʻrsatish</string>
+    <string name="settings_bubble_color">Pufakcha rangi</string>
+    <string name="settings_bubble_color_default">Standart mavzu</string>
+    <string name="settings_bubble_color_blue">Koʻk</string>
+    <string name="settings_bubble_color_green">Yashil</string>
+    <string name="settings_bubble_color_purple">Binafsha</string>
+    <string name="settings_bubble_color_orange">Toʻq sariq</string>
+    <string name="settings_bubble_color_pink">Pushti</string>
+    <string name="chat_cd_show_all_reactions">Barcha reaksiyalarni koʻrsatish</string>
+    <string name="circle_reactions_title">Reaksiyalar</string>
+    <string name="circle_reactions_close">Yopish</string>
+    <string name="chat_react_title">Reaksiya bildirish</string>
+    <string name="chat_react_with">%1$s bilan reaksiya bildirish</string>
+    <string name="chat_remove_reaction">Reaksiyani olib tashlash</string>
+    <string name="chat_cd_reaction_from_contact">Kontakt reaksiyasi</string>
 </resources>

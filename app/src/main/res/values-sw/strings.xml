@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">Maeneo %1$d yameingizwa</string>
     <string name="geo_file_failed">Faili hiyo haikuweza kusomwa au kuandikwa</string>
     <string name="notif_geofence_subtitle_polygon">%1$s · eneo la poligoni · %2$s</string>
+    <string name="contacts_cd_show_on_map">Onyesha kwenye ramani</string>
+    <string name="settings_bubble_color">Rangi ya kiputo</string>
+    <string name="settings_bubble_color_default">Mandhari chaguomsingi</string>
+    <string name="settings_bubble_color_blue">Bluu</string>
+    <string name="settings_bubble_color_green">Kijani</string>
+    <string name="settings_bubble_color_purple">Zambarau</string>
+    <string name="settings_bubble_color_orange">Chungwa</string>
+    <string name="settings_bubble_color_pink">Pinki</string>
+    <string name="chat_cd_show_all_reactions">Onyesha miitikio yote</string>
+    <string name="circle_reactions_title">Miitikio</string>
+    <string name="circle_reactions_close">Funga</string>
+    <string name="chat_react_title">Itikia</string>
+    <string name="chat_react_with">Itikia kwa %1$s</string>
+    <string name="chat_remove_reaction">Ondoa itikio</string>
+    <string name="chat_cd_reaction_from_contact">Itikio kutoka kwa mwasiliani</string>
 </resources>

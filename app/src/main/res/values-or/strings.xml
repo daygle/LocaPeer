@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d କ୍ଷେତ୍ର ଆମଦାନି ହେଲା</string>
     <string name="geo_file_failed">ସେ ଫାଇଲ ପଢ଼ିବା କିମ୍ବା ଲେଖିବା ସମ୍ଭବ ହେଲା ନାହିଁ</string>
     <string name="notif_geofence_subtitle_polygon">%1$s ରେ · ବହୁଭୁଜ ଅଞ୍ଚଳ · %2$s</string>
+    <string name="contacts_cd_show_on_map">ମ୍ୟାପରେ ଦେଖାନ୍ତୁ</string>
+    <string name="settings_bubble_color">ବବୁଲ ରଙ୍ଗ</string>
+    <string name="settings_bubble_color_default">ଥିମ ଡିଫଲ୍ଟ</string>
+    <string name="settings_bubble_color_blue">ନୀଳ</string>
+    <string name="settings_bubble_color_green">ସବୁଜ</string>
+    <string name="settings_bubble_color_purple">ବାଇଗଣୀ</string>
+    <string name="settings_bubble_color_orange">କମଳା</string>
+    <string name="settings_bubble_color_pink">ଗୋଲାପୀ</string>
+    <string name="chat_cd_show_all_reactions">ସମସ୍ତ ପ୍ରତିକ୍ରିୟା ଦେଖାନ୍ତୁ</string>
+    <string name="circle_reactions_title">ପ୍ରତିକ୍ରିୟା</string>
+    <string name="circle_reactions_close">ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="chat_react_title">ପ୍ରତିକ୍ରିୟା ଦିଅନ୍ତୁ</string>
+    <string name="chat_react_with">%1$s ସହ ପ୍ରତିକ୍ରିୟା ଦିଅନ୍ତୁ</string>
+    <string name="chat_remove_reaction">ପ୍ରତିକ୍ରିୟା ହଟାନ୍ତୁ</string>
+    <string name="chat_cd_reaction_from_contact">ଯୋଗାଯୋଗରୁ ପ୍ରତିକ୍ରିୟା</string>
 </resources>

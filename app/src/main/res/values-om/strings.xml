@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">Naannoo %1$d galcheera</string>
     <string name="geo_file_failed">Faayilii sana dubbisuu ykn barreessuu hin dandeenye</string>
     <string name="notif_geofence_subtitle_polygon">%1$s irratti · naannoo pooligoonii · %2$s</string>
+    <string name="contacts_cd_show_on_map">Kaartii irratti agarsiisi</string>
+    <string name="settings_bubble_color">Halluu bublii</string>
+    <string name="settings_bubble_color_default">Theemii durtii</string>
+    <string name="settings_bubble_color_blue">Cuquliisa</string>
+    <string name="settings_bubble_color_green">Magariisa</string>
+    <string name="settings_bubble_color_purple">Porpilii</string>
+    <string name="settings_bubble_color_orange">Burtukaana</string>
+    <string name="settings_bubble_color_pink">Pinkii</string>
+    <string name="chat_cd_show_all_reactions">Deebii hunda agarsiisi</string>
+    <string name="circle_reactions_title">Deebii</string>
+    <string name="circle_reactions_close">Cufi</string>
+    <string name="chat_react_title">Deebi</string>
+    <string name="chat_react_with">%1$s waliin deebi</string>
+    <string name="chat_remove_reaction">Deebii haqi</string>
+    <string name="chat_cd_reaction_from_contact">Deebii quunnamtii irraa</string>
 </resources>

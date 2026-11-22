@@ -1000,4 +1000,19 @@
     <string name="geo_import_done">%1$d áreas importadas</string>
     <string name="geo_file_failed">Não foi possível ler ou escrever esse ficheiro</string>
     <string name="notif_geofence_subtitle_polygon">em %1$s · área poligonal · %2$s</string>
+    <string name="contacts_cd_show_on_map">Mostrar no mapa</string>
+    <string name="settings_bubble_color">Cor da bolha</string>
+    <string name="settings_bubble_color_default">Tema predefinido</string>
+    <string name="settings_bubble_color_blue">Azul</string>
+    <string name="settings_bubble_color_green">Verde</string>
+    <string name="settings_bubble_color_purple">Roxo</string>
+    <string name="settings_bubble_color_orange">Laranja</string>
+    <string name="settings_bubble_color_pink">Rosa</string>
+    <string name="chat_cd_show_all_reactions">Mostrar todas as reações</string>
+    <string name="circle_reactions_title">Reações</string>
+    <string name="circle_reactions_close">Fechar</string>
+    <string name="chat_react_title">Reagir</string>
+    <string name="chat_react_with">Reagir com %1$s</string>
+    <string name="chat_remove_reaction">Remover reação</string>
+    <string name="chat_cd_reaction_from_contact">Reação do contacto</string>
 </resources>

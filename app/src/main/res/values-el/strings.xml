@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">Εισήχθησαν %1$d περιοχές</string>
     <string name="geo_file_failed">Δεν ήταν δυνατή η ανάγνωση ή εγγραφή του αρχείου</string>
     <string name="notif_geofence_subtitle_polygon">στις %1$s · πολυγωνική περιοχή · %2$s</string>
+    <string name="contacts_cd_show_on_map">Εμφάνιση στον χάρτη</string>
+    <string name="settings_bubble_color">Χρώμα φυσαλίδας</string>
+    <string name="settings_bubble_color_default">Προεπιλεγμένο θέμα</string>
+    <string name="settings_bubble_color_blue">Μπλε</string>
+    <string name="settings_bubble_color_green">Πράσινο</string>
+    <string name="settings_bubble_color_purple">Μωβ</string>
+    <string name="settings_bubble_color_orange">Πορτοκαλί</string>
+    <string name="settings_bubble_color_pink">Ροζ</string>
+    <string name="chat_cd_show_all_reactions">Εμφάνιση όλων των αντιδράσεων</string>
+    <string name="circle_reactions_title">Αντιδράσεις</string>
+    <string name="circle_reactions_close">Κλείσιμο</string>
+    <string name="chat_react_title">Αντίδραση</string>
+    <string name="chat_react_with">Αντίδραση με %1$s</string>
+    <string name="chat_remove_reaction">Αφαίρεση αντίδρασης</string>
+    <string name="chat_cd_reaction_from_contact">Αντίδραση από επαφή</string>
 </resources>

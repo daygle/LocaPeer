@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d ಪ್ರದೇಶಗಳನ್ನು ಆಮದಿಸಲಾಗಿದೆ</string>
     <string name="geo_file_failed">ಆ ಫೈಲ್ ಓದಲು ಅಥವಾ ಬರೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
     <string name="notif_geofence_subtitle_polygon">%1$s ನಲ್ಲಿ · ಬಹುಭುಜ ಪ್ರದೇಶ · %2$s</string>
+    <string name="contacts_cd_show_on_map">ನಕ್ಷೆಯಲ್ಲಿ ತೋರಿಸಿ</string>
+    <string name="settings_bubble_color">ಬಬಲ್ ಬಣ್ಣ</string>
+    <string name="settings_bubble_color_default">ಥೀಮ್ ಡೀಫಾಲ್ಟ್</string>
+    <string name="settings_bubble_color_blue">ನೀಲಿ</string>
+    <string name="settings_bubble_color_green">ಹಸಿರು</string>
+    <string name="settings_bubble_color_purple">ನೇರಳೆ</string>
+    <string name="settings_bubble_color_orange">ಕಿತ್ತಳೆ</string>
+    <string name="settings_bubble_color_pink">ಗುಲಾಬಿ</string>
+    <string name="chat_cd_show_all_reactions">ಎಲ್ಲಾ ಪ್ರತಿಕ್ರಿಯೆಗಳನ್ನು ತೋರಿಸಿ</string>
+    <string name="circle_reactions_title">ಪ್ರತಿಕ್ರಿಯೆಗಳು</string>
+    <string name="circle_reactions_close">ಮುಚ್ಚಿ</string>
+    <string name="chat_react_title">ಪ್ರತಿಕ್ರಿಯಿಸಿ</string>
+    <string name="chat_react_with">%1$s ನೊಂದಿಗೆ ಪ್ರತಿಕ್ರಿಯಿಸಿ</string>
+    <string name="chat_remove_reaction">ಪ್ರತಿಕ್ರಿಯೆ ತೆಗೆದುಹಾಕಿ</string>
+    <string name="chat_cd_reaction_from_contact">ಸಂಪರ್ಕದಿಂದ ಪ್ರತಿಕ್ರಿಯೆ</string>
 </resources>

@@ -597,8 +597,8 @@ internal fun MessageActionsSheet(
 @Composable
 internal fun ReactionChip(
     emoji: String,
-    contentDescription: String? = null,
     modifier: Modifier = Modifier,
+    contentDescription: String? = null,
     onClick: (() -> Unit)? = null
 ) {
     val padding = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)

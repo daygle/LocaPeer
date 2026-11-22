@@ -991,4 +991,19 @@
     <string name="geo_import_done">ဧရိယာ %1$d ခု တင်သွင်းပြီး</string>
     <string name="geo_file_failed">ထိုဖိုင်ကို ဖတ်၍ မရပါ</string>
     <string name="notif_geofence_subtitle_polygon">%1$s တွင် · ဗဟုဂံဧရိယာ · %2$s</string>
+    <string name="contacts_cd_show_on_map">မြေပုံပေါ်တွင် ပြရန်</string>
+    <string name="settings_bubble_color">ပူဖောင်းအရောင်</string>
+    <string name="settings_bubble_color_default">မူရင်းအပြင်အဆင်</string>
+    <string name="settings_bubble_color_blue">အပြာ</string>
+    <string name="settings_bubble_color_green">အစိမ်း</string>
+    <string name="settings_bubble_color_purple">ခရမ်းရောင်</string>
+    <string name="settings_bubble_color_orange">လိမ္မော်</string>
+    <string name="settings_bubble_color_pink">ပန်းရောင်</string>
+    <string name="chat_cd_show_all_reactions">တုံ့ပြန်မှုအားလုံး ပြရန်</string>
+    <string name="circle_reactions_title">တုံ့ပြန်မှုများ</string>
+    <string name="circle_reactions_close">ပိတ်ရန်</string>
+    <string name="chat_react_title">တုံ့ပြန်ရန်</string>
+    <string name="chat_react_with">%1$s ဖြင့် တုံ့ပြန်ရန်</string>
+    <string name="chat_remove_reaction">တုံ့ပြန်မှု ဖယ်ရှားရန်</string>
+    <string name="chat_cd_reaction_from_contact">အဆက်အသွယ်မှ တုံ့ပြန်မှု</string>
 </resources>

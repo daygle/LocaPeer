@@ -1002,4 +1002,19 @@
     <string name="geo_import_done">%1$d områden importerades</string>
     <string name="geo_file_failed">Filen kunde inte läsas eller skrivas</string>
     <string name="notif_geofence_subtitle_polygon">vid %1$s · polygonområde · %2$s</string>
+    <string name="contacts_cd_show_on_map">Visa på kartan</string>
+    <string name="settings_bubble_color">Bubbelfärg</string>
+    <string name="settings_bubble_color_default">Standardtema</string>
+    <string name="settings_bubble_color_blue">Blå</string>
+    <string name="settings_bubble_color_green">Grön</string>
+    <string name="settings_bubble_color_purple">Lila</string>
+    <string name="settings_bubble_color_orange">Orange</string>
+    <string name="settings_bubble_color_pink">Rosa</string>
+    <string name="chat_cd_show_all_reactions">Visa alla reaktioner</string>
+    <string name="circle_reactions_title">Reaktioner</string>
+    <string name="circle_reactions_close">Stäng</string>
+    <string name="chat_react_title">Reagera</string>
+    <string name="chat_react_with">Reagera med %1$s</string>
+    <string name="chat_remove_reaction">Ta bort reaktion</string>
+    <string name="chat_cd_reaction_from_contact">Reaktion från kontakt</string>
 </resources>

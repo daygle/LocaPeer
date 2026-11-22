@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d аймақ импортталды</string>
     <string name="geo_file_failed">Бұл файлды оқу немесе жазу мүмкін болмады</string>
     <string name="notif_geofence_subtitle_polygon">%1$s нүктесінде · көпбұрыш аймағы · %2$s</string>
+    <string name="contacts_cd_show_on_map">Картада көрсету</string>
+    <string name="settings_bubble_color">Көпіршік түсі</string>
+    <string name="settings_bubble_color_default">Әдепкі тақырып</string>
+    <string name="settings_bubble_color_blue">Көк</string>
+    <string name="settings_bubble_color_green">Жасыл</string>
+    <string name="settings_bubble_color_purple">Күлгін</string>
+    <string name="settings_bubble_color_orange">Қызғылт сары</string>
+    <string name="settings_bubble_color_pink">Қызғылт</string>
+    <string name="chat_cd_show_all_reactions">Барлық реакцияларды көрсету</string>
+    <string name="circle_reactions_title">Реакциялар</string>
+    <string name="circle_reactions_close">Жабу</string>
+    <string name="chat_react_title">Реакция қосу</string>
+    <string name="chat_react_with">%1$s арқылы реакция қосу</string>
+    <string name="chat_remove_reaction">Реакцияны жою</string>
+    <string name="chat_cd_reaction_from_contact">Байланыс реакциясы</string>
 </resources>

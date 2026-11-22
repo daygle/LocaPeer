@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d മേഖലകൾ ഇറക്കുമതി ചെയ്തു</string>
     <string name="geo_file_failed">ആ ഫയൽ വായിക്കാനോ എഴുതാനോ കഴിഞ്ഞില്ല</string>
     <string name="notif_geofence_subtitle_polygon">%1$s-ൽ · ബഹുഭുജ മേഖല · %2$s</string>
+    <string name="contacts_cd_show_on_map">മാപ്പിൽ കാണിക്കുക</string>
+    <string name="settings_bubble_color">ബബിൾ നിറം</string>
+    <string name="settings_bubble_color_default">ഡിഫോൾട്ട് തീം</string>
+    <string name="settings_bubble_color_blue">നീല</string>
+    <string name="settings_bubble_color_green">പച്ച</string>
+    <string name="settings_bubble_color_purple">പർപ്പിൾ</string>
+    <string name="settings_bubble_color_orange">ഓറഞ്ച്</string>
+    <string name="settings_bubble_color_pink">പിങ്ക്</string>
+    <string name="chat_cd_show_all_reactions">എല്ലാ പ്രതികരണങ്ങളും കാണിക്കുക</string>
+    <string name="circle_reactions_title">പ്രതികരണങ്ങൾ</string>
+    <string name="circle_reactions_close">അടയ്ക്കുക</string>
+    <string name="chat_react_title">പ്രതികരിക്കുക</string>
+    <string name="chat_react_with">%1$s ഉപയോഗിച്ച് പ്രതികരിക്കുക</string>
+    <string name="chat_remove_reaction">പ്രതികരണം നീക്കുക</string>
+    <string name="chat_cd_reaction_from_contact">കോൺടാക്റ്റിൽ നിന്നുള്ള പ്രതികരണം</string>
 </resources>

@@ -991,4 +991,19 @@
     <string name="geo_import_done">%1$d kawasan diimport</string>
     <string name="geo_file_failed">Fail itu tidak dapat dibaca atau ditulis</string>
     <string name="notif_geofence_subtitle_polygon">di %1$s · kawasan poligon · %2$s</string>
+    <string name="contacts_cd_show_on_map">Tunjuk pada peta</string>
+    <string name="settings_bubble_color">Warna gelembung</string>
+    <string name="settings_bubble_color_default">Tema lalai</string>
+    <string name="settings_bubble_color_blue">Biru</string>
+    <string name="settings_bubble_color_green">Hijau</string>
+    <string name="settings_bubble_color_purple">Ungu</string>
+    <string name="settings_bubble_color_orange">Jingga</string>
+    <string name="settings_bubble_color_pink">Merah jambu</string>
+    <string name="chat_cd_show_all_reactions">Tunjuk semua tindak balas</string>
+    <string name="circle_reactions_title">Tindak balas</string>
+    <string name="circle_reactions_close">Tutup</string>
+    <string name="chat_react_title">Bertindak balas</string>
+    <string name="chat_react_with">Bertindak balas dengan %1$s</string>
+    <string name="chat_remove_reaction">Buang tindak balas</string>
+    <string name="chat_cd_reaction_from_contact">Tindak balas daripada kenalan</string>
 </resources>

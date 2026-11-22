@@ -991,4 +991,19 @@
     <string name="geo_import_done">นำเข้า %1$d พื้นที่แล้ว</string>
     <string name="geo_file_failed">ไม่สามารถอ่านหรือเขียนไฟล์นั้นได้</string>
     <string name="notif_geofence_subtitle_polygon">ที่ %1$s · พื้นที่รูปหลายเหลี่ยม · %2$s</string>
+    <string name="contacts_cd_show_on_map">แสดงบนแผนที่</string>
+    <string name="settings_bubble_color">สีของบับเบิล</string>
+    <string name="settings_bubble_color_default">ธีมเริ่มต้น</string>
+    <string name="settings_bubble_color_blue">น้ำเงิน</string>
+    <string name="settings_bubble_color_green">เขียว</string>
+    <string name="settings_bubble_color_purple">ม่วง</string>
+    <string name="settings_bubble_color_orange">ส้ม</string>
+    <string name="settings_bubble_color_pink">ชมพู</string>
+    <string name="chat_cd_show_all_reactions">แสดงรีแอ็กชันทั้งหมด</string>
+    <string name="circle_reactions_title">รีแอ็กชัน</string>
+    <string name="circle_reactions_close">ปิด</string>
+    <string name="chat_react_title">ตอบสนอง</string>
+    <string name="chat_react_with">ตอบสนองด้วย %1$s</string>
+    <string name="chat_remove_reaction">ลบรีแอ็กชัน</string>
+    <string name="chat_cd_reaction_from_contact">รีแอ็กชันจากผู้ติดต่อ</string>
 </resources>

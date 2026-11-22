@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d பகுதிகள் இறக்குமதி செய்யப்பட்டன</string>
     <string name="geo_file_failed">அந்தக் கோப்பைப் படிக்கவோ எழுதவோ முடியவில்லை</string>
     <string name="notif_geofence_subtitle_polygon">%1$s இல் · பலகோணப் பகுதி · %2$s</string>
+    <string name="contacts_cd_show_on_map">வரைபடத்தில் காட்டு</string>
+    <string name="settings_bubble_color">குமிழ் நிறம்</string>
+    <string name="settings_bubble_color_default">இயல்புநிலை தீம்</string>
+    <string name="settings_bubble_color_blue">நீலம்</string>
+    <string name="settings_bubble_color_green">பச்சை</string>
+    <string name="settings_bubble_color_purple">ஊதா</string>
+    <string name="settings_bubble_color_orange">ஆரஞ்சு</string>
+    <string name="settings_bubble_color_pink">இளஞ்சிவப்பு</string>
+    <string name="chat_cd_show_all_reactions">அனைத்து எதிர்வினைகளையும் காட்டு</string>
+    <string name="circle_reactions_title">எதிர்வினைகள்</string>
+    <string name="circle_reactions_close">மூடு</string>
+    <string name="chat_react_title">எதிர்வினையாற்று</string>
+    <string name="chat_react_with">%1$s உடன் எதிர்வினையாற்று</string>
+    <string name="chat_remove_reaction">எதிர்வினையை நீக்கு</string>
+    <string name="chat_cd_reaction_from_contact">தொடர்பிலிருந்து எதிர்வினை</string>
 </resources>

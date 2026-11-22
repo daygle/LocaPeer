@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d क्षेत्रे आयात झाली</string>
     <string name="geo_file_failed">ती फाइल वाचता किंवा लिहिता आली नाही</string>
     <string name="notif_geofence_subtitle_polygon">%1$s वर · बहुभुज क्षेत्र · %2$s</string>
+    <string name="contacts_cd_show_on_map">नकाशावर दाखवा</string>
+    <string name="settings_bubble_color">बबल रंग</string>
+    <string name="settings_bubble_color_default">थीम डीफॉल्ट</string>
+    <string name="settings_bubble_color_blue">निळा</string>
+    <string name="settings_bubble_color_green">हिरवा</string>
+    <string name="settings_bubble_color_purple">जांभळा</string>
+    <string name="settings_bubble_color_orange">नारिंगी</string>
+    <string name="settings_bubble_color_pink">गुलाबी</string>
+    <string name="chat_cd_show_all_reactions">सर्व प्रतिक्रिया दाखवा</string>
+    <string name="circle_reactions_title">प्रतिक्रिया</string>
+    <string name="circle_reactions_close">बंद करा</string>
+    <string name="chat_react_title">प्रतिक्रिया द्या</string>
+    <string name="chat_react_with">%1$s ने प्रतिक्रिया द्या</string>
+    <string name="chat_remove_reaction">प्रतिक्रिया काढा</string>
+    <string name="chat_cd_reaction_from_contact">संपर्काकडून प्रतिक्रिया</string>
 </resources>

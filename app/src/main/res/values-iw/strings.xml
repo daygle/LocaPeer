@@ -1022,4 +1022,19 @@
     <string name="geo_import_done">יובאו %1$d אזורים</string>
     <string name="geo_file_failed">לא ניתן לקרוא או לכתוב את הקובץ</string>
     <string name="notif_geofence_subtitle_polygon">ב-%1$s · אזור מצולע · %2$s</string>
+    <string name="contacts_cd_show_on_map">הצג במפה</string>
+    <string name="settings_bubble_color">צבע הבועה</string>
+    <string name="settings_bubble_color_default">ערכת נושא ברירת מחדל</string>
+    <string name="settings_bubble_color_blue">כחול</string>
+    <string name="settings_bubble_color_green">ירוק</string>
+    <string name="settings_bubble_color_purple">סגול</string>
+    <string name="settings_bubble_color_orange">כתום</string>
+    <string name="settings_bubble_color_pink">ורוד</string>
+    <string name="chat_cd_show_all_reactions">הצג את כל התגובות</string>
+    <string name="circle_reactions_title">תגובות</string>
+    <string name="circle_reactions_close">סגור</string>
+    <string name="chat_react_title">הגב</string>
+    <string name="chat_react_with">הגב עם %1$s</string>
+    <string name="chat_remove_reaction">הסר תגובה</string>
+    <string name="chat_cd_reaction_from_contact">תגובה מהאיש קשר</string>
 </resources>

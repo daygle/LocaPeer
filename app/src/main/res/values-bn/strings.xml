@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$dটি এলাকা আমদানি হয়েছে</string>
     <string name="geo_file_failed">ফাইলটি পড়া বা লেখা যায়নি</string>
     <string name="notif_geofence_subtitle_polygon">%1$s-এ · বহুভুজ এলাকা · %2$s</string>
+    <string name="contacts_cd_show_on_map">মানচিত্রে দেখান</string>
+    <string name="settings_bubble_color">বাবলের রঙ</string>
+    <string name="settings_bubble_color_default">থিম ডিফল্ট</string>
+    <string name="settings_bubble_color_blue">নীল</string>
+    <string name="settings_bubble_color_green">সবুজ</string>
+    <string name="settings_bubble_color_purple">বেগুনি</string>
+    <string name="settings_bubble_color_orange">কমলা</string>
+    <string name="settings_bubble_color_pink">গোলাপি</string>
+    <string name="chat_cd_show_all_reactions">সব প্রতিক্রিয়া দেখান</string>
+    <string name="circle_reactions_title">প্রতিক্রিয়া</string>
+    <string name="circle_reactions_close">বন্ধ করুন</string>
+    <string name="chat_react_title">প্রতিক্রিয়া জানান</string>
+    <string name="chat_react_with">%1$s দিয়ে প্রতিক্রিয়া জানান</string>
+    <string name="chat_remove_reaction">প্রতিক্রিয়া সরান</string>
+    <string name="chat_cd_reaction_from_contact">পরিচিতির প্রতিক্রিয়া</string>
 </resources>

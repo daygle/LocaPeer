@@ -1007,4 +1007,19 @@
     <string name="geo_import_done">%1$d علاقے درآمد ہوئے</string>
     <string name="geo_file_failed">وہ فائل پڑھی یا لکھی نہیں جا سکی</string>
     <string name="notif_geofence_subtitle_polygon">%1$s پر · کثیر الاضلاع علاقہ · %2$s</string>
+    <string name="contacts_cd_show_on_map">نقشے پر دکھائیں</string>
+    <string name="settings_bubble_color">بلبلے کا رنگ</string>
+    <string name="settings_bubble_color_default">ڈیفالٹ تھیم</string>
+    <string name="settings_bubble_color_blue">نیلا</string>
+    <string name="settings_bubble_color_green">سبز</string>
+    <string name="settings_bubble_color_purple">جامنی</string>
+    <string name="settings_bubble_color_orange">نارنجی</string>
+    <string name="settings_bubble_color_pink">گلابی</string>
+    <string name="chat_cd_show_all_reactions">تمام ردعمل دکھائیں</string>
+    <string name="circle_reactions_title">ردعمل</string>
+    <string name="circle_reactions_close">بند کریں</string>
+    <string name="chat_react_title">ردعمل دیں</string>
+    <string name="chat_react_with">%1$s کے ساتھ ردعمل دیں</string>
+    <string name="chat_remove_reaction">ردعمل ہٹائیں</string>
+    <string name="chat_cd_reaction_from_contact">رابطے کی طرف سے ردعمل</string>
 </resources>

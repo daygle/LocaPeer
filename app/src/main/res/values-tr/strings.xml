@@ -1006,4 +1006,19 @@
     <string name="geo_import_done">%1$d alan içe aktarıldı</string>
     <string name="geo_file_failed">Bu dosya okunamadı veya yazılamadı</string>
     <string name="notif_geofence_subtitle_polygon">%1$s · çokgen alanı · %2$s</string>
+    <string name="contacts_cd_show_on_map">Haritada göster</string>
+    <string name="settings_bubble_color">Balon rengi</string>
+    <string name="settings_bubble_color_default">Varsayılan tema</string>
+    <string name="settings_bubble_color_blue">Mavi</string>
+    <string name="settings_bubble_color_green">Yeşil</string>
+    <string name="settings_bubble_color_purple">Mor</string>
+    <string name="settings_bubble_color_orange">Turuncu</string>
+    <string name="settings_bubble_color_pink">Pembe</string>
+    <string name="chat_cd_show_all_reactions">Tüm tepkileri göster</string>
+    <string name="circle_reactions_title">Tepkiler</string>
+    <string name="circle_reactions_close">Kapat</string>
+    <string name="chat_react_title">Tepki ver</string>
+    <string name="chat_react_with">%1$s ile tepki ver</string>
+    <string name="chat_remove_reaction">Tepkiyi kaldır</string>
+    <string name="chat_cd_reaction_from_contact">Kişiden gelen tepki</string>
 </resources>

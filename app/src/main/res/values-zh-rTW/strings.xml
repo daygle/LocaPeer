@@ -987,4 +987,19 @@
     <string name="geo_import_done">已匯入 %1$d 個區域</string>
     <string name="geo_file_failed">無法讀取或寫入該檔案</string>
     <string name="notif_geofence_subtitle_polygon">於 %1$s · 多邊形區域 · %2$s</string>
+    <string name="contacts_cd_show_on_map">在地圖上顯示</string>
+    <string name="settings_bubble_color">氣泡顏色</string>
+    <string name="settings_bubble_color_default">主題預設</string>
+    <string name="settings_bubble_color_blue">藍色</string>
+    <string name="settings_bubble_color_green">綠色</string>
+    <string name="settings_bubble_color_purple">紫色</string>
+    <string name="settings_bubble_color_orange">橘色</string>
+    <string name="settings_bubble_color_pink">粉紅色</string>
+    <string name="chat_cd_show_all_reactions">顯示所有回應</string>
+    <string name="circle_reactions_title">回應</string>
+    <string name="circle_reactions_close">關閉</string>
+    <string name="chat_react_title">回應</string>
+    <string name="chat_react_with">以 %1$s 回應</string>
+    <string name="chat_remove_reaction">移除回應</string>
+    <string name="chat_cd_reaction_from_contact">來自聯絡人的回應</string>
 </resources>
