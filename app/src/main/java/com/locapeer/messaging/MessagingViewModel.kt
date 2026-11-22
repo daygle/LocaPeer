@@ -48,12 +48,14 @@ enum class SortOrder { DATE, NAME, UNREAD }
 class MessagingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val messageDao: MessageDao,
+    private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val peerDao: PeerDao,
     private val circleDao: CircleDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient,
     private val peerManager: com.locapeer.peer.PeerManager,
+    private val heartbeatDao: com.locapeer.data.dao.HeartbeatDao,
     private val prefs: com.locapeer.settings.AppPreferences
 ) : ViewModel() {
 
@@ -132,6 +134,13 @@ class MessagingViewModel @Inject constructor(
         }
 
     fun observePeer(peerId: String): Flow<PeerEntity?> = peerDao.observePeer(peerId)
+
+    /** Latest location fix from the chat's contact, shown as "last seen" under their name. */
+    fun observeLastHeartbeat(peerId: String) = heartbeatDao.observeLatestHeartbeat(peerId)
+
+    /** Appearance settings; the chat screen reads [com.locapeer.settings.AppSettings.bubbleColor]. */
+    val appSettings: StateFlow<com.locapeer.settings.AppSettings?> = prefs.settings
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     val unreadCounts: StateFlow<Map<String, Int>> =
         unreadByPeer.stateIn(viewModelScope, SharingStarted.Lazily, emptyMap())
@@ -360,13 +369,17 @@ class MessagingViewModel @Inject constructor(
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val privBytes = crypto.hexToBytes(privHex)
                 val fullMembers = (members + pubHex).distinct()
+                // Generated before the envelope so every recipient stores the same logical id,
+                // which is what a later reaction targets (see [setReaction]).
+                val messageId = UUID.randomUUID().toString()
                 val envelope = GroupWire.encode(
                     GroupMessage(
                         gid = circleId,
                         gname = circle.name,
                         members = fullMembers,
                         text = content,
-                        creator = circle.creatorPubkey
+                        creator = circle.creatorPubkey,
+                        mid = messageId
                     ).withControl(circle, pubHex, privBytes)
                 )
                 // Capture each successfully built event id keyed by recipient pubkey while the
@@ -397,7 +410,7 @@ class MessagingViewModel @Inject constructor(
                 }
                 messageDao.insert(
                     MessageEntity(
-                        id = UUID.randomUUID().toString(),
+                        id = messageId,
                         peerId = circleId,
                         senderPublicKeyHex = pubHex,
                         content = content,
@@ -499,6 +512,8 @@ class MessagingViewModel @Inject constructor(
                 // circle after membership churn.
                 val fullMembers = (members + pubHex).distinct()
                 val innerMediaEnvelope = MediaWire.encode(media)
+                // Same logical-id scheme as [sendGroupMessage], so media rows are reactable too.
+                val messageId = UUID.randomUUID().toString()
                 val outerGroupEnvelope = GroupWire.encode(
                     GroupMessage(
                         gid = circleId,
@@ -506,6 +521,7 @@ class MessagingViewModel @Inject constructor(
                         members = fullMembers,
                         text = innerMediaEnvelope,
                         creator = circle.creatorPubkey,
+                        mid = messageId
                     ).withControl(circle, pubHex, privBytes)
                 )
                 // Same per-member event-id capture as [sendGroupMessage] - the map is what
@@ -532,7 +548,7 @@ class MessagingViewModel @Inject constructor(
                 }
                 messageDao.insert(
                     MessageEntity(
-                        id = UUID.randomUUID().toString(),
+                        id = messageId,
                         peerId = circleId,
                         senderPublicKeyHex = pubHex,
                         content = previewText,
@@ -557,9 +573,96 @@ class MessagingViewModel @Inject constructor(
 
     fun getMessages(peerId: String) = messageDao.getMessagesForPeer(peerId)
 
+    /**
+     * Set (or clear, when [emoji] is null) this user's reaction on a message. The row updates
+     * locally first, then the same reaction is published so the contact - or every circle
+     * member - sees it on their copy of the message.
+     */
+    fun setReaction(msg: MessageEntity, emoji: String?) {
+        viewModelScope.launch {
+            messageDao.setReaction(msg.id, emoji)
+            if (msg.groupId != null) {
+                // Circles keep one row per member, so several people can react to the same message
+                // and every bubble can name who reacted. The column above stays in sync purely so
+                // the long-press sheet can show which emoji this device already picked.
+                val (_, pubHex) = keyManager.ensureKeypair()
+                if (emoji == null) {
+                    messageReactionDao.delete(msg.id, pubHex)
+                } else {
+                    messageReactionDao.upsert(
+                        com.locapeer.data.entity.MessageReactionEntity(
+                            messageId = msg.id,
+                            reactorPubkey = pubHex,
+                            emoji = emoji,
+                            updatedAt = System.currentTimeMillis()
+                        )
+                    )
+                }
+            }
+            sendReaction(msg, emoji)
+        }
+    }
+
+    /** Circle reactions for every message in [circleId], keyed by message id. */
+    fun observeGroupReactions(
+        circleId: String
+    ): Flow<Map<String, List<com.locapeer.data.dao.MessageReactionWithName>>> =
+        messageReactionDao.observeForThread(circleId)
+            .map { rows -> rows.groupBy { it.messageId } }
+
+    /**
+     * Publish a reaction as an encrypted [NostrEventKind.MESSAGE_REACTION] event. 1:1 messages are
+     * addressed by their Nostr event id; circle messages by the author's logical id, which every
+     * member stores, and are fanned out to each member like the message itself.
+     */
+    private suspend fun sendReaction(msg: MessageEntity, emoji: String?) {
+        try {
+            val groupId = msg.groupId
+            // Own circle rows keep the logical id as their own id; a received circle row carries it
+            // in remoteMessageId (null for messages sent by clients that predate reactions).
+            val targetId = if (groupId != null) {
+                msg.remoteMessageId ?: msg.id.takeIf { msg.isMine }
+            } else {
+                // Not published yet (still SENDING): the peer has no id to match, so stay local.
+                msg.nostrEventId
+            }
+            if (targetId.isNullOrBlank()) return
+            val payload = json.encodeToString(ReactionPayload(targetId, emoji ?: "", groupId))
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val privBytes = crypto.hexToBytes(privHex)
+            val recipients = if (groupId != null) {
+                circleDao.getMemberPubkeys(groupId).filter { it != pubHex }
+            } else {
+                listOf(msg.peerId)
+            }
+            withContext(Dispatchers.Default) {
+                recipients.forEach { recipientPub ->
+                    try {
+                        val encrypted = crypto.nip44Encrypt(privBytes, recipientPub, payload)
+                        val event = NostrEvent.build(
+                            privKeyHex = privHex,
+                            pubKeyHex = pubHex,
+                            kind = NostrEventKind.MESSAGE_REACTION,
+                            content = encrypted,
+                            tags = listOf(listOf("p", recipientPub)),
+                            crypto = crypto
+                        )
+                        relayClient.publishEvent(event)
+                    } catch (e: Exception) {
+                        Log.e("MessagingViewModel", "reaction send to $recipientPub failed", e)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("MessagingViewModel", "sendReaction failed", e)
+        }
+    }
+
     fun deleteMessage(msg: MessageEntity) {
         viewModelScope.launch {
             messageDao.delete(msg)
+            // Reactions on the deleted row would otherwise linger as orphans.
+            messageReactionDao.deleteOrphans()
             // Drop any decrypted copy of this message's media staged in the cache.
             MediaCache.clearDecryptedMedia(context)
         }

@@ -1032,6 +1032,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.setUseDynamicColor(use) }
     }
 
+    fun setBubbleColor(id: String) {
+        viewModelScope.launch { prefs.setBubbleColor(id) }
+    }
+
     fun stopTemporaryShare(peerDeviceId: String) {
         viewModelScope.launch {
             sharingConfigDao.setTemporaryShareEndsAt(peerDeviceId, null)

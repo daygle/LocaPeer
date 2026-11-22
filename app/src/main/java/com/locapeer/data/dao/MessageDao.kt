@@ -50,6 +50,25 @@ interface MessageDao {
     @Query("DELETE FROM messages WHERE id = :messageId")
     suspend fun deleteById(messageId: String)
 
+    /** Set (or clear, with null) the local reaction on a single message. */
+    @Query("UPDATE messages SET reaction = :reaction WHERE id = :messageId")
+    suspend fun setReaction(messageId: String, reaction: String?)
+
+    /** Set (or clear, with null) the reaction the other participant put on a message. */
+    @Query("UPDATE messages SET peerReaction = :reaction WHERE id = :messageId")
+    suspend fun setPeerReaction(messageId: String, reaction: String?)
+
+    /**
+     * Resolve the message a wire reaction targets. [targetId] is a Nostr event id for 1:1 messages
+     * and the author's logical id for circle messages - which is either the row's own id (author's
+     * copy) or [MessageEntity.remoteMessageId] (everyone else's copy).
+     */
+    @Query(
+        "SELECT * FROM messages WHERE id = :targetId OR nostrEventId = :targetId " +
+            "OR remoteMessageId = :targetId LIMIT 1"
+    )
+    suspend fun findByWireTarget(targetId: String): MessageEntity?
+
     @Query("DELETE FROM messages WHERE timestamp < :before")
     suspend fun deleteOlderThan(before: Long)
 

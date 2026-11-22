@@ -63,7 +63,25 @@ data class MessageEntity(
     /** For FILE rows: the original display name (e.g. "notes.pdf"), shown on the bubble and used on open. */
     val mediaFilename: String? = null,
     /** For FILE rows: the MIME type (e.g. "application/pdf"), used to launch the right viewer on open. */
-    val mediaMimeType: String? = null
+    val mediaMimeType: String? = null,
+    /**
+     * A single emoji the local user attached to this message (e.g. "👍"), or null.
+     * Stored per message on this device only: reactions are a local annotation and are not
+     * published to the contact or the relay.
+     */
+    val reaction: String? = null,
+    /**
+     * Emoji reaction the OTHER participant put on this message, delivered over the wire as a
+     * [com.locapeer.messaging.ReactionPayload]. In a circle the last received reaction wins, so
+     * this holds one emoji rather than a per-member map.
+     */
+    val peerReaction: String? = null,
+    /**
+     * Circle rows only: the author's logical message id ([com.locapeer.messaging.GroupMessage.mid])
+     * for a message received from another member. Rows the user authored keep their own id, so a
+     * reaction can target either side by the same value.
+     */
+    val remoteMessageId: String? = null
 )
 
 /** Values for [MessageEntity.contentType]. Plain strings (not an enum) to keep the Room column simple. */

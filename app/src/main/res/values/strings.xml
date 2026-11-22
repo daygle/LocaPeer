@@ -557,6 +557,13 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_dynamic_color">Material You Colours</string>
     <string name="settings_dynamic_color_subtitle">Use colours from your wallpaper (Android 12+)</string>
+    <string name="settings_bubble_color">Bubble Colour</string>
+    <string name="settings_bubble_color_default">Theme Default</string>
+    <string name="settings_bubble_color_blue">Blue</string>
+    <string name="settings_bubble_color_green">Green</string>
+    <string name="settings_bubble_color_purple">Purple</string>
+    <string name="settings_bubble_color_orange">Orange</string>
+    <string name="settings_bubble_color_pink">Pink</string>
 
     <!-- Queued messages (relay outbox) -->
     <string name="settings_queued_messages">Queued Messages</string>
@@ -622,6 +629,10 @@
     <string name="chat_cd_share_location">Share Location</string>
     <string name="chat_input_placeholder">Message…</string>
     <string name="chat_cd_send">Send</string>
+    <string name="chat_react_title">React</string>
+    <string name="chat_react_with">React with %1$s</string>
+    <string name="chat_remove_reaction">Remove reaction</string>
+    <string name="chat_cd_reaction_from_contact">Reaction from contact</string>
 
     <string name="common_close">Close</string>
 

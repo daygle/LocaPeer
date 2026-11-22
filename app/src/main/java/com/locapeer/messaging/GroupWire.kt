@@ -32,7 +32,13 @@ data class GroupMessage(
     /** Creator-signed version of [gname] + [members] (see [GroupControl]); 0 = unsigned. */
     val cver: Long = 0,
     /** Creator's BIP-340 signature over that version, as 128 hex chars; empty when unsigned. */
-    val csig: String = ""
+    val csig: String = "",
+    /**
+     * Author's logical message id (a UUID). Every recipient stores it, so a reaction can target the
+     * same message on every device even though each member receives a differently-signed copy with
+     * its own event id. Empty on messages from clients that predate reactions.
+     */
+    val mid: String = ""
 )
 
 object GroupWire {
@@ -49,8 +55,9 @@ object GroupWire {
     internal fun isValid(message: GroupMessage): Boolean =
         circleIdPattern.matches(message.gid) && message.members.size in 1..256 &&
             message.members.all { pubkeyPattern.matches(it) } &&
-            (message.creator.isEmpty() || pubkeyPattern.matches(message.creator)) &&
-            message.cver >= 0 && (message.csig.isEmpty() || sigPattern.matches(message.csig))
+            (            message.creator.isEmpty() || pubkeyPattern.matches(message.creator)) &&
+            message.cver >= 0 && (message.csig.isEmpty() || sigPattern.matches(message.csig)) &&
+            message.mid.length <= 64
 
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 

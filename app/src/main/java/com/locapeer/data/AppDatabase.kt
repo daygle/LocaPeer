@@ -18,9 +18,10 @@ import com.locapeer.data.entity.*
         PendingRequestEntity::class,
         CircleEntity::class,
         CircleMemberEntity::class,
-        ContactAddReceiptEntity::class
+        ContactAddReceiptEntity::class,
+        MessageReactionEntity::class
     ],
-    version = 16,
+    version = 17,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -28,6 +29,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun peerDao(): PeerDao
     abstract fun heartbeatDao(): HeartbeatDao
     abstract fun messageDao(): MessageDao
+    abstract fun messageReactionDao(): MessageReactionDao
     abstract fun geofenceDao(): GeofenceDao
     abstract fun geofenceAssignmentDao(): GeofenceAssignmentDao
     abstract fun proximityAlertDao(): ProximityAlertDao

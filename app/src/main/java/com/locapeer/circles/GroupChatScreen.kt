@@ -24,6 +24,9 @@ import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.NotificationsOff
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.BubbleColor
+import com.locapeer.ui.theme.bubbleBackground
+import com.locapeer.ui.theme.bubbleContent
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -37,6 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
+import com.locapeer.data.dao.MessageReactionWithName
 import com.locapeer.data.entity.MessageEntity
 import com.locapeer.data.entity.MessageType
 import com.locapeer.messaging.ChatInputBar
@@ -45,7 +49,9 @@ import com.locapeer.messaging.ImageMessageContent
 import com.locapeer.messaging.ImageViewerDialog
 import com.locapeer.messaging.LocationPinCard
 import com.locapeer.messaging.MediaUtils
+import com.locapeer.messaging.MessageActionsSheet
 import com.locapeer.messaging.MessagingViewModel
+import com.locapeer.messaging.ReactionChip
 import com.locapeer.messaging.RecordTarget
 import com.locapeer.messaging.VoiceMessageContent
 import com.locapeer.messaging.detectLocationPin
@@ -81,6 +87,21 @@ fun GroupChatScreen(
     // Message the user is about to delete via long-press or left-swipe. Both gestures
     // converge on the same AlertDialog so the delete options stay identical to 1:1 chat.
     var pendingDeleteMsg by remember { mutableStateOf<MessageEntity?>(null) }
+    // Message whose long-press reaction/delete sheet is open. Same sheet as the 1:1 chat, so
+    // reactions work identically in circles (and are fanned out to every member).
+    var actionsMsg by remember { mutableStateOf<MessageEntity?>(null) }
+
+    actionsMsg?.let { msg ->
+        MessageActionsSheet(
+            currentReaction = msg.reaction,
+            onReact = { emoji ->
+                vm.setReaction(msg, if (msg.reaction == emoji) null else emoji)
+                actionsMsg = null
+            },
+            onDelete = { actionsMsg = null; pendingDeleteMsg = msg },
+            onDismiss = { actionsMsg = null }
+        )
+    }
     // Used by the full-screen image viewer dialog below. Persists across recompositions
     // but is screen-local; circles share no global viewer state with 1:1 chat (a viewer only
     // covers the chat that opened it).
@@ -88,6 +109,12 @@ fun GroupChatScreen(
     val listState = rememberLazyListState()
     val circleName = circle?.name ?: stringResource(R.string.circles_title)
     val mutedConversations by vm.mutedConversations.collectAsStateWithLifecycle()
+    // Same bubble colour preference as 1:1 chats, so the setting is consistent everywhere.
+    val appSettings by vm.appSettings.collectAsStateWithLifecycle()
+    val bubbleColor = BubbleColor.fromId(appSettings?.bubbleColor)
+    // Circle reactions: message id -> every member's emoji, with the reactor's name resolved.
+    val reactionsByMessage by remember(circleId) { vm.observeGroupReactions(circleId) }
+        .collectAsStateWithLifecycle(initialValue = emptyMap())
     val isCircleMuted = com.locapeer.settings.AppPreferences.circleMuteKey(circleId) in mutedConversations
 
     val context = LocalContext.current
@@ -406,8 +433,10 @@ fun GroupChatScreen(
                     // onLongPressRequest to flip pendingDeleteMsg, which surfaces the same
                     // AlertDialog ChatScreen uses for 1:1 messages. Identical UX on both
                     // surfaces - the wrapper is intentionally a near-clone.
-                    onLongPressRequest = { pendingDeleteMsg = msg },
+                    onLongPressRequest = { actionsMsg = msg },
                     onNavigateToMap = onNavigateToMap,
+                    bubbleColor = bubbleColor,
+                    reactions = reactionsByMessage[msg.id].orEmpty(),
                     // Single global playingMessageId in MessagingViewModel means a user can only
                     // hear one voice note at a time across 1:1 and circle chats - this is what we
                     // want so audio doesn't overlap.
@@ -439,6 +468,8 @@ fun GroupChatScreen(
 private fun GroupMessageBubble(
     msg: MessageEntity,
     senderName: String,
+    bubbleColor: BubbleColor = BubbleColor.DEFAULT,
+    reactions: List<MessageReactionWithName> = emptyList(),
     onNavigateToMap: (Double, Double) -> Unit,
     isPlaying: Boolean,
     onToggleAudio: (String) -> Unit,
@@ -446,21 +477,17 @@ private fun GroupMessageBubble(
     onOpenFile: () -> Unit,
 ) {
     val alignment = if (msg.isMine) Alignment.End else Alignment.Start
-    val bubbleColor = if (msg.isMine)
-        MaterialTheme.colorScheme.primaryContainer
-    else
-        MaterialTheme.colorScheme.surfaceVariant
-    val contentColor = if (msg.isMine)
-        MaterialTheme.colorScheme.onPrimaryContainer
-    else
-        MaterialTheme.colorScheme.onSurfaceVariant
+    val bubbleBg = bubbleBackground(msg.isMine, bubbleColor)
+    // Body and timestamp share this colour so both stay readable on the user-picked
+    // bubble colours as well as the theme default.
+    val contentColor = bubbleContent(msg.isMine, bubbleColor)
 
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = alignment) {
         Box(
             modifier = Modifier
                 .widthIn(max = 280.dp)
                 .background(
-                    bubbleColor,
+                    bubbleBg,
                     RoundedCornerShape(
                         topStart = 16.dp,
                         topEnd = 16.dp,
@@ -538,6 +565,14 @@ private fun GroupMessageBubble(
                     color = contentColor.copy(alpha = 0.7f),
                     modifier = Modifier.align(Alignment.End)
                 )
+                if (reactions.isNotEmpty()) {
+                    CircleReactionRow(
+                        reactions = reactions,
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(top = 4.dp)
+                    )
+                }
             }
         }
     }
@@ -545,6 +580,31 @@ private fun GroupMessageBubble(
 
 private fun formatTime(millis: Long): String =
     com.locapeer.util.DisplayFormat.timeFormat().format(Date(millis))
+
+/**
+ * One chip per distinct emoji with the members who picked it ("👍 Alex, Sam +1"), so a message
+ * several people reacted to stays readable inside the bubble's width.
+ */
+@Composable
+private fun CircleReactionRow(
+    reactions: List<MessageReactionWithName>,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        reactions.groupBy { it.emoji }.forEach { (emoji, rows) ->
+            val names = rows.map { it.reactorName.ifBlank { it.reactorPubkey.take(6) } }
+            val label = if (names.size <= 2) {
+                names.joinToString(", ")
+            } else {
+                names.take(2).joinToString(", ") + " +" + (names.size - 2)
+            }
+            ReactionChip(emoji = "$emoji $label")
+        }
+    }
+}
 
 /**
  * Wraps a [GroupMessageBubble] with `SwipeToDismissBox` (left-only) plus the bubble's own
@@ -563,7 +623,9 @@ private fun SwipeToDeleteGroupMessage(
     isPlaying: Boolean = false,
     onToggleAudio: (String) -> Unit = {},
     onViewImage: (String) -> Unit = {},
-    onOpenFile: () -> Unit = {}
+    onOpenFile: () -> Unit = {},
+    bubbleColor: BubbleColor = BubbleColor.DEFAULT,
+    reactions: List<MessageReactionWithName> = emptyList()
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
@@ -615,6 +677,8 @@ private fun SwipeToDeleteGroupMessage(
             GroupMessageBubble(
                 msg = msg,
                 senderName = senderName,
+                bubbleColor = bubbleColor,
+                reactions = reactions,
                 onNavigateToMap = onNavigateToMap,
                 isPlaying = isPlaying,
                 onToggleAudio = onToggleAudio,
