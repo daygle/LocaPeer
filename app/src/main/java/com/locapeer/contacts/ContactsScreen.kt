@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.ui.components.EmptyState
 import java.util.Locale
 
@@ -429,6 +430,15 @@ private fun ContactRow(
 ) {
     val hb = item.lastHeartbeat
     val canMessage = item.peer.messagingEnabled
+    // The map builds its pins from receive contacts only (PeerDao.getReceiveContacts), so a
+    // send-only contact has no pin to jump to - and a stored last location can outlive a role
+    // change to SEND, since heartbeats are never purged. Mirror the map's rule here so the
+    // button never opens a map where the contact has no pin (the camera would otherwise aim at
+    // their stale coordinates with nothing drawn there).
+    val canShowOnMap = hb != null && when (item.peer.locationRole) {
+        PeerEntity.ROLE_RECEIVE, PeerEntity.ROLE_SEND_RECEIVE -> true
+        else -> false
+    }
     var showOverflow by remember { mutableStateOf(false) }
 
     ListItem(
@@ -489,12 +499,13 @@ private fun ContactRow(
                         }
                     }
                     // Jump straight to this contact's pin on the map. Disabled (dimmed) until
-                    // the contact has shared a location, so the button never opens an empty map.
-                    IconButton(onClick = onShowOnMap, enabled = hb != null) {
+                    // the contact has shared a location with us, so the button never opens a
+                    // map that has no pin for them.
+                    IconButton(onClick = onShowOnMap, enabled = canShowOnMap) {
                         Icon(
                             Icons.Default.PinDrop,
                             contentDescription = stringResource(R.string.contacts_cd_show_on_map),
-                            tint = if (hb != null) MaterialTheme.colorScheme.primary
+                            tint = if (canShowOnMap) MaterialTheme.colorScheme.primary
                             else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.38f),
                             modifier = Modifier.size(22.dp)
                         )
