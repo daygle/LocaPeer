@@ -74,7 +74,6 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.core.net.toUri
 import android.util.Patterns
-import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -146,14 +145,24 @@ fun ChatScreen(
     }
 
     LaunchedEffect(peerId) { vm.markRead(peerId) }
+    // Count from the previous emission, so the first load can jump straight to the newest
+    // message while later arrivals only follow when the user is already at the bottom.
+    var previousMessageCount by remember(peerId) { mutableIntStateOf(0) }
     LaunchedEffect(messages.size) {
-        if (messages.isNotEmpty()) {
-            // Also mark messages arriving while the screen is open, otherwise a conversation the
-            // user is actively reading still accrues an unread badge (and withholds the read
-            // receipt) for later. Mirrors GroupChatScreen.
-            vm.markRead(peerId)
-            listState.animateScrollToItem(messages.size - 1)
+        if (messages.isEmpty()) return@LaunchedEffect
+        // Also mark messages arriving while the screen is open, otherwise a conversation the
+        // user is actively reading still accrues an unread badge (and withholds the read
+        // receipt) for later. Mirrors GroupChatScreen.
+        vm.markRead(peerId)
+        // Follow only from the bottom: every message used to yank the list down, so reading
+        // back through history was interrupted by any incoming message.
+        val nearBottom = listState.layoutInfo.visibleItemsInfo.lastOrNull()
+            ?.let { it.index >= messages.size - 3 } ?: false
+        when {
+            previousMessageCount == 0 -> listState.scrollToItem(messages.size - 1)
+            nearBottom -> listState.animateScrollToItem(messages.size - 1)
         }
+        previousMessageCount = messages.size
     }
 
     if (showDeleteConversationDialog) {
@@ -418,51 +427,11 @@ private fun SwipeToDeleteMessage(
     }
 
     if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
-            icon = { Icon(Icons.Default.Delete, contentDescription = null) },
-            title = { Text(stringResource(R.string.chat_delete_msg_title)) },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(stringResource(R.string.chat_delete_msg_message))
-
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
-                        supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
-                        modifier = Modifier.clickable {
-                            onDeleteLocal()
-                            showDeleteDialog = false
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-
-                    if (msg.isMine) {
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.chat_delete_from_contact)) },
-                            supportingContent = { Text(stringResource(R.string.chat_delete_from_contact_sub)) },
-                            modifier = Modifier.clickable {
-                                onDeleteRemote()
-                                showDeleteDialog = false
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
-                            supportingContent = { Text(stringResource(R.string.chat_delete_both_sub)) },
-                            modifier = Modifier.clickable { 
-                                onDeleteLocal()
-                                onDeleteRemote()
-                                showDeleteDialog = false
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                    }
-                }
-            },
-            confirmButton = {},
-            dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) { Text(stringResource(R.string.common_cancel)) }
-            }
+        DeleteMessageDialog(
+            msg = msg,
+            onDeleteLocal = onDeleteLocal,
+            onDeleteRemote = onDeleteRemote,
+            onDismiss = { showDeleteDialog = false }
         )
     }
 
@@ -593,6 +562,57 @@ internal fun MessageActionsSheet(
     }
 }
 
+/**
+ * Delete options for one message: this device only, plus - for a message this device sent -
+ * remove it from the contact or from both sides (NIP-09 remote deletion is sender-only).
+ * Shared by the 1:1 and circle chats, which used to carry near-identical copies of this dialog
+ * whose wording could drift apart.
+ */
+@Composable
+internal fun DeleteMessageDialog(
+    msg: MessageEntity,
+    onDeleteLocal: () -> Unit,
+    onDeleteRemote: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = { Icon(Icons.Default.Delete, contentDescription = null) },
+        title = { Text(stringResource(R.string.chat_delete_msg_title)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(stringResource(R.string.chat_delete_msg_message))
+
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
+                    supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
+                    modifier = Modifier.clickable { onDeleteLocal(); onDismiss() },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
+
+                if (msg.isMine) {
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.chat_delete_from_contact)) },
+                        supportingContent = { Text(stringResource(R.string.chat_delete_from_contact_sub)) },
+                        modifier = Modifier.clickable { onDeleteRemote(); onDismiss() },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
+                        supportingContent = { Text(stringResource(R.string.chat_delete_both_sub)) },
+                        modifier = Modifier.clickable { onDeleteLocal(); onDeleteRemote(); onDismiss() },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            }
+        },
+        confirmButton = {},
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) }
+        }
+    )
+}
+
 /** Small emoji badge shown at the bottom of a bubble for a reaction. */
 @Composable
 internal fun ReactionChip(
@@ -714,23 +734,35 @@ private fun MessageBubble(
                         horizontalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
                         Text(
-                            formatTime(msg.timestamp),
+                            com.locapeer.util.DisplayFormat.timeOfDay(msg.timestamp),
                             style = MaterialTheme.typography.labelSmall,
                             color = contentColor.copy(alpha = 0.75f)
                         )
-                        val (statusIcon, statusTint) = when (msg.deliveryState) {
-                            DeliveryState.SENDING.name ->
-                                Icons.Default.AccessTime to contentColor.copy(alpha = 0.75f)
-                            DeliveryState.SENT.name ->
-                                Icons.Default.Done to contentColor.copy(alpha = 0.75f)
-                            DeliveryState.READ.name ->
-                                Icons.Default.DoneAll to contentColor
+                        // The icon is tiny and the row is the only tap target, so the state has
+                        // to be announced: without a description a screen-reader user gets the
+                        // timestamp only and never learns whether the message was delivered.
+                        val (statusIcon, statusTint, statusLabel) = when (msg.deliveryState) {
+                            DeliveryState.SENDING.name -> Triple(
+                                Icons.Default.AccessTime, contentColor.copy(alpha = 0.75f),
+                                R.string.chat_delivery_state_sending
+                            )
+                            DeliveryState.SENT.name -> Triple(
+                                Icons.Default.Done, contentColor.copy(alpha = 0.75f),
+                                R.string.chat_delivery_state_sent
+                            )
+                            DeliveryState.READ.name -> Triple(
+                                Icons.Default.DoneAll, contentColor,
+                                R.string.chat_delivery_state_read
+                            )
                             else -> // DELIVERED
-                                Icons.Default.DoneAll to contentColor.copy(alpha = 0.75f)
+                                Triple(
+                                    Icons.Default.DoneAll, contentColor.copy(alpha = 0.75f),
+                                    R.string.chat_delivery_state_delivered
+                                )
                         }
                         Icon(
                             statusIcon,
-                            contentDescription = null,
+                            contentDescription = stringResource(statusLabel),
                             modifier = Modifier.size(12.dp),
                             tint = statusTint
                         )
@@ -740,7 +772,7 @@ private fun MessageBubble(
                     }
                 } else {
                     Text(
-                        formatTime(msg.timestamp),
+                        com.locapeer.util.DisplayFormat.timeOfDay(msg.timestamp),
                         style = MaterialTheme.typography.labelSmall,
                         color = contentColor.copy(alpha = 0.75f),
                         modifier = Modifier.align(Alignment.End)
@@ -1068,8 +1100,6 @@ private fun formatDuration(ms: Long): String {
     return "%d:%02d".format(totalSec / 60, totalSec % 60)
 }
 
-private fun formatTime(millis: Long): String =
-    com.locapeer.util.DisplayFormat.timeFormat().format(Date(millis))
 
 /**
  * Detects a shared-location message by finding the first OpenStreetMap URL carrying mlat/mlon

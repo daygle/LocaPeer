@@ -53,6 +53,11 @@ object DisplayFormat {
     fun timeFormat(withSeconds: Boolean = false): SimpleDateFormat =
         SimpleDateFormat(timePattern(withSeconds), locale())
 
+    /** Wall-clock time of a message or conversation timestamp, in the user's clock format.
+     *  Shared by the chat bubbles and the conversation/circle rows, which each used to carry a
+     *  private copy of this one-liner. */
+    fun timeOfDay(millis: Long): String = timeFormat().format(java.util.Date(millis))
+
     /** Speed value converted from metres/second to the user's unit, e.g. "12 km/h" or "8 mph". */
     fun speedValue(speedMps: Float): String {
         val converted = if (useImperialSpeed) speedMps * 2.236936f else speedMps * 3.6f

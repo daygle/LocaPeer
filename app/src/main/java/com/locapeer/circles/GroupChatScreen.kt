@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
@@ -46,6 +47,7 @@ import com.locapeer.data.dao.MessageReactionWithName
 import com.locapeer.data.entity.MessageEntity
 import com.locapeer.data.entity.MessageType
 import com.locapeer.messaging.ChatInputBar
+import com.locapeer.messaging.DeleteMessageDialog
 import com.locapeer.messaging.FileMessageContent
 import com.locapeer.messaging.ImageMessageContent
 import com.locapeer.messaging.ImageViewerDialog
@@ -58,7 +60,6 @@ import com.locapeer.messaging.RecordTarget
 import com.locapeer.messaging.VoiceMessageContent
 import com.locapeer.messaging.detectLocationPin
 import android.widget.Toast
-import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -158,13 +159,23 @@ fun GroupChatScreen(
     }
 
     LaunchedEffect(circleId) { vm.markReadGroup(circleId) }
+    // Count from the previous emission, so the first load can jump straight to the newest
+    // message while later arrivals only follow when the user is already at the bottom.
+    var previousMessageCount by remember(circleId) { mutableIntStateOf(0) }
     LaunchedEffect(messages.size) {
-        if (messages.isNotEmpty()) {
-            // Also mark messages arriving while the screen is open, otherwise a circle the
-            // user is actively reading still accrues an unread badge for later.
-            vm.markReadGroup(circleId)
-            listState.animateScrollToItem(messages.size - 1)
+        if (messages.isEmpty()) return@LaunchedEffect
+        // Also mark messages arriving while the screen is open, otherwise a circle the user is
+        // actively reading still accrues an unread badge for later.
+        vm.markReadGroup(circleId)
+        // Follow only from the bottom: every message used to yank the list down, so reading back
+        // through the circle's history was interrupted by any incoming message.
+        val nearBottom = listState.layoutInfo.visibleItemsInfo.lastOrNull()
+            ?.let { it.index >= messages.size - 3 } ?: false
+        when {
+            previousMessageCount == 0 -> listState.scrollToItem(messages.size - 1)
+            nearBottom -> listState.animateScrollToItem(messages.size - 1)
         }
+        previousMessageCount = messages.size
     }
 
     if (showDeleteDialog) {
@@ -227,62 +238,16 @@ fun GroupChatScreen(
         )
     }
 
-    // Long-press or left-swipe on a circle message bubble surfaces the same AlertDialog that
-    // ChatScreen uses for 1:1 messages. Reusing the existing strings keeps the UX consistent
-    // across both surfaces - "Delete from contact" / "Delete both" only show for messages I sent
-    // (NIP-09 remote deletion is sender-only).
+    // Long-press or left-swipe opens the shared 1:1 delete dialog, so both chats offer the same
+    // options and wording. "Delete from contact" / "Delete both" only show for messages I sent
+    // (NIP-09 remote deletion is sender-only); a row with no tracked relay event id falls through
+    // to deleteMessageFromRemote's defensive no-op.
     pendingDeleteMsg?.let { msg ->
-        AlertDialog(
-            onDismissRequest = { pendingDeleteMsg = null },
-            icon = { Icon(Icons.Default.Delete, contentDescription = null) },
-            title = { Text(stringResource(R.string.chat_delete_msg_title)) },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(stringResource(R.string.chat_delete_msg_message))
-
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
-                        supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
-                        modifier = Modifier.clickable {
-                            vm.deleteMessage(msg)
-                            pendingDeleteMsg = null
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-
-                    // Remote / NIP-09 deletion is sender-only - we can only ask the recipient(s)
-                    // to drop a message we originally signed. Gated on `isMine` alone so the menu
-                    // is identical to ChatScreen's 1:1 long-press menu. Rows with no tracked relay
-                    // event id (pre-v9 circle messages, or a self-only circle whose fanout had
-                    // zero non-self targets) fall through to [vm.deleteMessageFromRemote]'s
-                    // defensive no-op, same as a 1:1 row whose nostrEventId never got stamped.
-                    if (msg.isMine) {
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.chat_delete_from_contact)) },
-                            supportingContent = { Text(stringResource(R.string.chat_delete_from_contact_sub)) },
-                            modifier = Modifier.clickable {
-                                vm.deleteMessageFromRemote(msg)
-                                pendingDeleteMsg = null
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
-                            supportingContent = { Text(stringResource(R.string.chat_delete_both_sub)) },
-                            modifier = Modifier.clickable {
-                                vm.deleteMessage(msg)
-                                vm.deleteMessageFromRemote(msg)
-                                pendingDeleteMsg = null
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                    }
-                }
-            },
-            confirmButton = {},
-            dismissButton = {
-                TextButton(onClick = { pendingDeleteMsg = null }) { Text(stringResource(R.string.common_cancel)) }
-            }
+        DeleteMessageDialog(
+            msg = msg,
+            onDeleteLocal = { vm.deleteMessage(msg) },
+            onDeleteRemote = { vm.deleteMessageFromRemote(msg) },
+            onDismiss = { pendingDeleteMsg = null }
         )
     }
 
@@ -310,12 +275,23 @@ fun GroupChatScreen(
                                 tint = MaterialTheme.colorScheme.onTertiaryContainer
                             )
                         }
-                        Column {
-                            Text(circleName, fontWeight = FontWeight.SemiBold, style = MaterialTheme.typography.titleMedium)
+                        // Weighted so the name has a bounded width to ellipsize into: inside a
+                        // Row a child is measured unbounded, so maxLines alone would still let a
+                        // long circle name squeeze the options menu off the bar.
+                        Column(modifier = Modifier.weight(1f, fill = false)) {
+                            Text(
+                                circleName,
+                                fontWeight = FontWeight.SemiBold,
+                                style = MaterialTheme.typography.titleMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
                             Text(
                                 stringResource(R.string.circles_member_count, members.size),
                                 style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
                     }
@@ -566,7 +542,7 @@ private fun GroupMessageBubble(
                     }
                 }
                 Text(
-                    formatTime(msg.timestamp),
+                    com.locapeer.util.DisplayFormat.timeOfDay(msg.timestamp),
                     style = MaterialTheme.typography.labelSmall,
                     color = contentColor.copy(alpha = 0.7f),
                     modifier = Modifier.align(Alignment.End)
@@ -593,9 +569,6 @@ private fun GroupMessageBubble(
         )
     }
 }
-
-private fun formatTime(millis: Long): String =
-    com.locapeer.util.DisplayFormat.timeFormat().format(Date(millis))
 
 /**
  * One chip per distinct emoji with the members who picked it ("👍 Alex, Sam +1"). The row wraps

@@ -55,7 +55,6 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.settings.AppPreferences
 import com.locapeer.ui.components.ConversationShimmerRow
 import com.locapeer.ui.components.EmptyState
-import java.util.Date
 
 private enum class LoadState { LOADING, EMPTY, CONTENT }
 
@@ -110,7 +109,8 @@ fun ConversationListScreen(
 
     // Switching tabs is treated as a "fresh context": drop any in-progress search and
     // selection mode, otherwise users would see a stale search bar / selection state
-    // on a list that no longer matches (circles don't search/sort).
+    // on a list that no longer matches. The query itself is shared screen state, so it is
+    // cleared rather than carried across tabs (search and sort do apply to every tab).
     LaunchedEffect(selectedTab) {
         selectedIds = emptySet()
         showSearch = false
@@ -303,8 +303,12 @@ fun ConversationListScreen(
                                     }
                                 }
                             }
-                            IconButton(onClick = { selectedIds = allCurrentIds }) {
-                                Icon(Icons.Default.CheckBoxOutlineBlank, contentDescription = stringResource(R.string.conv_cd_select_all))
+                            // Nothing to select on an empty/loading list: the button used to be
+                            // shown anyway and did nothing when tapped.
+                            if (allCurrentIds.isNotEmpty()) {
+                                IconButton(onClick = { selectedIds = allCurrentIds }) {
+                                    Icon(Icons.Default.CheckBoxOutlineBlank, contentDescription = stringResource(R.string.conv_cd_select_all))
+                                }
                             }
                         }
                     }
@@ -321,11 +325,13 @@ fun ConversationListScreen(
                         onValueChange = { vm.setSearchQuery(it) },
                         placeholder = { Text(stringResource(R.string.conv_search_placeholder)) },
                         singleLine = true,
-                        leadingIcon = { Icon(Icons.Default.Search, null) },
+                        leadingIcon = {
+                            Icon(Icons.Default.Search, contentDescription = stringResource(R.string.common_search))
+                        },
                         trailingIcon = {
                             if (searchQuery.isNotEmpty()) {
                                 IconButton(onClick = { vm.setSearchQuery("") }) {
-                                    Icon(Icons.Default.Close, null)
+                                    Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_close))
                                 }
                             }
                         },
@@ -665,7 +671,7 @@ private fun CircleRow(
                     val lastTs = group.lastMessage?.timestamp
                     if (lastTs != null) {
                         Text(
-                            formatTime(lastTs),
+                            com.locapeer.util.DisplayFormat.timeOfDay(lastTs),
                             style = MaterialTheme.typography.labelSmall,
                             color = if (group.unread > 0) MaterialTheme.colorScheme.primary
                                     else MaterialTheme.colorScheme.onSurfaceVariant
@@ -829,6 +835,7 @@ private fun ConversationRow(
 ) {
     val hasUnread = unreadCount > 0
     val isBlocked = !summary.peer.messagingEnabled
+    val haptic = LocalHapticFeedback.current
     ListItem(
         leadingContent = {
             Box(modifier = Modifier.size(48.dp)) {
@@ -895,7 +902,7 @@ private fun ConversationRow(
         trailingContent = {
             Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
-                    formatTime(summary.lastMessage.timestamp),
+                    com.locapeer.util.DisplayFormat.timeOfDay(summary.lastMessage.timestamp),
                     style = MaterialTheme.typography.labelSmall,
                     color = if (hasUnread) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -904,7 +911,15 @@ private fun ConversationRow(
                 }
             }
         },
-        modifier = Modifier.combinedClickable(onClick = onClick, onLongClick = onLongClick)
+        modifier = Modifier.combinedClickable(
+            onClick = onClick,
+            onLongClick = {
+                // Same confirmation the circle rows give: entering selection mode is a mode
+                // change, so acknowledge the long press instead of switching silently.
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                onLongClick()
+            }
+        )
     )
 }
 
@@ -979,6 +994,3 @@ private fun ContactPickerDialog(
         }
     )
 }
-
-private fun formatTime(millis: Long): String =
-    com.locapeer.util.DisplayFormat.timeFormat().format(Date(millis))
