@@ -59,15 +59,28 @@ interface MessageDao {
     suspend fun setPeerReaction(messageId: String, reaction: String?)
 
     /**
-     * Resolve the message a wire reaction targets. [targetId] is a Nostr event id for 1:1 messages
-     * and the author's logical id for circle messages - which is either the row's own id (author's
-     * copy) or [MessageEntity.remoteMessageId] (everyone else's copy).
+     * The 1:1 message a contact's reaction targets: addressed by its Nostr event id, and only
+     * within that contact's own thread (uses the nostrEventId index).
      */
     @Query(
-        "SELECT * FROM messages WHERE id = :targetId OR nostrEventId = :targetId " +
-            "OR remoteMessageId = :targetId LIMIT 1"
+        "SELECT * FROM messages WHERE nostrEventId = :targetId AND peerId = :peerId " +
+            "AND groupId IS NULL LIMIT 1"
     )
-    suspend fun findByWireTarget(targetId: String): MessageEntity?
+    suspend fun findDirectReactionTarget(targetId: String, peerId: String): MessageEntity?
+
+    /**
+     * The circle message a member's reaction targets, addressed by the author's logical id -
+     * either the row's own id (author's copy) or [MessageEntity.remoteMessageId] (everyone else's
+     * copy) - and only within that circle (uses the groupId index). The logical id is chosen by
+     * the sender, so on a clash the author's own row, then the earliest copy, wins: a member
+     * reusing another message's id cannot redirect reactions meant for the original.
+     */
+    @Query(
+        "SELECT * FROM messages WHERE groupId = :groupId " +
+            "AND (id = :targetId OR remoteMessageId = :targetId) " +
+            "ORDER BY (id = :targetId) DESC, timestamp ASC LIMIT 1"
+    )
+    suspend fun findCircleReactionTarget(targetId: String, groupId: String): MessageEntity?
 
     @Query("DELETE FROM messages WHERE timestamp < :before")
     suspend fun deleteOlderThan(before: Long)

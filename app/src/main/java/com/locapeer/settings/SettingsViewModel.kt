@@ -155,6 +155,8 @@ data class SettingsBackup(
     // resetting settings to defaults: a null means "not in this backup", never "off".
     val themeMode: String? = null,
     val useDynamicColor: Boolean? = null,
+    /** Own chat bubble colour, a [com.locapeer.ui.theme.BubbleColor] id. */
+    val bubbleColor: String? = null,
     val appLockEnabled: Boolean? = null,
     val appLockTimeoutSeconds: Int? = null,
     val mapStartingPoint: String? = null,
@@ -201,7 +203,8 @@ class SettingsViewModel @Inject constructor(
     private val supervisedModeManager: SupervisedModeManager,
     private val changeReporter: com.locapeer.supervised.SupervisionChangeReporter,
     private val workManager: WorkManager,
-    private val appDatabase: com.locapeer.data.AppDatabase
+    private val appDatabase: com.locapeer.data.AppDatabase,
+    private val proximityStateStore: com.locapeer.proximity.ProximityStateStore
 ) : ViewModel() {
 
     val unlockState = supervisedModeManager.unlockState
@@ -410,6 +413,7 @@ class SettingsViewModel @Inject constructor(
                             appLanguageTag = AppLanguage.current().tag,
                             themeMode = s.themeMode,
                             useDynamicColor = s.useDynamicColor,
+                            bubbleColor = s.bubbleColor,
                             appLockEnabled = s.appLockEnabled,
                             appLockTimeoutSeconds = s.appLockTimeoutSeconds,
                             mapStartingPoint = s.mapStartingPoint,
@@ -741,6 +745,11 @@ class SettingsViewModel @Inject constructor(
                             ThemeMode.entries.firstOrNull { it.name == mode }?.let { prefs.setThemeMode(it) }
                         }
                         s.useDynamicColor?.let { prefs.setUseDynamicColor(it) }
+                        // Only a known colour id; anything else would silently read as DEFAULT.
+                        s.bubbleColor?.let { id ->
+                            com.locapeer.ui.theme.BubbleColor.entries.firstOrNull { it.id == id }
+                                ?.let { prefs.setBubbleColor(it.id) }
+                        }
                         s.appLockEnabled?.let { prefs.setAppLockEnabled(it) }
                         s.appLockTimeoutSeconds?.let { prefs.setAppLockTimeoutSeconds(it) }
                         s.mapStartingPoint?.let { prefs.setMapStartingPoint(it) }
@@ -855,6 +864,10 @@ class SettingsViewModel @Inject constructor(
                 // 4. Settings: name, intervals, schedules, mute lists, supervision state - the
                 //    whole store. The key DataStore (step 3) holds the identity blob.
                 runCatching { prefs.wipeAllSettings() }
+                //    Per-contact proximity state (keyed by contact pubkeys) and the map's saved
+                //    camera position live in their own stores, outside the settings store.
+                runCatching { proximityStateStore.clearAll() }
+                runCatching { com.locapeer.map.clearMapPrefs(context) }
 
                 // 5. Derived caches: decrypted media, recorded send audio, MapLibre tiles
                 //    (tiles map visited locations out of the device just like history would).

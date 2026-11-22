@@ -41,6 +41,11 @@ import javax.inject.Inject
 
 private val Context.mapPrefs by preferencesDataStore(name = "map_prefs")
 
+/** Drops the map's saved camera position; part of "Delete Identity & Erase All Data". */
+internal suspend fun clearMapPrefs(context: Context) {
+    context.applicationContext.mapPrefs.edit { it.clear() }
+}
+
 data class PinData(
     val peer: PeerEntity,
     val heartbeat: HeartbeatEntity?,

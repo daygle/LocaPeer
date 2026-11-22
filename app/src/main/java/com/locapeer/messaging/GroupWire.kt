@@ -55,7 +55,7 @@ object GroupWire {
     internal fun isValid(message: GroupMessage): Boolean =
         circleIdPattern.matches(message.gid) && message.members.size in 1..256 &&
             message.members.all { pubkeyPattern.matches(it) } &&
-            (            message.creator.isEmpty() || pubkeyPattern.matches(message.creator)) &&
+            (message.creator.isEmpty() || pubkeyPattern.matches(message.creator)) &&
             message.cver >= 0 && (message.csig.isEmpty() || sigPattern.matches(message.csig)) &&
             message.mid.length <= 64
 

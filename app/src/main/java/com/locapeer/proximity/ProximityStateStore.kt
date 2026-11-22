@@ -34,5 +34,21 @@ class ProximityStateStore @Inject constructor(@ApplicationContext private val co
         context.proximityStateStore.edit { prefs -> prefs.remove(key(peerId)) }
     }
 
-    private fun key(peerId: String) = stringPreferencesKey("peer_$peerId")
+    /** Peers that currently have persisted state, for pruning state whose alert is gone. */
+    suspend fun storedPeerIds(): Set<String> =
+        context.proximityStateStore.data.first().asMap().keys
+            .map { it.name }
+            .filter { it.startsWith(KEY_PREFIX) }
+            .mapTo(mutableSetOf()) { it.removePrefix(KEY_PREFIX) }
+
+    /** Drops every peer's state; part of "Delete Identity & Erase All Data". */
+    suspend fun clearAll() {
+        context.proximityStateStore.edit { prefs -> prefs.clear() }
+    }
+
+    private fun key(peerId: String) = stringPreferencesKey("$KEY_PREFIX$peerId")
+
+    private companion object {
+        const val KEY_PREFIX = "peer_"
+    }
 }

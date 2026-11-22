@@ -86,6 +86,7 @@ class BackupSerializationTest {
             // defaults by a restore, which is exactly what the round-trip must prevent.
             themeMode = "DARK",
             useDynamicColor = false,
+            bubbleColor = "GREEN",
             appLockEnabled = true,
             appLockTimeoutSeconds = 60,
             mapStartingPoint = "FIXED_LOCATION",
@@ -246,6 +247,7 @@ class BackupSerializationTest {
         // leaves the device's current values instead of resetting them to defaults.
         assertNull(settings.themeMode)
         assertNull(settings.useDynamicColor)
+        assertNull(settings.bubbleColor)
         assertNull(settings.appLockEnabled)
         assertNull(settings.appLockTimeoutSeconds)
         assertNull(settings.mapStartingPoint)

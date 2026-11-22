@@ -58,6 +58,22 @@ object DisplayFormat {
      *  private copy of this one-liner. */
     fun timeOfDay(millis: Long): String = timeFormat().format(java.util.Date(millis))
 
+    /**
+     * A conversation row's last-message stamp: the time for a message from today, otherwise the
+     * date (with the year only when it differs), so a week-old chat doesn't read like today's.
+     */
+    fun conversationTimestamp(millis: Long): String {
+        val cal = java.util.Calendar.getInstance().also { it.timeInMillis = millis }
+        val today = java.util.Calendar.getInstance()
+        val sameYear = cal.get(java.util.Calendar.YEAR) == today.get(java.util.Calendar.YEAR)
+        return when {
+            sameYear && cal.get(java.util.Calendar.DAY_OF_YEAR) == today.get(java.util.Calendar.DAY_OF_YEAR) ->
+                timeOfDay(millis)
+            sameYear -> SimpleDateFormat("d MMM", locale()).format(java.util.Date(millis))
+            else -> SimpleDateFormat("d MMM yyyy", locale()).format(java.util.Date(millis))
+        }
+    }
+
     /** Speed value converted from metres/second to the user's unit, e.g. "12 km/h" or "8 mph". */
     fun speedValue(speedMps: Float): String {
         val converted = if (useImperialSpeed) speedMps * 2.236936f else speedMps * 3.6f

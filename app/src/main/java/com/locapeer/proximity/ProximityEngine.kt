@@ -84,9 +84,21 @@ class ProximityEngine @Inject constructor(
 
     init {
         scope.launch {
+            var prunedStoredState = false
             proximityAlertDao.getAll().collect { alerts ->
                 alertsCache.clear()
                 val present = alerts.mapTo(mutableSetOf()) { it.peerDeviceId }
+                // [alertWasActive] only knows alerts seen by this process, so state persisted for
+                // an alert (or contact) deleted while the app was not running would never be
+                // released - and would greet a later alert for that peer with a stale "already
+                // nearby". Prune it once against the first full list.
+                if (!prunedStoredState) {
+                    prunedStoredState = true
+                    runCatching { proximityStateStore.storedPeerIds() }
+                        .getOrDefault(emptySet())
+                        .filter { it !in present }
+                        .forEach { peer -> stateCache.remove(peer) }
+                }
                 // An alert deleted outright releases its peer's nearby/cooldown state, so it
                 // can't leak into a later alert or accumulate for peers without one.
                 val removed = alertWasActive.keys.filter { it !in present }

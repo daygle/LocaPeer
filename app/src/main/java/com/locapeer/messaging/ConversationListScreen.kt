@@ -500,67 +500,117 @@ fun ConversationListScreen(
                             }
                         }
                     } else {
+                        // Chats: 1:1 rows. Archived: archived chats and circles as one list in the
+                        // tab's sort order - they used to be two blocks, every chat above every
+                        // circle, whatever the sort said.
+                        val rows = if (currentTab == MessagesTab.ARCHIVED) {
+                            mergeConversationRows(safeList, archivedGroupConversations, sortOrder, unreadCounts)
+                        } else {
+                            safeList.map { ConversationRowItem.Chat(it) }
+                        }
                         LazyColumn(modifier = Modifier.fillMaxSize()) {
-                            items(safeList, key = { it.peer.deviceId }) { conv ->
-                                val isSelected = conv.peer.deviceId in selectedIds
-                                SwipeActionsConversation(
-                                    conv = conv,
-                                    unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
-                                    isSelected = isSelected,
-                                    isSelectionMode = isSelectionMode,
-                                    isMuted = AppPreferences.peerMuteKey(conv.peer.deviceId) in mutedConversations,
-                                    onClick = { onOpenChat(conv.peer.deviceId, conv.peer.displayName) },
-                                    onToggleSelect = {
-                                        selectedIds = if (isSelected)
-                                            selectedIds - conv.peer.deviceId
-                                        else
-                                            selectedIds + conv.peer.deviceId
-                                    },
-                                    onEnterSelectionMode = {
-                                        selectedIds = setOf(conv.peer.deviceId)
-                                    },
-                                    onDeleteLocal = { vm.deleteConversation(conv.peer.deviceId) },
-                                    onDeleteRemote = { vm.deleteConversationFromRemote(conv.peer.deviceId) },
-                                    onArchive = { vm.archiveConversation(conv.peer.deviceId, !conv.peer.isArchived) }
-                                )
+                            items(rows, key = { it.key }) { row ->
+                                when (row) {
+                                    is ConversationRowItem.Chat -> {
+                                        val conv = row.summary
+                                        val isSelected = conv.peer.deviceId in selectedIds
+                                        SwipeActionsConversation(
+                                            conv = conv,
+                                            unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
+                                            isSelected = isSelected,
+                                            isSelectionMode = isSelectionMode,
+                                            isMuted = AppPreferences.peerMuteKey(conv.peer.deviceId) in mutedConversations,
+                                            onClick = { onOpenChat(conv.peer.deviceId, conv.peer.displayName) },
+                                            onToggleSelect = {
+                                                selectedIds = if (isSelected)
+                                                    selectedIds - conv.peer.deviceId
+                                                else
+                                                    selectedIds + conv.peer.deviceId
+                                            },
+                                            onEnterSelectionMode = {
+                                                selectedIds = setOf(conv.peer.deviceId)
+                                            },
+                                            onDeleteLocal = { vm.deleteConversation(conv.peer.deviceId) },
+                                            onDeleteRemote = { vm.deleteConversationFromRemote(conv.peer.deviceId) },
+                                            onArchive = { vm.archiveConversation(conv.peer.deviceId, !conv.peer.isArchived) }
+                                        )
+                                    }
+                                    is ConversationRowItem.Circle -> {
+                                        val group = row.summary
+                                        val isSelected = group.circle.id in selectedIds
+                                        CircleRow(
+                                            group = group,
+                                            isSelected = isSelected,
+                                            isSelectionMode = isSelectionMode,
+                                            isMuted = AppPreferences.circleMuteKey(group.circle.id) in mutedConversations,
+                                            onClick = { onOpenGroup(group.circle.id) },
+                                            onToggleSelect = {
+                                                selectedIds = if (isSelected)
+                                                    selectedIds - group.circle.id
+                                                else
+                                                    selectedIds + group.circle.id
+                                            },
+                                            onEnterSelectionMode = {
+                                                selectedIds = setOf(group.circle.id)
+                                            }
+                                        )
+                                    }
+                                }
                                 HorizontalDivider(
                                     modifier = Modifier.padding(start = 72.dp),
                                     color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
                                 )
-                            }
-                            // Archived circles share the Archived tab with archived 1:1 chats.
-                            // Same row + selection affordances as the Circles tab; unarchive and
-                            // delete run through the bulk-action bar like archived chats do.
-                            if (currentTab == MessagesTab.ARCHIVED) {
-                                items(archivedGroupConversations, key = { it.circle.id }) { group ->
-                                    val isSelected = group.circle.id in selectedIds
-                                    CircleRow(
-                                        group = group,
-                                        isSelected = isSelected,
-                                        isSelectionMode = isSelectionMode,
-                                        isMuted = AppPreferences.circleMuteKey(group.circle.id) in mutedConversations,
-                                        onClick = { onOpenGroup(group.circle.id) },
-                                        onToggleSelect = {
-                                            selectedIds = if (isSelected)
-                                                selectedIds - group.circle.id
-                                            else
-                                                selectedIds + group.circle.id
-                                        },
-                                        onEnterSelectionMode = {
-                                            selectedIds = setOf(group.circle.id)
-                                        }
-                                    )
-                                    HorizontalDivider(
-                                        modifier = Modifier.padding(start = 72.dp),
-                                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-                                    )
-                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+}
+
+/** One row of a conversation list: a 1:1 chat or a circle, keyed for the LazyColumn. */
+private sealed interface ConversationRowItem {
+    val key: String
+
+    data class Chat(val summary: ConversationSummary) : ConversationRowItem {
+        override val key: String get() = summary.peer.deviceId
+    }
+
+    data class Circle(val summary: GroupConversationSummary) : ConversationRowItem {
+        override val key: String get() = summary.circle.id
+    }
+}
+
+/**
+ * Archived chats and circles merged into one list, ordered with the same rules
+ * [MessagingViewModel] applies to each list on its own (newest first, by name, or unread first).
+ */
+private fun mergeConversationRows(
+    chats: List<ConversationSummary>,
+    circles: List<GroupConversationSummary>,
+    sort: SortOrder,
+    unreadCounts: Map<String, Int>
+): List<ConversationRowItem> {
+    fun timestamp(row: ConversationRowItem): Long = when (row) {
+        is ConversationRowItem.Chat -> row.summary.lastMessage.timestamp
+        is ConversationRowItem.Circle -> row.summary.lastMessage?.timestamp ?: row.summary.circle.createdAt
+    }
+    fun name(row: ConversationRowItem): String = when (row) {
+        is ConversationRowItem.Chat -> row.summary.peer.displayName
+        is ConversationRowItem.Circle -> row.summary.circle.name
+    }.lowercase(java.util.Locale.ROOT)
+    fun hasUnread(row: ConversationRowItem): Boolean = when (row) {
+        is ConversationRowItem.Chat -> (unreadCounts[row.summary.peer.deviceId] ?: 0) > 0
+        is ConversationRowItem.Circle -> row.summary.unread > 0
+    }
+    val all = chats.map { ConversationRowItem.Chat(it) } + circles.map { ConversationRowItem.Circle(it) }
+    return when (sort) {
+        SortOrder.DATE -> all.sortedByDescending(::timestamp)
+        SortOrder.NAME -> all.sortedBy(::name)
+        SortOrder.UNREAD -> all.sortedWith(
+            compareByDescending<ConversationRowItem> { hasUnread(it) }.thenByDescending(::timestamp)
+        )
     }
 }
 
@@ -674,7 +724,7 @@ private fun CircleRow(
                     val lastTs = group.lastMessage?.timestamp
                     if (lastTs != null) {
                         Text(
-                            com.locapeer.util.DisplayFormat.timeOfDay(lastTs),
+                            com.locapeer.util.DisplayFormat.conversationTimestamp(lastTs),
                             style = MaterialTheme.typography.labelSmall,
                             color = if (group.unread > 0) MaterialTheme.colorScheme.primary
                                     else MaterialTheme.colorScheme.onSurfaceVariant
@@ -905,7 +955,7 @@ private fun ConversationRow(
         trailingContent = {
             Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
-                    com.locapeer.util.DisplayFormat.timeOfDay(summary.lastMessage.timestamp),
+                    com.locapeer.util.DisplayFormat.conversationTimestamp(summary.lastMessage.timestamp),
                     style = MaterialTheme.typography.labelSmall,
                     color = if (hasUnread) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 )

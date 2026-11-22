@@ -1187,7 +1187,7 @@ class HeartbeatReceiver @Inject constructor(
             // circle back onto the Circles tab, but a late-arriving/queued message that predates
             // an explicit archive action doesn't silently undo it.
             circleDao.getCircle(group.gid)?.let { circleRow ->
-                if (!circleRow.isArchived || messageTimestampMs > circleRow.archivedAt) {
+                if (circleRow.isArchived && messageTimestampMs > circleRow.archivedAt) {
                     circleDao.unarchive(group.gid)
                 }
             }
@@ -1269,7 +1269,9 @@ class HeartbeatReceiver @Inject constructor(
                 mediaFilename = media.filename,
                 mediaMimeType = media.mimeType
             )
-            if (!sender.isArchived || mediaMsg.timestamp > sender.archivedAt) {
+            // A blocked contact's message is stored hidden, so it must not pull the
+            // conversation back out of the archive either.
+            if (!isBlocked && sender.isArchived && mediaMsg.timestamp > sender.archivedAt) {
                 peerDao.unarchive(event.pubkey)
             }
             messageDao.insert(mediaMsg)
@@ -1292,8 +1294,11 @@ class HeartbeatReceiver @Inject constructor(
             isBlocked = isBlocked
         )
         // Auto-unarchive on receive, but don't let a late-arriving/queued message that predates
-        // an explicit archive action silently undo it.
-        if (!sender.isArchived || msg.timestamp > sender.archivedAt) {
+        // an explicit archive action silently undo it. A blocked contact's message is stored
+        // hidden, so it must not unarchive the conversation either. Only archived rows are
+        // written: an unconditional update invalidated every peers-table query (map, contacts,
+        // conversation lists) on each incoming message.
+        if (!isBlocked && sender.isArchived && msg.timestamp > sender.archivedAt) {
             peerDao.unarchive(event.pubkey)
         }
         messageDao.insert(msg)
@@ -1319,11 +1324,13 @@ class HeartbeatReceiver @Inject constructor(
             .take(MAX_DELETION_TARGETS)
             .toList()
         var deleted = false
+        var deletedCircleRow = false
         targetEventIds.forEach { eventId ->
             val msg = messageDao.getByNostrEventId(eventId)
             if (msg != null && msg.senderPublicKeyHex == event.pubkey) {
                 messageDao.delete(msg)
                 deleted = true
+                if (msg.groupId != null) deletedCircleRow = true
             } else if (msg == null && eventId.length == 64) {
                 // Not here (yet): remember it in case the message is still on its way. Keyed
                 // by the signer, so this can only ever suppress the signer's own messages.
@@ -1333,6 +1340,8 @@ class HeartbeatReceiver @Inject constructor(
                 earlyDeletions.add(earlyDeletionKey(event.pubkey, eventId))
             }
         }
+        // Circle rows carry per-member reactions that would otherwise linger as orphans.
+        if (deletedCircleRow) messageReactionDao.deleteOrphans()
         if (deleted) com.locapeer.messaging.MediaCache.clearDecryptedMedia(context)
     }
 
@@ -1376,16 +1385,18 @@ class HeartbeatReceiver @Inject constructor(
             json.decodeFromString<ReactionPayload>(plaintext)
         } catch (e: Exception) { return }
         if (payload.emoji.length > ReactionPayload.MAX_EMOJI_CHARS) return
-        val target = messageDao.findByWireTarget(payload.targetId) ?: return
+        if (payload.targetId.isBlank()) return
         val groupId = payload.groupId
         if (groupId == null) {
-            // 1:1: the target must be a 1:1 row in the sender's own thread.
-            if (target.groupId != null || target.peerId != event.pubkey) return
+            // 1:1: the target must be a 1:1 row in the sender's own thread. The lookup is scoped
+            // to that thread, so a circle row whose sender-chosen logical id happens to equal the
+            // target can never shadow it.
+            val target = messageDao.findDirectReactionTarget(payload.targetId, event.pubkey) ?: return
             messageDao.setPeerReaction(target.id, payload.emoji.ifBlank { null })
         } else {
             // Circle: one row per member, so every reactor keeps their own emoji.
-            if (target.groupId != groupId) return
             if (!circleDao.getMemberPubkeys(groupId).contains(event.pubkey)) return
+            val target = messageDao.findCircleReactionTarget(payload.targetId, groupId) ?: return
             if (payload.emoji.isBlank()) {
                 messageReactionDao.delete(target.id, event.pubkey)
             } else {
@@ -2116,6 +2127,14 @@ class HeartbeatReceiver @Inject constructor(
             !circle.creatorPubkey.equals(event.pubkey, ignoreCase = true)
         ) return
         prefs.addLeftCircle(payload.gid, circle.creatorPubkey)
+        // The DataStore collector refreshes [leftCircles] asynchronously; update the mirror now so
+        // a straggler that the ordered pipeline handles next (common during catch-up) is dropped
+        // instead of re-creating the circle we are about to delete.
+        leftCircles = leftCircles + (payload.gid to LeftCircle(
+            circleId = payload.gid,
+            creatorPubkey = circle.creatorPubkey.lowercase(),
+            leftAt = Instant.now().epochSecond
+        ))
         messageDao.deleteAllForGroup(payload.gid)
         messageReactionDao.deleteOrphans()
         circleDao.clearMembers(payload.gid)
