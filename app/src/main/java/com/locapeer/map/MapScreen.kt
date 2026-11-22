@@ -136,6 +136,15 @@ fun MapScreen(
     }
 
     val navPeerId by vm.navPeerId.collectAsStateWithLifecycle()
+    // True when this map was opened to show something specific: a contact's pin from Contacts
+    // (peerId) or a shared location from a chat (lat/lng). Latched, because the args are
+    // consumed once the camera has been aimed - the Starting Point setting must not retake the
+    // camera afterwards, or opening a contact's pin ends up on the user's own pin, their fixed
+    // point or the last saved position instead of the contact they asked for.
+    var hasExplicitTarget by remember { mutableStateOf(navPeerId != null || centerOnArgs != null) }
+    LaunchedEffect(navPeerId, centerOnArgs) {
+        if (navPeerId != null || centerOnArgs != null) hasExplicitTarget = true
+    }
     LaunchedEffect(navPeerId, uiState.pins) {
         val id = navPeerId ?: return@LaunchedEffect
         val pin = uiState.pins.firstOrNull { it.peer.deviceId == id }
@@ -178,6 +187,7 @@ fun MapScreen(
                 mapStartingPoint = mapStartingPoint,
                 mapFixedLat = mapFixedLat,
                 mapFixedLng = mapFixedLng,
+                hasExplicitTarget = hasExplicitTarget,
                 onCenteredOnUser = { },
                 onCenteredOnPin = { centerOnPin = null; isFollowingUser = false },
                 onPinTapped = { selectedPin = it; followSelected = true; isFollowingUser = false },
@@ -610,7 +620,10 @@ private fun MainMapView(
     mapStartZoom: Double = 16.0,
     mapStartingPoint: String = "OWN_PIN",
     mapFixedLat: Double = 0.0,
-    mapFixedLng: Double = 0.0
+    mapFixedLng: Double = 0.0,
+    /** The screen was opened with a specific target (contact pin / shared location), which owns
+     *  the camera; the Starting Point setting must not position the map in that case. */
+    hasExplicitTarget: Boolean = false
 ) {
     // Zoom values from settings and the saved position are in the legacy (osmdroid) scale;
     // MapGeometry converts them at this boundary.
@@ -655,7 +668,7 @@ private fun MainMapView(
 
     LaunchedEffect(userLocation, map) {
         val mv = map ?: return@LaunchedEffect
-        if (userLocation != null && !initialCenterDone && !explicitCenterDone && centerOnPin == null) {
+        if (!hasExplicitTarget && userLocation != null && !initialCenterDone && !explicitCenterDone && centerOnPin == null) {
             mv.moveTo(userLocation.latitude, userLocation.longitude)
             initialCenterDone = true
         }
@@ -685,7 +698,7 @@ private fun MainMapView(
 
     LaunchedEffect(pins, isFitAll, map) {
         val mv = map ?: return@LaunchedEffect
-        if (!isFitAll || fitAllDone || explicitCenterDone || centerOnPin != null) return@LaunchedEffect
+        if (hasExplicitTarget || !isFitAll || fitAllDone || explicitCenterDone || centerOnPin != null) return@LaunchedEffect
         val points = pins.mapNotNull { it.heartbeat?.let { hb -> LatLng(hb.lat, hb.lng) } }
         if (points.isEmpty()) return@LaunchedEffect
         fitAllDone = true
@@ -786,7 +799,18 @@ private fun MainMapView(
         onUserCameraMove = onUserCameraMove,
         onReady = { controller ->
             val startZoom = MapGeometry.fromLegacyZoom(mapStartZoom)
+            // A requested target owns the camera: aim at it now if it is already resolved, else
+            // keep the previous camera (never the Starting Point setting) until the focus effect
+            // moves us - otherwise a fixed starting point parks the map where the user did not
+            // ask to be, and a slow target lookup looks like the jump silently failed.
+            val focus = if (hasExplicitTarget) followPin ?: centerOnPin else null
             when {
+                focus != null -> controller.moveTo(focus.latitude, focus.longitude, startZoom)
+                hasExplicitTarget && lastMapCenter != null -> {
+                    val (lat, lng, zoom) = lastMapCenter
+                    controller.moveTo(lat, lng, MapGeometry.fromLegacyZoom(zoom))
+                }
+                hasExplicitTarget -> controller.map.moveCamera(CameraUpdateFactory.zoomTo(startZoom))
                 isFitAll -> controller.map.moveCamera(CameraUpdateFactory.zoomTo(startZoom))
                 mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0 ->
                     controller.moveTo(mapFixedLat, mapFixedLng, startZoom)
