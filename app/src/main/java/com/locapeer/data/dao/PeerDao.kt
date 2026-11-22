@@ -39,5 +39,13 @@ interface PeerDao {
     )
     suspend fun setArchived(peerId: String, archived: Boolean, now: Long)
 
-    suspend fun unarchive(peerId: String) = setArchived(peerId, false, 0)
+    /**
+     * Clears the archived flag. Touches only a row that is actually archived, so the per-message
+     * callers (send, receive) don't invalidate every peers-table query when nothing changes.
+     */
+    @Query(
+        "UPDATE peers SET isArchived = 0 " +
+            "WHERE (deviceId = :peerId OR publicKeyHex = :peerId) AND isArchived = 1"
+    )
+    suspend fun unarchive(peerId: String)
 }

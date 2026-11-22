@@ -174,9 +174,11 @@ fun GroupChatScreen(
         // through the circle's history was interrupted by any incoming message.
         val nearBottom = listState.layoutInfo.visibleItemsInfo.lastOrNull()
             ?.let { it.index >= messages.size - 3 } ?: false
+        // A message the user just sent always brings them to the bottom, wherever they were.
+        val sentByMe = messages.size > previousMessageCount && messages.last().isMine
         when {
             previousMessageCount == 0 -> listState.scrollToItem(messages.size - 1)
-            nearBottom -> listState.animateScrollToItem(messages.size - 1)
+            nearBottom || sentByMe -> listState.animateScrollToItem(messages.size - 1)
         }
         previousMessageCount = messages.size
     }

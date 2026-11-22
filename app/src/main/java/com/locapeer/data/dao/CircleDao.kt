@@ -46,7 +46,9 @@ interface CircleDao {
     )
     suspend fun setArchived(circleId: String, archived: Boolean, now: Long)
 
-    suspend fun unarchive(circleId: String) = setArchived(circleId, false, 0)
+    /** Clears the archived flag, touching only an archived row (see [PeerDao.unarchive]). */
+    @Query("UPDATE circles SET isArchived = 0 WHERE id = :circleId AND isArchived = 1")
+    suspend fun unarchive(circleId: String)
 
     @Query("SELECT memberPubkey FROM circle_members WHERE circleId = :circleId")
     fun observeMemberPubkeys(circleId: String): Flow<List<String>>

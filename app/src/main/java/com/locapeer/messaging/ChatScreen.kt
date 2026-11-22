@@ -158,9 +158,11 @@ fun ChatScreen(
         // back through history was interrupted by any incoming message.
         val nearBottom = listState.layoutInfo.visibleItemsInfo.lastOrNull()
             ?.let { it.index >= messages.size - 3 } ?: false
+        // A message the user just sent always brings them to the bottom, wherever they were.
+        val sentByMe = messages.size > previousMessageCount && messages.last().isMine
         when {
             previousMessageCount == 0 -> listState.scrollToItem(messages.size - 1)
-            nearBottom -> listState.animateScrollToItem(messages.size - 1)
+            nearBottom || sentByMe -> listState.animateScrollToItem(messages.size - 1)
         }
         previousMessageCount = messages.size
     }
@@ -229,28 +231,41 @@ fun ChatScreen(
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                         }
-                        Column {
+                        // Weighted like the circle title, so a long name ellipsizes instead of
+                        // squeezing the options menu off the bar.
+                        Column(modifier = Modifier.weight(1f, fill = false)) {
                             Text(
                                 peerName,
                                 fontWeight = FontWeight.SemiBold,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
+                            // Only for contacts whose location we receive (the same rule as the
+                            // contact row's map pin): a send-only or messaging-only contact would
+                            // otherwise read "No location yet" forever, or a stale "last seen"
+                            // left over from before a role change.
+                            val receivesLocation = when (peer?.locationRole) {
+                                com.locapeer.data.entity.PeerEntity.ROLE_RECEIVE,
+                                com.locapeer.data.entity.PeerEntity.ROLE_SEND_RECEIVE -> true
+                                else -> false
+                            }
                             val hb = lastHeartbeat
-                            Text(
-                                text = if (hb != null) {
-                                    stringResource(
-                                        R.string.contacts_last_seen,
-                                        com.locapeer.util.DisplayFormat.relativeTimestamp(hb.timestamp)
-                                    )
-                                } else {
-                                    stringResource(R.string.contacts_no_location_yet)
-                                },
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
+                            if (receivesLocation) {
+                                Text(
+                                    text = if (hb != null) {
+                                        stringResource(
+                                            R.string.contacts_last_seen,
+                                            com.locapeer.util.DisplayFormat.relativeTimestamp(hb.timestamp)
+                                        )
+                                    } else {
+                                        stringResource(R.string.contacts_no_location_yet)
+                                    },
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
                         }
                     }
                 },

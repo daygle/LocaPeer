@@ -471,6 +471,8 @@ class MessagingViewModel @Inject constructor(
                         nostrEventIdsByMember = idsByMember.joinToString(","),
                     )
                 )
+                // Posting into an archived circle brings it back, as sending does for a 1:1 chat.
+                circleDao.unarchive(circleId)
             } catch (e: Exception) {
                 Log.e("MessagingViewModel", "sendGroupMessage failed", e)
             }
@@ -614,6 +616,7 @@ class MessagingViewModel @Inject constructor(
                         nostrEventIdsByMember = idsByMember.joinToString(","),
                     )
                 )
+                circleDao.unarchive(circleId)
             } catch (e: Exception) {
                 Log.e("MessagingViewModel", "sendGroupMedia failed", e)
             }

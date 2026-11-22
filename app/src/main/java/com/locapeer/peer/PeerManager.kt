@@ -41,6 +41,7 @@ class PeerManager @Inject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
+    private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val sharingConfigDao: PeerSharingConfigDao,
     private val circleDao: CircleDao,
     private val geofenceAssignmentDao: GeofenceAssignmentDao,
@@ -161,6 +162,9 @@ class PeerManager @Inject constructor(
     /** Called when we receive DELETE_MY_MESSAGES - wipe all messages sent by that pubkey. */
     suspend fun handleDeleteMyMessages(senderPubKeyHex: String) {
         messageDao.deleteAllFromSender(senderPubKeyHex)
+        // Unlike a 1:1 thread delete, this also removes the sender's circle messages, whose
+        // per-member reactions would otherwise linger as orphans.
+        messageReactionDao.deleteOrphans()
         MediaCache.clearDecryptedMedia(context)
         Log.i(TAG, "Deleted all messages from $senderPubKeyHex at their request")
     }
