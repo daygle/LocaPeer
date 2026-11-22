@@ -9,11 +9,21 @@ on:
   schedule:
     - cron: '20 18 * * 3'
 
+# The job sets its own permissions; nothing else gets any.
+permissions: {}
+
+# A newer push to main supersedes a scan still running for an older commit.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
-    timeout-minutes: 360
+    # A clean uncached build plus analysis; well beyond that means a hang, so stop
+    # there instead of holding a runner for the 6-hour default.
+    timeout-minutes: 90
     permissions:
       actions: read
       contents: read

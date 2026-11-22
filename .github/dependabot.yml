@@ -19,14 +19,14 @@ updates:
     labels:
       - "dependencies"
       - "gradle"
-    
+
     # Standardizes commit messages for a cleaner git history
     commit-message:
       prefix: "chore(deps):"
       include: "scope"
 
     versioning-strategy: increase
-    
+
     groups:
       # Kotlin compiler, KSP, and kotlinx libs co-evolve.
       kotlin-stack:
