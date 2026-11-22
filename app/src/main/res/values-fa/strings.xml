@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">می‌خواهید این پیام را چگونه حذف کنید؟</string>
     <string name="chat_delete_from_contact">حذف از مخاطب</string>
     <string name="chat_delete_from_contact_sub">گفتگو را از دستگاه مخاطب حذف می‌کند.</string>
+    <string name="chat_delete_from_members_sub">این پیام را از دستگاه هر عضو حذف می‌کند.</string>
+    <string name="chat_delete_both_members">حذف محلی/از همه</string>
+    <string name="chat_delete_both_members_sub">این پیام را محلی و از دستگاه هر عضو حذف می‌کند.</string>
     <string name="chat_delete_both_sub">گفتگو را به‌صورت محلی حذف می‌کند و خودکار از دستگاه مخاطب نیز پاک می‌کند.</string>
     <string name="chat_cd_share_location">اشتراک‌گذاری موقعیت</string>
     <string name="chat_input_placeholder">پیام…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">مکان به‌اشتراک‌گذاشته‌شده</string>
     <string name="chat_tap_to_open_map">برای باز کردن نقشه ضربه بزنید</string>
     <string name="circles_delete">حذف حلقه</string>
-    <string name="circles_delete_message">«%1$s» و گفتگوی گروهی‌اش حذف شود؟ این فقط آن را از دستگاه شما حذف می‌کند.</string>
     <string name="circles_delete_title">حلقه حذف شود؟</string>
+    <string name="circles_delete_everywhere">حذف برای همه</string>
+    <string name="circles_delete_everywhere_sub">حلقه و پیام‌های آن را از دستگاه هر عضو نیز حذف می‌کند.</string>
     <string name="circles_edit_title">ویرایش حلقه</string>
     <string name="circles_empty_body">یک حلقه بسازید تا به گروهی از مخاطبان پیام دهید و مکان خود را یک‌جا با همه به اشتراک بگذارید.</string>
     <string name="circles_empty_title">هنوز حلقه‌ای نیست</string>

@@ -331,6 +331,7 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.SETTINGS_CHANGE_SUMMARY,
     NostrEventKind.TRACKING_ALERT,
     NostrEventKind.CIRCLE_LEAVE,
+    NostrEventKind.CIRCLE_DISBAND,
     NostrEventKind.EVENT_DELETION
 )
 
@@ -503,6 +504,7 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.DELETE_MY_LOCATION,
                         NostrEventKind.TRACKING_ALERT,
                         NostrEventKind.CIRCLE_LEAVE,
+                        NostrEventKind.CIRCLE_DISBAND,
                         NostrEventKind.LIVE_VIEW_REQUEST,
                         NostrEventKind.EVENT_DELETION
                     ),
@@ -601,6 +603,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.DELETE_MY_LOCATION -> processDeleteMyLocation(event)
                     NostrEventKind.TRACKING_ALERT -> scope.launch { processTrackingAlert(event) }
                     NostrEventKind.CIRCLE_LEAVE -> processCircleLeave(event)
+                    NostrEventKind.CIRCLE_DISBAND -> processCircleDisband(event)
                     NostrEventKind.LIVE_VIEW_REQUEST -> scope.launch { processLiveViewRequest(event) }
                     NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }
@@ -2091,6 +2094,34 @@ class HeartbeatReceiver @Inject constructor(
         if (circle.creatorPubkey != myPub) return
         circleDao.removeMember(payload.gid, event.pubkey)
         Log.d(TAG, "Removed ${event.pubkey} from circle ${payload.gid} after they left")
+    }
+
+    /**
+     * The circle's creator disbanded it ("Delete for Everyone" on their device). Only the circle's
+     * recorded creator may disband it, and only for a circle we already hold; we then drop our copy
+     * and record the removal so a member's straggler message can't re-create it. Circles with no
+     * recorded creator can't be disbanded remotely - there is no owner to authenticate the notice.
+     */
+    private suspend fun processCircleDisband(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return  // known contacts only
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<com.locapeer.circles.CircleDisbandPayload>(plaintext)
+        } catch (e: Exception) { return }
+        val circle = circleDao.getCircle(payload.gid) ?: return
+        if (circle.creatorPubkey.isBlank() ||
+            !circle.creatorPubkey.equals(event.pubkey, ignoreCase = true)
+        ) return
+        prefs.addLeftCircle(payload.gid, circle.creatorPubkey)
+        messageDao.deleteAllForGroup(payload.gid)
+        messageReactionDao.deleteOrphans()
+        circleDao.clearMembers(payload.gid)
+        circleDao.deleteCircle(payload.gid)
+        com.locapeer.messaging.MediaCache.clearDecryptedMedia(context)
+        Log.d(TAG, "Removed circle ${payload.gid} after its creator disbanded it")
     }
 
     private suspend fun processTrackingAlert(event: NostrEvent) {

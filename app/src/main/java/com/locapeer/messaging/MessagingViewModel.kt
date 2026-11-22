@@ -256,15 +256,60 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch { circleDao.setArchived(circleId, archived, System.currentTimeMillis()) }
     }
 
-    /** Deletes a circle, its membership and its whole message thread (local only - a circle is a
-     *  client-side grouping, so there is no remote circle object to delete). */
-    fun deleteCircleAndConversation(circleId: String) {
+    /**
+     * Owner's "Delete for Everyone": notify every member that the circle is disbanded, then remove
+     * our own copy. Each member gets their own NIP-44-encrypted [NostrEventKind.CIRCLE_DISBAND]
+     * control message; a recipient acts on it only when the signed sender is the circle's recorded
+     * creator, so a member can't disband a circle they don't own.
+     *
+     * A circle with no recorded creator (created before ownership existed) has nobody authoritative
+     * to notify, so it falls back to the local teardown - as does a call from a non-owner, which the
+     * UI never offers but which must not let a member fake a disband.
+     */
+    fun disbandCircle(circleId: String) {
         viewModelScope.launch {
-            messageDao.deleteAllForGroup(circleId)
-            messageReactionDao.deleteOrphans()
-            circleDao.clearMembers(circleId)
-            circleDao.deleteCircle(circleId)
-            MediaCache.clearDecryptedMedia(context)
+            val circle = circleDao.getCircle(circleId)
+            val creator = circle?.creatorPubkey.orEmpty()
+            // Notify first: the recipients come from the membership rows the teardown below drops.
+            if (circle != null && creator.isNotBlank()) {
+                try {
+                    val (privHex, pubHex) = keyManager.ensureKeypair()
+                    if (creator.equals(pubHex, ignoreCase = true)) {
+                        val privBytes = crypto.hexToBytes(privHex)
+                        val payload = json.encodeToString(com.locapeer.circles.CircleDisbandPayload(circleId))
+                        circleDao.getMemberPubkeys(circleId).filter { it != pubHex }.forEach { memberPub ->
+                            try {
+                                val encrypted = crypto.nip44Encrypt(privBytes, memberPub, payload)
+                                val event = NostrEvent.build(
+                                    privKeyHex = privHex,
+                                    pubKeyHex = pubHex,
+                                    kind = NostrEventKind.CIRCLE_DISBAND,
+                                    content = encrypted,
+                                    tags = listOf(listOf("p", memberPub)),
+                                    crypto = crypto
+                                )
+                                relayClient.publishEvent(event)
+                            } catch (e: Exception) {
+                                Log.e("MessagingViewModel", "circle disband notify to $memberPub failed", e)
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("MessagingViewModel", "circle disband notify failed", e)
+                }
+            }
+            // The local teardown always runs, so a relay/crypto failure can't leave a circle the
+            // user has already chosen to delete sitting in their list.
+            try {
+                prefs.addLeftCircle(circleId, creator)
+                messageDao.deleteAllForGroup(circleId)
+                messageReactionDao.deleteOrphans()
+                circleDao.clearMembers(circleId)
+                circleDao.deleteCircle(circleId)
+                MediaCache.clearDecryptedMedia(context)
+            } catch (e: Exception) {
+                Log.e("MessagingViewModel", "disbandCircle local delete failed", e)
+            }
         }
     }
 
@@ -275,7 +320,8 @@ class MessagingViewModel @Inject constructor(
      * silently re-create the circle, then removes our local copy.
      *
      * If we own the circle or it has no recorded owner there is nobody authoritative to notify, so
-     * this falls back to a plain local delete (owners disband via [deleteCircleAndConversation]).
+     * this falls back to a plain local delete (owners use "Delete Locally" in the circle chat, or
+     * [disbandCircle] to remove it for every member).
      */
     fun leaveCircle(circleId: String, alsoDeleteRemote: Boolean) {
         viewModelScope.launch {

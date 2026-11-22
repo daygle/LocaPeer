@@ -502,6 +502,9 @@
     <string name="chat_delete_msg_message">Як видалити це повідомлення?</string>
     <string name="chat_delete_from_contact">Видалити в контакту</string>
     <string name="chat_delete_from_contact_sub">Видаляє повідомлення з пристрою контакту.</string>
+    <string name="chat_delete_from_members_sub">Видаляє це повідомлення з пристроїв усіх учасників.</string>
+    <string name="chat_delete_both_members">Видалити тут/у всіх</string>
+    <string name="chat_delete_both_members_sub">Видаляє це повідомлення тут і з пристроїв усіх учасників.</string>
     <string name="chat_delete_both_sub">Видаляє повідомлення локально й автоматично стирає його з пристрою контакту.</string>
     <string name="chat_cd_share_location">Поділитися місцезнаходженням</string>
     <string name="chat_input_placeholder">Повідомлення…</string>
@@ -819,8 +822,9 @@
     <string name="chat_shared_location">Надіслане місцезнаходження</string>
     <string name="chat_tap_to_open_map">Торкніться, щоб відкрити карту</string>
     <string name="circles_delete">Видалити коло</string>
-    <string name="circles_delete_message">Видалити «%1$s» та його груповий чат? Це видалить його лише з вашого пристрою.</string>
     <string name="circles_delete_title">Видалити коло?</string>
+    <string name="circles_delete_everywhere">Видалити для всіх</string>
+    <string name="circles_delete_everywhere_sub">Також видаляє круг і його повідомлення з пристроїв усіх учасників.</string>
     <string name="circles_edit_title">Редагувати коло</string>
     <string name="circles_empty_body">Створіть коло, щоб писати групі контактів і ділитися своїм місцезнаходженням з усіма одразу.</string>
     <string name="circles_empty_title">Кіл ще немає</string>

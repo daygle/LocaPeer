@@ -520,6 +520,9 @@
     <string name="chat_delete_msg_message">كيف تريد حذف هذه الرسالة؟</string>
     <string name="chat_delete_from_contact">حذف من جهة الاتصال</string>
     <string name="chat_delete_from_contact_sub">يحذف الدردشة من جهاز جهة الاتصال.</string>
+    <string name="chat_delete_from_members_sub">يحذف هذه الرسالة من جهاز كل عضو.</string>
+    <string name="chat_delete_both_members">حذف محلي/من الجميع</string>
+    <string name="chat_delete_both_members_sub">يحذف هذه الرسالة محليًا ومن جهاز كل عضو.</string>
     <string name="chat_delete_both_sub">يزيل الدردشة محليًا ويحذفها تلقائيًا من جهاز جهة الاتصال.</string>
     <string name="chat_cd_share_location">مشاركة الموقع</string>
     <string name="chat_input_placeholder">رسالة…</string>
@@ -849,8 +852,9 @@
     <string name="chat_shared_location">موقع مشترك</string>
     <string name="chat_tap_to_open_map">اضغط لفتح الخريطة</string>
     <string name="circles_delete">حذف الدائرة</string>
-    <string name="circles_delete_message">حذف \"%1$s\" ومحادثتها الجماعية؟ هذا يزيلها من جهازك فقط.</string>
     <string name="circles_delete_title">حذف الدائرة؟</string>
+    <string name="circles_delete_everywhere">حذف للجميع</string>
+    <string name="circles_delete_everywhere_sub">يزيل أيضًا الدائرة ورسائلها من جهاز كل عضو.</string>
     <string name="circles_edit_title">تعديل الدائرة</string>
     <string name="circles_empty_body">أنشئ دائرة لمراسلة مجموعة من جهات الاتصال ومشاركة موقعك معهم جميعًا دفعة واحدة.</string>
     <string name="circles_empty_title">لا توجد دوائر بعد</string>

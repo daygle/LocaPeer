@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">இந்த செய்தியை எப்படி நீக்க விரும்புகிறீர்கள்?</string>
     <string name="chat_delete_from_contact">தொடர்பிடமிருந்து நீக்கு</string>
     <string name="chat_delete_from_contact_sub">தொடர்பின் சாதனத்திலிருந்து சாட்டை நீக்குகிறது.</string>
+    <string name="chat_delete_from_members_sub">இந்தச் செய்தியை ஒவ்வொரு உறுப்பினரின் சாதனத்திலிருந்தும் நீக்கும்.</string>
+    <string name="chat_delete_both_members">இங்கே/அனைவரிடமிருந்தும் நீக்கு</string>
+    <string name="chat_delete_both_members_sub">இந்தச் செய்தியை இங்கேயும் ஒவ்வொரு உறுப்பினரின் சாதனத்திலிருந்தும் நீக்கும்.</string>
     <string name="chat_delete_both_sub">சாட்டை உள்நாட்டில் அகற்றி, தொடர்பின் சாதனத்திலிருந்து தானாகவே நீக்குகிறது.</string>
     <string name="chat_cd_share_location">இருப்பிடத்தைப் பகிர்</string>
     <string name="chat_input_placeholder">செய்தி…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">பகிரப்பட்ட இடம்</string>
     <string name="chat_tap_to_open_map">வரைபடத்தைத் திறக்க தட்டவும்</string>
     <string name="circles_delete">வட்டத்தை நீக்கு</string>
-    <string name="circles_delete_message">\"%1$s\" மற்றும் அதன் குழு உரையாடலை நீக்கவா? இது உங்கள் சாதனத்திலிருந்து மட்டுமே அகற்றுகிறது.</string>
     <string name="circles_delete_title">வட்டத்தை நீக்கவா?</string>
+    <string name="circles_delete_everywhere">அனைவருக்கும் நீக்கு</string>
+    <string name="circles_delete_everywhere_sub">வட்டத்தையும் அதன் செய்திகளையும் ஒவ்வொரு உறுப்பினரின் சாதனத்திலிருந்தும் நீக்கும்.</string>
     <string name="circles_edit_title">வட்டத்தைத் திருத்து</string>
     <string name="circles_empty_body">தொடர்புகளின் குழுவிற்குச் செய்தி அனுப்பவும், உங்கள் இடத்தை அனைவருடனும் ஒரே நேரத்தில் பகிரவும் ஒரு வட்டத்தை உருவாக்கவும்.</string>
     <string name="circles_empty_title">இன்னும் வட்டங்கள் இல்லை</string>

@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Hur vill du radera detta meddelande?</string>
     <string name="chat_delete_from_contact">Radera hos kontakten</string>
     <string name="chat_delete_from_contact_sub">Raderar chatten från kontaktens enhet.</string>
+    <string name="chat_delete_from_members_sub">Tar bort det här meddelandet från varje medlems enhet.</string>
+    <string name="chat_delete_both_members">Ta bort lokalt/från alla</string>
+    <string name="chat_delete_both_members_sub">Tar bort det här meddelandet lokalt och från varje medlems enhet.</string>
     <string name="chat_delete_both_sub">Tar bort chatten lokalt och raderar den automatiskt från kontaktens enhet.</string>
     <string name="chat_cd_share_location">Dela plats</string>
     <string name="chat_input_placeholder">Meddelande…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Delad plats</string>
     <string name="chat_tap_to_open_map">Tryck för att öppna kartan</string>
     <string name="circles_delete">Ta bort cirkel</string>
-    <string name="circles_delete_message">Ta bort ”%1$s” och dess gruppkonversation? Detta tar bara bort den från din enhet.</string>
     <string name="circles_delete_title">Ta bort cirkel?</string>
+    <string name="circles_delete_everywhere">Ta bort för alla</string>
+    <string name="circles_delete_everywhere_sub">Tar även bort cirkeln och dess meddelanden från varje medlems enhet.</string>
     <string name="circles_edit_title">Redigera cirkel</string>
     <string name="circles_empty_body">Skapa en cirkel för att meddela en grupp kontakter och dela din plats med alla samtidigt.</string>
     <string name="circles_empty_title">Inga cirklar än</string>

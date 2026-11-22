@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Ergaa kana akkamitti haquu barbaadda?</string>
     <string name="chat_delete_from_contact">Quunnamtii irraa haqi</string>
     <string name="chat_delete_from_contact_sub">Chat meeshaa quunnamtichaa irraa haqsa.</string>
+    <string name="chat_delete_from_members_sub">Ergaa kana meeshaa miseensa hunda irraa haqa.</string>
+    <string name="chat_delete_both_members">Asitti/hunda irraa haqi</string>
+    <string name="chat_delete_both_members_sub">Ergaa kana asitti fi meeshaa miseensa hunda irraa haqa.</string>
     <string name="chat_delete_both_sub">Chat meeshaa keessan irraa haqee bifa otomaatikiin meeshaa quunnamtichaa irraas ni haqsa.</string>
     <string name="chat_cd_share_location">Bakka Qoodi</string>
     <string name="chat_input_placeholder">Ergaa…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Bakka qoodame</string>
     <string name="chat_tap_to_open_map">Kaartaa banuuf tuqi</string>
     <string name="circles_delete">Geengoo haqi</string>
-    <string name="circles_delete_message">\"%1$s\" fi haasawa garee isaa haquu? Kun meeshaa kee irraa qofa balleessa.</string>
     <string name="circles_delete_title">Geengoo haquu?</string>
+    <string name="circles_delete_everywhere">Hundaaf haqi</string>
+    <string name="circles_delete_everywhere_sub">Geengoo fi ergaawwan isaa meeshaa miseensa hunda irraas ni haqa.</string>
     <string name="circles_edit_title">Geengoo gulaali</string>
     <string name="circles_empty_body">Garee quunnamtii ergaa erguu fi bakka kee yeruma tokko hunda waliin qooduuf geengoo uumi.</string>
     <string name="circles_empty_title">Hanga ammaatti geengoon hin jiru</string>

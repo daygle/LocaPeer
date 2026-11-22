@@ -1,8 +1,11 @@
 package com.locapeer.circles
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.crypto.KeyManager
+import com.locapeer.messaging.MediaCache
+import dagger.hilt.android.qualifiers.ApplicationContext
 import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
@@ -21,6 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CirclesViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val circleDao: CircleDao,
     private val peerDao: PeerDao,
     private val messageDao: MessageDao,
@@ -76,7 +80,13 @@ class CirclesViewModel @Inject constructor(
         viewModelScope.launch { circleDao.replaceMembers(circleId, memberPubkeys) }
     }
 
-    /** Deletes the circle, its membership and its message thread. */
+    /**
+     * The single local "delete circle" path: removes the circle, its membership and its message
+     * thread on this device only. Used by the circle chat's "Delete Locally" option (and by the
+     * owner as the fallback for a circle with no recorded creator). Owners who want it gone for
+     * every member use [com.locapeer.messaging.MessagingViewModel.disbandCircle], which notifies
+     * the members first.
+     */
     fun deleteCircle(circleId: String) {
         viewModelScope.launch {
             // Record the removal before dropping the row. Circles with no recorded owner (created
@@ -91,6 +101,8 @@ class CirclesViewModel @Inject constructor(
             messageDao.deleteAllForGroup(circleId)
             // Reactions on the circle's rows would otherwise linger as orphans.
             messageReactionDao.deleteOrphans()
+            // Drop any decrypted attachments/voice notes staged in the cache.
+            MediaCache.clearDecryptedMedia(context)
         }
     }
 }

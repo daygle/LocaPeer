@@ -591,15 +591,39 @@ internal fun DeleteMessageDialog(
                 )
 
                 if (msg.isMine) {
+                    // A circle message fans out to every member as their own encrypted copy, so its
+                    // remote deletion reaches all of them - not one contact. Same two options as a
+                    // 1:1 message, with circle wording instead of "from contact".
+                    val inCircle = msg.groupId != null
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.chat_delete_from_contact)) },
-                        supportingContent = { Text(stringResource(R.string.chat_delete_from_contact_sub)) },
+                        headlineContent = {
+                            Text(stringResource(
+                                if (inCircle) R.string.circles_delete_everywhere
+                                else R.string.chat_delete_from_contact
+                            ))
+                        },
+                        supportingContent = {
+                            Text(stringResource(
+                                if (inCircle) R.string.chat_delete_from_members_sub
+                                else R.string.chat_delete_from_contact_sub
+                            ))
+                        },
                         modifier = Modifier.clickable { onDeleteRemote(); onDismiss() },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
-                        supportingContent = { Text(stringResource(R.string.chat_delete_both_sub)) },
+                        headlineContent = {
+                            Text(stringResource(
+                                if (inCircle) R.string.chat_delete_both_members
+                                else R.string.conv_delete_both
+                            ))
+                        },
+                        supportingContent = {
+                            Text(stringResource(
+                                if (inCircle) R.string.chat_delete_both_members_sub
+                                else R.string.chat_delete_both_sub
+                            ))
+                        },
                         modifier = Modifier.clickable { onDeleteLocal(); onDeleteRemote(); onDismiss() },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )

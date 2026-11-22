@@ -475,6 +475,9 @@
     <string name="chat_delete_msg_message">您想如何删除此消息？</string>
     <string name="chat_delete_from_contact">从对方处删除</string>
     <string name="chat_delete_from_contact_sub">发送请求将其从他们的设备上移除。</string>
+    <string name="chat_delete_from_members_sub">从每位成员的设备上删除此消息。</string>
+    <string name="chat_delete_both_members">本地删除/向所有人删除</string>
+    <string name="chat_delete_both_members_sub">在此设备及每位成员的设备上删除此消息。</string>
     <string name="chat_delete_both_sub">本地移除并请求远程删除。</string>
     <string name="chat_cd_share_location">共享位置</string>
     <string name="chat_input_placeholder">消息…</string>
@@ -773,8 +776,9 @@
     <string name="chat_shared_location">共享的位置</string>
     <string name="chat_tap_to_open_map">点按以打开地图</string>
     <string name="circles_delete">删除圈子</string>
-    <string name="circles_delete_message">删除“%1$s”及其群聊？此操作只会将其从您的设备中移除。</string>
     <string name="circles_delete_title">删除圈子？</string>
+    <string name="circles_delete_everywhere">为所有人删除</string>
+    <string name="circles_delete_everywhere_sub">同时从每位成员的设备上删除该圈子及其消息。</string>
     <string name="circles_edit_title">编辑圈子</string>
     <string name="circles_empty_body">创建一个圈子，即可向一组联系人发送消息，并一次性与所有人共享您的位置。</string>
     <string name="circles_empty_title">还没有圈子</string>

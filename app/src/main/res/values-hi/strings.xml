@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">यह संदेश आप कैसे हटाना चाहते हैं?</string>
     <string name="chat_delete_from_contact">संपर्क से हटाएँ</string>
     <string name="chat_delete_from_contact_sub">चैट को संपर्क के डिवाइस से हटाता है।</string>
+    <string name="chat_delete_from_members_sub">यह संदेश हर सदस्य के डिवाइस से हटा देता है.</string>
+    <string name="chat_delete_both_members">स्थानीय/सभी से हटाएँ</string>
+    <string name="chat_delete_both_members_sub">यह संदेश स्थानीय रूप से और हर सदस्य के डिवाइस से हटा देता है.</string>
     <string name="chat_delete_both_sub">चैट को स्थानीय रूप से हटाता है और संपर्क के डिवाइस से स्वतः मिटा देता है।</string>
     <string name="chat_cd_share_location">स्थान साझा करें</string>
     <string name="chat_input_placeholder">संदेश…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">साझा किया गया स्थान</string>
     <string name="chat_tap_to_open_map">मानचित्र खोलने के लिए टैप करें</string>
     <string name="circles_delete">मंडली हटाएँ</string>
-    <string name="circles_delete_message">\"%1$s\" और उसकी समूह बातचीत हटाएँ? यह केवल आपके डिवाइस से हटाता है।</string>
     <string name="circles_delete_title">मंडली हटाएँ?</string>
+    <string name="circles_delete_everywhere">सभी के लिए हटाएँ</string>
+    <string name="circles_delete_everywhere_sub">सर्कल और उसके संदेश हर सदस्य के डिवाइस से भी हटा देता है.</string>
     <string name="circles_edit_title">मंडली संपादित करें</string>
     <string name="circles_empty_body">संपर्कों के समूह को संदेश भेजने और अपना स्थान सभी के साथ एक साथ साझा करने के लिए एक मंडली बनाएँ।</string>
     <string name="circles_empty_title">अभी कोई मंडली नहीं</string>

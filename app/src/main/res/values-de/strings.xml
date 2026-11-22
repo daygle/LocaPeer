@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Wie möchten Sie diese Nachricht löschen?</string>
     <string name="chat_delete_from_contact">Beim Kontakt löschen</string>
     <string name="chat_delete_from_contact_sub">Sendet eine Anfrage, sie von dessen Gerät zu entfernen.</string>
+    <string name="chat_delete_from_members_sub">Löscht diese Nachricht von den Geräten aller Mitglieder.</string>
+    <string name="chat_delete_both_members">Lokal/von allen löschen</string>
+    <string name="chat_delete_both_members_sub">Löscht diese Nachricht lokal und von den Geräten aller Mitglieder.</string>
     <string name="chat_delete_both_sub">Löscht sie lokal und fordert die Remote-Löschung an.</string>
     <string name="chat_cd_share_location">Standort teilen</string>
     <string name="chat_input_placeholder">Nachricht…</string>
@@ -788,8 +791,9 @@
     <string name="chat_shared_location">Geteilter Standort</string>
     <string name="chat_tap_to_open_map">Zum Öffnen der Karte tippen</string>
     <string name="circles_delete">Kreis löschen</string>
-    <string name="circles_delete_message">\"%1$s\" und die zugehörige Gruppenunterhaltung löschen? Dies entfernt sie nur von deinem Gerät.</string>
     <string name="circles_delete_title">Kreis löschen?</string>
+    <string name="circles_delete_everywhere">Für alle löschen</string>
+    <string name="circles_delete_everywhere_sub">Entfernt den Kreis und seine Nachrichten auch von den Geräten aller Mitglieder.</string>
     <string name="circles_edit_title">Kreis bearbeiten</string>
     <string name="circles_empty_body">Erstelle einen Kreis, um einer Gruppe von Kontakten zu schreiben und deinen Standort mit allen gleichzeitig zu teilen.</string>
     <string name="circles_empty_title">Noch keine Kreise</string>

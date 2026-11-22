@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Hogyan szeretné törölni ezt az üzenetet?</string>
     <string name="chat_delete_from_contact">Törlés a partnernél</string>
     <string name="chat_delete_from_contact_sub">Törli a csevegést a partner eszközéről.</string>
+    <string name="chat_delete_from_members_sub">Törli ezt az üzenetet minden tag eszközéről.</string>
+    <string name="chat_delete_both_members">Törlés helyben/mindenkinél</string>
+    <string name="chat_delete_both_members_sub">Törli ezt az üzenetet helyben és minden tag eszközéről.</string>
     <string name="chat_delete_both_sub">Helyben eltávolítja a csevegést, és automatikusan törli a partner eszközéről.</string>
     <string name="chat_cd_share_location">Hely megosztása</string>
     <string name="chat_input_placeholder">Üzenet…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Megosztott hely</string>
     <string name="chat_tap_to_open_map">Koppints a térkép megnyitásához</string>
     <string name="circles_delete">Kör törlése</string>
-    <string name="circles_delete_message">Törlöd a(z) „%1$s” kört és a csoportos beszélgetését? Ez csak a te eszközödről távolítja el.</string>
     <string name="circles_delete_title">Törlöd a kört?</string>
+    <string name="circles_delete_everywhere">Törlés mindenkinél</string>
+    <string name="circles_delete_everywhere_sub">A kört és üzeneteit minden tag eszközéről is eltávolítja.</string>
     <string name="circles_edit_title">Kör szerkesztése</string>
     <string name="circles_empty_body">Hozz létre egy kört, hogy egy csoport névjegynek írhass, és egyszerre oszthasd meg a helyedet mindenkivel.</string>
     <string name="circles_empty_title">Még nincsenek körök</string>

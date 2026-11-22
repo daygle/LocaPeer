@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">તમે આ સંદેશ કેવી રીતે ડીલીટ કરવા માંગો છો?</string>
     <string name="chat_delete_from_contact">સંપર્કમાંથી ડીલીટ કરો</string>
     <string name="chat_delete_from_contact_sub">સંપર્કના ઉપકરણમાંથી ચેટ ડીલીટ કરે છે.</string>
+    <string name="chat_delete_from_members_sub">આ સંદેશ દરેક સભ્યના ડિવાઇસમાંથી કાઢી નાખે છે.</string>
+    <string name="chat_delete_both_members">સ્થાનિક/દરેકમાંથી કાઢી નાખો</string>
+    <string name="chat_delete_both_members_sub">આ સંદેશ સ્થાનિક રીતે અને દરેક સભ્યના ડિવાઇસમાંથી કાઢી નાખે છે.</string>
     <string name="chat_delete_both_sub">ચેટને સ્થાનિક રીતે દૂર કરે છે અને સંપર્કના ઉપકરણમાંથી આપમેળે ડીલીટ કરે છે.</string>
     <string name="chat_cd_share_location">સ્થાન શેર કરો</string>
     <string name="chat_input_placeholder">સંદેશ…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">શેર કરેલું સ્થાન</string>
     <string name="chat_tap_to_open_map">નકશો ખોલવા ટૅપ કરો</string>
     <string name="circles_delete">વર્તુળ કાઢી નાખો</string>
-    <string name="circles_delete_message">\"%1$s\" અને તેની જૂથ વાતચીત કાઢી નાખવી? આ ફક્ત તમારા ડિવાઇસમાંથી દૂર કરે છે.</string>
     <string name="circles_delete_title">વર્તુળ કાઢી નાખવું?</string>
+    <string name="circles_delete_everywhere">દરેક માટે કાઢી નાખો</string>
+    <string name="circles_delete_everywhere_sub">વર્તુળ અને તેના સંદેશા દરેક સભ્યના ડિવાઇસમાંથી પણ કાઢી નાખે છે.</string>
     <string name="circles_edit_title">વર્તુળ સંપાદિત કરો</string>
     <string name="circles_empty_body">સંપર્કોના જૂથને સંદેશ મોકલવા અને તમારું સ્થાન બધા સાથે એકસાથે શેર કરવા એક વર્તુળ બનાવો.</string>
     <string name="circles_empty_title">હજી કોઈ વર્તુળ નથી</string>

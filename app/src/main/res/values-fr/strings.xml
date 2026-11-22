@@ -485,6 +485,9 @@
     <string name="chat_delete_msg_message">Comment souhaitez-vous supprimer ce message ?</string>
     <string name="chat_delete_from_contact">Supprimer chez le contact</string>
     <string name="chat_delete_from_contact_sub">Envoie une demande pour le supprimer de son appareil.</string>
+    <string name="chat_delete_from_members_sub">Supprime ce message de l’appareil de chaque membre.</string>
+    <string name="chat_delete_both_members">Supprimer localement/de tous</string>
+    <string name="chat_delete_both_members_sub">Supprime ce message localement et de l’appareil de chaque membre.</string>
     <string name="chat_delete_both_sub">Le supprime localement et demande la suppression à distance.</string>
     <string name="chat_cd_share_location">Partager la localisation</string>
     <string name="chat_input_placeholder">Message…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Position partagée</string>
     <string name="chat_tap_to_open_map">Touchez pour ouvrir la carte</string>
     <string name="circles_delete">Supprimer le cercle</string>
-    <string name="circles_delete_message">Supprimer \"%1$s\" et sa conversation de groupe ? Cela ne le retire que de votre appareil.</string>
     <string name="circles_delete_title">Supprimer le cercle ?</string>
+    <string name="circles_delete_everywhere">Supprimer pour tout le monde</string>
+    <string name="circles_delete_everywhere_sub">Supprime aussi le cercle et ses messages de l\'appareil de chaque membre.</string>
     <string name="circles_edit_title">Modifier le cercle</string>
     <string name="circles_empty_body">Créez un cercle pour envoyer des messages à un groupe de contacts et partager votre position avec tous en même temps.</string>
     <string name="circles_empty_title">Aucun cercle pour l\'instant</string>

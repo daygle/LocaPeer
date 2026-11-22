@@ -475,6 +475,9 @@
     <string name="chat_delete_msg_message">このメッセージをどのように削除しますか？</string>
     <string name="chat_delete_from_contact">相手から削除</string>
     <string name="chat_delete_from_contact_sub">相手のデバイスから削除するようリクエストを送信します。</string>
+    <string name="chat_delete_from_members_sub">このメッセージをすべてのメンバーの端末から削除します。</string>
+    <string name="chat_delete_both_members">この端末/全員から削除</string>
+    <string name="chat_delete_both_members_sub">このメッセージをこの端末とすべてのメンバーの端末から削除します。</string>
     <string name="chat_delete_both_sub">ローカルから削除し、リモート削除を依頼します。</string>
     <string name="chat_cd_share_location">位置情報を共有</string>
     <string name="chat_input_placeholder">メッセージ…</string>
@@ -773,8 +776,9 @@
     <string name="chat_shared_location">共有された位置情報</string>
     <string name="chat_tap_to_open_map">タップして地図を開く</string>
     <string name="circles_delete">サークルを削除</string>
-    <string name="circles_delete_message">「%1$s」とそのグループ会話を削除しますか？これはお使いのデバイスから削除するだけです。</string>
     <string name="circles_delete_title">サークルを削除しますか？</string>
+    <string name="circles_delete_everywhere">全員から削除</string>
+    <string name="circles_delete_everywhere_sub">サークルとそのメッセージをすべてのメンバーの端末からも削除します。</string>
     <string name="circles_edit_title">サークルを編集</string>
     <string name="circles_empty_body">サークルを作成すると、連絡先のグループにメッセージを送り、全員と一度に位置情報を共有できます。</string>
     <string name="circles_empty_title">まだサークルがありません</string>

@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">ଆପଣ ଏହି ବାର୍ତ୍ତା କିପରି ଡିଲିଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି?</string>
     <string name="chat_delete_from_contact">ସମ୍ପର୍କଙ୍କ ଠାରୁ ଡିଲିଟ୍ କରନ୍ତୁ</string>
     <string name="chat_delete_from_contact_sub">ସମ୍ପର୍କଙ୍କ ଡିଭାଇସରୁ ଚାଟ୍ ଡିଲିଟ୍ କରେ ।</string>
+    <string name="chat_delete_from_members_sub">ଏହି ସନ୍ଦେଶକୁ ପ୍ରତ୍ୟେକ ସଦସ୍ୟଙ୍କ ଡିଭାଇସରୁ ହଟାଏ।</string>
+    <string name="chat_delete_both_members">ଏଠାରେ/ସମସ୍ତଙ୍କଠାରୁ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="chat_delete_both_members_sub">ଏହି ସନ୍ଦେଶକୁ ଏଠାରେ ଏବଂ ପ୍ରତ୍ୟେକ ସଦସ୍ୟଙ୍କ ଡିଭାଇସରୁ ହଟାଏ।</string>
     <string name="chat_delete_both_sub">ଚାଟ୍‌କୁ ସ୍ଥାନୀୟ ଭାବରେ ବାହାର କରିଦିଏ ଏବଂ ସମ୍ପର୍କଙ୍କ ଡିଭାଇସରୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଡିଲିଟ୍ କରେ ।</string>
     <string name="chat_cd_share_location">ସ୍ଥାନ ଅଂଶୀଦାର କରନ୍ତୁ</string>
     <string name="chat_input_placeholder">ବାର୍ତ୍ତା…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">ସେୟାର୍ କରାଯାଇଥିବା ଅବସ୍ଥାନ</string>
     <string name="chat_tap_to_open_map">ମାନଚିତ୍ର ଖୋଲିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
     <string name="circles_delete">ବୃତ୍ତ ବିଲୋପ କରନ୍ତୁ</string>
-    <string name="circles_delete_message">\"%1$s\" ଏବଂ ଏହାର ଗୋଷ୍ଠୀ ବାର୍ତ୍ତାଳାପ ବିଲୋପ କରିବେ? ଏହା କେବଳ ଆପଣଙ୍କ ଡିଭାଇସରୁ ହଟାଏ।</string>
     <string name="circles_delete_title">ବୃତ୍ତ ବିଲୋପ କରିବେ?</string>
+    <string name="circles_delete_everywhere">ସମସ୍ତଙ୍କ ପାଇଁ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="circles_delete_everywhere_sub">ପ୍ରତ୍ୟେକ ସଦସ୍ୟଙ୍କ ଡିଭାଇସରୁ ମଧ୍ୟ ବୃତ୍ତ ଏବଂ ଏହାର ସନ୍ଦେଶଗୁଡ଼ିକ ହଟାଏ।</string>
     <string name="circles_edit_title">ବୃତ୍ତ ସମ୍ପାଦନ କରନ୍ତୁ</string>
     <string name="circles_empty_body">ଏକ ଯୋଗାଯୋଗ ଗୋଷ୍ଠୀକୁ ବାର୍ତ୍ତା ପଠାଇବାକୁ ଏବଂ ଆପଣଙ୍କ ଅବସ୍ଥାନ ସମସ୍ତଙ୍କ ସହ ଏକାଥରେ ସେୟାର୍ କରିବାକୁ ଏକ ବୃତ୍ତ ସୃଷ୍ଟି କରନ୍ତୁ।</string>
     <string name="circles_empty_title">ଏବେ ପର୍ଯ୍ୟନ୍ତ କୌଣସି ବୃତ୍ତ ନାହିଁ</string>

@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Πώς θέλετε να διαγράψετε αυτό το μήνυμα;</string>
     <string name="chat_delete_from_contact">Διαγραφή από την επαφή</string>
     <string name="chat_delete_from_contact_sub">Διαγράφει τη συνομιλία από τη συσκευή της επαφής.</string>
+    <string name="chat_delete_from_members_sub">Διαγράφει αυτό το μήνυμα από τη συσκευή κάθε μέλους.</string>
+    <string name="chat_delete_both_members">Διαγραφή τοπικά/από όλους</string>
+    <string name="chat_delete_both_members_sub">Διαγράφει αυτό το μήνυμα τοπικά και από τη συσκευή κάθε μέλους.</string>
     <string name="chat_delete_both_sub">Αφαιρεί τη συνομιλία τοπικά και τη διαγράφει αυτόματα από τη συσκευή της επαφής.</string>
     <string name="chat_cd_share_location">Κοινοποίηση τοποθεσίας</string>
     <string name="chat_input_placeholder">Μήνυμα…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Κοινοποιημένη τοποθεσία</string>
     <string name="chat_tap_to_open_map">Πατήστε για άνοιγμα του χάρτη</string>
     <string name="circles_delete">Διαγραφή κύκλου</string>
-    <string name="circles_delete_message">Διαγραφή του «%1$s» και της ομαδικής συνομιλίας του; Αυτό το αφαιρεί μόνο από τη συσκευή σας.</string>
     <string name="circles_delete_title">Διαγραφή κύκλου;</string>
+    <string name="circles_delete_everywhere">Διαγραφή για όλους</string>
+    <string name="circles_delete_everywhere_sub">Αφαιρεί επίσης τον κύκλο και τα μηνύματά του από τη συσκευή κάθε μέλους.</string>
     <string name="circles_edit_title">Επεξεργασία κύκλου</string>
     <string name="circles_empty_body">Δημιουργήστε έναν κύκλο για να στέλνετε μηνύματα σε μια ομάδα επαφών και να μοιράζεστε την τοποθεσία σας με όλους ταυτόχρονα.</string>
     <string name="circles_empty_title">Δεν υπάρχουν κύκλοι ακόμη</string>

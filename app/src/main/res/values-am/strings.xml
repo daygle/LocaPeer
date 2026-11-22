@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">ይህንን መልእክት እንዴት ማጥፋት ይፈልጋሉ?</string>
     <string name="chat_delete_from_contact">ከእውቂያው ዘንድ አጥፋ</string>
     <string name="chat_delete_from_contact_sub">መልእክቱን ከእውቂያው መሣሪያ ላይ ለማጥፋት ጥያቄ ይልካል።</string>
+    <string name="chat_delete_from_members_sub">ይህን መልእክት ከእያንዳንዱ አባል መሣሪያ ላይ ያጠፋል።</string>
+    <string name="chat_delete_both_members">በአካባቢ ብቻ/ከሁሉም</string>
+    <string name="chat_delete_both_members_sub">ይህን መልእክት በአካባቢው ያስወግዳል እና ከእያንዳንዱ አባል መሣሪያ ላይ ያጠፋል።</string>
     <string name="chat_delete_both_sub">ቻቱን በመሣሪያዎ ላይ ያስወግዳል እና ከእውቂያው መሣሪያ ላይ በራስ-ሰር ያጠፋል።</string>
     <string name="chat_cd_share_location">አካባቢን አጋራ</string>
     <string name="chat_input_placeholder">መልእክት…</string>
@@ -790,8 +793,9 @@
     <string name="chat_shared_location">የተጋራ ቦታ</string>
     <string name="chat_tap_to_open_map">ካርታ ለመክፈት ይንኩ</string>
     <string name="circles_delete">ክብ ሰርዝ</string>
-    <string name="circles_delete_message">\"%1$s\" እና የቡድን ውይይቱን ይሰረዝ? ይህ ከመሣሪያዎ ብቻ ያስወግደዋል።</string>
     <string name="circles_delete_title">ክብ ይሰረዝ?</string>
+    <string name="circles_delete_everywhere">ለሁሉም ሰው ሰርዝ</string>
+    <string name="circles_delete_everywhere_sub">ክበቡንና መልእክቶቹን ከእያንዳንዱ አባል መሣሪያ ላይም ያስወግዳል።</string>
     <string name="circles_edit_title">ክብ አርትዕ</string>
     <string name="circles_empty_body">ለቡድን እውቂያዎች መልእክት ለመላክ እና ቦታዎን በአንድ ጊዜ ከሁሉም ጋር ለማጋራት ክብ ይፍጠሩ።</string>
     <string name="circles_empty_title">እስካሁን ምንም ክብ የለም</string>

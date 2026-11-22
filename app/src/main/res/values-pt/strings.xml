@@ -485,6 +485,9 @@
     <string name="chat_delete_msg_message">Como você deseja excluir esta mensagem?</string>
     <string name="chat_delete_from_contact">Excluir do contato</string>
     <string name="chat_delete_from_contact_sub">Envia uma solicitação para removê-la do dispositivo deles.</string>
+    <string name="chat_delete_from_members_sub">Elimina esta mensagem do dispositivo de cada membro.</string>
+    <string name="chat_delete_both_members">Eliminar localmente/de todos</string>
+    <string name="chat_delete_both_members_sub">Elimina esta mensagem localmente e do dispositivo de cada membro.</string>
     <string name="chat_delete_both_sub">Remove localmente e solicita a exclusão remota.</string>
     <string name="chat_cd_share_location">Compartilhar Localização</string>
     <string name="chat_input_placeholder">Mensagem…</string>
@@ -787,8 +790,9 @@
     <string name="chat_shared_location">Localização partilhada</string>
     <string name="chat_tap_to_open_map">Toque para abrir o mapa</string>
     <string name="circles_delete">Eliminar círculo</string>
-    <string name="circles_delete_message">Eliminar \"%1$s\" e a sua conversa de grupo? Isto remove-o apenas do seu dispositivo.</string>
     <string name="circles_delete_title">Eliminar círculo?</string>
+    <string name="circles_delete_everywhere">Eliminar para todos</string>
+    <string name="circles_delete_everywhere_sub">Também remove o círculo e as suas mensagens do dispositivo de cada membro.</string>
     <string name="circles_edit_title">Editar círculo</string>
     <string name="circles_empty_body">Crie um círculo para enviar mensagens a um grupo de contactos e partilhar a sua localização com todos de uma só vez.</string>
     <string name="circles_empty_title">Ainda sem círculos</string>

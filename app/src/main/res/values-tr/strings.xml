@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Bu mesajı nasıl silmek istersiniz?</string>
     <string name="chat_delete_from_contact">Kişiden sil</string>
     <string name="chat_delete_from_contact_sub">Sohbeti kişinin cihazından siler.</string>
+    <string name="chat_delete_from_members_sub">Bu mesajı her üyenin cihazından siler.</string>
+    <string name="chat_delete_both_members">Yerel/herkesten sil</string>
+    <string name="chat_delete_both_members_sub">Bu mesajı hem burada hem her üyenin cihazından siler.</string>
     <string name="chat_delete_both_sub">Sohbeti yerel olarak kaldırır ve kişinin cihazından otomatik olarak siler.</string>
     <string name="chat_cd_share_location">Konum Paylaş</string>
     <string name="chat_input_placeholder">Mesaj…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Paylaşılan konum</string>
     <string name="chat_tap_to_open_map">Haritayı açmak için dokunun</string>
     <string name="circles_delete">Çevreyi sil</string>
-    <string name="circles_delete_message">\"%1$s\" ve grup sohbeti silinsin mi? Bu yalnızca cihazınızdan kaldırır.</string>
     <string name="circles_delete_title">Çevre silinsin mi?</string>
+    <string name="circles_delete_everywhere">Herkesten sil</string>
+    <string name="circles_delete_everywhere_sub">Daireyi ve mesajlarını her üyenin cihazından da kaldırır.</string>
     <string name="circles_edit_title">Çevreyi düzenle</string>
     <string name="circles_empty_body">Bir grup kişiye mesaj göndermek ve konumunuzu hepsiyle aynı anda paylaşmak için bir çevre oluşturun.</string>
     <string name="circles_empty_title">Henüz çevre yok</string>

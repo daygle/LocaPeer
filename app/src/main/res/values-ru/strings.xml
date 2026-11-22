@@ -502,6 +502,9 @@
     <string name="chat_delete_msg_message">Как удалить это сообщение?</string>
     <string name="chat_delete_from_contact">Удалить у контакта</string>
     <string name="chat_delete_from_contact_sub">Удаляет сообщение с устройства контакта.</string>
+    <string name="chat_delete_from_members_sub">Удаляет это сообщение с устройств всех участников.</string>
+    <string name="chat_delete_both_members">Удалить здесь/у всех</string>
+    <string name="chat_delete_both_members_sub">Удаляет это сообщение здесь и с устройств всех участников.</string>
     <string name="chat_delete_both_sub">Удаляет сообщение локально и автоматически стирает его с устройства контакта.</string>
     <string name="chat_cd_share_location">Поделиться местоположением</string>
     <string name="chat_input_placeholder">Сообщение…</string>
@@ -819,8 +822,9 @@
     <string name="chat_shared_location">Отправленное местоположение</string>
     <string name="chat_tap_to_open_map">Нажмите, чтобы открыть карту</string>
     <string name="circles_delete">Удалить круг</string>
-    <string name="circles_delete_message">Удалить «%1$s» и его групповой разговор? Это удалит его только с вашего устройства.</string>
     <string name="circles_delete_title">Удалить круг?</string>
+    <string name="circles_delete_everywhere">Удалить для всех</string>
+    <string name="circles_delete_everywhere_sub">Также удаляет круг и его сообщения с устройств всех участников.</string>
     <string name="circles_edit_title">Изменить круг</string>
     <string name="circles_empty_body">Создайте круг, чтобы писать группе контактов и делиться местоположением со всеми сразу.</string>
     <string name="circles_empty_title">Кругов пока нет</string>

@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">ਤੁਸੀਂ ਇਸ ਸੁਨੇਹੇ ਨੂੰ ਕਿਵੇਂ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="chat_delete_from_contact">ਸੰਪਰਕ ਤੋਂ ਮਿਟਾਓ</string>
     <string name="chat_delete_from_contact_sub">ਸੰਪਰਕ ਦੀ ਡਿਵਾਈਸ ਤੋਂ ਚੈਟ ਮਿਟਾਉਂਦਾ ਹੈ।</string>
+    <string name="chat_delete_from_members_sub">ਇਹ ਸੁਨੇਹਾ ਹਰ ਮੈਂਬਰ ਦੇ ਡੀਵਾਈਸ ਤੋਂ ਮਿਟਾ ਦਿੰਦਾ ਹੈ।</string>
+    <string name="chat_delete_both_members">ਇੱਥੇ/ਸਾਰਿਆਂ ਤੋਂ ਮਿਟਾਓ</string>
+    <string name="chat_delete_both_members_sub">ਇਹ ਸੁਨੇਹਾ ਇੱਥੇ ਅਤੇ ਹਰ ਮੈਂਬਰ ਦੇ ਡੀਵਾਈਸ ਤੋਂ ਮਿਟਾ ਦਿੰਦਾ ਹੈ।</string>
     <string name="chat_delete_both_sub">ਚੈਟ ਨੂੰ ਸਥਾਨਕ ਤੌਰ ਤੇ ਹਟਾਉਂਦਾ ਹੈ ਅਤੇ ਸੰਪਰਕ ਦੀ ਡਿਵਾਈਸ ਤੋਂ ਸਵੈਚਲਿਤ ਤੌਰ ਤੇ ਮਿਟਾ ਦਿੰਦਾ ਹੈ।</string>
     <string name="chat_cd_share_location">ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰੋ</string>
     <string name="chat_input_placeholder">ਸੁਨੇਹਾ…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">ਸਾਂਝਾ ਕੀਤਾ ਟਿਕਾਣਾ</string>
     <string name="chat_tap_to_open_map">ਨਕਸ਼ਾ ਖੋਲ੍ਹਣ ਲਈ ਟੈਪ ਕਰੋ</string>
     <string name="circles_delete">ਸਰਕਲ ਮਿਟਾਓ</string>
-    <string name="circles_delete_message">\"%1$s\" ਅਤੇ ਇਸ ਦੀ ਸਮੂਹ ਗੱਲਬਾਤ ਮਿਟਾਉਣੀ ਹੈ? ਇਹ ਸਿਰਫ਼ ਤੁਹਾਡੇ ਡਿਵਾਈਸ ਤੋਂ ਹਟਾਉਂਦਾ ਹੈ।</string>
     <string name="circles_delete_title">ਸਰਕਲ ਮਿਟਾਉਣਾ ਹੈ?</string>
+    <string name="circles_delete_everywhere">ਸਾਰਿਆਂ ਲਈ ਮਿਟਾਓ</string>
+    <string name="circles_delete_everywhere_sub">ਸਰਕਲ ਅਤੇ ਇਸ ਦੇ ਸੁਨੇਹੇ ਹਰ ਮੈਂਬਰ ਦੇ ਡੀਵਾਈਸ ਤੋਂ ਵੀ ਹਟਾ ਦਿੰਦਾ ਹੈ।</string>
     <string name="circles_edit_title">ਸਰਕਲ ਸੋਧੋ</string>
     <string name="circles_empty_body">ਸੰਪਰਕਾਂ ਦੇ ਸਮੂਹ ਨੂੰ ਸੁਨੇਹਾ ਭੇਜਣ ਅਤੇ ਆਪਣਾ ਟਿਕਾਣਾ ਸਾਰਿਆਂ ਨਾਲ ਇੱਕੋ ਵਾਰ ਸਾਂਝਾ ਕਰਨ ਲਈ ਇੱਕ ਸਰਕਲ ਬਣਾਓ।</string>
     <string name="circles_empty_title">ਅਜੇ ਕੋਈ ਸਰਕਲ ਨਹੀਂ</string>

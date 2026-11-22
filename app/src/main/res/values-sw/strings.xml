@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Je, ungependa kufuta vipi ujumbe huu?</string>
     <string name="chat_delete_from_contact">Futa kutoka kwa anwani</string>
     <string name="chat_delete_from_contact_sub">Hufuta gumzo kutoka kwa kifaa cha anwani.</string>
+    <string name="chat_delete_from_members_sub">Hufuta ujumbe huu kutoka kifaa cha kila mwanachama.</string>
+    <string name="chat_delete_both_members">Futa hapa/kwa kila mtu</string>
+    <string name="chat_delete_both_members_sub">Hufuta ujumbe huu hapa na kwenye kifaa cha kila mwanachama.</string>
     <string name="chat_delete_both_sub">Huondoa gumzo kwenye kifaa na kuifuta kiotomatiki kutoka kwa kifaa cha anwani.</string>
     <string name="chat_cd_share_location">Shiriki Mahali</string>
     <string name="chat_input_placeholder">Ujumbe…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Mahali paliposhirikiwa</string>
     <string name="chat_tap_to_open_map">Gusa ili kufungua ramani</string>
     <string name="circles_delete">Futa duara</string>
-    <string name="circles_delete_message">Futa \"%1$s\" na mazungumzo yake ya kikundi? Hii inaiondoa kwenye kifaa chako pekee.</string>
     <string name="circles_delete_title">Futa duara?</string>
+    <string name="circles_delete_everywhere">Futa kwa kila mtu</string>
+    <string name="circles_delete_everywhere_sub">Pia huondoa mduara na ujumbe wake kwenye kifaa cha kila mwanachama.</string>
     <string name="circles_edit_title">Hariri duara</string>
     <string name="circles_empty_body">Unda duara ili kutuma ujumbe kwa kikundi cha anwani na kushiriki mahali ulipo na wote kwa mara moja.</string>
     <string name="circles_empty_title">Bado hakuna maduara</string>

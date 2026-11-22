@@ -475,6 +475,9 @@
     <string name="chat_delete_msg_message">Kedu ka ị chọrọ isi pa ozi a rẹ́?</string>
     <string name="chat_delete_from_contact">Pa rẹ́ láti ọ̀dọ̀ ojúlùmọ̀</string>
     <string name="chat_delete_from_contact_sub">Yóò pa chat rẹ́ lórí ẹ̀rọ ojúlùmọ̀.</string>
+    <string name="chat_delete_from_members_sub">Ó ń pa ìfiránṣẹ́ yìí kúrò ní ẹ̀rọ ọmọ ẹgbẹ́ kọ̀ọ̀kan.</string>
+    <string name="chat_delete_both_members">Pa níbí/kúrò lọ́dọ̀ gbogbo ènìyàn</string>
+    <string name="chat_delete_both_members_sub">Ó ń pa ìfiránṣẹ́ yìí níbí àti ní ẹ̀rọ ọmọ ẹgbẹ́ kọ̀ọ̀kan.</string>
     <string name="chat_delete_both_sub">Yóò pa chat rẹ́ nínú ẹ̀rọ rẹ yóò sì pa á rẹ́ lórí ẹ̀rọ ojúlùmọ̀ náà.</string>
     <string name="chat_cd_share_location">Pín Ipò</string>
     <string name="chat_input_placeholder">Ifiranṣẹ…</string>
@@ -774,8 +777,9 @@
     <string name="chat_shared_location">Ipò tí a pín</string>
     <string name="chat_tap_to_open_map">Tẹ̀ láti ṣí máàpù</string>
     <string name="circles_delete">Pa àyíká rẹ́</string>
-    <string name="circles_delete_message">Pa \"%1$s\" àti ìjíròrò ẹgbẹ́ rẹ̀ rẹ́? Èyí máa yọ ọ́ kúrò lórí ẹ̀rọ rẹ nìkan.</string>
     <string name="circles_delete_title">Pa àyíká rẹ́?</string>
+    <string name="circles_delete_everywhere">Pa fún gbogbo ènìyàn</string>
+    <string name="circles_delete_everywhere_sub">Ó tún yọ àyíká àti àwọn ìfiránṣẹ́ rẹ̀ kúrò ní ẹ̀rọ ọmọ ẹgbẹ́ kọ̀ọ̀kan.</string>
     <string name="circles_edit_title">Ṣàtúnṣe àyíká</string>
     <string name="circles_empty_body">Ṣẹ̀dá àyíká láti fi ìránṣẹ́ ránṣẹ́ sí ẹgbẹ́ àwọn ọ̀rẹ́ àti láti pín ipò rẹ pẹ̀lú gbogbo wọn lẹ́ẹ̀kan náà.</string>
     <string name="circles_empty_title">Kò sí àyíká síbẹ̀</string>

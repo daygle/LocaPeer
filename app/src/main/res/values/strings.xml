@@ -628,13 +628,16 @@
     <string name="chat_delete_msg_message">How do you want to delete this message?</string>
     <string name="chat_delete_from_contact">Delete from Contact</string>
     <string name="chat_delete_from_contact_sub">Deletes the chat from the contact’s device.</string>
+    <string name="chat_delete_from_members_sub">Deletes this message from every member’s device.</string>
+    <string name="chat_delete_both_members">Delete Locally/From Everyone</string>
+    <string name="chat_delete_both_members_sub">Removes this message locally and deletes it from every member’s device.</string>
     <string name="chat_delete_both_sub">Removes the chat locally and automatically deletes it from the contact’s device.</string>
     <string name="chat_cd_share_location">Share Location</string>
     <string name="chat_input_placeholder">Message…</string>
     <string name="chat_cd_send">Send</string>
     <string name="chat_react_title">React</string>
     <string name="chat_react_with">React with %1$s</string>
-    <string name="chat_remove_reaction">Remove reaction</string>
+    <string name="chat_remove_reaction">Remove Reaction</string>
     <string name="chat_cd_reaction_from_contact">Reaction from contact</string>
 
     <string name="common_close">Close</string>
@@ -928,7 +931,8 @@
     <string name="circles_owner_tag">Owner</string>
     <string name="circles_delete">Delete Circle</string>
     <string name="circles_delete_title">Delete circle?</string>
-    <string name="circles_delete_message">Delete \"%1$s\" and its group conversation? This only removes it from your device.</string>
+    <string name="circles_delete_everywhere">Delete for Everyone</string>
+    <string name="circles_delete_everywhere_sub">Also removes the circle and its messages from every member\'s device.</string>
     <string name="circles_leave">Leave Circle</string>
     <string name="circles_leave_title">Leave circle?</string>
     <string name="circles_leave_message">Leave \"%1$s\"? The owner is notified and removes you from the circle.</string>

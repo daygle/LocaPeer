@@ -475,6 +475,9 @@
     <string name="chat_delete_msg_message">Bạn muốn xóa tin nhắn này như thế nào?</string>
     <string name="chat_delete_from_contact">Xóa khỏi liên hệ</string>
     <string name="chat_delete_from_contact_sub">Xóa cuộc trò chuyện khỏi thiết bị của liên hệ.</string>
+    <string name="chat_delete_from_members_sub">Xóa tin nhắn này khỏi thiết bị của mọi thành viên.</string>
+    <string name="chat_delete_both_members">Xóa tại đây/khỏi mọi người</string>
+    <string name="chat_delete_both_members_sub">Xóa tin nhắn này tại đây và khỏi thiết bị của mọi thành viên.</string>
     <string name="chat_delete_both_sub">Gỡ cuộc trò chuyện cục bộ và tự động xóa khỏi thiết bị của liên hệ.</string>
     <string name="chat_cd_share_location">Chia sẻ vị trí</string>
     <string name="chat_input_placeholder">Tin nhắn…</string>
@@ -774,8 +777,9 @@
     <string name="chat_shared_location">Vị trí đã chia sẻ</string>
     <string name="chat_tap_to_open_map">Chạm để mở bản đồ</string>
     <string name="circles_delete">Xóa vòng kết nối</string>
-    <string name="circles_delete_message">Xóa \"%1$s\" và cuộc trò chuyện nhóm của nó? Thao tác này chỉ xóa khỏi thiết bị của bạn.</string>
     <string name="circles_delete_title">Xóa vòng kết nối?</string>
+    <string name="circles_delete_everywhere">Xóa cho mọi người</string>
+    <string name="circles_delete_everywhere_sub">Cũng xóa vòng tròn và tin nhắn của nó khỏi thiết bị của mọi thành viên.</string>
     <string name="circles_edit_title">Chỉnh sửa vòng kết nối</string>
     <string name="circles_empty_body">Tạo một vòng kết nối để nhắn tin cho một nhóm liên hệ và chia sẻ vị trí của bạn với tất cả cùng lúc.</string>
     <string name="circles_empty_title">Chưa có vòng kết nối</string>

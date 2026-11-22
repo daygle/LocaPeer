@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Hûn dixwazin vê peyamê çawa jê bibin?</string>
     <string name="chat_delete_from_contact">Ji têkiliyê jê bibe</string>
     <string name="chat_delete_from_contact_sub">Chatê ji amûra têkiliyê jê dibe.</string>
+    <string name="chat_delete_from_members_sub">Vê peyamê ji amûra her endamî radike.</string>
+    <string name="chat_delete_both_members">Li vir/ji her kesî jê bibe</string>
+    <string name="chat_delete_both_members_sub">Vê peyamê li vir û ji amûra her endamî radike.</string>
     <string name="chat_delete_both_sub">Chatê bi herêmî radike û bixweber ji amûra têkiliyê jê dibe.</string>
     <string name="chat_cd_share_location">Cih Parve Bike</string>
     <string name="chat_input_placeholder">Peyam…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Cihê parvekirî</string>
     <string name="chat_tap_to_open_map">Ji bo vekirina nexşeyê bitepîne</string>
     <string name="circles_delete">Xelekê jê bibe</string>
-    <string name="circles_delete_message">\"%1$s\" û axaftina wê ya komê jê bibe? Ev tenê ji cîhaza te radike.</string>
     <string name="circles_delete_title">Xelekê jê bibe?</string>
+    <string name="circles_delete_everywhere">Ji bo her kesî jê bibe</string>
+    <string name="circles_delete_everywhere_sub">Çember û peyamên wê jî ji amûra her endamî radike.</string>
     <string name="circles_edit_title">Xelekê biguherîne</string>
     <string name="circles_empty_body">Xelekek çêbike da ku ji komek têkiliyan re peyaman bişînî û cihê xwe bi hemûyan re yekcar parve bikî.</string>
     <string name="circles_empty_title">Hê xelek nînin</string>

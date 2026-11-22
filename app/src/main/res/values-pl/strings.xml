@@ -502,6 +502,9 @@
     <string name="chat_delete_msg_message">Jak chcesz usunąć tę wiadomość?</string>
     <string name="chat_delete_from_contact">Usuń u kontaktu</string>
     <string name="chat_delete_from_contact_sub">Usuwa wiadomość z urządzenia kontaktu.</string>
+    <string name="chat_delete_from_members_sub">Usuwa tę wiadomość z urządzeń wszystkich członków.</string>
+    <string name="chat_delete_both_members">Usuń lokalnie/u wszystkich</string>
+    <string name="chat_delete_both_members_sub">Usuwa tę wiadomość lokalnie i z urządzeń wszystkich członków.</string>
     <string name="chat_delete_both_sub">Usuwa wiadomość lokalnie i automatycznie kasuje ją z urządzenia kontaktu.</string>
     <string name="chat_cd_share_location">Udostępnij lokalizację</string>
     <string name="chat_input_placeholder">Wiadomość…</string>
@@ -819,8 +822,9 @@
     <string name="chat_shared_location">Udostępniona lokalizacja</string>
     <string name="chat_tap_to_open_map">Dotknij, aby otworzyć mapę</string>
     <string name="circles_delete">Usuń krąg</string>
-    <string name="circles_delete_message">Usunąć „%1$s” i jego rozmowę grupową? Spowoduje to usunięcie tylko z Twojego urządzenia.</string>
     <string name="circles_delete_title">Usunąć krąg?</string>
+    <string name="circles_delete_everywhere">Usuń dla wszystkich</string>
+    <string name="circles_delete_everywhere_sub">Usuwa też krąg i jego wiadomości z urządzeń wszystkich członków.</string>
     <string name="circles_edit_title">Edytuj krąg</string>
     <string name="circles_empty_body">Utwórz krąg, aby pisać do grupy kontaktów i udostępniać swoją lokalizację wszystkim naraz.</string>
     <string name="circles_empty_title">Brak kręgów</string>

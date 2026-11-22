@@ -78,6 +78,11 @@ object NostrEventKind {
      *  NIP-44 encrypted [com.locapeer.messaging.ReactionPayload]; circle reactions are fanned out
      *  per member like circle messages. */
     const val MESSAGE_REACTION = 1070
+
+    /** Circle creator -> every member (kind 1071): the creator deleted the circle for everyone.
+     *  The content is a NIP-44 encrypted [com.locapeer.circles.CircleDisbandPayload]; recipients
+     *  drop their local copy and record the removal so a straggler can't re-create the circle. */
+    const val CIRCLE_DISBAND = 1071
 }
 
 @Serializable

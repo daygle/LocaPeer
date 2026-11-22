@@ -82,6 +82,9 @@ fun GroupChatScreen(
     // Only the owner may rename the circle or change its members; a non-owner opens the member
     // screen read-only, so the menu entry reads "View members" for them.
     val canEditCircle = circlesVm.canEditCircle(circle, myPub)
+    // Only the recorded creator can disband the circle on every member's device: a legacy circle
+    // with a blank creator has nobody whose signature the members could verify.
+    val isOwner = circle?.creatorPubkey?.let { it.isNotBlank() && it.equals(myPub, ignoreCase = true) } == true
 
     var inputText by remember { mutableStateOf("") }
     var showMenu by remember { mutableStateOf(false) }
@@ -178,20 +181,50 @@ fun GroupChatScreen(
         previousMessageCount = messages.size
     }
 
+    // Owner delete: choose between removing the circle on this device only (the original
+    // behaviour) and disbanding it for every member. Non-owners never reach this dialog - they
+    // "Leave" instead, which notifies the owner to drop them from the membership.
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
             icon = { Icon(Icons.Default.DeleteSweep, contentDescription = null) },
             title = { Text(stringResource(R.string.circles_delete_title)) },
-            text = { Text(stringResource(R.string.circles_delete_message, circleName)) },
-            confirmButton = {
-                TextButton(onClick = {
-                    // Removes the circle, its membership rows and its whole message thread.
-                    circlesVm.deleteCircle(circleId)
-                    showDeleteDialog = false
-                    onNavigateBack()
-                }) { Text(stringResource(R.string.common_delete), color = MaterialTheme.colorScheme.error) }
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    Text(stringResource(R.string.conv_delete_message, circleName))
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
+                        supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
+                        modifier = Modifier.clickable {
+                            // Removes the circle, its membership rows and its whole message thread
+                            // here; the other members keep their copies.
+                            circlesVm.deleteCircle(circleId)
+                            showDeleteDialog = false
+                            onNavigateBack()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    if (isOwner) {
+                        ListItem(
+                            headlineContent = {
+                                Text(
+                                    stringResource(R.string.circles_delete_everywhere),
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            },
+                            supportingContent = { Text(stringResource(R.string.circles_delete_everywhere_sub)) },
+                            modifier = Modifier.clickable {
+                                // Notifies every member (CIRCLE_DISBAND) and then removes our copy.
+                                vm.disbandCircle(circleId)
+                                showDeleteDialog = false
+                                onNavigateBack()
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+                    }
+                }
             },
+            confirmButton = {},
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) { Text(stringResource(R.string.common_cancel)) }
             }

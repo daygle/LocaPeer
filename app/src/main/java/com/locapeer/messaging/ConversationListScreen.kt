@@ -180,8 +180,13 @@ fun ConversationListScreen(
         )
     }
 
+    // Bulk delete is a 1:1-conversation action only. A circle is deleted from its own chat,
+    // where the owner picks "Delete Locally" or "Delete for Everyone" (and a member leaves);
+    // offering a third, silently local-only variant here would contradict those semantics and
+    // the copy below. Circle rows stay selectable for mark read / archive, but never reach this
+    // dialog, so its count and wording describe exactly what will happen.
     if (showBulkDeleteDialog) {
-        val count = selectedIds.size
+        val count = selectedPeerIds.size
         AlertDialog(
             onDismissRequest = { showBulkDeleteDialog = false },
             icon = { Icon(Icons.Default.Delete, contentDescription = null) },
@@ -193,31 +198,24 @@ fun ConversationListScreen(
                         supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                         modifier = Modifier.clickable {
                             selectedPeerIds.forEach { vm.deleteConversation(it) }
-                            selectedCircleIds.forEach { vm.deleteCircleAndConversation(it) }
                             showBulkDeleteDialog = false
                             selectedIds = emptySet()
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
-                    // Remote purge only exists for 1:1 conversations - a circle is a client-side
-                    // grouping with no remote conversation object - so hide "delete both" when the
-                    // selection is circles only (the Circles tab always is).
-                    if (selectedPeerIds.isNotEmpty()) {
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
-                            supportingContent = { Text(stringResource(R.string.conv_bulk_delete_both_sub)) },
-                            modifier = Modifier.clickable {
-                                selectedPeerIds.forEach {
-                                    vm.deleteConversation(it)
-                                    vm.deleteConversationFromRemote(it)
-                                }
-                                selectedCircleIds.forEach { vm.deleteCircleAndConversation(it) }
-                                showBulkDeleteDialog = false
-                                selectedIds = emptySet()
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                    }
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
+                        supportingContent = { Text(stringResource(R.string.conv_bulk_delete_both_sub)) },
+                        modifier = Modifier.clickable {
+                            selectedPeerIds.forEach {
+                                vm.deleteConversation(it)
+                                vm.deleteConversationFromRemote(it)
+                            }
+                            showBulkDeleteDialog = false
+                            selectedIds = emptySet()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
                 }
             },
             confirmButton = {},
@@ -402,11 +400,16 @@ fun ConversationListScreen(
                                 selectedIds = emptySet()
                             }
                         )
-                        BulkActionButton(
-                            icon = { Icon(Icons.Default.Delete, contentDescription = null) },
-                            label = stringResource(R.string.common_delete),
-                            onClick = { showBulkDeleteDialog = true }
-                        )
+                        // Only 1:1 conversations can be bulk-deleted - see the dialog below.
+                        // A circles-only selection (the Circles tab always is) keeps mark read
+                        // and archive, and deletes circles from their own chat instead.
+                        if (selectedPeerIds.isNotEmpty()) {
+                            BulkActionButton(
+                                icon = { Icon(Icons.Default.Delete, contentDescription = null) },
+                                label = stringResource(R.string.common_delete),
+                                onClick = { showBulkDeleteDialog = true }
+                            )
+                        }
                     }
                 }
             }

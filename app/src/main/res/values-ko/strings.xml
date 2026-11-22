@@ -475,6 +475,9 @@
     <string name="chat_delete_msg_message">이 메시지를 어떻게 삭제할까요?</string>
     <string name="chat_delete_from_contact">연락처에서 삭제</string>
     <string name="chat_delete_from_contact_sub">연락처의 기기에서 채팅을 삭제합니다.</string>
+    <string name="chat_delete_from_members_sub">이 메시지를 모든 멤버의 기기에서 삭제합니다.</string>
+    <string name="chat_delete_both_members">이 기기/모두에게서 삭제</string>
+    <string name="chat_delete_both_members_sub">이 메시지를 이 기기와 모든 멤버의 기기에서 삭제합니다.</string>
     <string name="chat_delete_both_sub">채팅을 로컬에서 제거하고 연락처의 기기에서 자동으로 삭제합니다.</string>
     <string name="chat_cd_share_location">위치 공유</string>
     <string name="chat_input_placeholder">메시지…</string>
@@ -774,8 +777,9 @@
     <string name="chat_shared_location">공유된 위치</string>
     <string name="chat_tap_to_open_map">지도를 열려면 탭하세요</string>
     <string name="circles_delete">서클 삭제</string>
-    <string name="circles_delete_message">\"%1$s\"와(과) 그 그룹 대화를 삭제할까요? 이 작업은 내 기기에서만 제거합니다.</string>
     <string name="circles_delete_title">서클을 삭제할까요?</string>
+    <string name="circles_delete_everywhere">모두에게서 삭제</string>
+    <string name="circles_delete_everywhere_sub">서클과 메시지를 모든 멤버의 기기에서도 삭제합니다.</string>
     <string name="circles_edit_title">서클 편집</string>
     <string name="circles_empty_body">서클을 만들면 연락처 그룹에 메시지를 보내고 모두와 한 번에 위치를 공유할 수 있습니다.</string>
     <string name="circles_empty_title">아직 서클이 없습니다</string>

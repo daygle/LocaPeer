@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Ushbu xabarni qanday o‘chirmoqchisiz?</string>
     <string name="chat_delete_from_contact">Kontaktdan o‘chirish</string>
     <string name="chat_delete_from_contact_sub">Chatni kontaktning qurilmasidan o‘chiradi.</string>
+    <string name="chat_delete_from_members_sub">Bu xabarni har bir a’zoning qurilmasidan o‘chiradi.</string>
+    <string name="chat_delete_both_members">Shu yerda/hammadan o‘chirish</string>
+    <string name="chat_delete_both_members_sub">Bu xabarni shu yerda va har bir a’zoning qurilmasidan o‘chiradi.</string>
     <string name="chat_delete_both_sub">Chatni qurilmangizdan olib tashlaydi va kontaktning qurilmasidan avtomatik ravishda o‘chiradi.</string>
     <string name="chat_cd_share_location">Joylashuvni baham ko‘rish</string>
     <string name="chat_input_placeholder">Xabar…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Ulashilgan joylashuv</string>
     <string name="chat_tap_to_open_map">Xaritani ochish uchun bosing</string>
     <string name="circles_delete">Doirani o\'chirish</string>
-    <string name="circles_delete_message">\"%1$s\" va uning guruh suhbatini o\'chirilsinmi? Bu faqat qurilmangizdan olib tashlaydi.</string>
     <string name="circles_delete_title">Doira o\'chirilsinmi?</string>
+    <string name="circles_delete_everywhere">Hamma uchun o‘chirish</string>
+    <string name="circles_delete_everywhere_sub">Doira va uning xabarlarini har bir a\'zoning qurilmasidan ham olib tashlaydi.</string>
     <string name="circles_edit_title">Doirani tahrirlash</string>
     <string name="circles_empty_body">Bir guruh kontaktga xabar yuborish va joylashuvingizni ular bilan bir vaqtda ulashish uchun doira yarating.</string>
     <string name="circles_empty_title">Hali doiralar yo\'q</string>

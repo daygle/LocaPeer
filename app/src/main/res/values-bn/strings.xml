@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">এই বার্তা আপনি কীভাবে মুছতে চান?</string>
     <string name="chat_delete_from_contact">পরিচিতি থেকে মুছুন</string>
     <string name="chat_delete_from_contact_sub">পরিচিতির ডিভাইস থেকে চ্যাট মুছে ফেলে।</string>
+    <string name="chat_delete_from_members_sub">প্রতিটি সদস্যের ডিভাইস থেকে এই বার্তাটি মুছে দেয়।</string>
+    <string name="chat_delete_both_members">স্থানীয়/সবার থেকে মুছুন</string>
+    <string name="chat_delete_both_members_sub">এই বার্তাটি স্থানীয়ভাবে মুছে প্রতিটি সদস্যের ডিভাইস থেকেও মুছে দেয়।</string>
     <string name="chat_delete_both_sub">চ্যাট স্থানীয়ভাবে সরায় এবং পরিচিতির ডিভাইস থেকে স্বয়ংক্রিয়ভাবে মুছে ফেলে।</string>
     <string name="chat_cd_share_location">অবস্থান শেয়ার করুন</string>
     <string name="chat_input_placeholder">বার্তা…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">শেয়ার করা অবস্থান</string>
     <string name="chat_tap_to_open_map">মানচিত্র খুলতে ট্যাপ করুন</string>
     <string name="circles_delete">বৃত্ত মুছুন</string>
-    <string name="circles_delete_message">\"%1$s\" এবং এর গ্রুপ কথোপকথন মুছবেন? এটি শুধু আপনার ডিভাইস থেকে সরিয়ে দেয়।</string>
     <string name="circles_delete_title">বৃত্ত মুছবেন?</string>
+    <string name="circles_delete_everywhere">সবার জন্য মুছুন</string>
+    <string name="circles_delete_everywhere_sub">প্রতিটি সদস্যের ডিভাইস থেকেও বৃত্তটি ও তার বার্তাগুলো মুছে দেয়।</string>
     <string name="circles_edit_title">বৃত্ত সম্পাদনা করুন</string>
     <string name="circles_empty_body">একদল পরিচিতিকে বার্তা পাঠাতে এবং সবার সঙ্গে একসাথে আপনার অবস্থান শেয়ার করতে একটি বৃত্ত তৈরি করুন।</string>
     <string name="circles_empty_title">এখনও কোনো বৃত্ত নেই</string>

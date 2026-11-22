@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">آپ یہ پیغام کیسے حذف کرنا چاہتے ہیں؟</string>
     <string name="chat_delete_from_contact">رابطے سے حذف کریں</string>
     <string name="chat_delete_from_contact_sub">چیٹ رابطے کے آلے سے حذف کرتا ہے۔</string>
+    <string name="chat_delete_from_members_sub">یہ پیغام ہر رکن کے ڈیوائس سے حذف کرتا ہے۔</string>
+    <string name="chat_delete_both_members">یہاں/سب سے حذف کریں</string>
+    <string name="chat_delete_both_members_sub">یہ پیغام یہاں اور ہر رکن کے ڈیوائس سے حذف کرتا ہے۔</string>
     <string name="chat_delete_both_sub">چیٹ مقامی طور پر ہٹاتا ہے اور رابطے کے آلے سے خودکار طور پر حذف کر دیتا ہے۔</string>
     <string name="chat_cd_share_location">مقام شیئر کریں</string>
     <string name="chat_input_placeholder">پیغام…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">مشترکہ مقام</string>
     <string name="chat_tap_to_open_map">نقشہ کھولنے کے لیے تھپتھپائیں</string>
     <string name="circles_delete">حلقہ حذف کریں</string>
-    <string name="circles_delete_message">\"%1$s\" اور اس کی گروپ گفتگو حذف کریں؟ یہ صرف آپ کے آلے سے ہٹاتا ہے۔</string>
     <string name="circles_delete_title">حلقہ حذف کریں؟</string>
+    <string name="circles_delete_everywhere">سب کے لیے حذف کریں</string>
+    <string name="circles_delete_everywhere_sub">دائرہ اور اس کے پیغامات ہر رکن کے ڈیوائس سے بھی ہٹا دیتا ہے۔</string>
     <string name="circles_edit_title">حلقہ میں ترمیم کریں</string>
     <string name="circles_empty_body">رابطوں کے ایک گروپ کو پیغام بھیجنے اور اپنا مقام سب کے ساتھ ایک ساتھ شیئر کرنے کے لیے ایک حلقہ بنائیں۔</string>
     <string name="circles_empty_title">ابھی کوئی حلقہ نہیں</string>

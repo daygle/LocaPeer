@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Бұл хабарламаны қалай жойғыңыз келеді?</string>
     <string name="chat_delete_from_contact">Контактіден жою</string>
     <string name="chat_delete_from_contact_sub">Чатты контактінің құрылғысынан жояды.</string>
+    <string name="chat_delete_from_members_sub">Бұл хабарламаны әр мүшенің құрылғысынан жояды.</string>
+    <string name="chat_delete_both_members">Жергілікті/барлығынан жою</string>
+    <string name="chat_delete_both_members_sub">Бұл хабарламаны жергілікті және әр мүшенің құрылғысынан жояды.</string>
     <string name="chat_delete_both_sub">Чатты құрылғыдан алып тастайды және контактінің құрылғысынан автоматты түрде жояды.</string>
     <string name="chat_cd_share_location">Орынды бөлісу</string>
     <string name="chat_input_placeholder">Хабарлама…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Бөлісілген орын</string>
     <string name="chat_tap_to_open_map">Картаны ашу үшін түртіңіз</string>
     <string name="circles_delete">Шеңберді жою</string>
-    <string name="circles_delete_message">\"%1$s\" және оның топтық сөйлесуін жою керек пе? Бұл оны тек құрылғыңыздан жояды.</string>
     <string name="circles_delete_title">Шеңберді жою керек пе?</string>
+    <string name="circles_delete_everywhere">Барлығынан жою</string>
+    <string name="circles_delete_everywhere_sub">Шеңбер мен оның хабарламаларын әр мүшенің құрылғысынан да жояды.</string>
     <string name="circles_edit_title">Шеңберді өңдеу</string>
     <string name="circles_empty_body">Контактілер тобына хабар жіберу және орныңызды олардың барлығымен бірден бөлісу үшін шеңбер жасаңыз.</string>
     <string name="circles_empty_title">Әзірге шеңберлер жоқ</string>

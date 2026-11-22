@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">तुम्हाला हा संदेश कसा हटवायचा आहे?</string>
     <string name="chat_delete_from_contact">संपर्काकडून हटवा</string>
     <string name="chat_delete_from_contact_sub">संपर्काच्या डिव्हाइसवरून चॅट हटवते.</string>
+    <string name="chat_delete_from_members_sub">हा संदेश प्रत्येक सदस्याच्या डिव्हाइसवरून हटवते.</string>
+    <string name="chat_delete_both_members">स्थानिक/सर्वांकडून हटवा</string>
+    <string name="chat_delete_both_members_sub">हा संदेश स्थानिक पातळीवर आणि प्रत्येक सदस्याच्या डिव्हाइसवरून हटवते.</string>
     <string name="chat_delete_both_sub">चॅट स्थानिक पातळीवर काढून टाकते आणि संपर्काच्या डिव्हाइसवरून स्वयंचलितपणे हटवते.</string>
     <string name="chat_cd_share_location">स्थान शेअर करा</string>
     <string name="chat_input_placeholder">संदेश…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">शेअर केलेले स्थान</string>
     <string name="chat_tap_to_open_map">नकाशा उघडण्यासाठी टॅप करा</string>
     <string name="circles_delete">मंडळ हटवा</string>
-    <string name="circles_delete_message">\"%1$s\" आणि त्याचे गट संभाषण हटवायचे? हे फक्त तुमच्या डिव्हाइसवरून काढून टाकते.</string>
     <string name="circles_delete_title">मंडळ हटवायचे?</string>
+    <string name="circles_delete_everywhere">सर्वांसाठी हटवा</string>
+    <string name="circles_delete_everywhere_sub">वर्तुळ आणि त्यातील संदेश प्रत्येक सदस्याच्या डिव्हाइसवरूनही काढून टाकते.</string>
     <string name="circles_edit_title">मंडळ संपादित करा</string>
     <string name="circles_empty_body">संपर्कांच्या गटाला संदेश पाठवण्यासाठी आणि तुमचे स्थान सर्वांसोबत एकाच वेळी शेअर करण्यासाठी मंडळ तयार करा.</string>
     <string name="circles_empty_title">अजून मंडळे नाहीत</string>

@@ -475,6 +475,9 @@
     <string name="chat_delete_msg_message">Kedu ka ị chọrọ isi hichapụ ozi a?</string>
     <string name="chat_delete_from_contact">Hichapụ na kọntaktị</string>
     <string name="chat_delete_from_contact_sub">Na-ehichapụ chat na ngwaọrụ kọntaktị.</string>
+    <string name="chat_delete_from_members_sub">Na-ehichapụ ozi a na ngwaọrụ onye otu ọ bụla.</string>
+    <string name="chat_delete_both_members">Hichapụ na ngwaọrụ/na onye ọ bụla</string>
+    <string name="chat_delete_both_members_sub">Na-ehichapụ ozi a na ngwaọrụ a na nke onye otu ọ bụla.</string>
     <string name="chat_delete_both_sub">Na-ewepụ chat n\'ime ngwaọrụ wee hichapụ ya na ngwaọrụ kọntaktị na akpaghị aka.</string>
     <string name="chat_cd_share_location">Kesa Ebe</string>
     <string name="chat_input_placeholder">Ozi…</string>
@@ -774,8 +777,9 @@
     <string name="chat_shared_location">Ebe e kekọrịtara</string>
     <string name="chat_tap_to_open_map">Pịa iji mepee maapụ</string>
     <string name="circles_delete">Hichapụ okirikiri</string>
-    <string name="circles_delete_message">Hichapụ \"%1$s\" na mkparịta ụka otu ya? Nke a na-ewepụ ya naanị na ngwaọrụ gị.</string>
     <string name="circles_delete_title">Hichapụ okirikiri?</string>
+    <string name="circles_delete_everywhere">Hichapụ maka onye ọ bụla</string>
+    <string name="circles_delete_everywhere_sub">Na-ewepụkwa okirikiri na ozi ya na ngwaọrụ onye otu ọ bụla.</string>
     <string name="circles_edit_title">Dezie okirikiri</string>
     <string name="circles_empty_body">Mepụta okirikiri iji zigara ìgwè kọntaktị ozi ma kekọrịta ebe ị nọ na ha niile n\'otu oge.</string>
     <string name="circles_empty_title">Enwebeghị okirikiri</string>

@@ -475,6 +475,9 @@
     <string name="chat_delete_msg_message">คุณต้องการลบข้อความนี้อย่างไร?</string>
     <string name="chat_delete_from_contact">ลบจากผู้ติดต่อ</string>
     <string name="chat_delete_from_contact_sub">ลบแชทออกจากอุปกรณ์ของผู้ติดต่อ</string>
+    <string name="chat_delete_from_members_sub">ลบข้อความนี้จากอุปกรณ์ของสมาชิกทุกคน</string>
+    <string name="chat_delete_both_members">ลบในเครื่อง/จากทุกคน</string>
+    <string name="chat_delete_both_members_sub">ลบข้อความนี้ในเครื่องและจากอุปกรณ์ของสมาชิกทุกคน</string>
     <string name="chat_delete_both_sub">ลบแชทในเครื่องและลบออกจากอุปกรณ์ของผู้ติดต่อโดยอัตโนมัติ</string>
     <string name="chat_cd_share_location">แชร์ตำแหน่ง</string>
     <string name="chat_input_placeholder">ข้อความ…</string>
@@ -774,8 +777,9 @@
     <string name="chat_shared_location">ตำแหน่งที่แชร์</string>
     <string name="chat_tap_to_open_map">แตะเพื่อเปิดแผนที่</string>
     <string name="circles_delete">ลบวงกลม</string>
-    <string name="circles_delete_message">ลบ \"%1$s\" และการสนทนากลุ่มของมันไหม การดำเนินการนี้จะลบออกจากอุปกรณ์ของคุณเท่านั้น</string>
     <string name="circles_delete_title">ลบวงกลมไหม</string>
+    <string name="circles_delete_everywhere">ลบสำหรับทุกคน</string>
+    <string name="circles_delete_everywhere_sub">ลบวงและข้อความออกจากอุปกรณ์ของสมาชิกทุกคนด้วย</string>
     <string name="circles_edit_title">แก้ไขวงกลม</string>
     <string name="circles_empty_body">สร้างวงกลมเพื่อส่งข้อความถึงกลุ่มผู้ติดต่อและแชร์ตำแหน่งของคุณกับทุกคนพร้อมกัน</string>
     <string name="circles_empty_title">ยังไม่มีวงกลม</string>

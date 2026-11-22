@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">ఈ సందేశాన్ని మీరు ఎలా తొలగించాలనుకుంటున్నారు?</string>
     <string name="chat_delete_from_contact">పరిచయం నుండి తొలగించు</string>
     <string name="chat_delete_from_contact_sub">పరిచయం యొక్క పరికరం నుండి చాట్‌ని తొలగిస్తుంది.</string>
+    <string name="chat_delete_from_members_sub">ఈ సందేశాన్ని ప్రతి సభ్యుని పరికరం నుండి తొలగిస్తుంది.</string>
+    <string name="chat_delete_both_members">ఇక్కడ/అందరి నుండి తొలగించు</string>
+    <string name="chat_delete_both_members_sub">ఈ సందేశాన్ని ఇక్కడ మరియు ప్రతి సభ్యుని పరికరం నుండి తొలగిస్తుంది.</string>
     <string name="chat_delete_both_sub">చాట్‌ని స్థానికంగా తీసివేస్తుంది మరియు పరిచయం యొక్క పరికరం నుండి స్వయంచాలకగా తొలగిస్తుంది.</string>
     <string name="chat_cd_share_location">స్థానాన్ని పంచుకో</string>
     <string name="chat_input_placeholder">సందేశం…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">భాగస్వామ్యం చేసిన స్థానం</string>
     <string name="chat_tap_to_open_map">మ్యాప్‌ను తెరవడానికి నొక్కండి</string>
     <string name="circles_delete">సర్కిల్‌ను తొలగించండి</string>
-    <string name="circles_delete_message">\"%1$s\" మరియు దాని గ్రూప్ సంభాషణను తొలగించాలా? ఇది మీ పరికరం నుండి మాత్రమే తీసివేస్తుంది.</string>
     <string name="circles_delete_title">సర్కిల్‌ను తొలగించాలా?</string>
+    <string name="circles_delete_everywhere">అందరికీ తొలగించు</string>
+    <string name="circles_delete_everywhere_sub">సర్కిల్ మరియు దాని సందేశాలను ప్రతి సభ్యుని పరికరం నుండి కూడా తీసివేస్తుంది.</string>
     <string name="circles_edit_title">సర్కిల్‌ను సవరించండి</string>
     <string name="circles_empty_body">పరిచయాల సమూహానికి సందేశం పంపడానికి, మీ స్థానాన్ని అందరితో ఒకేసారి భాగస్వామ్యం చేయడానికి ఒక సర్కిల్‌ను సృష్టించండి.</string>
     <string name="circles_empty_title">ఇంకా సర్కిల్‌లు లేవు</string>

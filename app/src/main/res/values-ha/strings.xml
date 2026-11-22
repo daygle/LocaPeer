@@ -484,6 +484,9 @@
     <string name="chat_delete_msg_message">Kedu yadda kuke son share wannan saƙon?</string>
     <string name="chat_delete_from_contact">Share daga lamba</string>
     <string name="chat_delete_from_contact_sub">Yana share hira daga na\'urar lamba.</string>
+    <string name="chat_delete_from_members_sub">Yana cire wannan saƙo daga na’urar kowane memba.</string>
+    <string name="chat_delete_both_members">Share a nan/na kowa</string>
+    <string name="chat_delete_both_members_sub">Yana cire wannan saƙo a nan da kuma daga na’urar kowane memba.</string>
     <string name="chat_delete_both_sub">Yana cire hira a cikin na\'ura kuma yana share ta kai tsaye daga na\'urar lamba.</string>
     <string name="chat_cd_share_location">Raba Wuri</string>
     <string name="chat_input_placeholder">Saƙo…</string>
@@ -789,8 +792,9 @@
     <string name="chat_shared_location">Wurin da aka raba</string>
     <string name="chat_tap_to_open_map">Danna don buɗe taswira</string>
     <string name="circles_delete">Share da\'ira</string>
-    <string name="circles_delete_message">Share \"%1$s\" da tattaunawar rukuninsa? Wannan yana cirewa daga na\'urarka kawai.</string>
     <string name="circles_delete_title">Share da\'ira?</string>
+    <string name="circles_delete_everywhere">Share don kowa</string>
+    <string name="circles_delete_everywhere_sub">Hakanan yana cire da\'irar da saƙonninta daga na\'urar kowane memba.</string>
     <string name="circles_edit_title">Gyara da\'ira</string>
     <string name="circles_empty_body">Ƙirƙiri da\'ira don aika saƙo ga rukunin lambobin sadarwa da raba wurin ka da kowa lokaci ɗaya.</string>
     <string name="circles_empty_title">Babu da\'ira tukuna</string>

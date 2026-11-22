@@ -502,6 +502,9 @@
     <string name="chat_delete_msg_message">Jak chcete smazat tuto zprávu?</string>
     <string name="chat_delete_from_contact">Smazat u kontaktu</string>
     <string name="chat_delete_from_contact_sub">Smaže chat ze zařízení kontaktu.</string>
+    <string name="chat_delete_from_members_sub">Smaže tuto zprávu ze zařízení všech členů.</string>
+    <string name="chat_delete_both_members">Smazat lokálně/od všech</string>
+    <string name="chat_delete_both_members_sub">Smaže tuto zprávu lokálně i ze zařízení všech členů.</string>
     <string name="chat_delete_both_sub">Odstraní chat lokálně a automaticky jej smaže ze zařízení kontaktu.</string>
     <string name="chat_cd_share_location">Sdílet polohu</string>
     <string name="chat_input_placeholder">Zpráva…</string>
@@ -819,8 +822,9 @@
     <string name="chat_shared_location">Sdílená poloha</string>
     <string name="chat_tap_to_open_map">Klepnutím otevřete mapu</string>
     <string name="circles_delete">Smazat kruh</string>
-    <string name="circles_delete_message">Smazat „%1$s“ a jeho skupinovou konverzaci? Odstraní se pouze z vašeho zařízení.</string>
     <string name="circles_delete_title">Smazat kruh?</string>
+    <string name="circles_delete_everywhere">Smazat pro všechny</string>
+    <string name="circles_delete_everywhere_sub">Odebere kruh a jeho zprávy také ze zařízení všech členů.</string>
     <string name="circles_edit_title">Upravit kruh</string>
     <string name="circles_empty_body">Vytvořte kruh, abyste mohli psát skupině kontaktů a sdílet svou polohu se všemi najednou.</string>
     <string name="circles_empty_title">Zatím žádné kruhy</string>

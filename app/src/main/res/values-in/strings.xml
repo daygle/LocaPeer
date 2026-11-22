@@ -475,6 +475,9 @@
     <string name="chat_delete_msg_message">Bagaimana Anda ingin menghapus pesan ini?</string>
     <string name="chat_delete_from_contact">Hapus dari kontak</string>
     <string name="chat_delete_from_contact_sub">Menghapus obrolan dari perangkat kontak.</string>
+    <string name="chat_delete_from_members_sub">Menghapus pesan ini dari perangkat setiap anggota.</string>
+    <string name="chat_delete_both_members">Hapus lokal/dari semua</string>
+    <string name="chat_delete_both_members_sub">Menghapus pesan ini secara lokal dan dari perangkat setiap anggota.</string>
     <string name="chat_delete_both_sub">Menghapus obrolan secara lokal dan otomatis menghapusnya dari perangkat kontak.</string>
     <string name="chat_cd_share_location">Bagikan Lokasi</string>
     <string name="chat_input_placeholder">Pesan…</string>
@@ -774,8 +777,9 @@
     <string name="chat_shared_location">Lokasi yang dibagikan</string>
     <string name="chat_tap_to_open_map">Ketuk untuk membuka peta</string>
     <string name="circles_delete">Hapus lingkaran</string>
-    <string name="circles_delete_message">Hapus \"%1$s\" dan percakapan grupnya? Ini hanya menghapusnya dari perangkat Anda.</string>
     <string name="circles_delete_title">Hapus lingkaran?</string>
+    <string name="circles_delete_everywhere">Hapus untuk Semua</string>
+    <string name="circles_delete_everywhere_sub">Juga menghapus lingkaran dan pesannya dari perangkat setiap anggota.</string>
     <string name="circles_edit_title">Edit lingkaran</string>
     <string name="circles_empty_body">Buat lingkaran untuk mengirim pesan ke sekelompok kontak dan membagikan lokasi Anda ke semuanya sekaligus.</string>
     <string name="circles_empty_title">Belum ada lingkaran</string>
