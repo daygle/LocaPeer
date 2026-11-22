@@ -186,7 +186,11 @@ fun LocaPeerNavHost(
                 "map" -> {
                     val peerId = target.peerId
                     if (peerId != null) {
-                        navController.navigate("${Screen.Map.route}?peerId=${Uri.encode(peerId)}")
+                        // Same one-target, one-entry rule as the other "show on map" callers:
+                        // replace any map already on the stack instead of pushing a second one.
+                        navController.navigate("${Screen.Map.route}?peerId=${Uri.encode(peerId)}") {
+                            popUpTo(Screen.Map.route) { inclusive = true }
+                        }
                     } else {
                         navController.navigate(Screen.Map.route) {
                             popUpTo(Screen.Map.route) { inclusive = true }
@@ -483,10 +487,11 @@ fun LocaPeerNavHost(
                     peerName = entry.arguments?.getString("peerName") ?: "",
                     onNavigateBack = { navController.popBackStack() },
                     onNavigateToMap = { lat, lng ->
+                        // New map entry so the target is delivered: a launchSingleTop reuse keeps
+                        // the existing entry's old arguments, leaving the camera on the Starting
+                        // Point setting. Popping the previous map keeps one map on the stack.
                         navController.navigate("${Screen.Map.route}?lat=$lat&lng=$lng") {
-                            popUpTo(startDestination) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
+                            popUpTo(Screen.Map.route) { inclusive = true }
                         }
                     }
                 )
@@ -516,10 +521,11 @@ fun LocaPeerNavHost(
                     circleId = entry.arguments?.getString("circleId") ?: "",
                     onNavigateBack = { navController.popBackStack() },
                     onNavigateToMap = { lat, lng ->
+                        // New map entry so the target is delivered: a launchSingleTop reuse keeps
+                        // the existing entry's old arguments, leaving the camera on the Starting
+                        // Point setting. Popping the previous map keeps one map on the stack.
                         navController.navigate("${Screen.Map.route}?lat=$lat&lng=$lng") {
-                            popUpTo(startDestination) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
+                            popUpTo(Screen.Map.route) { inclusive = true }
                         }
                     },
                     onManageMembers = { circleId -> navController.navigate("circle-edit?circleId=$circleId") }
