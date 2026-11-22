@@ -427,6 +427,9 @@ class HeartbeatReceiver @Inject constructor(
     /** In-memory mirror of [AppPreferences.pendingCircleDisbands], kept fresh like [leftCircles]. */
     @Volatile private var pendingDisbands: Map<String, LeftCircle> = emptyMap()
 
+    /** Completes once [leftCircles] and [pendingDisbands] hold their persisted values. */
+    private val circleStateLoaded = kotlinx.coroutines.CompletableDeferred<Unit>()
+
     /** Last time an approval dialog (unlock / disable request) was surfaced per sender.
      *  In-memory on purpose: the cooldown guards a burst within one session only, and a
      *  process restart must reset it (the user could legitimately retry immediately).
@@ -478,8 +481,17 @@ class HeartbeatReceiver @Inject constructor(
             .launchIn(scope)
         // Keep the left-circle cache warm so the DM hot path can suppress left circles without a
         // DataStore read per message.
-        prefs.leftCircles.onEach { leftCircles = it }.launchIn(scope)
-        prefs.pendingCircleDisbands.onEach { pendingDisbands = it }.launchIn(scope)
+        // The event pipeline waits for the first load (see [circleStateLoaded]): after a restart a
+        // circle message handled before it would see empty records and could re-create a circle
+        // the user left or its creator disbanded - and the control catch-up won't replay a
+        // notice it has already moved past.
+        scope.launch {
+            leftCircles = prefs.leftCircles.first()
+            pendingDisbands = prefs.pendingCircleDisbands.first()
+            circleStateLoaded.complete(Unit)
+            prefs.leftCircles.onEach { leftCircles = it }.launchIn(scope)
+            prefs.pendingCircleDisbands.onEach { pendingDisbands = it }.launchIn(scope)
+        }
         // Sync points only advance once a relay has actually replayed the catch-up (EOSE).
         // Saving them when the subscription is merely queued would skip everything sent in
         // the meantime if the app started offline and was killed before it ever connected.
@@ -607,6 +619,8 @@ class HeartbeatReceiver @Inject constructor(
 
         relayClient.events
             .onEach { event ->
+              // Immediate after the first load; see [circleStateLoaded].
+              circleStateLoaded.await()
               // A single malformed/hostile event must never cancel the collector and stop
               // all future event processing - isolate every dispatch.
               try {
