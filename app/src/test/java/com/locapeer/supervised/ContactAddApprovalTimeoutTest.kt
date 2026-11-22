@@ -400,18 +400,21 @@ class ContactAddApprovalTimeoutTest {
             mock(KeyManager::class.java), mock(CryptoUtils::class.java),
             mock(NostrRelayClient::class.java), prefs, executor
         )
-        withTimeout(5_000) {
+        // The add and the drop that follows it happen in the manager's background scope, so
+        // wait for both before asserting: observing the add alone can win the race against
+        // the queue removal that persists null a moment later.
+        withTimeout(10_000) {
             while (true) {
                 try {
                     verify(executor).performOutboundAdd(invite, "a1")
+                    // The recovered intent is dropped once the add completes.
+                    verify(prefs).setContactAddIntentsJson(null)
                     break
                 } catch (_: AssertionError) {
                     kotlinx.coroutines.delay(10)
                 }
             }
         }
-        // The recovered intent is dropped once the add completes.
-        verify(prefs).setContactAddIntentsJson(null)
     }
 
     @Test fun `an approved add older than the recovery window is not resumed`() = runBlocking {
