@@ -582,19 +582,24 @@ private fun formatTime(millis: Long): String =
     com.locapeer.util.DisplayFormat.timeFormat().format(Date(millis))
 
 /**
- * One chip per distinct emoji with the members who picked it ("👍 Alex, Sam +1"), so a message
- * several people reacted to stays readable inside the bubble's width.
+ * One chip per distinct emoji with the members who picked it ("👍 Alex, Sam +1"). The row wraps
+ * and keeps at most [MAX_REACTION_CHIPS] chips, folding the rest into a "+N" chip, so a message
+ * that several people reacted to with different emoji stays readable inside the bubble's width.
  */
 @Composable
 private fun CircleReactionRow(
     reactions: List<MessageReactionWithName>,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    val byEmoji = reactions.groupBy { it.emoji }.toList()
+    val shown = byEmoji.take(MAX_REACTION_CHIPS)
+    val hidden = byEmoji.size - shown.size
+    FlowRow(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(4.dp)
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        reactions.groupBy { it.emoji }.forEach { (emoji, rows) ->
+        shown.forEach { (emoji, rows) ->
             val names = rows.map { it.reactorName.ifBlank { it.reactorPubkey.take(6) } }
             val label = if (names.size <= 2) {
                 names.joinToString(", ")
@@ -603,8 +608,14 @@ private fun CircleReactionRow(
             }
             ReactionChip(emoji = "$emoji $label")
         }
+        if (hidden > 0) {
+            ReactionChip(emoji = "+$hidden")
+        }
     }
 }
+
+/** Distinct emoji shown before the remaining ones fold into a single "+N" chip. */
+private const val MAX_REACTION_CHIPS = 3
 
 /**
  * Wraps a [GroupMessageBubble] with `SwipeToDismissBox` (left-only) plus the bubble's own
