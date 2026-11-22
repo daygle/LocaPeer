@@ -13,9 +13,12 @@ import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppSettings
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -249,10 +252,15 @@ class GeofenceEngineTest {
     @Test
     fun `the decoded polygon ring is cached per area and cleared when areas change`() {
         activeFences = listOf(fence())
+        // Both startup collectors clear the ring cache unconditionally, so unlike the state
+        // prune (which a seeded row survives) no fixture value makes a late first emission
+        // harmless here. Give the engine flows that do not replay anything instead: then the
+        // only emission is the one below, and no sleep is needed to get out of its way.
+        val assignmentEmissions = MutableSharedFlow<List<GeofenceAssignmentEntity>>()
+        val geofenceEmissions = MutableSharedFlow<List<GeofenceEntity>>()
+        `when`(assignmentDao.observeAll()).thenReturn(assignmentEmissions)
+        `when`(geofenceDao.getAllGeofences()).thenReturn(geofenceEmissions)
         val engine = engine()
-        // Let the init collectors consume their first emissions so they cannot clear the
-        // cache after the evaluations below.
-        Thread.sleep(200)
 
         runBlocking {
             engine.evaluate(heartbeat(0.005, 0.005, accuracy = 10f), previous = null)
@@ -261,17 +269,23 @@ class GeofenceEngineTest {
         assertEquals(1, ringCache(engine).size)
 
         // A new geofence emission invalidates the cache, so an edited ring cannot keep
-        // being evaluated from a stale decode.
-        geofenceFlow.value = listOf(
-            GeofenceEntity(
-                id = "fence-1",
-                name = "Square",
-                lat = 0.005,
-                lng = 0.005,
-                radiusMetres = 628,
-                polygon = squareRing
+        // being evaluated from a stale decode. Wait for the collector to attach first, so
+        // the emission cannot be dropped by a replay-less flow with no subscriber yet.
+        runBlocking {
+            withTimeout(5_000) { geofenceEmissions.subscriptionCount.first { it > 0 } }
+            geofenceEmissions.emit(
+                listOf(
+                    GeofenceEntity(
+                        id = "fence-1",
+                        name = "Square",
+                        lat = 0.005,
+                        lng = 0.005,
+                        radiusMetres = 628,
+                        polygon = squareRing
+                    )
+                )
             )
-        )
+        }
 
         val deadline = System.currentTimeMillis() + 2_000
         while (ringCache(engine).isNotEmpty() && System.currentTimeMillis() < deadline) {
