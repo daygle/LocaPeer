@@ -1,6 +1,6 @@
 [versions]
 # Security-hardened versions
-netty = "4.1.141.Final"
+netty = "4.2.21.Final"
 # Pinned: CVE-2026-102554 (GHSA-xxph-c9ww-hj94) - crafted CompactHashMap/CompactHashSet/
 # MapMakerInternalMap serialization streams trigger ~4 GB allocations on deserialization.
 # Affects <= 33.7.1; the Hilt/Dagger compiler chain resolves 33.6.0-jre.
