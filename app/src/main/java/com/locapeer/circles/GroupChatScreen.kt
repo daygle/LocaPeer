@@ -195,7 +195,6 @@ fun GroupChatScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text(stringResource(R.string.conv_delete_message, circleName))
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
                         supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                         modifier = Modifier.clickable {
                             // Removes the circle, its membership rows and its whole message thread
@@ -205,15 +204,9 @@ fun GroupChatScreen(
                             onNavigateBack()
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) { Text(stringResource(R.string.conv_delete_locally)) }
                     if (isOwner) {
                         ListItem(
-                            headlineContent = {
-                                Text(
-                                    stringResource(R.string.circles_delete_everywhere),
-                                    color = MaterialTheme.colorScheme.error
-                                )
-                            },
                             supportingContent = { Text(stringResource(R.string.circles_delete_everywhere_sub)) },
                             modifier = Modifier.clickable {
                                 // Notifies every member (CIRCLE_DISBAND) and then removes our copy.
@@ -222,7 +215,12 @@ fun GroupChatScreen(
                                 onNavigateBack()
                             },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
+                        ) {
+                            Text(
+                                stringResource(R.string.circles_delete_everywhere),
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
                     }
                 }
             },
@@ -245,7 +243,6 @@ fun GroupChatScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(stringResource(R.string.circles_leave_message, circleName))
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.circles_leave_local)) },
                         supportingContent = { Text(stringResource(R.string.circles_leave_local_sub)) },
                         modifier = Modifier.clickable {
                             vm.leaveCircle(circleId, alsoDeleteRemote = false)
@@ -253,9 +250,8 @@ fun GroupChatScreen(
                             onNavigateBack()
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) { Text(stringResource(R.string.circles_leave_local)) }
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.circles_leave_remote)) },
                         supportingContent = { Text(stringResource(R.string.circles_leave_remote_sub)) },
                         modifier = Modifier.clickable {
                             vm.leaveCircle(circleId, alsoDeleteRemote = true)
@@ -263,7 +259,7 @@ fun GroupChatScreen(
                             onNavigateBack()
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) { Text(stringResource(R.string.circles_leave_remote)) }
                 }
             },
             confirmButton = {},

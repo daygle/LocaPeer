@@ -1,5 +1,6 @@
 package com.locapeer.sharing
 
+import com.locapeer.ui.components.AppSlider
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -418,7 +419,7 @@ fun PeerSafetyAlertsScreen(
                     val options = listOf(100, 250, 500, 1000, 2000, 5000, 10000)
                     val currentIndex = options.indexOf(radius).coerceAtLeast(0)
                     var sliderIdx by remember(radius) { mutableFloatStateOf(currentIndex.toFloat()) }
-                    Slider(
+                    AppSlider(
                         value = sliderIdx,
                         onValueChange = { sliderIdx = it },
                         onValueChangeFinished = { vm.setProximityAlertRadius(options[sliderIdx.roundToInt()]) },

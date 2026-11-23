@@ -177,7 +177,6 @@ fun ChatScreen(
                     Text(stringResource(R.string.conv_delete_message, peerName))
 
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
                         supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                         modifier = Modifier.clickable {
                             vm.deleteConversation(peerId)
@@ -185,10 +184,9 @@ fun ChatScreen(
                             onNavigateBack()
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) { Text(stringResource(R.string.conv_delete_locally)) }
 
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
                         supportingContent = { Text(stringResource(R.string.conv_delete_both_sub)) },
                         modifier = Modifier.clickable {
                             vm.deleteConversation(peerId)
@@ -197,7 +195,7 @@ fun ChatScreen(
                             onNavigateBack()
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) { Text(stringResource(R.string.conv_delete_both)) }
                 }
             },
             confirmButton = {},
@@ -521,7 +519,11 @@ internal fun MessageActionsSheet(
     onDelete: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        // Opens fully expanded, never half-way (the old skipPartiallyExpanded = true).
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+    )
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
         Column(modifier = Modifier.padding(start = 24.dp, end = 24.dp, bottom = 24.dp)) {
             Text(
@@ -558,21 +560,19 @@ internal fun MessageActionsSheet(
             HorizontalDivider()
             if (currentReaction != null) {
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.chat_remove_reaction)) },
                     modifier = Modifier.clickable { onReact(currentReaction) },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                )
+                ) { Text(stringResource(R.string.chat_remove_reaction)) }
             }
             ListItem(
-                headlineContent = {
-                    Text(
-                        stringResource(R.string.common_delete),
-                        color = MaterialTheme.colorScheme.error
-                    )
-                },
                 modifier = Modifier.clickable(onClick = onDelete),
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-            )
+            ) {
+                Text(
+                    stringResource(R.string.common_delete),
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         }
     }
 }
@@ -599,11 +599,10 @@ internal fun DeleteMessageDialog(
                 Text(stringResource(R.string.chat_delete_msg_message))
 
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
                     supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                     modifier = Modifier.clickable { onDeleteLocal(); onDismiss() },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                )
+                ) { Text(stringResource(R.string.conv_delete_locally)) }
 
                 if (msg.isMine) {
                     // A circle message fans out to every member as their own encrypted copy, so its
@@ -611,12 +610,6 @@ internal fun DeleteMessageDialog(
                     // 1:1 message, with circle wording instead of "from contact".
                     val inCircle = msg.groupId != null
                     ListItem(
-                        headlineContent = {
-                            Text(stringResource(
-                                if (inCircle) R.string.circles_delete_everywhere
-                                else R.string.chat_delete_from_contact
-                            ))
-                        },
                         supportingContent = {
                             Text(stringResource(
                                 if (inCircle) R.string.chat_delete_from_members_sub
@@ -625,14 +618,13 @@ internal fun DeleteMessageDialog(
                         },
                         modifier = Modifier.clickable { onDeleteRemote(); onDismiss() },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) {
+                        Text(stringResource(
+                            if (inCircle) R.string.circles_delete_everywhere
+                            else R.string.chat_delete_from_contact
+                        ))
+                    }
                     ListItem(
-                        headlineContent = {
-                            Text(stringResource(
-                                if (inCircle) R.string.chat_delete_both_members
-                                else R.string.conv_delete_both
-                            ))
-                        },
                         supportingContent = {
                             Text(stringResource(
                                 if (inCircle) R.string.chat_delete_both_members_sub
@@ -641,7 +633,12 @@ internal fun DeleteMessageDialog(
                         },
                         modifier = Modifier.clickable { onDeleteLocal(); onDeleteRemote(); onDismiss() },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) {
+                        Text(stringResource(
+                            if (inCircle) R.string.chat_delete_both_members
+                            else R.string.conv_delete_both
+                        ))
+                    }
                 }
             }
         },
@@ -1219,7 +1216,11 @@ internal fun LocationPinCard(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DeliveryStatusSheet(deliveryState: String, onDismiss: () -> Unit) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val sheetState = rememberBottomSheetState(
+        initialValue = SheetValue.Hidden,
+        // Opens fully expanded, never half-way (the old skipPartiallyExpanded = true).
+        enabledValues = setOf(SheetValue.Hidden, SheetValue.Expanded)
+    )
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
         Column(modifier = Modifier.padding(24.dp)) {
             Text(

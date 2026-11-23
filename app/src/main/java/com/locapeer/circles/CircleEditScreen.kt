@@ -159,9 +159,6 @@ fun CircleEditScreen(
                 items(contacts, key = { it.deviceId }) { contact ->
                     val checked = selected.contains(contact.deviceId)
                     ListItem(
-                        headlineContent = {
-                            Text(contact.displayName.ifBlank { stringResource(R.string.fallback_unknown) })
-                        },
                         // Tag the owner's row so it's clear who controls the circle (the owner is
                         // also a member). Only appears when the creator is one of your contacts.
                         trailingContent = if (contact.deviceId == ownerPubkey) {
@@ -187,7 +184,9 @@ fun CircleEditScreen(
                         modifier = if (canEdit) Modifier.clickable {
                             selected = if (checked) selected - contact.deviceId else selected + contact.deviceId
                         } else Modifier
-                    )
+                    ) {
+                        Text(contact.displayName.ifBlank { stringResource(R.string.fallback_unknown) })
+                    }
                 }
             }
         }

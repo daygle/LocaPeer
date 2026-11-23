@@ -124,7 +124,6 @@ private fun PendingRequestRow(
     }
 
     ListItem(
-        headlineContent = { Text(request.senderName) },
         supportingContent = {
             Column {
                 Text(subtitle, style = MaterialTheme.typography.bodySmall)
@@ -158,5 +157,5 @@ private fun PendingRequestRow(
                 }
             }
         }
-    )
+    ) { Text(request.senderName) }
 }

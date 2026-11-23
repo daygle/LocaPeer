@@ -1,5 +1,7 @@
 package com.locapeer.settings
 
+import androidx.compose.foundation.text.input.clearText
+import com.locapeer.ui.components.AppSlider
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -653,7 +655,7 @@ fun MapSettingsScreen(
                     Text(stringResource(R.string.settings_default_zoom_level), style = MaterialTheme.typography.bodyLarge)
                     Text(settings.mapStartZoom.toInt().toString(), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                 }
-                Slider(
+                AppSlider(
                     value = settings.mapStartZoom.toFloat(),
                     onValueChange = { vm.setMapStartZoom(it.toDouble()) },
                     valueRange = 3f..18f,
@@ -772,7 +774,7 @@ private fun MetresFilterSliderRow(
             )
         }
         Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Slider(
+        AppSlider(
             value = value,
             onValueChange = { value = it },
             onValueChangeFinished = { onCommit(value.roundToInt()) },
@@ -791,7 +793,7 @@ private fun IntervalSlider(label: String, value: Int, range: ClosedFloatingPoint
             Text(label, style = MaterialTheme.typography.bodySmall)
             Text(stringResource(R.string.settings_minutes_short, sliderValue.roundToInt()), style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
         }
-        Slider(
+        AppSlider(
             value = sliderValue,
             onValueChange = { sliderValue = it },
             onValueChangeFinished = { onChanged(sliderValue.roundToInt()) },
@@ -1152,12 +1154,15 @@ fun BackupSettingsScreen(
     var exportedKey by remember { mutableStateOf("") }
     var showExportDialog by remember { mutableStateOf(false) }
     var exportSections by remember { mutableStateOf(setOf(BackupSection.PRIVATE_KEY, BackupSection.CONTACTS, BackupSection.GEOFENCES, BackupSection.SETTINGS)) }
-    var exportPassword by remember { mutableStateOf("") }
+    // Held in a TextFieldState for the secure (obscured) password field below.
+    val exportPasswordState = androidx.compose.foundation.text.input.rememberTextFieldState()
+    val exportPassword = exportPasswordState.text.toString()
     val exportLauncher = rememberLauncherForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
     ) { uri ->
-        uri?.let { vm.exportBackup(it, exportSections, exportPassword.takeIf { p -> p.isNotBlank() }) }
-        exportPassword = ""
+        val password = exportPasswordState.text.toString()
+        uri?.let { vm.exportBackup(it, exportSections, password.takeIf { p -> p.isNotBlank() }) }
+        exportPasswordState.clearText()
     }
     val backupResult by vm.backupResult.collectAsStateWithLifecycle()
     val pendingRestore by vm.pendingRestore.collectAsStateWithLifecycle()
@@ -1220,7 +1225,8 @@ fun BackupSettingsScreen(
 
     pendingRestore?.let { restore ->
         if (restore.requiresPassword) {
-            var passwordInput by remember { mutableStateOf("") }
+            val passwordState = androidx.compose.foundation.text.input.rememberTextFieldState()
+            val passwordInput = passwordState.text.toString()
             AlertDialog(
                 onDismissRequest = { vm.dismissPendingRestore() },
                 title = { Text(stringResource(R.string.settings_encrypted_backup_title)) },
@@ -1228,12 +1234,9 @@ fun BackupSettingsScreen(
                     Column {
                         Text(stringResource(R.string.settings_encrypted_backup_message), style = MaterialTheme.typography.bodySmall)
                         Spacer(Modifier.height(16.dp))
-                        OutlinedTextField(
-                            value = passwordInput,
-                            onValueChange = { passwordInput = it },
+                        OutlinedSecureTextField(
+                            state = passwordState,
                             label = { Text(stringResource(R.string.common_password)) },
-                            visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
-                            singleLine = true,
                             isError = restorePasswordError != null,
                             supportingText = restorePasswordError?.let { { Text(it) } },
                             modifier = Modifier.fillMaxWidth()
@@ -1276,18 +1279,15 @@ fun BackupSettingsScreen(
 
     if (showExportDialog) {
         AlertDialog(
-            onDismissRequest = { showExportDialog = false; exportPassword = "" },
+            onDismissRequest = { showExportDialog = false; exportPasswordState.clearText() },
             title = { Text(stringResource(R.string.settings_select_export_title)) },
             text = {
                 Column {
                     Text(stringResource(R.string.settings_export_password_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.height(16.dp))
-                    OutlinedTextField(
-                        value = exportPassword,
-                        onValueChange = { exportPassword = it },
+                    OutlinedSecureTextField(
+                        state = exportPasswordState,
                         label = { Text(stringResource(R.string.settings_backup_password_optional)) },
-                        visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
-                        singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(Modifier.height(24.dp))
@@ -1318,7 +1318,7 @@ fun BackupSettingsScreen(
                 ) { Text(stringResource(R.string.settings_choose_file_location)) }
             },
             dismissButton = {
-                TextButton(onClick = { showExportDialog = false; exportPassword = "" }) { Text(stringResource(R.string.common_cancel)) }
+                TextButton(onClick = { showExportDialog = false; exportPasswordState.clearText() }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }

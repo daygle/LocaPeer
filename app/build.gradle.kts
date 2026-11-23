@@ -65,7 +65,11 @@ if (providedVersionName != null && providedVersionCode != null) {
 
 android {
     namespace = "com.locapeer"
-    compileSdk = 37
+    // API 37.1: Compose 1.13 (BOM 2026.11) needs 37.1+ to compile against. compileSdk only
+    // changes which APIs are visible at build time; targetSdk stays 37.
+    compileSdk {
+        version = release(37) { minorApiLevel = 1 }
+    }
 
     defaultConfig {
         applicationId = "com.locapeer"

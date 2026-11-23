@@ -194,7 +194,6 @@ fun ConversationListScreen(
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
                         supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                         modifier = Modifier.clickable {
                             selectedPeerIds.forEach { vm.deleteConversation(it) }
@@ -202,9 +201,8 @@ fun ConversationListScreen(
                             selectedIds = emptySet()
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) { Text(stringResource(R.string.conv_delete_locally)) }
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
                         supportingContent = { Text(stringResource(R.string.conv_bulk_delete_both_sub)) },
                         modifier = Modifier.clickable {
                             selectedPeerIds.forEach {
@@ -215,7 +213,7 @@ fun ConversationListScreen(
                             selectedIds = emptySet()
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) { Text(stringResource(R.string.conv_delete_both)) }
                 }
             },
             confirmButton = {},
@@ -673,19 +671,6 @@ private fun CircleRow(
     ) {
         ListItem(
             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-            headlineContent = {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    Text(group.circle.name, fontWeight = FontWeight.Medium)
-                    if (isMuted) {
-                        Icon(
-                            Icons.Default.NotificationsOff,
-                            contentDescription = stringResource(R.string.conv_cd_muted),
-                            modifier = Modifier.size(14.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-            },
             supportingContent = {
                 val preview = group.lastMessage?.content
                 Text(
@@ -742,7 +727,19 @@ private fun CircleRow(
                     if (isSelectionMode) onToggleSelect() else onEnterSelectionMode()
                 }
             )
-        )
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(group.circle.name, fontWeight = FontWeight.Medium)
+                if (isMuted) {
+                    Icon(
+                        Icons.Default.NotificationsOff,
+                        contentDescription = stringResource(R.string.conv_cd_muted),
+                        modifier = Modifier.size(14.dp),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -806,17 +803,15 @@ private fun SwipeActionsConversation(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(stringResource(R.string.conv_delete_message, conv.peer.displayName))
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
                         supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                         modifier = Modifier.clickable { onDeleteLocal(); showDeleteDialog = false },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) { Text(stringResource(R.string.conv_delete_locally)) }
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
                         supportingContent = { Text(stringResource(R.string.conv_delete_both_sub)) },
                         modifier = Modifier.clickable { onDeleteLocal(); onDeleteRemote(); showDeleteDialog = false },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    ) { Text(stringResource(R.string.conv_delete_both)) }
                 }
             },
             confirmButton = {},
@@ -911,30 +906,6 @@ private fun ConversationRow(
                 }
             }
         },
-        headlineContent = {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                Text(
-                    summary.peer.displayName,
-                    fontWeight = if (hasUnread) FontWeight.Bold else FontWeight.Normal
-                )
-                if (isBlocked) {
-                    Icon(
-                        Icons.Default.Block,
-                        contentDescription = stringResource(R.string.conv_messages_blocked),
-                        modifier = Modifier.size(14.dp),
-                        tint = MaterialTheme.colorScheme.error
-                    )
-                }
-                if (isMuted) {
-                    Icon(
-                        Icons.Default.NotificationsOff,
-                        contentDescription = stringResource(R.string.conv_cd_muted),
-                        modifier = Modifier.size(14.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-        },
         supportingContent = {
             val preview = when {
                 isBlocked -> stringResource(R.string.conv_messages_blocked)
@@ -973,7 +944,30 @@ private fun ConversationRow(
                 onLongClick()
             }
         )
-    )
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(
+                summary.peer.displayName,
+                fontWeight = if (hasUnread) FontWeight.Bold else FontWeight.Normal
+            )
+            if (isBlocked) {
+                Icon(
+                    Icons.Default.Block,
+                    contentDescription = stringResource(R.string.conv_messages_blocked),
+                    modifier = Modifier.size(14.dp),
+                    tint = MaterialTheme.colorScheme.error
+                )
+            }
+            if (isMuted) {
+                Icon(
+                    Icons.Default.NotificationsOff,
+                    contentDescription = stringResource(R.string.conv_cd_muted),
+                    modifier = Modifier.size(14.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
 }
 
 @Composable
@@ -1035,9 +1029,8 @@ private fun ContactPickerDialog(
                                     )
                                 }
                             },
-                            headlineContent = { Text(peer.displayName) },
                             modifier = Modifier.clickable { onSelect(peer.deviceId, peer.displayName) }
-                        )
+                        ) { Text(peer.displayName) }
                     }
                 }
             }
