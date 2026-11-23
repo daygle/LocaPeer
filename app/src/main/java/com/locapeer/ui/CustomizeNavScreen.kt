@@ -76,12 +76,6 @@ fun CustomizeNavScreen(
                     val canToggle = !isMap && !(visible && visibleCount <= 2)
 
                     ListItem(
-                        headlineContent = {
-                            Text(
-                                navTabLabel(screen.route),
-                                fontWeight = if (isMap) FontWeight.SemiBold else FontWeight.Normal
-                            )
-                        },
                         leadingContent = {
                             Icon(screen.icon, contentDescription = null)
                         },
@@ -132,7 +126,12 @@ fun CustomizeNavScreen(
                                 )
                             }
                         }
-                    )
+                    ) {
+                        Text(
+                            navTabLabel(screen.route),
+                            fontWeight = if (isMap) FontWeight.SemiBold else FontWeight.Normal
+                        )
+                    }
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                 }
             }

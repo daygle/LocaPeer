@@ -101,7 +101,6 @@ fun IncomingShareRequestScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.incoming_share_my_location, senderName)) },
                     supportingContent = { Text(stringResource(R.string.incoming_share_my_location_sub)) },
                     leadingContent = {
                         Icon(
@@ -115,10 +114,9 @@ fun IncomingShareRequestScreen(
                         Switch(checked = shareMyLocation, onCheckedChange = { shareMyLocation = it })
                     },
                     colors = ListItemDefaults.colors(containerColor = androidx.compose.ui.graphics.Color.Transparent)
-                )
+                ) { Text(stringResource(R.string.incoming_share_my_location, senderName)) }
                 HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.incoming_see_their_location, senderName)) },
                     supportingContent = { Text(stringResource(R.string.incoming_see_their_location_sub)) },
                     leadingContent = {
                         Icon(
@@ -132,7 +130,7 @@ fun IncomingShareRequestScreen(
                         Switch(checked = seeTheirLocation, onCheckedChange = { seeTheirLocation = it })
                     },
                     colors = ListItemDefaults.colors(containerColor = androidx.compose.ui.graphics.Color.Transparent)
-                )
+                ) { Text(stringResource(R.string.incoming_see_their_location, senderName)) }
             }
 
             HorizontalDivider()
@@ -149,7 +147,6 @@ fun IncomingShareRequestScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.incoming_allow_messages)) },
                     supportingContent = { Text(stringResource(R.string.incoming_allow_messages_sub, senderName)) },
                     leadingContent = {
                         Icon(
@@ -166,7 +163,7 @@ fun IncomingShareRequestScreen(
                         )
                     },
                     colors = ListItemDefaults.colors(containerColor = androidx.compose.ui.graphics.Color.Transparent)
-                )
+                ) { Text(stringResource(R.string.incoming_allow_messages)) }
             }
 
             Spacer(Modifier.weight(1f))

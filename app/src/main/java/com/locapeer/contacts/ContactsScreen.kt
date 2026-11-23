@@ -469,15 +469,6 @@ private fun ContactRow(
                 }
             }
         },
-        headlineContent = {
-            Text(
-                item.peer.displayName,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
         supportingContent = {
             Text(
                 if (hb != null) stringResource(R.string.contacts_last_seen, formatLastSeen(hb.timestamp)) else stringResource(R.string.contacts_no_location_yet),
@@ -585,5 +576,13 @@ private fun ContactRow(
                 }
             }
         }
-    )
+    ) {
+        Text(
+            item.peer.displayName,
+            style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.SemiBold,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+    }
 }

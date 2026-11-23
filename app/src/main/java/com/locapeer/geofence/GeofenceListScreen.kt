@@ -1,5 +1,6 @@
 package com.locapeer.geofence
 
+import com.locapeer.ui.components.AppSlider
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
@@ -500,9 +501,6 @@ private fun GeofenceAreaRow(
         leadingContent = {
             Icon(Icons.Default.Fence, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
         },
-        headlineContent = {
-            Text(area.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-        },
         supportingContent = {
             val ring = remember(area.polygon) { GeofencePolygon.decode(area.polygon) }
             Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -531,7 +529,9 @@ private fun GeofenceAreaRow(
             RowOverflowMenu(onEdit = onEdit, onDelete = onDelete, deleteLabel = stringResource(R.string.common_delete))
         },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-    )
+    ) {
+        Text(area.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+    }
 }
 
 @Composable
@@ -559,9 +559,6 @@ private fun AssignmentRow(
         modifier = Modifier.clickable(onClick = onEdit),
         leadingContent = {
             Icon(Icons.Default.Fence, contentDescription = null, tint = triggerColor)
-        },
-        headlineContent = {
-            Text(assignment.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
         },
         supportingContent = {
             Row(
@@ -603,7 +600,9 @@ private fun AssignmentRow(
             }
         },
         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-    )
+    ) {
+        Text(assignment.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+    }
 }
 
 /** Overflow (⋮) menu offering Edit + a destructive Delete/Remove, matching the app-wide row idiom. */
@@ -1148,7 +1147,7 @@ private fun GeofenceAreaDialog(
                                     modifier = Modifier.width(160.dp)
                                 )
                             }
-                            Slider(
+                            AppSlider(
                                 value = radiusForMap.toFloat(),
                                 onValueChange = { radiusText = it.roundToInt().toString() },
                                 valueRange = MIN_RADIUS_M.toFloat()..MAX_RADIUS_M.toFloat(),

@@ -74,7 +74,7 @@ fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
                 fontWeight = FontWeight.Bold
             )
         }
-        Slider(
+        AppSlider(
             value = sliderValue,
             onValueChange = { sliderValue = it },
             onValueChangeFinished = {
