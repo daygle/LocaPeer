@@ -723,7 +723,7 @@
     <string name="notif_person_nearby">‏%1$s בקרבת מקום</string>
     <string name="notif_distance_from_you">‏%1$s ממך</string>
     <string name="notif_missed_title">אין עדכון מ-%1$s</string>
-    <string name="notif_missed_text">נראה לאחרונה לפני %1$s דק׳ ליד (%2$s, %3$s)</string>
+    <string name="notif_missed_text">נראה לאחרונה לפני %1$s דק׳</string>
     <string name="notif_sos_active_title">‏SOS פעיל!</string>
     <string name="notif_sos_active_text">משדר התראת חירום לאנשי הקשר של SOS</string>
 

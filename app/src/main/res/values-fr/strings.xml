@@ -711,7 +711,7 @@
     <string name="notif_person_nearby">%1$s est à proximité</string>
     <string name="notif_distance_from_you">à %1$s de vous</string>
     <string name="notif_missed_title">Pas de mise à jour de %1$s</string>
-    <string name="notif_missed_text">Vu pour la dernière fois il y a %1$sm près de (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Vu pour la dernière fois il y a %1$sm</string>
     <string name="notif_sos_active_title">SOS ACTIF !</string>
     <string name="notif_sos_active_text">Diffusion d\'une alerte d\'urgence aux contacts SOS</string>
 

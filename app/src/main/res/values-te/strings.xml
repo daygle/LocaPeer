@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s సమీపంలో ఉన్నారు</string>
     <string name="notif_distance_from_you">మీ నుండి %1$s దూరంలో</string>
     <string name="notif_missed_title">%1$s నుండి అప్‌డేట్ లేదు</string>
-    <string name="notif_missed_text">చివరిగా %1$s నిమిషాల క్రితం (%2$s, %3$s) సమీపంలో కనిపించారు</string>
+    <string name="notif_missed_text">చివరిగా %1$s నిమిషాల క్రితం కనిపించారు</string>
     <string name="notif_sos_active_title">SOS సక్రియంగా ఉంది!</string>
     <string name="notif_sos_active_text">SOS పరిచయాలకు అత్యవసర హెచ్చరికను ప్రసారం చేస్తోంది</string>
 

@@ -736,7 +736,7 @@
     <string name="notif_person_nearby">%1$s je poblíž</string>
     <string name="notif_distance_from_you">%1$s od vás</string>
     <string name="notif_missed_title">Žádná aktualizace od %1$s</string>
-    <string name="notif_missed_text">Naposledy online před %1$s min poblíž (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Naposledy online před %1$s min</string>
     <string name="notif_sos_active_title">SOS AKTIVNÍ!</string>
     <string name="notif_sos_active_text">Vysílá se nouzové upozornění SOS kontaktům</string>
 

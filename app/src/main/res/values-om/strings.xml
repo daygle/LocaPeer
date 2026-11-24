@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s dhihoo jira</string>
     <string name="notif_distance_from_you">%1$s si irraa</string>
     <string name="notif_missed_title">Haaromsi %1$s irraa hin jiru</string>
-    <string name="notif_missed_text">Yeroo dhumaa daqiiqaa %1$s dura (%2$s, %3$s) dhihootti argame</string>
+    <string name="notif_missed_text">Yeroo dhumaa daqiiqaa %1$s dura argame</string>
     <string name="notif_sos_active_title">SOS HOJJETAA JIRA!</string>
     <string name="notif_sos_active_text">Akeekkachiisa hatattamaa quunnamtii SOS-f tamsaasaa jira</string>
 

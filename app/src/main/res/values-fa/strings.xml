@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s نزدیک است</string>
     <string name="notif_distance_from_you">%1$s از شما</string>
     <string name="notif_missed_title">به‌روزرسانی‌ای از %1$s نیست</string>
-    <string name="notif_missed_text">آخرین بازدید %1$s دقیقه پیش نزدیک (%2$s, %3$s)</string>
+    <string name="notif_missed_text">آخرین بازدید %1$s دقیقه پیش</string>
     <string name="notif_sos_active_title">SOS فعال!</string>
     <string name="notif_sos_active_text">در حال ارسال هشدار اضطراری به مخاطبین SOS</string>
 

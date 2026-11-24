@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s is in de buurt</string>
     <string name="notif_distance_from_you">%1$s van jou</string>
     <string name="notif_missed_title">Geen update van %1$s</string>
-    <string name="notif_missed_text">Laatst gezien %1$s min geleden nabij (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Laatst gezien %1$s min geleden</string>
     <string name="notif_sos_active_title">SOS ACTIEF!</string>
     <string name="notif_sos_active_text">Noodmelding wordt uitgezonden naar SOS-contacten</string>
 

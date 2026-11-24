@@ -711,7 +711,7 @@
     <string name="notif_person_nearby">%1$s በአቅራቢያ ናቸው</string>
     <string name="notif_distance_from_you">ከእርስዎ %1$s ርቀት ላይ</string>
     <string name="notif_missed_title">ከ%1$s ምንም ዝመና የለም</string>
-    <string name="notif_missed_text">ለመጨረሻ ጊዜ የታዩት ከ%1$s ደቂቃ በፊት በ(%2$s, %3$s) አቅራቢያ</string>
+    <string name="notif_missed_text">ለመጨረሻ ጊዜ የታዩት ከ%1$s ደቂቃ በፊት</string>
     <string name="notif_sos_active_title">SOS ንቁ ነው!</string>
     <string name="notif_sos_active_text">ለSOS እውቂያዎች የአደጋ ጊዜ ማስጠንቀቂያ እያስተላለፈ ነው</string>
 

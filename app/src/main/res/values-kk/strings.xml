@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s жақын жерде</string>
     <string name="notif_distance_from_you">сізден %1$s қашықтықта</string>
     <string name="notif_missed_title">%1$s-ден жаңарту жоқ</string>
-    <string name="notif_missed_text">Соңғы рет %1$s мин бұрын (%2$s, %3$s) жанында көрінді</string>
+    <string name="notif_missed_text">Соңғы рет %1$s мин бұрын көрінді</string>
     <string name="notif_sos_active_title">SOS БЕЛСЕНДІ!</string>
     <string name="notif_sos_active_text">SOS контактілеріне төтенше жағдай ескертуі жіберілуде</string>
 

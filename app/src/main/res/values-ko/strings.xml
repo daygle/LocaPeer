@@ -697,7 +697,7 @@
     <string name="notif_person_nearby">%1$s 님이 근처에 있습니다</string>
     <string name="notif_distance_from_you">나에게서 %1$s</string>
     <string name="notif_missed_title">%1$s 님의 업데이트 없음</string>
-    <string name="notif_missed_text">%1$s분 전에 (%2$s, %3$s) 근처에서 마지막으로 확인됨</string>
+    <string name="notif_missed_text">%1$s분 전에 마지막으로 확인됨</string>
     <string name="notif_sos_active_title">SOS 활성화됨!</string>
     <string name="notif_sos_active_text">SOS 연락처에 긴급 알림 전송 중</string>
 

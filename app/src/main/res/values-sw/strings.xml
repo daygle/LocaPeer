@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s yuko karibu</string>
     <string name="notif_distance_from_you">%1$s kutoka kwako</string>
     <string name="notif_missed_title">Hakuna sasisho kutoka kwa %1$s</string>
-    <string name="notif_missed_text">Imeonekana mara ya mwisho %1$sm zilizopita karibu na (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Imeonekana mara ya mwisho %1$sm zilizopita</string>
     <string name="notif_sos_active_title">SOS IMEWASHWA!</string>
     <string name="notif_sos_active_text">Inatangaza arifa ya dharura kwa anwani za SOS</string>
 

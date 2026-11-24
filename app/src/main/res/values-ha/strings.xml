@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s yana kusa</string>
     <string name="notif_distance_from_you">%1$s daga gare ku</string>
     <string name="notif_missed_title">Babu sabuntawa daga %1$s</string>
-    <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga nso (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga</string>
     <string name="notif_sos_active_title">SOS NA AIKI!</string>
     <string name="notif_sos_active_text">Ń rán ìkìlọ̀ pàjáwìrì sí àwọn ojúlùmọ̀ SOS</string>
 

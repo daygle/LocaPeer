@@ -736,7 +736,7 @@
     <string name="notif_person_nearby">%1$s поблизу</string>
     <string name="notif_distance_from_you">%1$s від вас</string>
     <string name="notif_missed_title">Немає оновлень від %1$s</string>
-    <string name="notif_missed_text">Останній сигнал %1$s хв тому біля (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Останній сигнал %1$s хв тому</string>
     <string name="notif_sos_active_title">SOS АКТИВНИЙ!</string>
     <string name="notif_sos_active_text">Екстрене оповіщення передається SOS-контактам</string>
 

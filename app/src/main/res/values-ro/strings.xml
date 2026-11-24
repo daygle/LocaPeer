@@ -723,7 +723,7 @@
     <string name="notif_person_nearby">%1$s este în apropiere</string>
     <string name="notif_distance_from_you">%1$s de dvs.</string>
     <string name="notif_missed_title">Nicio actualizare de la %1$s</string>
-    <string name="notif_missed_text">Văzut ultima dată acum %1$s min lângă (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Văzut ultima dată acum %1$s min</string>
     <string name="notif_sos_active_title">SOS ACTIV!</string>
     <string name="notif_sos_active_text">Se transmite alerta de urgență către contactele SOS</string>
 

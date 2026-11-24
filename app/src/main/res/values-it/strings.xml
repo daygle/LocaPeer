@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s è nelle vicinanze</string>
     <string name="notif_distance_from_you">%1$s da te</string>
     <string name="notif_missed_title">Nessun aggiornamento da %1$s</string>
-    <string name="notif_missed_text">Ultimo avvistamento %1$sm fa nei pressi di (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Ultimo avvistamento %1$sm fa</string>
     <string name="notif_sos_active_title">SOS ATTIVO!</string>
     <string name="notif_sos_active_text">Trasmissione avviso di emergenza ai contatti SOS</string>
 

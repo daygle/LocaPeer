@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s a közelben van</string>
     <string name="notif_distance_from_you">%1$s távolságra Öntől</string>
     <string name="notif_missed_title">Nincs frissítés %1$s partnertől</string>
-    <string name="notif_missed_text">Utoljára látva %1$s perce, itt: (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Utoljára látva %1$s perce</string>
     <string name="notif_sos_active_title">SOS AKTÍV!</string>
     <string name="notif_sos_active_text">Vészjelzés sugárzása az SOS-partnereknek</string>
 

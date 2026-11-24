@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s yakınlarda</string>
     <string name="notif_distance_from_you">Size %1$s uzaklıkta</string>
     <string name="notif_missed_title">%1$s kişisinden güncelleme yok</string>
-    <string name="notif_missed_text">Son görülme %1$s dk önce, (%2$s, %3$s) yakınında</string>
+    <string name="notif_missed_text">Son görülme %1$s dk önce</string>
     <string name="notif_sos_active_title">SOS ETKİN!</string>
     <string name="notif_sos_active_text">Acil durum uyarısı SOS kişilerine yayınlanıyor</string>
 

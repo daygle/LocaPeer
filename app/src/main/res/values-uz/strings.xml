@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s yaqin joyda</string>
     <string name="notif_distance_from_you">sizdan %1$s masofada</string>
     <string name="notif_missed_title">%1$s-dan yangilanish yo‘q</string>
-    <string name="notif_missed_text">Oxirgi marta %1$s daqiqa oldin (%2$s, %3$s) yonida ko‘rildi</string>
+    <string name="notif_missed_text">Oxirgi marta %1$s daqiqa oldin ko‘rildi</string>
     <string name="notif_sos_active_title">SOS FAOL!</string>
     <string name="notif_sos_active_text">SOS kontaktlariga favqulodda ogohlantirish yuborilmoqda</string>
 

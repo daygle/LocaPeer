@@ -762,7 +762,7 @@
     <string name="notif_person_nearby">%1$s قريب</string>
     <string name="notif_distance_from_you">%1$s منك</string>
     <string name="notif_missed_title">لا يوجد تحديث من %1$s</string>
-    <string name="notif_missed_text">آخر ظهور قبل %1$s د بالقرب من (%2$s, %3$s)</string>
+    <string name="notif_missed_text">آخر ظهور قبل %1$s د</string>
     <string name="notif_sos_active_title">SOS مفعّل!</string>
     <string name="notif_sos_active_text">جارٍ بث تنبيه الطوارئ إلى جهات اتصال SOS</string>
 

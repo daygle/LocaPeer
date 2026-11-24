@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">Malapit si %1$s</string>
     <string name="notif_distance_from_you">%1$s mula sa iyo</string>
     <string name="notif_missed_title">Walang update mula kay %1$s</string>
-    <string name="notif_missed_text">Huling nakita %1$s min ang nakalipas malapit sa (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Huling nakita %1$s min ang nakalipas</string>
     <string name="notif_sos_active_title">AKTIBO ANG SOS!</string>
     <string name="notif_sos_active_text">Nagbo-broadcast ng emergency alert sa mga SOS contact</string>
 

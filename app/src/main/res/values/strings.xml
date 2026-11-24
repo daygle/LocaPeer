@@ -844,7 +844,7 @@
     <string name="notif_live_watch_text">Your location is updating in real time.</string>
     <string name="notif_live_watch_text_low_battery">Live updates are paused while your battery is low.</string>
     <string name="notif_tracking_proximity">%1$s received a proximity alert about you</string>
-    <string name="notif_tracking_geofence">%1$s received an alert that you entered/exited fence: %2$s</string>
+    <string name="notif_tracking_geofence">%1$s received an alert that you entered or left %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s received an alert that you entered or exited a geofence</string>
     <string name="notif_tracking_generic">%1$s is monitoring your location</string>
     <string name="notif_track_update_title">Sharing update from %1$s</string>
@@ -868,7 +868,7 @@
     <string name="notif_person_nearby">%1$s is nearby</string>
     <string name="notif_distance_from_you">%1$s from you</string>
     <string name="notif_missed_title">No update from %1$s</string>
-    <string name="notif_missed_text">Last seen %1$sm ago near (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Last seen %1$sm ago</string>
     <string name="notif_sos_active_title">SOS ACTIVE!</string>
     <string name="notif_sos_active_text">Broadcasting emergency alert to SOS contacts</string>
 

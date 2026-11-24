@@ -710,7 +710,7 @@
     <string name="notif_person_nearby">%1$s কাছাকাছি আছেন</string>
     <string name="notif_distance_from_you">আপনার থেকে %1$s</string>
     <string name="notif_missed_title">%1$s থেকে কোনো আপডেট নেই</string>
-    <string name="notif_missed_text">সর্বশেষ %1$s মিনিট আগে (%2$s, %3$s)-এর কাছে দেখা গেছে</string>
+    <string name="notif_missed_text">সর্বশেষ %1$s মিনিট আগে দেখা গেছে</string>
     <string name="notif_sos_active_title">SOS সক্রিয়!</string>
     <string name="notif_sos_active_text">SOS পরিচিতিদের কাছে জরুরি সতর্কতা সম্প্রচার হচ্ছে</string>
 
