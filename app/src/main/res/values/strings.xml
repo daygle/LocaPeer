@@ -835,9 +835,9 @@
     <string name="notif_supervisor_request_title">%1$s wants you to be their supervisor</string>
     <string name="notif_supervisor_request_text">Accept to allow unlock approval requests from this device</string>
     <string name="notif_supervisor_request_big">Accept to allow %1$s to send you unlock approval requests when supervised mode is active.</string>
-    <string name="notif_supervised_active_title">Supervised mode active</string>
+    <string name="notif_supervised_active_title">Supervised Mode Active</string>
     <string name="notif_supervised_active_text">Your supervisor confirmed - supervised mode is now set up</string>
-    <string name="notif_supervised_declined_title">Supervised mode declined</string>
+    <string name="notif_supervised_declined_title">Supervised Mode Declined</string>
     <string name="notif_supervised_declined_text">Your supervisor declined the request - supervised mode has been disabled</string>
     <string name="notif_tracking_alert_title">Tracking Alert</string>
     <string name="notif_live_watch_title">%1$s is watching you live</string>
@@ -869,7 +869,7 @@
     <string name="notif_distance_from_you">%1$s from you</string>
     <string name="notif_missed_title">No update from %1$s</string>
     <string name="notif_missed_text">Last seen %1$sm ago</string>
-    <string name="notif_sos_active_title">SOS ACTIVE!</string>
+    <string name="notif_sos_active_title">SOS Active!</string>
     <string name="notif_sos_active_text">Broadcasting emergency alert to SOS contacts</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
@@ -985,7 +985,7 @@
     <string name="toast_now_supervised">Now supervised by %1$s</string>
     <string name="toast_already_supervised">Already supervised - decline the request instead</string>
     <string name="toast_declined_supervision_invite">Declined the supervision request from %1$s</string>
-    <string name="notif_supervision_ended_title">Supervision ended</string>
+    <string name="notif_supervision_ended_title">Supervision Ended</string>
     <string name="notif_supervision_ended_text">Your supervisor removed the supervision of this device. Settings are unlocked.</string>
     <string name="supervision_disable_request_title">Release this device?</string>
     <string name="supervision_disable_request_message">%1$s asks to turn off supervised mode. Approving unlocks its settings permanently until a new supervised request is accepted.</string>
