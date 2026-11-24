@@ -18,6 +18,7 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.sos.SosManager
+import com.locapeer.util.GeoMath
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -190,11 +191,8 @@ class MapViewModel @Inject constructor(
     // Otherwise the map's own start-up centering can win the race and jump to the user's
     // location instead of the requested contact location.
     private val _centerOnArgs = MutableStateFlow<LatLng?>(
-        run {
-            val lat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()
-            val lng = savedStateHandle.get<String>("lng")?.toDoubleOrNull()
-            if (lat != null && lng != null) LatLng(lat, lng) else null
-        }
+        coordinateArgs(savedStateHandle.get<String>("lat"), savedStateHandle.get<String>("lng"))
+            ?.let { (lat, lng) -> LatLng(lat, lng) }
     )
     val centerOnArgs: StateFlow<LatLng?> = _centerOnArgs.asStateFlow()
     val navPeerId: StateFlow<String?> = savedStateHandle.getStateFlow("peerId", null)
@@ -219,10 +217,9 @@ class MapViewModel @Inject constructor(
                 savedStateHandle.getStateFlow<String?>("peerId", null)
             ) { lat, lng, peerId -> Triple(lat, lng, peerId) }
                 .collect { (latStr, lngStr, peerId) ->
-                    val lat = latStr?.toDoubleOrNull()
-                    val lng = lngStr?.toDoubleOrNull()
-                    if (lat != null && lng != null) {
-                        _centerOnArgs.value = LatLng(lat, lng)
+                    val coordinates = coordinateArgs(latStr, lngStr)
+                    if (coordinates != null) {
+                        _centerOnArgs.value = LatLng(coordinates.first, coordinates.second)
                     } else if (peerId != null) {
                         heartbeatDao.getLatestHeartbeat(peerId)?.let { hb ->
                             _centerOnArgs.value = LatLng(hb.lat, hb.lng)
@@ -237,11 +234,10 @@ class MapViewModel @Inject constructor(
             val lng = prefs[KEY_LNG]
             val zoom = prefs[KEY_ZOOM]
 
-            val argLat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()
-            val argLng = savedStateHandle.get<String>("lng")?.toDoubleOrNull()
+            val args = coordinateArgs(savedStateHandle.get<String>("lat"), savedStateHandle.get<String>("lng"))
 
-            if (argLat != null && argLng != null) {
-                _lastMapCenter.value = Triple(argLat, argLng, 16.0)
+            if (args != null) {
+                _lastMapCenter.value = Triple(args.first, args.second, 16.0)
             } else if (lat != null && lng != null && zoom != null) {
                 // If we have center args, we'll use those instead of saved center for the initial view
                 if (_centerOnArgs.value == null) {
@@ -249,6 +245,14 @@ class MapViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    /** Parses the map's lat/lng nav args, rejecting anything MapLibre's `LatLng` would throw on
+     *  (NaN, infinities, out-of-range values) - these can originate in peer-sent location links. */
+    private fun coordinateArgs(lat: String?, lng: String?): Pair<Double, Double>? {
+        val latValue = lat?.toDoubleOrNull() ?: return null
+        val lngValue = lng?.toDoubleOrNull() ?: return null
+        return if (GeoMath.isValidCoordinate(latValue, lngValue)) latValue to lngValue else null
     }
 
     fun consumeCenterArgs() {

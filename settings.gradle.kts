@@ -30,10 +30,11 @@ plugins {
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    // Google and Maven Central host every dependency. No JitPack: it builds arbitrary GitHub
+    // repositories on demand, so any coordinate missing above would silently resolve from it.
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }
     }
 }
 

@@ -277,8 +277,7 @@ object GeofenceExchange {
             runCatching { isExpandEntityReferences = false }
         }
 
-    private fun validPoint(lat: Double, lng: Double): Boolean =
-        lat.isFinite() && lng.isFinite() && lat in -90.0..90.0 && lng in -180.0..180.0
+    private fun validPoint(lat: Double, lng: Double): Boolean = GeoMath.isValidCoordinate(lat, lng)
 
     private fun clampRadius(metres: Double): Int = metres.roundToInt().coerceIn(50, 50000)
 

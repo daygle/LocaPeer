@@ -61,8 +61,9 @@ fun CircleEditScreen(
 
     // Seed the fields once the existing circle/members load (edit mode only).
     LaunchedEffect(existingCircle, existingMembers) {
-        if (isEdit && !seeded && existingCircle != null) {
-            name = existingCircle!!.name
+        val circle = existingCircle
+        if (isEdit && !seeded && circle != null) {
+            name = circle.name
             selected = existingMembers.toSet()
             seeded = true
         }

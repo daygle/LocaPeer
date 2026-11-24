@@ -1,11 +1,12 @@
 package com.locapeer.onboarding
 
 import android.Manifest
-import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.util.Log
 import androidx.core.net.toUri
 import android.os.Build
 import android.os.PowerManager
@@ -76,20 +77,17 @@ object PermissionManager {
 
     /** Open the system Location settings screen so the user can flip the master toggle on. */
     fun openLocationSettings(context: Context) {
-        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
+        startSettings(context, Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
     }
 
     /** Open the app's own system-settings page, where "Allow all the time" (background
      *  location) lives on Android 11+. A runtime request for the background permission
      *  is silently denied there, so settings is the only reliable route. */
     fun openAppDetailsSettings(context: Context) {
-        val intent = Intent(
-            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-            "package:${context.packageName}".toUri()
-        ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
+        startSettings(
+            context,
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:${context.packageName}".toUri())
+        )
     }
 
     fun isIgnoringBatteryOptimizations(context: Context): Boolean {
@@ -108,7 +106,28 @@ object PermissionManager {
                 data = "package:${context.packageName}".toUri()
             }
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        context.startActivity(intent)
+        startSettings(context, intent)
+    }
+
+    /**
+     * Starts a system-settings [intent], falling back to the app's details page and then to
+     * the top-level Settings screen. Some OEM and Android Go builds ship without the battery
+     * optimisation or location-source activities, and an unhandled ActivityNotFoundException
+     * there would crash the onboarding and permissions screens.
+     */
+    private fun startSettings(context: Context, intent: Intent) {
+        val candidates = listOf(
+            intent,
+            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, "package:${context.packageName}".toUri()),
+            Intent(Settings.ACTION_SETTINGS),
+        )
+        for (candidate in candidates) {
+            try {
+                context.startActivity(candidate.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                return
+            } catch (e: ActivityNotFoundException) {
+                Log.w("PermissionManager", "No activity for ${candidate.action}", e)
+            }
+        }
     }
 }

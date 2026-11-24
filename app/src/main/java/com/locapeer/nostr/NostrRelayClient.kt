@@ -807,7 +807,10 @@ class NostrRelayClient @Inject constructor(
 
             override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
                 // Reply to the peer's close frame so OkHttp releases the socket and calls onClosed.
-                webSocket.close(code, reason)
+                // Answer with a normal close rather than echoing [code]: OkHttp rejects the
+                // reserved codes a relay can report here (e.g. 1005 "no status") with an
+                // IllegalArgumentException, which turned a clean close into a failure.
+                webSocket.close(1000, null)
             }
 
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {

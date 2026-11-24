@@ -39,10 +39,9 @@ class AppLockManager @Inject constructor(
      */
     val unlocked: StateFlow<Boolean?> = _unlocked.asStateFlow()
 
-    // Written and read from coroutines dispatched off the two ProcessLifecycleOwner
-    // callbacks (ON_STOP/ON_START), which run on different Dispatchers.Default threads.
-    // @Volatile guarantees each foreground read sees the timestamp the last background
-    // write published.
+    // Written by the ProcessLifecycleOwner ON_STOP callback and read by ON_START and
+    // [setUnlocked], which can be called from other threads. @Volatile guarantees each
+    // foreground read sees the timestamp the last background write published.
     @Volatile private var backgroundedAtMs: Long = 0L
 
     // Latest lock settings, mirrored from DataStore so the foreground check can decide

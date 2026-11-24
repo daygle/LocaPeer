@@ -65,7 +65,8 @@ fun HistoryReportScreen(
     }
 
     LaunchedEffect(isOwnHistoryMode, selfPubkeyHex) {
-        if (isOwnHistoryMode && selfPubkeyHex != null) vm.selectPeer(selfPubkeyHex!!)
+        val self = selfPubkeyHex
+        if (isOwnHistoryMode && self != null) vm.selectPeer(self)
     }
 
     val broadcasters by vm.receiveContacts.collectAsStateWithLifecycle()

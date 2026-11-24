@@ -215,7 +215,7 @@ object DatabaseEncryption {
         try {
             KeyStore.getInstance(ANDROID_KEYSTORE).also { it.load(null) }.deleteEntry(WRAP_KEY_ALIAS)
         } catch (e: Exception) {
-            android.util.Log.w(TAG, "Failed to delete the database wrap key", e)
+            Log.w(TAG, "Failed to delete the database wrap key", e)
         }
     }
 

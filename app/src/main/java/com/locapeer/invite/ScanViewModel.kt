@@ -85,7 +85,10 @@ class ScanViewModel @Inject constructor(
                     ?: context.getString(com.locapeer.R.string.scan_fallback_contact)
             )
         } catch (e: Exception) {
-            _scanState.value = ScanState(error = e.message ?: context.getString(com.locapeer.R.string.scan_error_unknown))
+            // The input is untrusted (a deep link can carry anything) and parser messages echo
+            // it back verbatim, so log the detail and show the localised message instead.
+            Log.w("ScanViewModel", "Invite could not be parsed", e)
+            _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_invalid_link))
             processed = false
         }
     }
@@ -145,7 +148,8 @@ class ScanViewModel @Inject constructor(
                     _scanState.value = ScanState(success = true, addedName = invite.displayName)
                 }
             } catch (e: Exception) {
-                _scanState.value = ScanState(error = e.message ?: context.getString(com.locapeer.R.string.scan_error_unknown))
+                Log.e("ScanViewModel", "Adding the contact failed", e)
+                _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_unknown))
                 processed = false
             }
         }
