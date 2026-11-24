@@ -229,6 +229,9 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
                 )
+                TextButton(onClick = { vm.cancelSupervisorRequest() }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
             }
         } else {
             if (cameraPermission.status.isGranted) {
