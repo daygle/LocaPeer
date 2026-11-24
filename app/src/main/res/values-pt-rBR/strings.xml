@@ -705,11 +705,11 @@
     <string name="notif_message_person">Mensagem %1$s</string>
     <string name="notif_geofence_entered_title">%1$s entrou em %2$s</string>
     <string name="notif_geofence_left_title">%1$s saiu de %2$s</string>
-    <string name="notif_geofence_subtitle">em %1$s · raio de %2$s</string>
+    <string name="notif_geofence_subtitle">em %1$s</string>
     <string name="notif_person_nearby">%1$s está por perto</string>
     <string name="notif_distance_from_you">a %1$s de você</string>
     <string name="notif_missed_title">Sem atualização de %1$s</string>
-    <string name="notif_missed_text">Visto pela última vez há %1$sm perto de (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Visto pela última vez há %1$sm</string>
     <string name="notif_sos_active_title">SOS ATIVO!</string>
     <string name="notif_sos_active_text">Transmitindo alerta de emergência para contatos de SOS</string>
 
@@ -1003,7 +1003,6 @@
     <string name="geo_import_empty">Nenhuma área de geocerca encontrada nesse arquivo</string>
     <string name="geo_import_done">%1$d áreas importadas</string>
     <string name="geo_file_failed">Não foi possível ler ou gravar esse arquivo</string>
-    <string name="notif_geofence_subtitle_polygon">em %1$s · área poligonal · %2$s</string>
     <string name="contacts_cd_show_on_map">Mostrar no mapa</string>
     <string name="settings_bubble_color">Cor do balão</string>
     <string name="settings_bubble_color_default">Tema padrão</string>

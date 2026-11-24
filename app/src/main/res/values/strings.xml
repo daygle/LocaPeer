@@ -835,16 +835,16 @@
     <string name="notif_supervisor_request_title">%1$s wants you to be their supervisor</string>
     <string name="notif_supervisor_request_text">Accept to allow unlock approval requests from this device</string>
     <string name="notif_supervisor_request_big">Accept to allow %1$s to send you unlock approval requests when supervised mode is active.</string>
-    <string name="notif_supervised_active_title">Supervised mode active</string>
+    <string name="notif_supervised_active_title">Supervised Mode Active</string>
     <string name="notif_supervised_active_text">Your supervisor confirmed - supervised mode is now set up</string>
-    <string name="notif_supervised_declined_title">Supervised mode declined</string>
+    <string name="notif_supervised_declined_title">Supervised Mode Declined</string>
     <string name="notif_supervised_declined_text">Your supervisor declined the request - supervised mode has been disabled</string>
     <string name="notif_tracking_alert_title">Tracking Alert</string>
     <string name="notif_live_watch_title">%1$s is watching you live</string>
     <string name="notif_live_watch_text">Your location is updating in real time.</string>
     <string name="notif_live_watch_text_low_battery">Live updates are paused while your battery is low.</string>
     <string name="notif_tracking_proximity">%1$s received a proximity alert about you</string>
-    <string name="notif_tracking_geofence">%1$s received an alert that you entered/exited fence: %2$s</string>
+    <string name="notif_tracking_geofence">%1$s received an alert that you entered or left %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s received an alert that you entered or exited a geofence</string>
     <string name="notif_tracking_generic">%1$s is monitoring your location</string>
     <string name="notif_track_update_title">Sharing update from %1$s</string>
@@ -864,12 +864,12 @@
     <string name="notif_geofence_entered_title">%1$s entered %2$s</string>
     <string name="notif_geofence_left_title">%1$s left %2$s</string>
     <string name="notif_geofence_inside_title">%1$s is inside %2$s</string>
-    <string name="notif_geofence_subtitle">at %1$s · %2$s radius</string>
+    <string name="notif_geofence_subtitle">at %1$s</string>
     <string name="notif_person_nearby">%1$s is nearby</string>
     <string name="notif_distance_from_you">%1$s from you</string>
     <string name="notif_missed_title">No update from %1$s</string>
-    <string name="notif_missed_text">Last seen %1$sm ago near (%2$s, %3$s)</string>
-    <string name="notif_sos_active_title">SOS ACTIVE!</string>
+    <string name="notif_missed_text">Last seen %1$sm ago</string>
+    <string name="notif_sos_active_title">SOS Active!</string>
     <string name="notif_sos_active_text">Broadcasting emergency alert to SOS contacts</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
@@ -985,7 +985,7 @@
     <string name="toast_now_supervised">Now supervised by %1$s</string>
     <string name="toast_already_supervised">Already supervised - decline the request instead</string>
     <string name="toast_declined_supervision_invite">Declined the supervision request from %1$s</string>
-    <string name="notif_supervision_ended_title">Supervision ended</string>
+    <string name="notif_supervision_ended_title">Supervision Ended</string>
     <string name="notif_supervision_ended_text">Your supervisor removed the supervision of this device. Settings are unlocked.</string>
     <string name="supervision_disable_request_title">Release this device?</string>
     <string name="supervision_disable_request_message">%1$s asks to turn off supervised mode. Approving unlocks its settings permanently until a new supervised request is accepted.</string>
@@ -1049,5 +1049,4 @@
     <string name="geo_import_empty">No geofence areas found in that file</string>
     <string name="geo_import_done" tools:ignore="PluralsCandidate">Imported %1$d areas</string>
     <string name="geo_file_failed">Could not read or write that file</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area • %2$s</string>
 </resources>

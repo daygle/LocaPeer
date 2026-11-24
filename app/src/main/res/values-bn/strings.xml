@@ -706,11 +706,11 @@
     <string name="notif_message_person">%1$s-কে বার্তা পাঠান</string>
     <string name="notif_geofence_entered_title">%1$s %2$s-এ প্রবেশ করেছেন</string>
     <string name="notif_geofence_left_title">%1$s %2$s ছেড়ে গেছেন</string>
-    <string name="notif_geofence_subtitle">%1$s-এ · %2$s ব্যাসার্ধ</string>
+    <string name="notif_geofence_subtitle">%1$s-এ</string>
     <string name="notif_person_nearby">%1$s কাছাকাছি আছেন</string>
     <string name="notif_distance_from_you">আপনার থেকে %1$s</string>
     <string name="notif_missed_title">%1$s থেকে কোনো আপডেট নেই</string>
-    <string name="notif_missed_text">সর্বশেষ %1$s মিনিট আগে (%2$s, %3$s)-এর কাছে দেখা গেছে</string>
+    <string name="notif_missed_text">সর্বশেষ %1$s মিনিট আগে দেখা গেছে</string>
     <string name="notif_sos_active_title">SOS সক্রিয়!</string>
     <string name="notif_sos_active_text">SOS পরিচিতিদের কাছে জরুরি সতর্কতা সম্প্রচার হচ্ছে</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">এই ফাইলে কোনো জিওফেন্স এলাকা পাওয়া যায়নি</string>
     <string name="geo_import_done">%1$dটি এলাকা আমদানি হয়েছে</string>
     <string name="geo_file_failed">ফাইলটি পড়া বা লেখা যায়নি</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s-এ · বহুভুজ এলাকা · %2$s</string>
     <string name="contacts_cd_show_on_map">মানচিত্রে দেখান</string>
     <string name="settings_bubble_color">বাবলের রঙ</string>
     <string name="settings_bubble_color_default">থিম ডিফল্ট</string>

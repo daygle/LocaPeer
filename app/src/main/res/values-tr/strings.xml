@@ -706,11 +706,11 @@
     <string name="notif_message_person">%1$s kişisine mesaj</string>
     <string name="notif_geofence_entered_title">%1$s, %2$s alanına girdi</string>
     <string name="notif_geofence_left_title">%1$s, %2$s alanından ayrıldı</string>
-    <string name="notif_geofence_subtitle">%1$s · %2$s yarıçap</string>
+    <string name="notif_geofence_subtitle">%1$s</string>
     <string name="notif_person_nearby">%1$s yakınlarda</string>
     <string name="notif_distance_from_you">Size %1$s uzaklıkta</string>
     <string name="notif_missed_title">%1$s kişisinden güncelleme yok</string>
-    <string name="notif_missed_text">Son görülme %1$s dk önce, (%2$s, %3$s) yakınında</string>
+    <string name="notif_missed_text">Son görülme %1$s dk önce</string>
     <string name="notif_sos_active_title">SOS ETKİN!</string>
     <string name="notif_sos_active_text">Acil durum uyarısı SOS kişilerine yayınlanıyor</string>
 
@@ -1009,7 +1009,6 @@
     <string name="geo_import_empty">Bu dosyada geofence alanı bulunamadı</string>
     <string name="geo_import_done">%1$d alan içe aktarıldı</string>
     <string name="geo_file_failed">Bu dosya okunamadı veya yazılamadı</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s · çokgen alanı · %2$s</string>
     <string name="contacts_cd_show_on_map">Haritada göster</string>
     <string name="settings_bubble_color">Balon rengi</string>
     <string name="settings_bubble_color_default">Varsayılan tema</string>

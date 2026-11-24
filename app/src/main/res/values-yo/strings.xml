@@ -693,11 +693,11 @@
     <string name="notif_message_person">Ránṣẹ́ sí %1$s</string>
     <string name="notif_geofence_entered_title">%1$s banyere %2$s</string>
     <string name="notif_geofence_left_title">%1$s pụrụ na %2$s</string>
-    <string name="notif_geofence_subtitle">na %1$s · radius %2$s</string>
+    <string name="notif_geofence_subtitle">na %1$s</string>
     <string name="notif_person_nearby">%1$s nọ nso</string>
     <string name="notif_distance_from_you">%1$s site na gị</string>
     <string name="notif_missed_title">Enweghị mmelite sitere na %1$s</string>
-    <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga nso (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga</string>
     <string name="notif_sos_active_title">SOS NA-ARỤ ỌRỤ!</string>
     <string name="notif_sos_active_text">Ń rán ìkìlọ̀ pàjáwìrì sí àwọn ojúlùmọ̀ SOS</string>
 
@@ -994,7 +994,6 @@
     <string name="geo_import_empty">A kò rí agbègbè geofence kankan nínú fáìlì yẹn</string>
     <string name="geo_import_done">A gbé agbègbè %1$d wọlé</string>
     <string name="geo_file_failed">A kò lè kà tàbí kọ fáìlì yẹn</string>
-    <string name="notif_geofence_subtitle_polygon">ní %1$s · àgbègbè poligoni · %2$s</string>
     <string name="contacts_cd_show_on_map">Fi hàn lórí maapu</string>
     <string name="settings_bubble_color">Àwọ̀ bọ́bù</string>
     <string name="settings_bubble_color_default">Tímù àkọ́kọ́</string>

@@ -706,11 +706,11 @@
     <string name="notif_message_person">Messaggio %1$s</string>
     <string name="notif_geofence_entered_title">%1$s è entrato in %2$s</string>
     <string name="notif_geofence_left_title">%1$s è uscito da %2$s</string>
-    <string name="notif_geofence_subtitle">presso %1$s · raggio %2$s</string>
+    <string name="notif_geofence_subtitle">presso %1$s</string>
     <string name="notif_person_nearby">%1$s è nelle vicinanze</string>
     <string name="notif_distance_from_you">%1$s da te</string>
     <string name="notif_missed_title">Nessun aggiornamento da %1$s</string>
-    <string name="notif_missed_text">Ultimo avvistamento %1$sm fa nei pressi di (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Ultimo avvistamento %1$sm fa</string>
     <string name="notif_sos_active_title">SOS ATTIVO!</string>
     <string name="notif_sos_active_text">Trasmissione avviso di emergenza ai contatti SOS</string>
 
@@ -1004,7 +1004,6 @@
     <string name="geo_import_empty">Nessuna area geofence trovata in quel file</string>
     <string name="geo_import_done">%1$d aree importate</string>
     <string name="geo_file_failed">Impossibile leggere o scrivere quel file</string>
-    <string name="notif_geofence_subtitle_polygon">presso %1$s · area poligonale · %2$s</string>
     <string name="contacts_cd_show_on_map">Mostra sulla mappa</string>
     <string name="settings_bubble_color">Colore del fumetto</string>
     <string name="settings_bubble_color_default">Tema predefinito</string>

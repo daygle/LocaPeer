@@ -732,11 +732,11 @@
     <string name="notif_message_person">Написать %1$s</string>
     <string name="notif_geofence_entered_title">%1$s вошёл(ла) в %2$s</string>
     <string name="notif_geofence_left_title">%1$s покинул(а) %2$s</string>
-    <string name="notif_geofence_subtitle">в %1$s · радиус %2$s</string>
+    <string name="notif_geofence_subtitle">в %1$s</string>
     <string name="notif_person_nearby">%1$s поблизости</string>
     <string name="notif_distance_from_you">%1$s от вас</string>
     <string name="notif_missed_title">Нет обновлений от %1$s</string>
-    <string name="notif_missed_text">Последний сигнал %1$s мин назад возле (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Последний сигнал %1$s мин назад</string>
     <string name="notif_sos_active_title">SOS АКТИВЕН!</string>
     <string name="notif_sos_active_text">Экстренное оповещение передаётся SOS-контактам</string>
 
@@ -1037,7 +1037,6 @@
     <string name="geo_import_empty">В этом файле не найдено областей геозон</string>
     <string name="geo_import_done">Импортировано областей: %1$d</string>
     <string name="geo_file_failed">Не удалось прочитать или записать этот файл</string>
-    <string name="notif_geofence_subtitle_polygon">в %1$s · область многоугольника · %2$s</string>
     <string name="contacts_cd_show_on_map">Показать на карте</string>
     <string name="settings_bubble_color">Цвет пузыря</string>
     <string name="settings_bubble_color_default">Тема по умолчанию</string>

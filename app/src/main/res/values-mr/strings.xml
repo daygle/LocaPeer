@@ -706,11 +706,11 @@
     <string name="notif_message_person">%1$s ला संदेश पाठवा</string>
     <string name="notif_geofence_entered_title">%1$s ने %2$s मध्ये प्रवेश केला</string>
     <string name="notif_geofence_left_title">%1$s %2$s मधून बाहेर पडले</string>
-    <string name="notif_geofence_subtitle">%1$s वर · %2$s त्रिज्या</string>
+    <string name="notif_geofence_subtitle">%1$s वर</string>
     <string name="notif_person_nearby">%1$s जवळ आहेत</string>
     <string name="notif_distance_from_you">तुमच्यापासून %1$s अंतरावर</string>
     <string name="notif_missed_title">%1$s कडून कोणतेही अपडेट नाही</string>
-    <string name="notif_missed_text">शेवटचे %1$s मिनिटांपूर्वी (%2$s, %3$s) जवळ पाहिले</string>
+    <string name="notif_missed_text">शेवटचे %1$s मिनिटांपूर्वी पाहिले</string>
     <string name="notif_sos_active_title">SOS सक्रिय आहे!</string>
     <string name="notif_sos_active_text">SOS संपर्कांना आणीबाणीचा अलर्ट प्रसारित करत आहे</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">या फाइलमध्ये जिओफेन्स क्षेत्रे आढळली नाहीत</string>
     <string name="geo_import_done">%1$d क्षेत्रे आयात झाली</string>
     <string name="geo_file_failed">ती फाइल वाचता किंवा लिहिता आली नाही</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s वर · बहुभुज क्षेत्र · %2$s</string>
     <string name="contacts_cd_show_on_map">नकाशावर दाखवा</string>
     <string name="settings_bubble_color">बबल रंग</string>
     <string name="settings_bubble_color_default">थीम डीफॉल्ट</string>

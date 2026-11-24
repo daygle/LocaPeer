@@ -706,11 +706,11 @@
     <string name="notif_message_person">Μήνυμα στον/στην %1$s</string>
     <string name="notif_geofence_entered_title">Ο/Η %1$s μπήκε στο %2$s</string>
     <string name="notif_geofence_left_title">Ο/Η %1$s έφυγε από το %2$s</string>
-    <string name="notif_geofence_subtitle">στις %1$s · ακτίνα %2$s</string>
+    <string name="notif_geofence_subtitle">στις %1$s</string>
     <string name="notif_person_nearby">Ο/Η %1$s είναι κοντά</string>
     <string name="notif_distance_from_you">%1$s από εσάς</string>
     <string name="notif_missed_title">Καμία ενημέρωση από τον/την %1$s</string>
-    <string name="notif_missed_text">Τελευταία εμφάνιση πριν από %1$s λεπ. κοντά στο (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Τελευταία εμφάνιση πριν από %1$s λεπ.</string>
     <string name="notif_sos_active_title">SOS ΕΝΕΡΓΟ!</string>
     <string name="notif_sos_active_text">Μετάδοση ειδοποίησης έκτακτης ανάγκης στις επαφές SOS</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">Δεν βρέθηκαν περιοχές γεωφράχτη σε αυτό το αρχείο</string>
     <string name="geo_import_done">Εισήχθησαν %1$d περιοχές</string>
     <string name="geo_file_failed">Δεν ήταν δυνατή η ανάγνωση ή εγγραφή του αρχείου</string>
-    <string name="notif_geofence_subtitle_polygon">στις %1$s · πολυγωνική περιοχή · %2$s</string>
     <string name="contacts_cd_show_on_map">Εμφάνιση στον χάρτη</string>
     <string name="settings_bubble_color">Χρώμα φυσαλίδας</string>
     <string name="settings_bubble_color_default">Προεπιλεγμένο θέμα</string>

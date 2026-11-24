@@ -706,11 +706,11 @@
     <string name="notif_message_person">%1$s ਨੂੰ ਸੁਨੇਹਾ ਭੇਜੋ</string>
     <string name="notif_geofence_entered_title">%1$s %2$s ਵਿੱਚ ਦਾਖਲ ਹੋਇਆ</string>
     <string name="notif_geofence_left_title">%1$s %2$s ਤੋਂ ਬਾਹਰ ਚਲਾ ਗਿਆ</string>
-    <string name="notif_geofence_subtitle">%1$s \'ਤੇ · %2$s ਘੇਰਾ</string>
+    <string name="notif_geofence_subtitle">%1$s \'ਤੇ</string>
     <string name="notif_person_nearby">%1$s ਨੇੜੇ ਹੈ</string>
     <string name="notif_distance_from_you">ਤੁਹਾਡੇ ਤੋਂ %1$s ਦੀ ਦੂਰੀ \'ਤੇ</string>
     <string name="notif_missed_title">%1$s ਤੋਂ ਕੋਈ ਅੱਪਡੇਟ ਨਹੀਂ</string>
-    <string name="notif_missed_text">ਆਖਰੀ ਵਾਰ %1$s ਮਿੰਟ ਪਹਿਲਾਂ (%2$s, %3$s) ਦੇ ਨੇੜੇ ਦੇਖਿਆ ਗਿਆ ਸੀ</string>
+    <string name="notif_missed_text">ਆਖਰੀ ਵਾਰ %1$s ਮਿੰਟ ਪਹਿਲਾਂ ਦੇਖਿਆ ਗਿਆ ਸੀ</string>
     <string name="notif_sos_active_title">SOS ਸਰਗਰਮ ਹੈ!</string>
     <string name="notif_sos_active_text">SOS ਸੰਪਰਕਾਂ ਨੂੰ ਐਮਰਜੈਂਸੀ ਅਲਰਟ ਪ੍ਰਸਾਰਿਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">ਇਸ ਫਾਈਲ ਵਿੱਚ ਕੋਈ ਜੀਓਫੈਂਸ ਖੇਤਰ ਨਹੀਂ ਮਿਲਿਆ</string>
     <string name="geo_import_done">%1$d ਖੇਤਰ ਆਯਾਤ ਕੀਤੇ ਗਏ</string>
     <string name="geo_file_failed">ਉਹ ਫਾਈਲ ਪੜ੍ਹੀ ਜਾਂ ਲਿਖੀ ਨਹੀਂ ਜਾ ਸਕੀ</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s \'ਤੇ · ਬਹੁਭੁਜ ਖੇਤਰ · %2$s</string>
     <string name="contacts_cd_show_on_map">ਨਕਸ਼ੇ ਤੇ ਦਿਖਾਓ</string>
     <string name="settings_bubble_color">ਬਬਲ ਰੰਗ</string>
     <string name="settings_bubble_color_default">ਥੀਮ ਡਿਫਾਲਟ</string>

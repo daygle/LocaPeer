@@ -706,11 +706,11 @@
     <string name="notif_message_person">Skicka meddelande till %1$s</string>
     <string name="notif_geofence_entered_title">%1$s gick in i %2$s</string>
     <string name="notif_geofence_left_title">%1$s lämnade %2$s</string>
-    <string name="notif_geofence_subtitle">vid %1$s · %2$s radie</string>
+    <string name="notif_geofence_subtitle">vid %1$s</string>
     <string name="notif_person_nearby">%1$s är i närheten</string>
     <string name="notif_distance_from_you">%1$s från dig</string>
     <string name="notif_missed_title">Ingen uppdatering från %1$s</string>
-    <string name="notif_missed_text">Senast sedd för %1$s min sedan nära (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Senast sedd för %1$s min sedan</string>
     <string name="notif_sos_active_title">SOS AKTIVT!</string>
     <string name="notif_sos_active_text">Sänder nödlarm till SOS-kontakter</string>
 
@@ -1005,7 +1005,6 @@
     <string name="geo_import_empty">Inga geofence-områden hittades i filen</string>
     <string name="geo_import_done">%1$d områden importerades</string>
     <string name="geo_file_failed">Filen kunde inte läsas eller skrivas</string>
-    <string name="notif_geofence_subtitle_polygon">vid %1$s · polygonområde · %2$s</string>
     <string name="contacts_cd_show_on_map">Visa på kartan</string>
     <string name="settings_bubble_color">Bubbelfärg</string>
     <string name="settings_bubble_color_default">Standardtema</string>

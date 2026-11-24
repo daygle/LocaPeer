@@ -693,11 +693,11 @@
     <string name="notif_message_person">%1$sにメッセージを送信</string>
     <string name="notif_geofence_entered_title">%1$sが%2$sに入りました</string>
     <string name="notif_geofence_left_title">%1$sが%2$sから出ました</string>
-    <string name="notif_geofence_subtitle">%1$sにて · 半径 %2$s</string>
+    <string name="notif_geofence_subtitle">%1$sにて</string>
     <string name="notif_person_nearby">%1$sが近くにいます</string>
     <string name="notif_distance_from_you">あなたから %1$s</string>
     <string name="notif_missed_title">%1$sからの更新なし</string>
-    <string name="notif_missed_text">%1$s分前に（%2$s、 %3$s）の近くで確認されました</string>
+    <string name="notif_missed_text">%1$s分前に確認されました</string>
     <string name="notif_sos_active_title">SOS発信中！</string>
     <string name="notif_sos_active_text">SOS連絡先に緊急アラートを配信しています</string>
 
@@ -993,7 +993,6 @@
     <string name="geo_import_empty">このファイルにジオフェンスエリアが見つかりません</string>
     <string name="geo_import_done">%1$d 件のエリアをインポートしました</string>
     <string name="geo_file_failed">ファイルを読み書きできませんでした</string>
-    <string name="notif_geofence_subtitle_polygon">%1$sにて · 多角形エリア · %2$s</string>
     <string name="contacts_cd_show_on_map">地図で表示</string>
     <string name="settings_bubble_color">吹き出しの色</string>
     <string name="settings_bubble_color_default">テーマの既定</string>

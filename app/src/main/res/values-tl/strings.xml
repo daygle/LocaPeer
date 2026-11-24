@@ -706,11 +706,11 @@
     <string name="notif_message_person">Mag-message kay %1$s</string>
     <string name="notif_geofence_entered_title">Pumasok si %1$s sa %2$s</string>
     <string name="notif_geofence_left_title">Umalis si %1$s sa %2$s</string>
-    <string name="notif_geofence_subtitle">sa %1$s · %2$s na radius</string>
+    <string name="notif_geofence_subtitle">sa %1$s</string>
     <string name="notif_person_nearby">Malapit si %1$s</string>
     <string name="notif_distance_from_you">%1$s mula sa iyo</string>
     <string name="notif_missed_title">Walang update mula kay %1$s</string>
-    <string name="notif_missed_text">Huling nakita %1$s min ang nakalipas malapit sa (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Huling nakita %1$s min ang nakalipas</string>
     <string name="notif_sos_active_title">AKTIBO ANG SOS!</string>
     <string name="notif_sos_active_text">Nagbo-broadcast ng emergency alert sa mga SOS contact</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">Walang nahanap na geofence area sa file na iyon</string>
     <string name="geo_import_done">Na-import ang %1$d area</string>
     <string name="geo_file_failed">Hindi mabasa o maisulat ang file na iyon</string>
-    <string name="notif_geofence_subtitle_polygon">sa %1$s · lugar na poligono · %2$s</string>
     <string name="contacts_cd_show_on_map">Ipakita sa mapa</string>
     <string name="settings_bubble_color">Kulay ng bula</string>
     <string name="settings_bubble_color_default">Karaniwang tema</string>

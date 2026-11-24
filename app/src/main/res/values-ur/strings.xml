@@ -706,11 +706,11 @@
     <string name="notif_message_person">%1$s کو پیغام بھیجیں</string>
     <string name="notif_geofence_entered_title">%1$s %2$s میں داخل ہوا</string>
     <string name="notif_geofence_left_title">%1$s نے %2$s چھوڑ دیا</string>
-    <string name="notif_geofence_subtitle">%1$s پر · %2$s رداس</string>
+    <string name="notif_geofence_subtitle">%1$s پر</string>
     <string name="notif_person_nearby">%1$s قریب ہے</string>
     <string name="notif_distance_from_you">آپ سے %1$s</string>
     <string name="notif_missed_title">%1$s کی طرف سے کوئی اپ ڈیٹ نہیں</string>
-    <string name="notif_missed_text">آخری بار %1$s منٹ پہلے (%2$s, %3$s) کے قریب دیکھا گیا</string>
+    <string name="notif_missed_text">آخری بار %1$s منٹ پہلے دیکھا گیا</string>
     <string name="notif_sos_active_title">SOS فعال!</string>
     <string name="notif_sos_active_text">SOS رابطوں کو ہنگامی الرٹ نشر کیا جا رہا ہے</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">اس فائل میں کوئی جیوفنس علاقہ نہیں ملا</string>
     <string name="geo_import_done">%1$d علاقے درآمد ہوئے</string>
     <string name="geo_file_failed">وہ فائل پڑھی یا لکھی نہیں جا سکی</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s پر · کثیر الاضلاع علاقہ · %2$s</string>
     <string name="contacts_cd_show_on_map">نقشے پر دکھائیں</string>
     <string name="settings_bubble_color">بلبلے کا رنگ</string>
     <string name="settings_bubble_color_default">ڈیفالٹ تھیم</string>

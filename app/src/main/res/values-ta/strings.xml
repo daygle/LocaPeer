@@ -706,11 +706,11 @@
     <string name="notif_message_person">%1$s-க்கு செய்தி அனுப்பு</string>
     <string name="notif_geofence_entered_title">%1$s %2$s-க்குள் நுழைந்தார்</string>
     <string name="notif_geofence_left_title">%1$s %2$s-லிருந்து வெளியேறினார்</string>
-    <string name="notif_geofence_subtitle">%1$s இல் · %2$s ஆரம்</string>
+    <string name="notif_geofence_subtitle">%1$s இல்</string>
     <string name="notif_person_nearby">%1$s அருகில் இருக்கிறார்</string>
     <string name="notif_distance_from_you">உங்களிடமிருந்து %1$s தூரத்தில்</string>
     <string name="notif_missed_title">%1$s இடமிருந்து புதுப்பிப்பு இல்லை</string>
-    <string name="notif_missed_text">கடைசியாக %1$s நிமிடம் முன் (%2$s, %3$s) அருகில் பார்க்கப்பட்டது</string>
+    <string name="notif_missed_text">கடைசியாக %1$s நிமிடம் முன் பார்க்கப்பட்டது</string>
     <string name="notif_sos_active_title">SOS செயலில் உள்ளது!</string>
     <string name="notif_sos_active_text">SOS தொடர்புகளுக்கு அவசர எச்சரிக்கையை ஒளிபரப்புகிறது</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">இந்தக் கோப்பில் புவிவேலி பகுதிகள் எதுவும் கிடைக்கவில்லை</string>
     <string name="geo_import_done">%1$d பகுதிகள் இறக்குமதி செய்யப்பட்டன</string>
     <string name="geo_file_failed">அந்தக் கோப்பைப் படிக்கவோ எழுதவோ முடியவில்லை</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s இல் · பலகோணப் பகுதி · %2$s</string>
     <string name="contacts_cd_show_on_map">வரைபடத்தில் காட்டு</string>
     <string name="settings_bubble_color">குமிழ் நிறம்</string>
     <string name="settings_bubble_color_default">இயல்புநிலை தீம்</string>

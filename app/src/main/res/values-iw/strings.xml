@@ -719,11 +719,11 @@
     <string name="notif_message_person">הודעה ל-%1$s</string>
     <string name="notif_geofence_entered_title">‏%1$s נכנס ל-%2$s</string>
     <string name="notif_geofence_left_title">‏%1$s עזב את %2$s</string>
-    <string name="notif_geofence_subtitle">ב-%1$s · רדיוס %2$s</string>
+    <string name="notif_geofence_subtitle">ב-%1$s</string>
     <string name="notif_person_nearby">‏%1$s בקרבת מקום</string>
     <string name="notif_distance_from_you">‏%1$s ממך</string>
     <string name="notif_missed_title">אין עדכון מ-%1$s</string>
-    <string name="notif_missed_text">נראה לאחרונה לפני %1$s דק׳ ליד (%2$s, %3$s)</string>
+    <string name="notif_missed_text">נראה לאחרונה לפני %1$s דק׳</string>
     <string name="notif_sos_active_title">‏SOS פעיל!</string>
     <string name="notif_sos_active_text">משדר התראת חירום לאנשי הקשר של SOS</string>
 
@@ -1025,7 +1025,6 @@
     <string name="geo_import_empty">לא נמצאו אזורי גדר גאוגרפית בקובץ הזה</string>
     <string name="geo_import_done">יובאו %1$d אזורים</string>
     <string name="geo_file_failed">לא ניתן לקרוא או לכתוב את הקובץ</string>
-    <string name="notif_geofence_subtitle_polygon">ב-%1$s · אזור מצולע · %2$s</string>
     <string name="contacts_cd_show_on_map">הצג במפה</string>
     <string name="settings_bubble_color">צבע הבועה</string>
     <string name="settings_bubble_color_default">ערכת נושא ברירת מחדל</string>

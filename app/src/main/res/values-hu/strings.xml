@@ -706,11 +706,11 @@
     <string name="notif_message_person">Üzenet %1$s részére</string>
     <string name="notif_geofence_entered_title">%1$s belépett ide: %2$s</string>
     <string name="notif_geofence_left_title">%1$s elhagyta ezt: %2$s</string>
-    <string name="notif_geofence_subtitle">itt: %1$s · %2$s sugár</string>
+    <string name="notif_geofence_subtitle">itt: %1$s</string>
     <string name="notif_person_nearby">%1$s a közelben van</string>
     <string name="notif_distance_from_you">%1$s távolságra Öntől</string>
     <string name="notif_missed_title">Nincs frissítés %1$s partnertől</string>
-    <string name="notif_missed_text">Utoljára látva %1$s perce, itt: (%2$s, %3$s)</string>
+    <string name="notif_missed_text">Utoljára látva %1$s perce</string>
     <string name="notif_sos_active_title">SOS AKTÍV!</string>
     <string name="notif_sos_active_text">Vészjelzés sugárzása az SOS-partnereknek</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">Ebben a fájlban nem találhatók geokerítés-területek</string>
     <string name="geo_import_done">%1$d terület importálva</string>
     <string name="geo_file_failed">A fájl nem olvasható vagy írható</string>
-    <string name="notif_geofence_subtitle_polygon">itt: %1$s · sokszögterület · %2$s</string>
     <string name="contacts_cd_show_on_map">Megjelenítés a térképen</string>
     <string name="settings_bubble_color">Buborékszín</string>
     <string name="settings_bubble_color_default">Téma alapértelmezett</string>

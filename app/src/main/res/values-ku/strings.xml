@@ -706,11 +706,11 @@
     <string name="notif_message_person">Peyam bide %1$s</string>
     <string name="notif_geofence_entered_title">%1$s ketiye %2$s</string>
     <string name="notif_geofence_left_title">%1$s ji %2$s derketiye</string>
-    <string name="notif_geofence_subtitle">li %1$s · radyusa %2$s</string>
+    <string name="notif_geofence_subtitle">li %1$s</string>
     <string name="notif_person_nearby">%1$s nêzîk e</string>
     <string name="notif_distance_from_you">%1$s dûrî we ye</string>
     <string name="notif_missed_title">Nûvekirinek ji %1$s tune</string>
-    <string name="notif_missed_text">Cara dawî %1$sm berê li nêzî (%2$s, %3$s) hat dîtin</string>
+    <string name="notif_missed_text">Cara dawî %1$sm berê hat dîtin</string>
     <string name="notif_sos_active_title">SOS ÇALAK E!</string>
     <string name="notif_sos_active_text">Hişyariya acîl ji têkiliyên SOS re tê weşandin</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">Di vê pelê de tu çemberên erdnîgarî nehatin dîtin</string>
     <string name="geo_import_done">%1$d dever hatin têxistin</string>
     <string name="geo_file_failed">Ew pel nehat xwendin an nivîsandin</string>
-    <string name="notif_geofence_subtitle_polygon">li %1$s · herêma pirgoşe · %2$s</string>
     <string name="contacts_cd_show_on_map">Li ser nexşeyê nîşan bide</string>
     <string name="settings_bubble_color">Rengê bilbilan</string>
     <string name="settings_bubble_color_default">Temaya berdest</string>

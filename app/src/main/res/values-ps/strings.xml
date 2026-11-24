@@ -706,11 +706,11 @@
     <string name="notif_message_person">%1$s ته پیغام واستوئ</string>
     <string name="notif_geofence_entered_title">%1$s %2$s ته ننوتل</string>
     <string name="notif_geofence_left_title">%1$s له %2$s څخه ووتل</string>
-    <string name="notif_geofence_subtitle">په %1$s کې · %2$s وړانګه</string>
+    <string name="notif_geofence_subtitle">په %1$s کې</string>
     <string name="notif_person_nearby">%1$s نږدې دی</string>
     <string name="notif_distance_from_you">له تاسو څخه د %1$s په واټن کې</string>
     <string name="notif_missed_title">له %1$s څخه تازه معلومات نشته</string>
-    <string name="notif_missed_text">وروستی ځل %1$s دقیقې وړاندې (%2$s, %3$s) ته نږدې لیدل شوی</string>
+    <string name="notif_missed_text">وروستی ځل %1$s دقیقې وړاندې لیدل شوی</string>
     <string name="notif_sos_active_title">SOS فعال دی!</string>
     <string name="notif_sos_active_text">د SOS اړیکو ته بیړنۍ خبرتیا لیږل کیږي</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">په دې فایل کې د جیوفینس سیمې ونه موندل شوې</string>
     <string name="geo_import_done">%1$d سیمې واردې شوې</string>
     <string name="geo_file_failed">هغه فایل ونه لوستل شو یا ونه لیکل شو</string>
-    <string name="notif_geofence_subtitle_polygon">په %1$s کې · څو اړخیزه سیمه · %2$s</string>
     <string name="contacts_cd_show_on_map">په نقشه کې ښودل</string>
     <string name="settings_bubble_color">د پوکڼۍ رنګ</string>
     <string name="settings_bubble_color_default">اصلي بڼه</string>

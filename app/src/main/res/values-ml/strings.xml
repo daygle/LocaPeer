@@ -706,11 +706,11 @@
     <string name="notif_message_person">%1$s-ന് സന്ദേശം അയയ്ക്കുക</string>
     <string name="notif_geofence_entered_title">%1$s %2$s-ൽ പ്രവേശിച്ചു</string>
     <string name="notif_geofence_left_title">%1$s %2$s-ൽ നിന്ന് പുറത്തുപോയി</string>
-    <string name="notif_geofence_subtitle">%1$s-ൽ · %2$s ആരം</string>
+    <string name="notif_geofence_subtitle">%1$s-ൽ</string>
     <string name="notif_person_nearby">%1$s അടുത്തുണ്ട്</string>
     <string name="notif_distance_from_you">നിങ്ങളിൽ നിന്ന് %1$s അകലെ</string>
     <string name="notif_missed_title">%1$s-ൽ നിന്ന് പുതിയ വിവരമൊന്നുമില്ല</string>
-    <string name="notif_missed_text">അവസാനമായി കണ്ടത് %1$s മിനിറ്റ് മുമ്പ് (%2$s, %3$s) സമീപം</string>
+    <string name="notif_missed_text">അവസാനമായി കണ്ടത് %1$s മിനിറ്റ് മുമ്പ്</string>
     <string name="notif_sos_active_title">SOS സജീവമാണ്!</string>
     <string name="notif_sos_active_text">SOS കോൺടാക്റ്റുകളിലേക്ക് അടിയന്തര അലേർട്ട് പ്രക്ഷേപണം ചെയ്യുന്നു</string>
 
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">ഈ ഫയലിൽ ജിയോഫെൻസ് മേഖലകളൊന്നും കണ്ടെത്തിയില്ല</string>
     <string name="geo_import_done">%1$d മേഖലകൾ ഇറക്കുമതി ചെയ്തു</string>
     <string name="geo_file_failed">ആ ഫയൽ വായിക്കാനോ എഴുതാനോ കഴിഞ്ഞില്ല</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s-ൽ · ബഹുഭുജ മേഖല · %2$s</string>
     <string name="contacts_cd_show_on_map">മാപ്പിൽ കാണിക്കുക</string>
     <string name="settings_bubble_color">ബബിൾ നിറം</string>
     <string name="settings_bubble_color_default">ഡിഫോൾട്ട് തീം</string>

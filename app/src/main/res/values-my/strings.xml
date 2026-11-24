@@ -693,11 +693,11 @@
     <string name="notif_message_person">%1$s ထံ မက်ဆေ့ဂျ် ပို့ရန်</string>
     <string name="notif_geofence_entered_title">%1$s က %2$s ထဲသို့ ဝင်ရောက်လာသည်</string>
     <string name="notif_geofence_left_title">%1$s က %2$s ထဲမှ ထွက်ခွာသွားသည်</string>
-    <string name="notif_geofence_subtitle">%1$s တွင် · အချင်းဝက် %2$s</string>
+    <string name="notif_geofence_subtitle">%1$s တွင်</string>
     <string name="notif_person_nearby">%1$s အနီးအနားတွင် ရှိသည်</string>
     <string name="notif_distance_from_you">သင့်ထံမှ %1$s အကွာတွင်</string>
     <string name="notif_missed_title">%1$s ထံမှ အပ်ဒိတ် မရှိပါ</string>
-    <string name="notif_missed_text">နောက်ဆုံးတွေ့ရှိမှု- %1$s မိနစ်ခန့်က (%2$s, %3$s) အနီး</string>
+    <string name="notif_missed_text">နောက်ဆုံးတွေ့ရှိမှု- %1$s မိနစ်ခန့်က</string>
     <string name="notif_sos_active_title">SOS အလုပ်လုပ်နေသည်!</string>
     <string name="notif_sos_active_text">SOS အဆက်အသွယ်များထံ အရေးပေါ် သတိပေးချက် ထုတ်လွှင့်နေသည်</string>
 
@@ -994,7 +994,6 @@
     <string name="geo_import_empty">ဤဖိုင်တွင် ဂျီအိုဖဲန်စ် ဧရိယာ မတွေ့ပါ</string>
     <string name="geo_import_done">ဧရိယာ %1$d ခု တင်သွင်းပြီး</string>
     <string name="geo_file_failed">ထိုဖိုင်ကို ဖတ်၍ မရပါ</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s တွင် · ဗဟုဂံဧရိယာ · %2$s</string>
     <string name="contacts_cd_show_on_map">မြေပုံပေါ်တွင် ပြရန်</string>
     <string name="settings_bubble_color">ပူဖောင်းအရောင်</string>
     <string name="settings_bubble_color_default">မူရင်းအပြင်အဆင်</string>
