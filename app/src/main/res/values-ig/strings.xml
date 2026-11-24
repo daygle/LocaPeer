@@ -693,7 +693,7 @@
     <string name="notif_message_person">Zipụ ozi %1$s</string>
     <string name="notif_geofence_entered_title">%1$s banyere %2$s</string>
     <string name="notif_geofence_left_title">%1$s pụrụ na %2$s</string>
-    <string name="notif_geofence_subtitle">na %1$s · radius %2$s</string>
+    <string name="notif_geofence_subtitle">na %1$s</string>
     <string name="notif_person_nearby">%1$s nọ nso</string>
     <string name="notif_distance_from_you">%1$s site na gị</string>
     <string name="notif_missed_title">Enweghị mmelite sitere na %1$s</string>
@@ -994,7 +994,6 @@
     <string name="geo_import_empty">Ahụghị mpaghara geofence na faịlụ a</string>
     <string name="geo_import_done">E bubatara mpaghara %1$d</string>
     <string name="geo_file_failed">Enweghị ike ịgụ ma ọ bụ dee faịlụ ahụ</string>
-    <string name="notif_geofence_subtitle_polygon">na %1$s · mpaghara poligọn · %2$s</string>
     <string name="contacts_cd_show_on_map">Gosi na map</string>
     <string name="settings_bubble_color">Agba afụ</string>
     <string name="settings_bubble_color_default">Isiokwu ndabara</string>

@@ -693,7 +693,7 @@
     <string name="notif_message_person">傳訊息給 %1$s</string>
     <string name="notif_geofence_entered_title">%1$s 進入了 %2$s</string>
     <string name="notif_geofence_left_title">%1$s 離開了 %2$s</string>
-    <string name="notif_geofence_subtitle">於 %1$s · 半徑 %2$s</string>
+    <string name="notif_geofence_subtitle">於 %1$s</string>
     <string name="notif_person_nearby">%1$s 在附近</string>
     <string name="notif_distance_from_you">距您 %1$s</string>
     <string name="notif_missed_title">沒有來自 %1$s 的更新</string>
@@ -990,7 +990,6 @@
     <string name="geo_import_empty">在該檔案中找不到地理圍欄區域</string>
     <string name="geo_import_done">已匯入 %1$d 個區域</string>
     <string name="geo_file_failed">無法讀取或寫入該檔案</string>
-    <string name="notif_geofence_subtitle_polygon">於 %1$s · 多邊形區域 · %2$s</string>
     <string name="contacts_cd_show_on_map">在地圖上顯示</string>
     <string name="settings_bubble_color">氣泡顏色</string>
     <string name="settings_bubble_color_default">主題預設</string>

@@ -706,7 +706,7 @@
     <string name="notif_message_person">Ergaa %1$s-f</string>
     <string name="notif_geofence_entered_title">%1$s %2$s seeneera</string>
     <string name="notif_geofence_left_title">%1$s %2$s ba\'eera</string>
-    <string name="notif_geofence_subtitle">Guyyaa %1$s irratti · raadiyasii %2$s</string>
+    <string name="notif_geofence_subtitle">Guyyaa %1$s irratti</string>
     <string name="notif_person_nearby">%1$s dhihoo jira</string>
     <string name="notif_distance_from_you">%1$s si irraa</string>
     <string name="notif_missed_title">Haaromsi %1$s irraa hin jiru</string>
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">Faayilii kana keessatti naannoo geofence hin argamne</string>
     <string name="geo_import_done">Naannoo %1$d galcheera</string>
     <string name="geo_file_failed">Faayilii sana dubbisuu ykn barreessuu hin dandeenye</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s irratti · naannoo pooligoonii · %2$s</string>
     <string name="contacts_cd_show_on_map">Kaartii irratti agarsiisi</string>
     <string name="settings_bubble_color">Halluu bublii</string>
     <string name="settings_bubble_color_default">Theemii durtii</string>

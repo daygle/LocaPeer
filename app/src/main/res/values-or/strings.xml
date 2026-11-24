@@ -706,7 +706,7 @@
     <string name="notif_message_person">%1$s କୁ ବାର୍ତ୍ତା ପଠାନ୍ତୁ</string>
     <string name="notif_geofence_entered_title">%1$s %2$s ରେ ପ୍ରବେଶ କଲେ</string>
     <string name="notif_geofence_left_title">%1$s %2$s ରୁ ବାହାରି ଗଲେ</string>
-    <string name="notif_geofence_subtitle">%1$s ରେ · %2$s ବ୍ୟାସାର୍ଦ୍ଧ</string>
+    <string name="notif_geofence_subtitle">%1$s ରେ</string>
     <string name="notif_person_nearby">%1$s ନିକଟରେ ଅଛନ୍ତି</string>
     <string name="notif_distance_from_you">ଆପଣଙ୍କ ଠାରୁ %1$s ଦୂରରେ</string>
     <string name="notif_missed_title">%1$s ଙ୍କ ଠାରୁ କୌଣସି ଅପଡେଟ୍ ନାହିଁ</string>
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">ଏହି ଫାଇଲରେ କୌଣସି ଜିଓଫେନ୍ସ କ୍ଷେତ୍ର ମିଳିଲା ନାହିଁ</string>
     <string name="geo_import_done">%1$d କ୍ଷେତ୍ର ଆମଦାନି ହେଲା</string>
     <string name="geo_file_failed">ସେ ଫାଇଲ ପଢ଼ିବା କିମ୍ବା ଲେଖିବା ସମ୍ଭବ ହେଲା ନାହିଁ</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s ରେ · ବହୁଭୁଜ ଅଞ୍ଚଳ · %2$s</string>
     <string name="contacts_cd_show_on_map">ମ୍ୟାପରେ ଦେଖାନ୍ତୁ</string>
     <string name="settings_bubble_color">ବବୁଲ ରଙ୍ଗ</string>
     <string name="settings_bubble_color_default">ଥିମ ଡିଫଲ୍ଟ</string>

@@ -693,7 +693,7 @@
     <string name="notif_message_person">Nhắn tin cho %1$s</string>
     <string name="notif_geofence_entered_title">%1$s đã vào %2$s</string>
     <string name="notif_geofence_left_title">%1$s đã rời %2$s</string>
-    <string name="notif_geofence_subtitle">lúc %1$s · bán kính %2$s</string>
+    <string name="notif_geofence_subtitle">lúc %1$s</string>
     <string name="notif_person_nearby">%1$s đang ở gần</string>
     <string name="notif_distance_from_you">cách bạn %1$s</string>
     <string name="notif_missed_title">Không có cập nhật từ %1$s</string>
@@ -994,7 +994,6 @@
     <string name="geo_import_empty">Không tìm thấy vùng hàng rào địa lý nào trong tệp đó</string>
     <string name="geo_import_done">Đã nhập %1$d vùng</string>
     <string name="geo_file_failed">Không thể đọc hoặc ghi tệp đó</string>
-    <string name="notif_geofence_subtitle_polygon">lúc %1$s · vùng đa giác · %2$s</string>
     <string name="contacts_cd_show_on_map">Hiển thị trên bản đồ</string>
     <string name="settings_bubble_color">Màu bong bóng</string>
     <string name="settings_bubble_color_default">Chủ đề mặc định</string>

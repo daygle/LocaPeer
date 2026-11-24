@@ -693,7 +693,7 @@
     <string name="notif_message_person">%1$s 님에게 메시지</string>
     <string name="notif_geofence_entered_title">%1$s 님이 %2$s에 들어왔습니다</string>
     <string name="notif_geofence_left_title">%1$s 님이 %2$s에서 나갔습니다</string>
-    <string name="notif_geofence_subtitle">%1$s · 반경 %2$s</string>
+    <string name="notif_geofence_subtitle">%1$s</string>
     <string name="notif_person_nearby">%1$s 님이 근처에 있습니다</string>
     <string name="notif_distance_from_you">나에게서 %1$s</string>
     <string name="notif_missed_title">%1$s 님의 업데이트 없음</string>
@@ -994,7 +994,6 @@
     <string name="geo_import_empty">이 파일에서 지오펜스 영역을 찾을 수 없습니다</string>
     <string name="geo_import_done">%1$d개 영역을 가져왔습니다</string>
     <string name="geo_file_failed">파일을 읽거나 쓸 수 없습니다</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s · 다각형 영역 · %2$s</string>
     <string name="contacts_cd_show_on_map">지도에서 보기</string>
     <string name="settings_bubble_color">말풍선 색상</string>
     <string name="settings_bubble_color_default">테마 기본값</string>

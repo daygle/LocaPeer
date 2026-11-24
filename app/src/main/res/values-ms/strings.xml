@@ -693,7 +693,7 @@
     <string name="notif_message_person">Mesej %1$s</string>
     <string name="notif_geofence_entered_title">%1$s memasuki %2$s</string>
     <string name="notif_geofence_left_title">%1$s meninggalkan %2$s</string>
-    <string name="notif_geofence_subtitle">di %1$s · jejari %2$s</string>
+    <string name="notif_geofence_subtitle">di %1$s</string>
     <string name="notif_person_nearby">%1$s berdekatan</string>
     <string name="notif_distance_from_you">%1$s daripada anda</string>
     <string name="notif_missed_title">Tiada kemas kini daripada %1$s</string>
@@ -994,7 +994,6 @@
     <string name="geo_import_empty">Tiada kawasan geofence ditemui dalam fail itu</string>
     <string name="geo_import_done">%1$d kawasan diimport</string>
     <string name="geo_file_failed">Fail itu tidak dapat dibaca atau ditulis</string>
-    <string name="notif_geofence_subtitle_polygon">di %1$s · kawasan poligon · %2$s</string>
     <string name="contacts_cd_show_on_map">Tunjuk pada peta</string>
     <string name="settings_bubble_color">Warna gelembung</string>
     <string name="settings_bubble_color_default">Tema lalai</string>

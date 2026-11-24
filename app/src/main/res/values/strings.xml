@@ -864,7 +864,7 @@
     <string name="notif_geofence_entered_title">%1$s entered %2$s</string>
     <string name="notif_geofence_left_title">%1$s left %2$s</string>
     <string name="notif_geofence_inside_title">%1$s is inside %2$s</string>
-    <string name="notif_geofence_subtitle">at %1$s · %2$s radius</string>
+    <string name="notif_geofence_subtitle">at %1$s</string>
     <string name="notif_person_nearby">%1$s is nearby</string>
     <string name="notif_distance_from_you">%1$s from you</string>
     <string name="notif_missed_title">No update from %1$s</string>
@@ -1049,5 +1049,4 @@
     <string name="geo_import_empty">No geofence areas found in that file</string>
     <string name="geo_import_done" tools:ignore="PluralsCandidate">Imported %1$d areas</string>
     <string name="geo_file_failed">Could not read or write that file</string>
-    <string name="notif_geofence_subtitle_polygon">at %1$s • polygon area • %2$s</string>
 </resources>

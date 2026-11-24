@@ -693,7 +693,7 @@
     <string name="notif_message_person">Kirim pesan ke %1$s</string>
     <string name="notif_geofence_entered_title">%1$s memasuki %2$s</string>
     <string name="notif_geofence_left_title">%1$s meninggalkan %2$s</string>
-    <string name="notif_geofence_subtitle">di %1$s · radius %2$s</string>
+    <string name="notif_geofence_subtitle">di %1$s</string>
     <string name="notif_person_nearby">%1$s ada di dekat Anda</string>
     <string name="notif_distance_from_you">%1$s dari Anda</string>
     <string name="notif_missed_title">Tidak ada pembaruan dari %1$s</string>
@@ -994,7 +994,6 @@
     <string name="geo_import_empty">Tidak ada area geofence di file itu</string>
     <string name="geo_import_done">%1$d area diimpor</string>
     <string name="geo_file_failed">File itu tidak dapat dibaca atau ditulis</string>
-    <string name="notif_geofence_subtitle_polygon">di %1$s · area poligon · %2$s</string>
     <string name="contacts_cd_show_on_map">Tampilkan di peta</string>
     <string name="settings_bubble_color">Warna balon</string>
     <string name="settings_bubble_color_default">Tema bawaan</string>

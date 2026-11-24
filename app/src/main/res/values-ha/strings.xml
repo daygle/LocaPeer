@@ -706,7 +706,7 @@
     <string name="notif_message_person">Aika wa %1$s saƙo</string>
     <string name="notif_geofence_entered_title">%1$s ya shiga %2$s</string>
     <string name="notif_geofence_left_title">%1$s ya fita daga %2$s</string>
-    <string name="notif_geofence_subtitle">a %1$s · radius %2$s</string>
+    <string name="notif_geofence_subtitle">a %1$s</string>
     <string name="notif_person_nearby">%1$s yana kusa</string>
     <string name="notif_distance_from_you">%1$s daga gare ku</string>
     <string name="notif_missed_title">Babu sabuntawa daga %1$s</string>
@@ -1011,7 +1011,6 @@
     <string name="geo_import_empty">Ba a sami yankunan geofence a wannan fayil ɗin ba</string>
     <string name="geo_import_done">An shigo da yankuna %1$d</string>
     <string name="geo_file_failed">Ba a iya karanta ko rubuta wannan fayil ɗin ba</string>
-    <string name="notif_geofence_subtitle_polygon">a %1$s · yankin polygon · %2$s</string>
     <string name="contacts_cd_show_on_map">Nuna a taswira</string>
     <string name="settings_bubble_color">Launin kumfa</string>
     <string name="settings_bubble_color_default">Jigon asali</string>

@@ -706,7 +706,7 @@
     <string name="notif_message_person">%1$s కి సందేశం పంపు</string>
     <string name="notif_geofence_entered_title">%1$s %2$s లోకి ప్రవేశించారు</string>
     <string name="notif_geofence_left_title">%1$s %2$s నుండి బయటకు వెళ్ళారు</string>
-    <string name="notif_geofence_subtitle">%1$s వద్ద · %2$s వ్యాసార్థం</string>
+    <string name="notif_geofence_subtitle">%1$s వద్ద</string>
     <string name="notif_person_nearby">%1$s సమీపంలో ఉన్నారు</string>
     <string name="notif_distance_from_you">మీ నుండి %1$s దూరంలో</string>
     <string name="notif_missed_title">%1$s నుండి అప్‌డేట్ లేదు</string>
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">ఈ ఫైల్‌లో జియోఫెన్స్ ప్రాంతాలు ఏవీ కనుగొనబడలేదు</string>
     <string name="geo_import_done">%1$d ప్రాంతాలు దిగుమతి అయ్యాయి</string>
     <string name="geo_file_failed">ఆ ఫైల్‌ను చదవడం లేదా రాయడం సాధ్యపడలేదు</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s వద్ద · బహుభుజి ప్రాంతం · %2$s</string>
     <string name="contacts_cd_show_on_map">మ్యాప్‌లో చూపించు</string>
     <string name="settings_bubble_color">బబుల్ రంగు</string>
     <string name="settings_bubble_color_default">థీమ్ డిఫాల్ట్</string>

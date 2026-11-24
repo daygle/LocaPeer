@@ -706,7 +706,7 @@
     <string name="notif_message_person">پیام به %1$s</string>
     <string name="notif_geofence_entered_title">%1$s وارد %2$s شد</string>
     <string name="notif_geofence_left_title">%1$s از %2$s خارج شد</string>
-    <string name="notif_geofence_subtitle">در %1$s · شعاع %2$s</string>
+    <string name="notif_geofence_subtitle">در %1$s</string>
     <string name="notif_person_nearby">%1$s نزدیک است</string>
     <string name="notif_distance_from_you">%1$s از شما</string>
     <string name="notif_missed_title">به‌روزرسانی‌ای از %1$s نیست</string>
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">هیچ ناحیه ژئوفنسی در این فایل یافت نشد</string>
     <string name="geo_import_done">%1$d ناحیه درون‌ریزی شد</string>
     <string name="geo_file_failed">خواندن یا نوشتن آن فایل ممکن نشد</string>
-    <string name="notif_geofence_subtitle_polygon">در %1$s · ناحیه چندضلعی · %2$s</string>
     <string name="contacts_cd_show_on_map">نمایش روی نقشه</string>
     <string name="settings_bubble_color">رنگ حباب</string>
     <string name="settings_bubble_color_default">پیش‌فرض پوسته</string>

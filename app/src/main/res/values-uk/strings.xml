@@ -732,7 +732,7 @@
     <string name="notif_message_person">Написати %1$s</string>
     <string name="notif_geofence_entered_title">%1$s увійшов(-ла) у %2$s</string>
     <string name="notif_geofence_left_title">%1$s покинув(-ла) %2$s</string>
-    <string name="notif_geofence_subtitle">о %1$s · радіус %2$s</string>
+    <string name="notif_geofence_subtitle">о %1$s</string>
     <string name="notif_person_nearby">%1$s поблизу</string>
     <string name="notif_distance_from_you">%1$s від вас</string>
     <string name="notif_missed_title">Немає оновлень від %1$s</string>
@@ -1037,7 +1037,6 @@
     <string name="geo_import_empty">У цьому файлі не знайдено областей геозон</string>
     <string name="geo_import_done">Імпортовано областей: %1$d</string>
     <string name="geo_file_failed">Не вдалося прочитати або записати цей файл</string>
-    <string name="notif_geofence_subtitle_polygon">о %1$s · область багатокутника · %2$s</string>
     <string name="contacts_cd_show_on_map">Показати на карті</string>
     <string name="settings_bubble_color">Колір бульбашки</string>
     <string name="settings_bubble_color_default">Тема за замовчуванням</string>

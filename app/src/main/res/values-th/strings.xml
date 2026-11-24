@@ -693,7 +693,7 @@
     <string name="notif_message_person">ส่งข้อความถึง %1$s</string>
     <string name="notif_geofence_entered_title">%1$s เข้าสู่ %2$s</string>
     <string name="notif_geofence_left_title">%1$s ออกจาก %2$s</string>
-    <string name="notif_geofence_subtitle">ที่ %1$s · รัศมี %2$s</string>
+    <string name="notif_geofence_subtitle">ที่ %1$s</string>
     <string name="notif_person_nearby">%1$s อยู่ใกล้ ๆ</string>
     <string name="notif_distance_from_you">%1$s จากคุณ</string>
     <string name="notif_missed_title">ไม่มีการอัปเดตจาก %1$s</string>
@@ -994,7 +994,6 @@
     <string name="geo_import_empty">ไม่พบพื้นที่ geofence ในไฟล์นั้น</string>
     <string name="geo_import_done">นำเข้า %1$d พื้นที่แล้ว</string>
     <string name="geo_file_failed">ไม่สามารถอ่านหรือเขียนไฟล์นั้นได้</string>
-    <string name="notif_geofence_subtitle_polygon">ที่ %1$s · พื้นที่รูปหลายเหลี่ยม · %2$s</string>
     <string name="contacts_cd_show_on_map">แสดงบนแผนที่</string>
     <string name="settings_bubble_color">สีของบับเบิล</string>
     <string name="settings_bubble_color_default">ธีมเริ่มต้น</string>

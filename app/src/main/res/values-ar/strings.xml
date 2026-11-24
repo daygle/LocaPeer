@@ -758,7 +758,7 @@
     <string name="notif_message_person">مراسلة %1$s</string>
     <string name="notif_geofence_entered_title">دخل %1$s إلى %2$s</string>
     <string name="notif_geofence_left_title">غادر %1$s %2$s</string>
-    <string name="notif_geofence_subtitle">عند %1$s · نصف قطر %2$s</string>
+    <string name="notif_geofence_subtitle">عند %1$s</string>
     <string name="notif_person_nearby">%1$s قريب</string>
     <string name="notif_distance_from_you">%1$s منك</string>
     <string name="notif_missed_title">لا يوجد تحديث من %1$s</string>
@@ -1070,7 +1070,6 @@
     <string name="geo_import_empty">لم يتم العثور على مناطق سياج جغرافي في هذا الملف</string>
     <string name="geo_import_done">تم استيراد %1$d مناطق</string>
     <string name="geo_file_failed">تعذر قراءة ذلك الملف أو كتابته</string>
-    <string name="notif_geofence_subtitle_polygon">عند %1$s · منطقة مضلعة · %2$s</string>
     <string name="contacts_cd_show_on_map">إظهار على الخريطة</string>
     <string name="settings_bubble_color">لون الفقاعة</string>
     <string name="settings_bubble_color_default">السمة الافتراضية</string>

@@ -706,7 +706,7 @@
     <string name="notif_message_person">%1$s ને સંદેશ મોકલો</string>
     <string name="notif_geofence_entered_title">%1$s એ %2$s માં પ્રવેશ કર્યો</string>
     <string name="notif_geofence_left_title">%1$s એ %2$s માંથી બહાર નીકળ્યા</string>
-    <string name="notif_geofence_subtitle">%1$s પર · %2$s ત્રિજ્યા</string>
+    <string name="notif_geofence_subtitle">%1$s પર</string>
     <string name="notif_person_nearby">%1$s નજીકમાં છે</string>
     <string name="notif_distance_from_you">તમારાથી %1$s દૂર</string>
     <string name="notif_missed_title">%1$s તરફથી કોઈ અપડેટ નથી</string>
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">આ ફાઇલમાં કોઈ જિયોફેન્સ વિસ્તાર મળ્યો નથી</string>
     <string name="geo_import_done">%1$d વિસ્તાર આયાત થયા</string>
     <string name="geo_file_failed">એ ફાઇલ વાંચી કે લખી શકાઈ નથી</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s પર · બહુકોણીય વિસ્તાર · %2$s</string>
     <string name="contacts_cd_show_on_map">નકશા પર બતાવો</string>
     <string name="settings_bubble_color">બબલ રંગ</string>
     <string name="settings_bubble_color_default">થીમ ડિફોલ્ટ</string>

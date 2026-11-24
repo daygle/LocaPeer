@@ -229,17 +229,7 @@ class GeofenceEngine @Inject constructor(
                     personName = current.displayName,
                     personDeviceId = current.deviceId,
                     title = title,
-                    subtitle = if (ring != null) {
-                        context.getString(
-                            R.string.notif_geofence_subtitle_polygon,
-                            formatTime(current.timestamp),
-                            com.locapeer.util.DisplayFormat.areaValue(
-                                GeoMath.ringAreaSquareMetres(ring)
-                            )
-                        )
-                    } else {
-                        context.getString(R.string.notif_geofence_subtitle, formatTime(current.timestamp), com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble()))
-                    }
+                    subtitle = context.getString(R.string.notif_geofence_subtitle, formatTime(current.timestamp))
                 )
                 // An "is inside" report follows a settings change, not a crossing, so the
                 // peer's "you entered or exited a fence" alert would be false.

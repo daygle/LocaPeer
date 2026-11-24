@@ -706,7 +706,7 @@
     <string name="notif_message_person">%1$s-ga xabar yuborish</string>
     <string name="notif_geofence_entered_title">%1$s %2$s hududiga kirdi</string>
     <string name="notif_geofence_left_title">%1$s %2$s hududidan chiqdi</string>
-    <string name="notif_geofence_subtitle">%1$s nuqtasida · %2$s radiusi</string>
+    <string name="notif_geofence_subtitle">%1$s nuqtasida</string>
     <string name="notif_person_nearby">%1$s yaqin joyda</string>
     <string name="notif_distance_from_you">sizdan %1$s masofada</string>
     <string name="notif_missed_title">%1$s-dan yangilanish yo‘q</string>
@@ -1010,7 +1010,6 @@
     <string name="geo_import_empty">Bu faylda geofence hududlari topilmadi</string>
     <string name="geo_import_done">%1$d hudud import qilindi</string>
     <string name="geo_file_failed">Bu faylni o\'qish yoki yozish imkoni bo\'lmadi</string>
-    <string name="notif_geofence_subtitle_polygon">%1$s nuqtasida · ko\'pburchak hududi · %2$s</string>
     <string name="contacts_cd_show_on_map">Xaritada koʻrsatish</string>
     <string name="settings_bubble_color">Pufakcha rangi</string>
     <string name="settings_bubble_color_default">Standart mavzu</string>
