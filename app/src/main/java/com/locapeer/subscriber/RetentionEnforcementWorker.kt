@@ -43,7 +43,6 @@ class RetentionEnforcementWorker @AssistedInject constructor(
     private val configDao: PeerSharingConfigDao,
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
-    private val locationRejectAggregateDao: com.locapeer.data.dao.LocationRejectAggregateDao,
     private val messageDao: MessageDao,
     private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val pendingRequestDao: PendingRequestDao,
@@ -80,7 +79,9 @@ class RetentionEnforcementWorker @AssistedInject constructor(
         return try {
             // Rejected readings have their own fixed policy, independent of user retention
             // and of any remote-purge work, so this runs before the early-outs below.
-            downsampleRejectedReadings()
+            heartbeatDao.deleteRejectedOlderThan(
+                RejectedReadingRetention.cutoff(System.currentTimeMillis())
+            )
 
             if (!hasLocalWork && !hasRemoteWork) return Result.success()
 
@@ -144,30 +145,6 @@ class RetentionEnforcementWorker @AssistedInject constructor(
             Log.e(TAG, "Failed to send purge requests", e)
             Result.retry()
         }
-    }
-
-    /**
-     * Rejected readings keep full detail for 7 days, then become one row per (device, UTC
-     * hour) with the rejected count and median accuracy for 30 days, then disappear.
-     *
-     * Aggregates are written before the detail rows are deleted. REPLACE on the aggregate
-     * primary key and the deterministic median make a run interrupted between the two steps
-     * converge on the next tick instead of double-counting. Accepted readings are untouched:
-     * they keep the user's normal retention policy.
-     */
-    private suspend fun downsampleRejectedReadings() {
-        val now = System.currentTimeMillis()
-        val detailCutoff = RejectedReadingRetention.fullDetailCutoff(now)
-        val aggregateCutoff = RejectedReadingRetention.aggregateCutoff(now)
-        val agedDetail = heartbeatDao.getRejectedBetween(aggregateCutoff, detailCutoff)
-        if (agedDetail.isNotEmpty()) {
-            val aggregates = RejectedReadingRetention.hourlyAggregates(agedDetail)
-            if (aggregates.isNotEmpty()) locationRejectAggregateDao.insertAll(aggregates)
-            Log.d(TAG, "Downsampled ${agedDetail.size} rejected readings into ${aggregates.size} hourly aggregates")
-        }
-        // Also drops rejected detail past the aggregate window, which no longer needs a summary.
-        heartbeatDao.deleteRejectedOlderThan(detailCutoff)
-        locationRejectAggregateDao.deleteOlderThan(aggregateCutoff)
     }
 
     private suspend fun publishPurge(

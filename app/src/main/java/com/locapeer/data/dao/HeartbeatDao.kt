@@ -95,13 +95,9 @@ interface HeartbeatDao {
     suspend fun deleteOlderThanForDevice(deviceId: String, before: Long)
 
     /**
-     * Rejected readings still holding full detail in [from, to), for the retention job's
-     * hourly downsampling. Accepted rows are covered by the existing retention policy.
+     * Drops rejected readings older than [before]. Accepted rows are covered by the user's
+     * normal retention policy.
      */
-    @Query("SELECT * FROM heartbeats WHERE status = 'rejected' AND timestamp >= :from AND timestamp < :to ORDER BY timestamp ASC")
-    suspend fun getRejectedBetween(from: Long, to: Long): List<HeartbeatEntity>
-
-    /** Drops rejected readings past the full-detail window, after they were aggregated. */
     @Query("DELETE FROM heartbeats WHERE status = 'rejected' AND timestamp < :before")
     suspend fun deleteRejectedOlderThan(before: Long)
 }

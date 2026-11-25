@@ -507,23 +507,7 @@ private fun HistoryMapTab(
             if (acceptedPings.size >= 2) {
                 add(MapLine(acceptedPings.map { LatLng(it.lat, it.lng) }, lineArgb, widthDp = 3f))
             }
-            // A dotted trail through the rejected attempts: alternating short segments read
-            // as a separate, uncertain path instead of joining the solid line.
-            val dottedArgb = android.graphics.Color.argb(150, 128, 128, 128)
-            var index = 0
-            while (index + 1 < rejectedPings.size) {
-                add(
-                    MapLine(
-                        listOf(
-                            LatLng(rejectedPings[index].lat, rejectedPings[index].lng),
-                            LatLng(rejectedPings[index + 1].lat, rejectedPings[index + 1].lng)
-                        ),
-                        dottedArgb,
-                        widthDp = 2f
-                    )
-                )
-                index += 2
-            }
+            // Rejected readings get no line of their own: they show as dimmed dots only.
         }
     }
     val markers = remember(mappedPings, selectedId) {

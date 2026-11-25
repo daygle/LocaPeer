@@ -1297,7 +1297,7 @@ class HeartbeatService : LifecycleService() {
     private fun sharingRejects(accuracyM: Float): Boolean =
         !LocationQualityGate.evaluate(
             ReadingQuality(accuracyM, fixAgeSeconds = 0L, hasFix = true),
-            LocationQualityConfig.fromSettings(currentSettings).sharing,
+            SharingQuality.thresholds(currentSettings),
             bypass = isSos,
         ).accepted
 
@@ -1366,7 +1366,7 @@ class HeartbeatService : LifecycleService() {
 
         // Quality is data: evaluate each consumer's policy, but never use the verdict to
         // throw the reading away. SOS bypasses the gate, as it always has.
-        val sharingThresholds = LocationQualityConfig.fromSettings(currentSettings).sharing
+        val sharingThresholds = SharingQuality.thresholds(currentSettings)
         // While stationary the FixSelector deliberately holds the last sharp fix instead of
         // wobbling to each coarse poll, so that position can be old without becoming wrong:
         // the device provably has not moved. Age is still recorded on the reading; only the

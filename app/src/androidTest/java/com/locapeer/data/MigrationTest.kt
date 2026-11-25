@@ -65,13 +65,13 @@ class MigrationTest {
     @Throws(IOException::class)
     fun migrateAll() {
         // Earliest committed schema is v2; run every migration forward to the current
-        // latest (v18), validating the schema after the last one. This is the chain an
+        // latest (v19), validating the schema after the last one. This is the chain an
         // installed device actually walks, so it also proves no intermediate step leaves
         // a table or index missing.
         helper.createDatabase(TEST_DB, 2).apply {
             close()
         }
-        helper.runMigrationsAndValidate(TEST_DB, 18, true, *DatabaseModule.ALL_MIGRATIONS)
+        helper.runMigrationsAndValidate(TEST_DB, 19, true, *DatabaseModule.ALL_MIGRATIONS)
     }
 
     @Test
@@ -151,6 +151,19 @@ class MigrationTest {
             close()
         }
         helper.runMigrationsAndValidate(TEST_DB, 18, true, *DatabaseModule.ALL_MIGRATIONS)
+    }
+
+    /**
+     * v18 -> v19: drops the never-read `location_reject_aggregates` table, validated against
+     * schemas/.../19.json.
+     */
+    @Test
+    @Throws(IOException::class)
+    fun migrate18To19() {
+        helper.createDatabase(TEST_DB, 18).apply {
+            close()
+        }
+        helper.runMigrationsAndValidate(TEST_DB, 19, true, *DatabaseModule.ALL_MIGRATIONS)
     }
 
     /** v13 -> v14: index changes only, validated against schemas/.../14.json. */
