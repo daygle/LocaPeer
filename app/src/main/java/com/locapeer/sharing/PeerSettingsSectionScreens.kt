@@ -205,11 +205,13 @@ fun PeerSharingControlsScreen(
                 } else null
             )
             CardDivider()
+            // Locked for the supervisor like the switch above: the sender ignores their schedule
+            // while supervised, so it reads as always sharing.
             SettingsRow(
                 title = stringResource(R.string.settings_sharing_schedule),
-                value = if (scheduleRules.isEmpty()) stringResource(R.string.peer_always_sharing)
+                value = if (scheduleRules.isEmpty() || supervisorLocked) stringResource(R.string.peer_always_sharing)
                 else pluralStringResource(R.plurals.peer_active_rules, scheduleRules.size, scheduleRules.size),
-                enabled = sharingEnabled,
+                enabled = sharingEnabled && !supervisorLocked,
                 onClick = onNavigateToSchedule
             )
         }
@@ -264,7 +266,8 @@ fun PeerPrivacyScreen(
             SwitchRow(
                 title = stringResource(R.string.peer_pause_sharing),
                 subtitle = stringResource(R.string.peer_pause_sub, peerName),
-                checked = isPaused,
+                // A pause set before supervision began is not applied to the supervisor.
+                checked = isPaused && !supervisorLocked,
                 onCheckedChange = { vm.setSharingEnabled(!it) },
                 enabled = !supervisorLocked
             )

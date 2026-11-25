@@ -735,8 +735,12 @@ class HeartbeatReceiver @Inject constructor(
         // A per-contact pause or inactive per-contact schedule overrides everything, exactly
         // as it does for heartbeats (which would skip this contact anyway).
         val cfg = sharingConfigDao.getForPeer(peer.deviceId)
-        if (cfg?.sharingEnabled == false) return
-        if (cfg != null) {
+        // The supervisor is exempt from both, matching the heartbeat sender.
+        val toSupervisor = com.locapeer.sharing.isActiveSupervisor(
+            settings.supervisionActive, settings.supervisorPubkey, peer.publicKeyHex
+        )
+        if (!toSupervisor && cfg?.sharingEnabled == false) return
+        if (!toSupervisor && cfg != null) {
             val (dayIndex, minute) = com.locapeer.sharing.SharingSchedule.nowDayMinute()
             val active = com.locapeer.sharing.SharingSchedule.isPeerSharingActive(
                 cfg.scheduleRules(), dayIndex, minute,
@@ -1435,7 +1439,10 @@ class HeartbeatReceiver @Inject constructor(
      * thread the payload claims. An empty emoji clears the reaction.
      */
     private suspend fun processReaction(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return
+        val sender = peerDao.getPeer(event.pubkey) ?: return
+        // A contact with messaging turned off has their messages hidden and their circle
+        // messages dropped; their reactions must not show up either.
+        if (!sender.messagingEnabled) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)

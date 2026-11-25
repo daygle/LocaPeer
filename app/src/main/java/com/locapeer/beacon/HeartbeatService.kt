@@ -48,6 +48,7 @@ import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.data.entity.scheduleRules
 import com.locapeer.sharing.SharingSchedule
+import com.locapeer.sharing.isActiveSupervisor
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
@@ -1302,7 +1303,11 @@ class HeartbeatService : LifecycleService() {
                         } else {
                             val roleAllows = peer.locationRole == PeerEntity.ROLE_SEND ||
                                             peer.locationRole == PeerEntity.ROLE_SEND_RECEIVE
-                            roleAllows && (cfg?.sharingEnabled ?: true)
+                            // A pause can't cut off the supervisor while supervised.
+                            val toSupervisor = isActiveSupervisor(
+                                settings.supervisionActive, settings.supervisorPubkey, peer.publicKeyHex
+                            )
+                            roleAllows && (toSupervisor || (cfg?.sharingEnabled ?: true))
                         }
                     }
                     // Between cadence pulses, only contacts actually watching get the
@@ -1327,7 +1332,9 @@ class HeartbeatService : LifecycleService() {
                     targetRecipients.forEach { recipient ->
                         val cfg = configMap[recipient.deviceId]
 
-                        if (!isSos && cfg != null && !SharingSchedule.isPeerSharingActive(
+                        if (!isSos && cfg != null &&
+                            !isActiveSupervisor(settings.supervisionActive, settings.supervisorPubkey, recipient.publicKeyHex) &&
+                            !SharingSchedule.isPeerSharingActive(
                                 cfg.scheduleRules(), dayIndex, currentMinute,
                                 cfg.temporaryShareEndsAtEpochSeconds, nowSec
                             )

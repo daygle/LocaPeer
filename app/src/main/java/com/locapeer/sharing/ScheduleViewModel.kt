@@ -42,8 +42,14 @@ class ScheduleViewModel @Inject constructor(
     }
 
     fun saveRules(rules: List<ScheduleRule>) {
-        _rules.value = rules
         viewModelScope.launch {
+            // While supervised, the supervisor's schedule is locked like their pause switch: a
+            // schedule with no active hours would cut their location off just the same.
+            if (scope != "global") {
+                val settings = prefs.settings.first()
+                if (isActiveSupervisor(settings.supervisionActive, settings.supervisorPubkey, peerId)) return@launch
+            }
+            _rules.value = rules
             if (scope == "global") {
                 prefs.setGlobalScheduleRules(rules)
             } else {

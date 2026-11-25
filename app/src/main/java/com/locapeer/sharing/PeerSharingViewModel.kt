@@ -122,6 +122,9 @@ class PeerSharingViewModel @Inject constructor(
             val existing = configDao.getForPeer(currentPeerId)
             if (existing != null) configDao.setSharingEnabled(currentPeerId, enabled)
             else configDao.upsert(defaultConfig().copy(sharingEnabled = enabled))
+            // Pausing outranks a temporary share, so end it rather than keep counting down
+            // (here and in Settings' active-shares list) while nothing is being sent.
+            if (!enabled) endTemporaryShare(existing)
             // Visibility: the supervisor sees pause/resume of a destination.
             changeReporter.report(
                 if (enabled) SupervisionChangeReporter.Areas.RESUME else SupervisionChangeReporter.Areas.PAUSE,
@@ -140,8 +143,8 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setMessagingEnabled(enabled: Boolean) {
         viewModelScope.launch {
-            val peer = peerDao.getPeer(currentPeerId) ?: return@launch
-            peerDao.upsertPeer(peer.copy(messagingEnabled = enabled))
+            peerDao.getPeer(currentPeerId) ?: return@launch
+            peerDao.setMessagingEnabled(currentPeerId, enabled)
             if (enabled) messageDao.unblockMessagesFromPeer(currentPeerId)
             // Messaging is not location visibility; no summary entry.
         }
@@ -192,7 +195,7 @@ class PeerSharingViewModel @Inject constructor(
                 }
                 val promotedRole = PeerEntity.roleWithReceive(peer.locationRole)
                 if (promotedRole != peer.locationRole) {
-                    peerDao.upsertPeer(peer.copy(locationRole = promotedRole))
+                    peerDao.setLocationRole(currentPeerId, promotedRole)
                 }
                 // Turning supervision back on drops an ended notice that has not been
                 // published yet: a retry sending it after the new invite would clear the
@@ -311,12 +314,13 @@ class PeerSharingViewModel @Inject constructor(
                 PeerEntity.ROLE_SEND_RECEIVE -> if (enabled) PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
                 else -> peer.locationRole
             }
-            peerDao.upsertPeer(peer.copy(locationRole = newRole))
+            peerDao.setLocationRole(currentPeerId, newRole)
             val nowSharing = newRole == PeerEntity.ROLE_SEND || newRole == PeerEntity.ROLE_SEND_RECEIVE
             // Immediately command the peer to clear our stored location data when we revoke access,
             // so they don't continue to see a stale pin until heartbeat timeout.
             if (wasSharing && !nowSharing) {
                 peerManager.sendDeleteMyLocation(currentPeerId)
+                endTemporaryShare(configDao.getForPeer(currentPeerId))
             }
             changeReporter.report(SupervisionChangeReporter.Areas.ROLE, peerName())
         }
@@ -435,6 +439,13 @@ class PeerSharingViewModel @Inject constructor(
             )
             changeReporter.report(SupervisionChangeReporter.Areas.TEMP_SHARE_START, peerName())
         }
+    }
+
+    /** Ends a running temporary share as a side effect of pausing or no longer sharing. */
+    private suspend fun endTemporaryShare(existing: PeerSharingConfig?) {
+        if (existing?.temporaryShareEndsAtEpochSeconds == null) return
+        configDao.setTemporaryShareEndsAt(currentPeerId, null)
+        workManager.cancelUniqueWork(TempShareExpiryWorker.workNameFor(currentPeerId))
     }
 
     /**
