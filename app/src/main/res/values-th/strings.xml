@@ -556,6 +556,9 @@
     <string name="history_reject_other">อื่นๆ</string>
     <string name="history_fix_age">อายุของตำแหน่ง</string>
     <string name="history_fix_age_value">%1$d วิ</string>
+    <string name="history_detail_source">แหล่งที่มา</string>
+    <string name="history_source_network">เครือข่าย</string>
+    <string name="history_source_fused">แบบผสม</string>
     <string name="history_gap_title">ไม่มีตำแหน่ง %1$s</string>
     <string name="history_gap_attempts">จำนวนครั้ง: %1$d</string>
 

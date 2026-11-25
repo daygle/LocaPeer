@@ -566,6 +566,9 @@
     <string name="history_reject_other">ଅନ୍ୟ</string>
     <string name="history_fix_age">ସ୍ଥିତିର ବୟସ</string>
     <string name="history_fix_age_value">%1$d ସେ</string>
+    <string name="history_detail_source">ଉତ୍ସ</string>
+    <string name="history_source_network">ନେଟୱାର୍କ</string>
+    <string name="history_source_fused">ସମ୍ମିଳିତ</string>
     <string name="history_gap_title">ସ୍ଥାନ ନାହିଁ %1$s</string>
     <string name="history_gap_attempts">ପ୍ରୟାସ: %1$d</string>
 

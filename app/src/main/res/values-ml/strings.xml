@@ -566,6 +566,9 @@
     <string name="history_reject_other">മറ്റുള്ളവ</string>
     <string name="history_fix_age">സ്ഥാനത്തിന്റെ പഴക്കം</string>
     <string name="history_fix_age_value">%1$d സെ</string>
+    <string name="history_detail_source">ഉറവിടം</string>
+    <string name="history_source_network">നെറ്റ്‌വർക്ക്</string>
+    <string name="history_source_fused">സംയോജിതം</string>
     <string name="history_gap_title">ലൊക്കേഷനില്ല %1$s</string>
     <string name="history_gap_attempts">ശ്രമങ്ങൾ: %1$d</string>
 

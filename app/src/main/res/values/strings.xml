@@ -721,6 +721,10 @@
     <string name="history_reject_other">Other</string>
     <string name="history_fix_age">Fix age</string>
     <string name="history_fix_age_value" tools:ignore="PluralsCandidate">%1$d s</string>
+    <!-- Location provider of a reading; GPS is shown as-is. -->
+    <string name="history_detail_source">Source</string>
+    <string name="history_source_network">Network</string>
+    <string name="history_source_fused">Combined</string>
     <!-- History list: one line standing in for a run of attempts with no position. %1$s is a time or a time range. -->
     <string name="history_gap_title">No location %1$s</string>
     <string name="history_gap_attempts">Attempts: %1$d</string>

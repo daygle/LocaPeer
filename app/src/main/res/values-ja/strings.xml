@@ -556,6 +556,9 @@
     <string name="history_reject_other">その他</string>
     <string name="history_fix_age">位置情報の経過時間</string>
     <string name="history_fix_age_value">%1$d秒</string>
+    <string name="history_detail_source">取得元</string>
+    <string name="history_source_network">ネットワーク</string>
+    <string name="history_source_fused">複合</string>
     <string name="history_gap_title">位置情報なし %1$s</string>
     <string name="history_gap_attempts">試行回数: %1$d</string>
 

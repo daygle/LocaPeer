@@ -586,6 +586,9 @@
     <string name="history_reject_other">Інше</string>
     <string name="history_fix_age">Вік даних</string>
     <string name="history_fix_age_value">%1$d с</string>
+    <string name="history_detail_source">Джерело</string>
+    <string name="history_source_network">Мережа</string>
+    <string name="history_source_fused">Комбіноване</string>
     <string name="history_gap_title">Немає місцезнаходження %1$s</string>
     <string name="history_gap_attempts">Спроби: %1$d</string>
 

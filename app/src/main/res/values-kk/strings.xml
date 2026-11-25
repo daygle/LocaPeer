@@ -566,6 +566,9 @@
     <string name="history_reject_other">Басқа</string>
     <string name="history_fix_age">Орынның жасы</string>
     <string name="history_fix_age_value">%1$d с</string>
+    <string name="history_detail_source">Дереккөз</string>
+    <string name="history_source_network">Желі</string>
+    <string name="history_source_fused">Аралас</string>
     <string name="history_gap_title">Орын жоқ %1$s</string>
     <string name="history_gap_attempts">Әрекеттер: %1$d</string>
 

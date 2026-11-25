@@ -566,6 +566,9 @@
     <string name="history_reject_other">अन्य</string>
     <string name="history_fix_age">स्थिति की आयु</string>
     <string name="history_fix_age_value">%1$d से</string>
+    <string name="history_detail_source">स्रोत</string>
+    <string name="history_source_network">नेटवर्क</string>
+    <string name="history_source_fused">संयुक्त</string>
     <string name="history_gap_title">कोई स्थान नहीं %1$s</string>
     <string name="history_gap_attempts">प्रयास: %1$d</string>
 

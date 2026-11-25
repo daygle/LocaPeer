@@ -556,6 +556,9 @@
     <string name="history_reject_other">Lainnya</string>
     <string name="history_fix_age">Usia posisi</string>
     <string name="history_fix_age_value">%1$d dtk</string>
+    <string name="history_detail_source">Sumber</string>
+    <string name="history_source_network">Jaringan</string>
+    <string name="history_source_fused">Gabungan</string>
     <string name="history_gap_title">Tidak ada lokasi %1$s</string>
     <string name="history_gap_attempts">Percobaan: %1$d</string>
 

@@ -586,6 +586,9 @@
     <string name="history_reject_other">Jiné</string>
     <string name="history_fix_age">Stáří polohy</string>
     <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Zdroj</string>
+    <string name="history_source_network">Síť</string>
+    <string name="history_source_fused">Kombinovaný</string>
     <string name="history_gap_title">Bez polohy %1$s</string>
     <string name="history_gap_attempts">Pokusy: %1$d</string>
 

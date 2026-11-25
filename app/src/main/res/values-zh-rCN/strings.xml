@@ -556,6 +556,9 @@
     <string name="history_reject_other">其他</string>
     <string name="history_fix_age">位置时长</string>
     <string name="history_fix_age_value">%1$d 秒</string>
+    <string name="history_detail_source">来源</string>
+    <string name="history_source_network">网络</string>
+    <string name="history_source_fused">综合</string>
     <string name="history_gap_title">无位置 %1$s</string>
     <string name="history_gap_attempts">尝试次数：%1$d</string>
 

@@ -566,6 +566,9 @@
     <string name="history_reject_other">Sonstiges</string>
     <string name="history_fix_age">Alter der Position</string>
     <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Quelle</string>
+    <string name="history_source_network">Netzwerk</string>
+    <string name="history_source_fused">Kombiniert</string>
     <string name="history_gap_title">Kein Standort %1$s</string>
     <string name="history_gap_attempts">Versuche: %1$d</string>
 

@@ -566,6 +566,9 @@
     <string name="history_reject_other">ಇತರೆ</string>
     <string name="history_fix_age">ಸ್ಥಾನದ ವಯಸ್ಸು</string>
     <string name="history_fix_age_value">%1$d ಸೆ</string>
+    <string name="history_detail_source">ಮೂಲ</string>
+    <string name="history_source_network">ನೆಟ್‌ವರ್ಕ್</string>
+    <string name="history_source_fused">ಸಂಯೋಜಿತ</string>
     <string name="history_gap_title">ಸ್ಥಳವಿಲ್ಲ %1$s</string>
     <string name="history_gap_attempts">ಪ್ರಯತ್ನಗಳು: %1$d</string>
 

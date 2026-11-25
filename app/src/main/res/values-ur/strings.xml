@@ -566,6 +566,9 @@
     <string name="history_reject_other">دیگر</string>
     <string name="history_fix_age">مقام کی عمر</string>
     <string name="history_fix_age_value">%1$d سیکنڈ</string>
+    <string name="history_detail_source">ماخذ</string>
+    <string name="history_source_network">نیٹ ورک</string>
+    <string name="history_source_fused">مشترکہ</string>
     <string name="history_gap_title">کوئی مقام نہیں %1$s</string>
     <string name="history_gap_attempts">کوششیں: %1$d</string>
 

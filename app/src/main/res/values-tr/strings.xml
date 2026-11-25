@@ -566,6 +566,9 @@
     <string name="history_reject_other">Diğer</string>
     <string name="history_fix_age">Konumun yaşı</string>
     <string name="history_fix_age_value">%1$d sn</string>
+    <string name="history_detail_source">Kaynak</string>
+    <string name="history_source_network">Ağ</string>
+    <string name="history_source_fused">Birleşik</string>
     <string name="history_gap_title">Konum yok %1$s</string>
     <string name="history_gap_attempts">Denemeler: %1$d</string>
 

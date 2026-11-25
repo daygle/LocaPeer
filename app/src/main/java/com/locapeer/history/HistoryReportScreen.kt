@@ -882,6 +882,11 @@ private fun HistoryPingDetailDialog(
                     DetailRow(stringResource(R.string.map_stat_elevation), DisplayFormat.elevationValue(ping.altitude))
                 }
                 DetailRow(stringResource(R.string.map_stat_battery), "${ping.battery}%")
+                // Which provider produced the fix: the first thing to check when a reading
+                // was imprecise. Only this device's own readings record it.
+                if (ping.source.isNotBlank()) {
+                    DetailRow(stringResource(R.string.history_detail_source), sourceLabel(ping.source))
+                }
                 if (!ping.isAccepted) {
                     DetailRow(
                         stringResource(R.string.history_reject_reason),
@@ -910,6 +915,15 @@ private fun DetailRow(label: String, value: String) {
             style = MaterialTheme.typography.bodyLarge
         )
     }
+}
+
+/** Readable name for a stored location provider; an unrecognised provider is shown as stored. */
+@Composable
+private fun sourceLabel(source: String): String = when (source.lowercase()) {
+    "gps" -> "GPS"
+    "network" -> stringResource(R.string.history_source_network)
+    "fused" -> stringResource(R.string.history_source_fused)
+    else -> source
 }
 
 /** Localized label for a stored reject-reason code; unknown/legacy values fall back to "Other". */

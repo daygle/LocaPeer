@@ -576,6 +576,9 @@
     <string name="history_reject_other">Altul</string>
     <string name="history_fix_age">Vechimea poziției</string>
     <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Sursă</string>
+    <string name="history_source_network">Rețea</string>
+    <string name="history_source_fused">Combinată</string>
     <string name="history_gap_title">Fără locație %1$s</string>
     <string name="history_gap_attempts">Încercări: %1$d</string>
 

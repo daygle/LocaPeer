@@ -566,6 +566,9 @@
     <string name="history_reject_other">Kan biraa</string>
     <string name="history_fix_age">Umurii bakkaa</string>
     <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Madda</string>
+    <string name="history_source_network">Neetworkii</string>
+    <string name="history_source_fused">Walitti makame</string>
     <string name="history_gap_title">Bakki hin jiru %1$s</string>
     <string name="history_gap_attempts">Yaalii: %1$d</string>
 

@@ -556,6 +556,9 @@
     <string name="history_reject_other">기타</string>
     <string name="history_fix_age">위치 경과 시간</string>
     <string name="history_fix_age_value">%1$d초</string>
+    <string name="history_detail_source">소스</string>
+    <string name="history_source_network">네트워크</string>
+    <string name="history_source_fused">복합</string>
     <string name="history_gap_title">위치 없음 %1$s</string>
     <string name="history_gap_attempts">시도: %1$d</string>
 

@@ -586,6 +586,9 @@
     <string name="history_reject_other">Другое</string>
     <string name="history_fix_age">Возраст данных</string>
     <string name="history_fix_age_value">%1$d с</string>
+    <string name="history_detail_source">Источник</string>
+    <string name="history_source_network">Сеть</string>
+    <string name="history_source_fused">Комбинированный</string>
     <string name="history_gap_title">Нет местоположения %1$s</string>
     <string name="history_gap_attempts">Попытки: %1$d</string>
 

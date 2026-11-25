@@ -606,6 +606,9 @@
     <string name="history_reject_other">أخرى</string>
     <string name="history_fix_age">عمر الموقع</string>
     <string name="history_fix_age_value">%1$d ث</string>
+    <string name="history_detail_source">المصدر</string>
+    <string name="history_source_network">الشبكة</string>
+    <string name="history_source_fused">مدمج</string>
     <string name="history_gap_title">لا يوجد موقع %1$s</string>
     <string name="history_gap_attempts">المحاولات: %1$d</string>
 

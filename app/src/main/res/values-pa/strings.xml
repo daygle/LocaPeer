@@ -566,6 +566,9 @@
     <string name="history_reject_other">ਹੋਰ</string>
     <string name="history_fix_age">ਸਥਿਤੀ ਦੀ ਉਮਰ</string>
     <string name="history_fix_age_value">%1$d ਸ</string>
+    <string name="history_detail_source">ਸਰੋਤ</string>
+    <string name="history_source_network">ਨੈੱਟਵਰਕ</string>
+    <string name="history_source_fused">ਸੰਯੁਕਤ</string>
     <string name="history_gap_title">ਕੋਈ ਟਿਕਾਣਾ ਨਹੀਂ %1$s</string>
     <string name="history_gap_attempts">ਕੋਸ਼ਿਸ਼ਾਂ: %1$d</string>
 
