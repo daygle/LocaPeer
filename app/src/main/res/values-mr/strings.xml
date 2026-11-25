@@ -671,7 +671,7 @@
     <string name="about_lib_room_desc">स्थानिक डेटाबेस</string>
     <string name="about_lib_sqlcipher_desc">डेटाबेस एन्क्रिप्शन</string>
     <string name="about_lib_bouncycastle_desc">क्रिप्टोग्राफी</string>
-    <string name="about_lib_secp256k1_desc">लंबवर्तुळ वक्र स्वाक्षऱ्या</string>
+    <string name="about_lib_secp256k1_desc">लंबवर्तुळाकार वक्र स्वाक्षऱ्या</string>
     <string name="about_lib_zxing_desc">QR कोड स्कॅनिंग</string>
     <string name="about_map_attribution">नकाशा डेटा © OpenStreetMap योगदानकर्ते</string>
 
