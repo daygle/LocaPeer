@@ -569,6 +569,7 @@
     <string name="history_detail_source">स्रोत</string>
     <string name="history_source_network">नेटवर्क</string>
     <string name="history_source_fused">संयुक्त</string>
+    <string name="history_detail_fix_taken">स्थिति ली गई</string>
     <string name="history_gap_title">कोई स्थान नहीं %1$s</string>
     <string name="history_gap_attempts">प्रयास: %1$d</string>
 

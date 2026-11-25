@@ -569,6 +569,7 @@
     <string name="history_detail_source">Πηγή</string>
     <string name="history_source_network">Δίκτυο</string>
     <string name="history_source_fused">Συνδυασμένη</string>
+    <string name="history_detail_fix_taken">Λήψη θέσης</string>
     <string name="history_gap_title">Χωρίς τοποθεσία %1$s</string>
     <string name="history_gap_attempts">Προσπάθειες: %1$d</string>
 

@@ -569,6 +569,7 @@
     <string name="history_detail_source">سرچینه</string>
     <string name="history_source_network">شبکه</string>
     <string name="history_source_fused">ګډ</string>
+    <string name="history_detail_fix_taken">د موقعیت اخیستو وخت</string>
     <string name="history_gap_title">موقعیت نشته %1$s</string>
     <string name="history_gap_attempts">هڅې: %1$d</string>
 

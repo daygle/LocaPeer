@@ -609,6 +609,7 @@
     <string name="history_detail_source">المصدر</string>
     <string name="history_source_network">الشبكة</string>
     <string name="history_source_fused">مدمج</string>
+    <string name="history_detail_fix_taken">وقت تحديد الموقع</string>
     <string name="history_gap_title">لا يوجد موقع %1$s</string>
     <string name="history_gap_attempts">المحاولات: %1$d</string>
 

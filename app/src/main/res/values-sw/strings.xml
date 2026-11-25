@@ -569,6 +569,7 @@
     <string name="history_detail_source">Chanzo</string>
     <string name="history_source_network">Mtandao</string>
     <string name="history_source_fused">Mchanganyiko</string>
+    <string name="history_detail_fix_taken">Mahali palichukuliwa</string>
     <string name="history_gap_title">Hakuna mahali %1$s</string>
     <string name="history_gap_attempts">Majaribio: %1$d</string>
 

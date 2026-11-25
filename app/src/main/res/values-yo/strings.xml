@@ -559,6 +559,7 @@
     <string name="history_detail_source">Orísun</string>
     <string name="history_source_network">Nẹ́tíwọ̀ọ̀kì</string>
     <string name="history_source_fused">Àdàpọ̀</string>
+    <string name="history_detail_fix_taken">Àkókò tí a gba ipò</string>
     <string name="history_gap_title">Kò sí ipò %1$s</string>
     <string name="history_gap_attempts">Ìgbìyànjú: %1$d</string>
 

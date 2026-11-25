@@ -569,6 +569,7 @@
     <string name="history_detail_source">Madda</string>
     <string name="history_source_network">Neetworkii</string>
     <string name="history_source_fused">Walitti makame</string>
+    <string name="history_detail_fix_taken">Yeroo bakki fudhatame</string>
     <string name="history_gap_title">Bakki hin jiru %1$s</string>
     <string name="history_gap_attempts">Yaalii: %1$d</string>
 

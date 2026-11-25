@@ -559,6 +559,7 @@
     <string name="history_detail_source">Sumber</string>
     <string name="history_source_network">Rangkaian</string>
     <string name="history_source_fused">Gabungan</string>
+    <string name="history_detail_fix_taken">Kedudukan diambil</string>
     <string name="history_gap_title">Tiada lokasi %1$s</string>
     <string name="history_gap_attempts">Percubaan: %1$d</string>
 

@@ -559,6 +559,7 @@
     <string name="history_detail_source">Sumber</string>
     <string name="history_source_network">Jaringan</string>
     <string name="history_source_fused">Gabungan</string>
+    <string name="history_detail_fix_taken">Posisi diambil</string>
     <string name="history_gap_title">Tidak ada lokasi %1$s</string>
     <string name="history_gap_attempts">Percobaan: %1$d</string>
 

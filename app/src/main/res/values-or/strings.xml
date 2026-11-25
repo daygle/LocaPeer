@@ -569,6 +569,7 @@
     <string name="history_detail_source">ଉତ୍ସ</string>
     <string name="history_source_network">ନେଟୱାର୍କ</string>
     <string name="history_source_fused">ସମ୍ମିଳିତ</string>
+    <string name="history_detail_fix_taken">ସ୍ଥିତି ନିଆଯାଇଛି</string>
     <string name="history_gap_title">ସ୍ଥାନ ନାହିଁ %1$s</string>
     <string name="history_gap_attempts">ପ୍ରୟାସ: %1$d</string>
 

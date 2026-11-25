@@ -569,6 +569,7 @@
     <string name="history_detail_source">మూలం</string>
     <string name="history_source_network">నెట్‌వర్క్</string>
     <string name="history_source_fused">సంయుక్త</string>
+    <string name="history_detail_fix_taken">స్థానం తీసుకున్న సమయం</string>
     <string name="history_gap_title">స్థానం లేదు %1$s</string>
     <string name="history_gap_attempts">ప్రయత్నాలు: %1$d</string>
 

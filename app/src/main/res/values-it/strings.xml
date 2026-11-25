@@ -569,6 +569,7 @@
     <string name="history_detail_source">Origine</string>
     <string name="history_source_network">Rete</string>
     <string name="history_source_fused">Combinata</string>
+    <string name="history_detail_fix_taken">Posizione rilevata</string>
     <string name="history_gap_title">Nessuna posizione %1$s</string>
     <string name="history_gap_attempts">Tentativi: %1$d</string>
 

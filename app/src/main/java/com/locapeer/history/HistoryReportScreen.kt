@@ -51,6 +51,7 @@ import java.util.Date
 // Locale.US below formats the time pickers' "%02d:%02d" as ASCII digits on purpose: it is
 // a machine-formatted value, not localized text.
 import java.util.Locale
+import java.util.SimpleTimeZone
 import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -887,6 +888,15 @@ private fun HistoryPingDetailDialog(
                 if (ping.source.isNotBlank()) {
                     DetailRow(stringResource(R.string.history_detail_source), sourceLabel(ping.source))
                 }
+                // When the provider actually took the fix, in the wearer's time zone at that
+                // moment. Own readings only (the same rows that record a source): contacts'
+                // readings carry neither a real capture time nor an offset.
+                if (ping.source.isNotBlank() && ping.capturedAt > 0L) {
+                    DetailRow(
+                        stringResource(R.string.history_detail_fix_taken),
+                        captureTimeLabel(ping.capturedAt, ping.capturedAtOffsetMinutes)
+                    )
+                }
                 if (!ping.isAccepted) {
                     DetailRow(
                         stringResource(R.string.history_reject_reason),
@@ -915,6 +925,22 @@ private fun DetailRow(label: String, value: String) {
             style = MaterialTheme.typography.bodyLarge
         )
     }
+}
+
+/**
+ * [capturedAtMs] as a clock time in the zone the device was in when the fix was taken. When
+ * that differs from the current zone (the reading was taken while travelling) the stored UTC
+ * offset is appended, so the time is never mistaken for local time here.
+ */
+private fun captureTimeLabel(capturedAtMs: Long, offsetMinutes: Int): String {
+    val format = SimpleDateFormat(DisplayFormat.timePattern(withSeconds = true), DisplayFormat.locale())
+    format.timeZone = SimpleTimeZone(offsetMinutes * 60_000, "capture")
+    val time = format.format(Date(capturedAtMs))
+    val currentOffsetMinutes = TimeZone.getDefault().getOffset(capturedAtMs) / 60_000
+    if (currentOffsetMinutes == offsetMinutes) return time
+    val sign = if (offsetMinutes < 0) "-" else "+"
+    val abs = kotlin.math.abs(offsetMinutes)
+    return "%s (UTC%s%02d:%02d)".format(Locale.ROOT, time, sign, abs / 60, abs % 60)
 }
 
 /** Readable name for a stored location provider; an unrecognised provider is shown as stored. */

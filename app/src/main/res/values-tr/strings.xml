@@ -569,6 +569,7 @@
     <string name="history_detail_source">Kaynak</string>
     <string name="history_source_network">Ağ</string>
     <string name="history_source_fused">Birleşik</string>
+    <string name="history_detail_fix_taken">Konum alındı</string>
     <string name="history_gap_title">Konum yok %1$s</string>
     <string name="history_gap_attempts">Denemeler: %1$d</string>
 

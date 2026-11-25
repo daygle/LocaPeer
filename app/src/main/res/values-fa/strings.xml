@@ -569,6 +569,7 @@
     <string name="history_detail_source">منبع</string>
     <string name="history_source_network">شبکه</string>
     <string name="history_source_fused">ترکیبی</string>
+    <string name="history_detail_fix_taken">زمان ثبت موقعیت</string>
     <string name="history_gap_title">بدون موقعیت %1$s</string>
     <string name="history_gap_attempts">تلاش‌ها: %1$d</string>
 

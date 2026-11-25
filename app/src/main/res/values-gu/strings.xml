@@ -569,6 +569,7 @@
     <string name="history_detail_source">સ્રોત</string>
     <string name="history_source_network">નેટવર્ક</string>
     <string name="history_source_fused">સંયુક્ત</string>
+    <string name="history_detail_fix_taken">સ્થાન લેવાયું</string>
     <string name="history_gap_title">કોઈ સ્થાન નથી %1$s</string>
     <string name="history_gap_attempts">પ્રયાસો: %1$d</string>
 

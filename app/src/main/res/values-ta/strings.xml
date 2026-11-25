@@ -569,6 +569,7 @@
     <string name="history_detail_source">மூலம்</string>
     <string name="history_source_network">நெட்வொர்க்</string>
     <string name="history_source_fused">ஒருங்கிணைந்த</string>
+    <string name="history_detail_fix_taken">நிலை எடுக்கப்பட்டது</string>
     <string name="history_gap_title">இருப்பிடம் இல்லை %1$s</string>
     <string name="history_gap_attempts">முயற்சிகள்: %1$d</string>
 

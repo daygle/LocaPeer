@@ -589,6 +589,7 @@
     <string name="history_detail_source">Источник</string>
     <string name="history_source_network">Сеть</string>
     <string name="history_source_fused">Комбинированный</string>
+    <string name="history_detail_fix_taken">Время определения</string>
     <string name="history_gap_title">Нет местоположения %1$s</string>
     <string name="history_gap_attempts">Попытки: %1$d</string>
 

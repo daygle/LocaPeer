@@ -579,6 +579,7 @@
     <string name="history_detail_source">מקור</string>
     <string name="history_source_network">רשת</string>
     <string name="history_source_fused">משולב</string>
+    <string name="history_detail_fix_taken">מועד קביעת המיקום</string>
     <string name="history_gap_title">אין מיקום %1$s</string>
     <string name="history_gap_attempts">ניסיונות: %1$d</string>
 

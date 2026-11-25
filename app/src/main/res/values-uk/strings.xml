@@ -589,6 +589,7 @@
     <string name="history_detail_source">Джерело</string>
     <string name="history_source_network">Мережа</string>
     <string name="history_source_fused">Комбіноване</string>
+    <string name="history_detail_fix_taken">Час визначення</string>
     <string name="history_gap_title">Немає місцезнаходження %1$s</string>
     <string name="history_gap_attempts">Спроби: %1$d</string>
 

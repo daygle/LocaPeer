@@ -569,6 +569,7 @@
     <string name="history_detail_source">Bron</string>
     <string name="history_source_network">Netwerk</string>
     <string name="history_source_fused">Gecombineerd</string>
+    <string name="history_detail_fix_taken">Positie bepaald</string>
     <string name="history_gap_title">Geen locatie %1$s</string>
     <string name="history_gap_attempts">Pogingen: %1$d</string>
 

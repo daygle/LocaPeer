@@ -569,6 +569,7 @@
     <string name="history_detail_source">Pinagmulan</string>
     <string name="history_source_network">Network</string>
     <string name="history_source_fused">Pinagsama</string>
+    <string name="history_detail_fix_taken">Oras ng pagkuha ng posisyon</string>
     <string name="history_gap_title">Walang lokasyon %1$s</string>
     <string name="history_gap_attempts">Mga pagsubok: %1$d</string>
 

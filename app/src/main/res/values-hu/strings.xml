@@ -569,6 +569,7 @@
     <string name="history_detail_source">Forrás</string>
     <string name="history_source_network">Hálózat</string>
     <string name="history_source_fused">Kombinált</string>
+    <string name="history_detail_fix_taken">Pozíció rögzítve</string>
     <string name="history_gap_title">Nincs hely %1$s</string>
     <string name="history_gap_attempts">Próbálkozások: %1$d</string>
 

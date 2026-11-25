@@ -569,6 +569,7 @@
     <string name="history_detail_source">Manba</string>
     <string name="history_source_network">Tarmoq</string>
     <string name="history_source_fused">Aralash</string>
+    <string name="history_detail_fix_taken">Joylashuv olingan</string>
     <string name="history_gap_title">Joylashuv yo‘q %1$s</string>
     <string name="history_gap_attempts">Urinishlar: %1$d</string>
 

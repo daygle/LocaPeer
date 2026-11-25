@@ -569,6 +569,7 @@
     <string name="history_detail_source">Çavkanî</string>
     <string name="history_source_network">Tor</string>
     <string name="history_source_fused">Hevbeş</string>
+    <string name="history_detail_fix_taken">Dema girtina cihê</string>
     <string name="history_gap_title">Cih tune %1$s</string>
     <string name="history_gap_attempts">Hewldan: %1$d</string>
 

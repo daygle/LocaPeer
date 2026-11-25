@@ -725,6 +725,7 @@
     <string name="history_detail_source">Source</string>
     <string name="history_source_network">Network</string>
     <string name="history_source_fused">Combined</string>
+    <string name="history_detail_fix_taken">Fix taken</string>
     <!-- History list: one line standing in for a run of attempts with no position. %1$s is a time or a time range. -->
     <string name="history_gap_title">No location %1$s</string>
     <string name="history_gap_attempts">Attempts: %1$d</string>

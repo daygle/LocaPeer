@@ -569,6 +569,7 @@
     <string name="history_detail_source">Tushe</string>
     <string name="history_source_network">Hanyar sadarwa</string>
     <string name="history_source_fused">Haɗaɗɗe</string>
+    <string name="history_detail_fix_taken">Lokacin ɗaukar wuri</string>
     <string name="history_gap_title">Babu wuri %1$s</string>
     <string name="history_gap_attempts">Ƙoƙari: %1$d</string>
 

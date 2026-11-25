@@ -569,6 +569,7 @@
     <string name="history_detail_source">উৎস</string>
     <string name="history_source_network">নেটওয়ার্ক</string>
     <string name="history_source_fused">সমন্বিত</string>
+    <string name="history_detail_fix_taken">অবস্থান নেওয়ার সময়</string>
     <string name="history_gap_title">কোনো অবস্থান নেই %1$s</string>
     <string name="history_gap_attempts">চেষ্টা: %1$d</string>
 

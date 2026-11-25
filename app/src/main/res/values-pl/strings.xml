@@ -589,6 +589,7 @@
     <string name="history_detail_source">Źródło</string>
     <string name="history_source_network">Sieć</string>
     <string name="history_source_fused">Łączone</string>
+    <string name="history_detail_fix_taken">Pozycja ustalona</string>
     <string name="history_gap_title">Brak lokalizacji %1$s</string>
     <string name="history_gap_attempts">Próby: %1$d</string>
 

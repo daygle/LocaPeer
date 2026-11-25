@@ -569,6 +569,7 @@
     <string name="history_detail_source">Källa</string>
     <string name="history_source_network">Nätverk</string>
     <string name="history_source_fused">Kombinerad</string>
+    <string name="history_detail_fix_taken">Position tagen</string>
     <string name="history_gap_title">Ingen plats %1$s</string>
     <string name="history_gap_attempts">Försök: %1$d</string>
 

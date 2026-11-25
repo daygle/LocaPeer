@@ -569,6 +569,7 @@
     <string name="history_detail_source">ഉറവിടം</string>
     <string name="history_source_network">നെറ്റ്‌വർക്ക്</string>
     <string name="history_source_fused">സംയോജിതം</string>
+    <string name="history_detail_fix_taken">സ്ഥാനം എടുത്ത സമയം</string>
     <string name="history_gap_title">ലൊക്കേഷനില്ല %1$s</string>
     <string name="history_gap_attempts">ശ്രമങ്ങൾ: %1$d</string>
 

@@ -569,6 +569,7 @@
     <string name="history_detail_source">ምንጭ</string>
     <string name="history_source_network">አውታረ መረብ</string>
     <string name="history_source_fused">ጥምር</string>
+    <string name="history_detail_fix_taken">ቦታው የተወሰደበት</string>
     <string name="history_gap_title">ቦታ የለም %1$s</string>
     <string name="history_gap_attempts">ሙከራዎች: %1$d</string>
 
