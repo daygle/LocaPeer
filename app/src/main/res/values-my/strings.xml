@@ -205,7 +205,7 @@
 
     <!-- အကြောင်း -->
     <string name="settings_about_locapeer">LocaPeer အကြောင်း</string>
-    <string name="settings_about_subtitle">ဗားရှင်း၊ ရီလေး အခြေအနေ၊ ပွင့်လင်းရင်းမြစ်</string>
+    <string name="settings_about_subtitle">ဗားရှင်း၊ ပွင့်လင်းရင်းမြစ်၊ မြေပုံဒေတာ</string>
 
     <!-- ဒိုင်ယာလော့ဂ်များ -->
     <string name="settings_edit_display_name">အမည်ကို ပြင်ဆင်ရန်</string>

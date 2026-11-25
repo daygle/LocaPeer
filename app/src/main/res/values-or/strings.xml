@@ -206,7 +206,7 @@
 
     <!-- ବିଷୟରେ -->
     <string name="settings_about_locapeer">LocaPeer ବିଷୟରେ</string>
-    <string name="settings_about_subtitle">ସଂସ୍କରଣ, ରିଲେ ସ୍ଥିତି, ମୁକ୍ତ ଉତ୍ସ</string>
+    <string name="settings_about_subtitle">ସଂସ୍କରଣ, ମୁକ୍ତ ଉତ୍ସ, ମାନଚିତ୍ର ଡାଟା</string>
 
     <!-- ସଂଳାପ -->
     <string name="settings_edit_display_name">ପ୍ରଦର୍ଶନ ନାମ ସଂପାଦନ କରନ୍ତୁ</string>

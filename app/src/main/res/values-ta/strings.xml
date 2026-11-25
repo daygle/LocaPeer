@@ -206,7 +206,7 @@
 
     <!-- பற்றி -->
     <string name="settings_about_locapeer">LocaPeer பற்றி</string>
-    <string name="settings_about_subtitle">பதிப்பு, ரிலே நிலை, திறந்த மூல</string>
+    <string name="settings_about_subtitle">பதிப்பு, திறந்த மூல, வரைபடத் தரவு</string>
 
     <!-- உரையாடல்கள் -->
     <string name="settings_edit_display_name">காட்சிப் பெயரைத் தொகு</string>

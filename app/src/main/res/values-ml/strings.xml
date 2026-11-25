@@ -206,7 +206,7 @@
 
     <!-- വിവരങ്ങൾ -->
     <string name="settings_about_locapeer">LocaPeer-നെ കുറിച്ച്</string>
-    <string name="settings_about_subtitle">പതിപ്പ്, റിലേ സ്റ്റാറ്റസ്, ഓപ്പൺ സോഴ്സ്</string>
+    <string name="settings_about_subtitle">പതിപ്പ്, ഓപ്പൺ സോഴ്സ്, മാപ്പ് ഡാറ്റ</string>
 
     <!-- ഡയലോഗുകൾ -->
     <string name="settings_edit_display_name">പ്രദർശന നാമം മാറ്റുക</string>

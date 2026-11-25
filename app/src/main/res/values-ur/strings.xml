@@ -206,7 +206,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">LocaPeer کے بارے میں</string>
-    <string name="settings_about_subtitle">ورژن، ریلے کی حالت، اوپن سورس</string>
+    <string name="settings_about_subtitle">ورژن، اوپن سورس، نقشہ ڈیٹا</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">ڈسپلے نام میں ترمیم کریں</string>

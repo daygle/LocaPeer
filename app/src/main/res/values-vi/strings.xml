@@ -205,7 +205,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">Về LocaPeer</string>
-    <string name="settings_about_subtitle">Phiên bản, trạng thái relay, mã nguồn mở</string>
+    <string name="settings_about_subtitle">Phiên bản, mã nguồn mở, Dữ liệu bản đồ</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Sửa tên hiển thị</string>

@@ -206,7 +206,7 @@
 
     <!-- ስለ -->
     <string name="settings_about_locapeer">ስለ LocaPeer</string>
-    <string name="settings_about_subtitle">ስሪት፣ የሪሌይ ሁኔታ፣ ክፍት ምንጭ</string>
+    <string name="settings_about_subtitle">ስሪት፣ ክፍት ምንጭ፣ የካርታ ውሂብ</string>
 
     <!-- ንግግሮች -->
     <string name="settings_edit_display_name">የሚታይ ስም ቀይር</string>

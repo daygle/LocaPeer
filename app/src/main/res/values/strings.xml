@@ -248,7 +248,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">About LocaPeer</string>
-    <string name="settings_about_subtitle">Version, relay status, open source</string>
+    <string name="settings_about_subtitle">Version, open source, map data</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Edit Display Name</string>

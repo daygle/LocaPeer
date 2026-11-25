@@ -206,7 +206,7 @@
 
     <!-- बद्दल -->
     <string name="settings_about_locapeer">LocaPeer बद्दल</string>
-    <string name="settings_about_subtitle">आवृत्ती, रिले स्थिती, मुक्त स्रोत</string>
+    <string name="settings_about_subtitle">आवृत्ती, मुक्त स्रोत, नकाशा डेटा</string>
 
     <!-- संवाद -->
     <string name="settings_edit_display_name">नाव संपादित करा</string>

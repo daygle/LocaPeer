@@ -206,7 +206,7 @@
 
     <!-- ಬಗ್ಗೆ -->
     <string name="settings_about_locapeer">LocaPeer ಬಗ್ಗೆ</string>
-    <string name="settings_about_subtitle">ಆವೃತ್ತಿ, ರಿಲೇ ಸ್ಥಿತಿ, ಮುಕ್ತ ಮೂಲ</string>
+    <string name="settings_about_subtitle">ಆವೃತ್ತಿ, ಮುಕ್ತ ಮೂಲ, ನಕ್ಷೆ ಡೇಟಾ</string>
 
     <!-- ಡೈಲಾಗ್‌ಗಳು -->
     <string name="settings_edit_display_name">ಪ್ರದರ್ಶನದ ಹೆಸರನ್ನು ಬದಲಿಸಿ</string>

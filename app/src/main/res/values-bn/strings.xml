@@ -206,7 +206,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">LocaPeer সম্পর্কে</string>
-    <string name="settings_about_subtitle">সংস্করণ, রিলে অবস্থা, ওপেন সোর্স</string>
+    <string name="settings_about_subtitle">সংস্করণ, ওপেন সোর্স, ম্যাপ ডেটা</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">প্রদর্শন নাম সম্পাদনা করুন</string>

@@ -206,7 +206,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">Over LocaPeer</string>
-    <string name="settings_about_subtitle">Versie, relaystatus, open source</string>
+    <string name="settings_about_subtitle">Versie, open source, Kaartgegevens</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Weergavenaam bewerken</string>

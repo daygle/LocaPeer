@@ -206,7 +206,7 @@
 
     <!-- ਬਾਰੇ -->
     <string name="settings_about_locapeer">LocaPeer ਬਾਰੇ</string>
-    <string name="settings_about_subtitle">ਵਰਜਨ, ਰੀਲੇਅ ਸਥਿਤੀ, ਓਪਨ ਸੋਰਸ</string>
+    <string name="settings_about_subtitle">ਵਰਜਨ, ਓਪਨ ਸੋਰਸ, ਨਕਸ਼ਾ ਡਾਟਾ</string>
 
     <!-- ਸੰਵਾਦ -->
     <string name="settings_edit_display_name">ਨਾਂ ਸੋਧੋ</string>

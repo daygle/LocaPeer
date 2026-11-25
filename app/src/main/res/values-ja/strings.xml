@@ -205,7 +205,7 @@
 
     <!-- 詳細 -->
     <string name="settings_about_locapeer">LocaPeerについて</string>
-    <string name="settings_about_subtitle">バージョン、リレーの状態、オープンソース</string>
+    <string name="settings_about_subtitle">バージョン、オープンソース、地図データ</string>
 
     <!-- ダイアログ -->
     <string name="settings_edit_display_name">表示名を編集</string>

@@ -208,7 +208,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">O aplikaci LocaPeer</string>
-    <string name="settings_about_subtitle">Verze, stav relé, open source</string>
+    <string name="settings_about_subtitle">Verze, open source, mapová data</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Upravit zobrazované jméno</string>

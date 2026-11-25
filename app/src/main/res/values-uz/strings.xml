@@ -206,7 +206,7 @@
 
     <!-- Haqida -->
     <string name="settings_about_locapeer">LocaPeer haqida</string>
-    <string name="settings_about_subtitle">Versiya, rele holati, ochiq kodli</string>
+    <string name="settings_about_subtitle">Versiya, ochiq kodli, Xarita ma’lumotlari</string>
 
     <!-- Dialoglar -->
     <string name="settings_edit_display_name">Nomni o‘zgartirish</string>

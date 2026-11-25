@@ -206,7 +206,7 @@
 
     <!-- Kuhusu -->
     <string name="settings_about_locapeer">Kuhusu LocaPeer</string>
-    <string name="settings_about_subtitle">Toleo, hali ya relay, chanzo wazi</string>
+    <string name="settings_about_subtitle">Toleo, chanzo wazi, Data ya ramani</string>
 
     <!-- Mazungumzo -->
     <string name="settings_edit_display_name">Hariri Jina la Maonyesho</string>

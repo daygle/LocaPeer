@@ -23,8 +23,8 @@ import com.locapeer.R
 @Composable
 fun AboutScreen(
     onNavigateBack: () -> Unit,
-    versionName: String = "1.1.37",
-    versionCode: Int = 41,
+    versionName: String,
+    versionCode: Int,
 ) {
     Scaffold(
         topBar = {

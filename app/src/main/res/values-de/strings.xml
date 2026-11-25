@@ -206,7 +206,7 @@
 
     <!-- Über -->
     <string name="settings_about_locapeer">Über LocaPeer</string>
-    <string name="settings_about_subtitle">Version, Relay-Status, Open Source</string>
+    <string name="settings_about_subtitle">Version, Open Source, Kartendaten</string>
 
     <!-- Dialoge -->
     <string name="settings_edit_display_name">Anzeigename bearbeiten</string>

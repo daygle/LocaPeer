@@ -205,7 +205,7 @@
 
     <!-- 关于 -->
     <string name="settings_about_locapeer">关于 LocaPeer</string>
-    <string name="settings_about_subtitle">版本、中继状态、开源</string>
+    <string name="settings_about_subtitle">版本、开源、地图数据</string>
 
     <!-- 对话框 -->
     <string name="settings_edit_display_name">编辑显示名称</string>

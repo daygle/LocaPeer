@@ -210,7 +210,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">حول LocaPeer</string>
-    <string name="settings_about_subtitle">الإصدار، حالة المرحّلات، المصدر المفتوح</string>
+    <string name="settings_about_subtitle">الإصدار، المصدر المفتوح، بيانات الخريطة</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">تعديل الاسم المعروض</string>

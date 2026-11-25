@@ -206,7 +206,7 @@
 
     <!-- په اړه -->
     <string name="settings_about_locapeer">د LocaPeer په اړه</string>
-    <string name="settings_about_subtitle">نسخه، د ریلی حالت، خلاص سرچینه</string>
+    <string name="settings_about_subtitle">نسخه، خلاص سرچینه، د نقشې ډاټا</string>
 
     <!-- ډیالوګونه -->
     <string name="settings_edit_display_name">نوم بدلول</string>
