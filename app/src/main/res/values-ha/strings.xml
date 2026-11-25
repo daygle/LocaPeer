@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Za a rufa wurin ku ne musamman don na\'urar mai dubawa.</string>
     <string name="invite_camera_required_title">Ana Buƙatar Damar Kamara</string>
     <string name="invite_camera_required_message">Ba da izinin kamara don duba lambar QR.</string>
+    <string name="invite_camera_unavailable_title">Kamara ba ta samuwa</string>
+    <string name="invite_camera_unavailable_message">Wataƙila wata manhaja tana amfani da kamara. Rufe ta kuma sake gwadawa.</string>
     <string name="invite_point_camera">Tuo igwefoto na QR LocaPeer</string>
     <string name="invite_paste_title">Ko Manna Hanyar Gayyata</string>
     <string name="invite_process_link">Gudanar Da Hanya</string>

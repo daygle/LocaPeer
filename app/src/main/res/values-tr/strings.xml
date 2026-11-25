@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Konumunuz özellikle tarayan kişinin cihazı için şifrelenecek.</string>
     <string name="invite_camera_required_title">Kamera Erişimi Gerekli</string>
     <string name="invite_camera_required_message">QR kodu taramak için kamera izni verin.</string>
+    <string name="invite_camera_unavailable_title">Kamera kullanılamıyor</string>
+    <string name="invite_camera_unavailable_message">Başka bir uygulama kamerayı kullanıyor olabilir. Onu kapatıp tekrar deneyin.</string>
     <string name="invite_point_camera">Kamerayı bir LocaPeer QR koduna doğrultun</string>
     <string name="invite_paste_title">Veya Davet Bağlantısını Yapıştırın</string>
     <string name="invite_process_link">Bağlantıyı İşle</string>

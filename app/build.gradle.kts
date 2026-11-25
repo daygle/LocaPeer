@@ -266,7 +266,11 @@ dependencies {
     // Location, Maps, QR, Camera
     implementation(libs.play.services.location)
     implementation(libs.maplibre.android)
-    implementation(libs.zxing.android.embedded) { isTransitive = false }
+    // CameraX runs the camera pipeline; ZXing core decodes the frames on-device.
+    implementation(libs.camera.core)
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
     implementation(libs.zxing.core)
     implementation(libs.androidx.biometric)
     implementation(libs.accompanist.permissions)

@@ -369,6 +369,8 @@
     <string name="invite_encryption_note">Vaše poloha bude zašifrována speciálně pro zařízení skenujícího.</string>
     <string name="invite_camera_required_title">Je vyžadován přístup ke kameře</string>
     <string name="invite_camera_required_message">Udělte oprávnění kamery pro naskenování QR kódu.</string>
+    <string name="invite_camera_unavailable_title">Kamera není dostupná</string>
+    <string name="invite_camera_unavailable_message">Kameru možná používá jiná aplikace. Zavřete ji a zkuste to znovu.</string>
     <string name="invite_point_camera">Namiřte kameru na QR kód LocaPeer</string>
     <string name="invite_paste_title">Nebo vložte zvací odkaz</string>
     <string name="invite_process_link">Zpracovat odkaz</string>

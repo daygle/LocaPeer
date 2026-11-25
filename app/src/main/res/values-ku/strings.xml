@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Cihê we dê taybetî ji bo amûra xwendevan were şîfrekirin.</string>
     <string name="invite_camera_required_title">Gihîştina Kêmereyê Hewce ye</string>
     <string name="invite_camera_required_message">Ji bo xwendina koda QR destûra kêmereyê bide.</string>
+    <string name="invite_camera_unavailable_title">Kêmere tune</string>
+    <string name="invite_camera_unavailable_message">Dibe ku sepaneke din kêmerê bi kar tîne. Wê bigire û dîsa biceribîne.</string>
     <string name="invite_point_camera">Kêmereyê ber bi QR-ya LocaPeer ve bigirin</string>
     <string name="invite_paste_title">An Lînka Vexwendinê Binivîsin</string>
     <string name="invite_process_link">Lînkê Bişopîne</string>

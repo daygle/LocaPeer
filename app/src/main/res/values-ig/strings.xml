@@ -351,6 +351,8 @@
     <string name="invite_encryption_note">A ga-ezobe ebe ị nọ ezo maka ngwaọrụ onye nyocha ahụ.</string>
     <string name="invite_camera_required_title">Achọrọ ohere igwefoto</string>
     <string name="invite_camera_required_message">Nye ikike igwefoto iji nyochaa koodu QR.</string>
+    <string name="invite_camera_unavailable_title">Igwefoto adịghị</string>
+    <string name="invite_camera_unavailable_message">O nwere ike ịbụ na ngwa ọzọ na-eji igwefoto. Mechie ya ma nwaa ọzọ.</string>
     <string name="invite_point_camera">Tuo igwefoto na QR LocaPeer</string>
     <string name="invite_paste_title">Ma ọ bụ Tapawa Link Òkù</string>
     <string name="invite_process_link">Nhazi Link</string>

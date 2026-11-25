@@ -351,6 +351,8 @@
     <string name="invite_encryption_note">您的位置将专门为扫描者的设备进行加密。</string>
     <string name="invite_camera_required_title">需要摄像头权限</string>
     <string name="invite_camera_required_message">授予摄像头权限以扫描二维码。</string>
+    <string name="invite_camera_unavailable_title">相机不可用</string>
+    <string name="invite_camera_unavailable_message">其他应用可能正在使用相机。请关闭该应用后重试。</string>
     <string name="invite_point_camera">将摄像头对准 LocaPeer 二维码</string>
     <string name="invite_paste_title">或粘贴邀请链接</string>
     <string name="invite_process_link">处理链接</string>

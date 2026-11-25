@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Ie-encrypt ang iyong lokasyon partikular para sa device ng scanner.</string>
     <string name="invite_camera_required_title">Kailangan ng Access sa Camera</string>
     <string name="invite_camera_required_message">Ibigay ang pahintulot sa camera para mag-scan ng QR code.</string>
+    <string name="invite_camera_unavailable_title">Hindi magamit ang camera</string>
+    <string name="invite_camera_unavailable_message">Maaaring ginagamit ng ibang app ang camera. Isara ito at subukan muli.</string>
     <string name="invite_point_camera">Itutok ang camera sa isang LocaPeer QR</string>
     <string name="invite_paste_title">O I-paste ang Invite Link</string>
     <string name="invite_process_link">Iproseso ang Link</string>

@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Din plats krypteras specifikt för skannerns enhet.</string>
     <string name="invite_camera_required_title">Kameraåtkomst krävs</string>
     <string name="invite_camera_required_message">Bevilja kamerabehörighet för att skanna en QR-kod.</string>
+    <string name="invite_camera_unavailable_title">Kameran är inte tillgänglig</string>
+    <string name="invite_camera_unavailable_message">En annan app använder kanske kameran. Stäng den och försök igen.</string>
     <string name="invite_point_camera">Rikta kameran mot en LocaPeer-QR</string>
     <string name="invite_paste_title">Eller klistra in inbjudningslänk</string>
     <string name="invite_process_link">Bearbeta länk</string>

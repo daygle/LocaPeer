@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਸਕੈਨਰ ਦੀ ਡਿਵਾਈਸ ਲਈ ਖਾਸ ਤੌਰ ਤੇ ਏਨਕ੍ਰਿਪਟ ਕੀਤਾ ਜਾਵੇਗਾ।</string>
     <string name="invite_camera_required_title">ਕੈਮਰਾ ਪਹੁੰਚ ਦੀ ਲੋੜ ਹੈ</string>
     <string name="invite_camera_required_message">QR ਕੋਡ ਸਕੈਨ ਕਰਨ ਲਈ ਕੈਮਰਾ ਪਰਮਿਸ਼ਨ ਦਿਓ।</string>
+    <string name="invite_camera_unavailable_title">ਕੈਮਰਾ ਉਪਲਬਧ ਨਹੀਂ</string>
+    <string name="invite_camera_unavailable_message">ਹੋ ਸਕਦਾ ਹੈ ਕੋਈ ਹੋਰ ਐਪ ਕੈਮਰਾ ਵਰਤ ਰਹੀ ਹੋਵੇ। ਉਸਨੂੰ ਬੰਦ ਕਰੋ ਅਤੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
     <string name="invite_point_camera">ਕੈਮਰਾ LocaPeer QR ਵੱਲ ਕਰੋ</string>
     <string name="invite_paste_title">ਜਾਂ ਸੱਦਾ ਲਿੰਕ ਪੇਸਟ ਕਰੋ</string>
     <string name="invite_process_link">ਲਿੰਕ ਦੀ ਪ੍ਰਕਿਰਿਆ ਕਰੋ</string>

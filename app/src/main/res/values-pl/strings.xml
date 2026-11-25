@@ -369,6 +369,8 @@
     <string name="invite_encryption_note">Twoja lokalizacja zostanie zaszyfrowana specjalnie dla urządzenia osoby skanującej.</string>
     <string name="invite_camera_required_title">Wymagany dostęp do aparatu</string>
     <string name="invite_camera_required_message">Przyznaj uprawnienie aparatu, aby zeskanować kod QR.</string>
+    <string name="invite_camera_unavailable_title">Aparat niedostępny</string>
+    <string name="invite_camera_unavailable_message">Być może inna aplikacja używa aparatu. Zamknij ją i spróbuj ponownie.</string>
     <string name="invite_point_camera">Skieruj aparat na kod QR LocaPeer</string>
     <string name="invite_paste_title">Lub wklej link z zaproszeniem</string>
     <string name="invite_process_link">Przetwórz link</string>

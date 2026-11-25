@@ -363,6 +363,8 @@
     <string name="invite_encryption_note">Locația dvs. va fi criptată special pentru dispozitivul celui care scanează.</string>
     <string name="invite_camera_required_title">Este necesar accesul la cameră</string>
     <string name="invite_camera_required_message">Acordați permisiunea camerei pentru a scana un cod QR.</string>
+    <string name="invite_camera_unavailable_title">Camera nu este disponibilă</string>
+    <string name="invite_camera_unavailable_message">O altă aplicație poate folosi camera. Închideți-o și încercați din nou.</string>
     <string name="invite_point_camera">Îndreptați camera spre un cod QR LocaPeer</string>
     <string name="invite_paste_title">Sau lipiți linkul de invitație</string>
     <string name="invite_process_link">Procesați linkul</string>

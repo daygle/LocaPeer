@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Helyzete kifejezetten a beolvasó eszközéhez lesz titkosítva.</string>
     <string name="invite_camera_required_title">Kamerahozzáférés szükséges</string>
     <string name="invite_camera_required_message">Adjon kameraengedélyt a QR-kód beolvasásához.</string>
+    <string name="invite_camera_unavailable_title">A kamera nem érhető el</string>
+    <string name="invite_camera_unavailable_message">Lehet, hogy egy másik alkalmazás használja a kamerát. Zárja be, és próbálja újra.</string>
     <string name="invite_point_camera">Irányítsa a kamerát egy LocaPeer QR-kódra</string>
     <string name="invite_paste_title">Vagy illessze be a meghívólinket</string>
     <string name="invite_process_link">Link feldolgozása</string>

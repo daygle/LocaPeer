@@ -351,6 +351,8 @@
     <string name="invite_encryption_note">ตำแหน่งของคุณจะถูกเข้ารหัสเฉพาะสำหรับอุปกรณ์ของผู้สแกน</string>
     <string name="invite_camera_required_title">ต้องการการเข้าถึงกล้อง</string>
     <string name="invite_camera_required_message">ให้สิทธิ์กล้องเพื่อสแกนรหัส QR</string>
+    <string name="invite_camera_unavailable_title">ไม่สามารถใช้กล้องได้</string>
+    <string name="invite_camera_unavailable_message">แอปอื่นอาจกำลังใช้กล้องอยู่ ปิดแอปนั้นแล้วลองอีกครั้ง</string>
     <string name="invite_point_camera">หันกล้องไปที่รหัส QR ของ LocaPeer</string>
     <string name="invite_paste_title">หรือวางลิงก์คำเชิญ</string>
     <string name="invite_process_link">ประมวลผลลิงก์</string>
