@@ -556,7 +556,8 @@
     <string name="history_reject_other">Lain-lain</string>
     <string name="history_fix_age">Usia kedudukan</string>
     <string name="history_fix_age_value">%1$d s</string>
-    <string name="history_hide_rejected">Sembunyikan bacaan yang ditolak</string>
+    <string name="history_gap_title">Tiada lokasi %1$s</string>
+    <string name="history_gap_attempts">Percubaan: %1$d</string>
 
     <string name="common_create">Cipta</string>
 

@@ -566,7 +566,8 @@
     <string name="history_reject_other">Sonstiges</string>
     <string name="history_fix_age">Alter der Position</string>
     <string name="history_fix_age_value">%1$d s</string>
-    <string name="history_hide_rejected">Abgelehnte Messungen ausblenden</string>
+    <string name="history_gap_title">Kein Standort %1$s</string>
+    <string name="history_gap_attempts">Versuche: %1$d</string>
 
     <string name="common_create">Erstellen</string>
 

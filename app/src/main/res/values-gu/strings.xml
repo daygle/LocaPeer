@@ -566,7 +566,8 @@
     <string name="history_reject_other">અન્ય</string>
     <string name="history_fix_age">સ્થાનની ઉંમર</string>
     <string name="history_fix_age_value">%1$d સે</string>
-    <string name="history_hide_rejected">નકારેલ રીડિંગ છુપાવો</string>
+    <string name="history_gap_title">કોઈ સ્થાન નથી %1$s</string>
+    <string name="history_gap_attempts">પ્રયાસો: %1$d</string>
 
     <string name="common_create">બનાવો</string>
 

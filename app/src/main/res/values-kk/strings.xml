@@ -566,7 +566,8 @@
     <string name="history_reject_other">Басқа</string>
     <string name="history_fix_age">Орынның жасы</string>
     <string name="history_fix_age_value">%1$d с</string>
-    <string name="history_hide_rejected">Қабылданбаған өлшемдерді жасыру</string>
+    <string name="history_gap_title">Орын жоқ %1$s</string>
+    <string name="history_gap_attempts">Әрекеттер: %1$d</string>
 
     <string name="common_create">Жасау</string>
 

@@ -566,7 +566,8 @@
     <string name="history_reject_other">ఇతర</string>
     <string name="history_fix_age">స్థానం వయస్సు</string>
     <string name="history_fix_age_value">%1$d సె</string>
-    <string name="history_hide_rejected">తిరస్కరించిన రీడింగ్‌లను దాచు</string>
+    <string name="history_gap_title">స్థానం లేదు %1$s</string>
+    <string name="history_gap_attempts">ప్రయత్నాలు: %1$d</string>
 
     <string name="common_create">సృష్టించు</string>
 

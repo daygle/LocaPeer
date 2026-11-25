@@ -1,7 +1,6 @@
 package com.locapeer.history
 
 import com.locapeer.data.entity.HeartbeatEntity
-import com.locapeer.data.entity.RejectReason
 import com.locapeer.util.GeoMath
 
 /**
@@ -49,7 +48,7 @@ object HistoryThinning {
             // point, and a too-imprecise rejection is exactly such a point. Attempts with no
             // position (no fix, permission withdrawn) have no meaningful radius and stay.
             if (!p.isAccepted) {
-                if (filterAcc && p.hasOwnPosition() && p.accuracy > maxAccuracyM) continue
+                if (filterAcc && p.hasMappedPosition() && p.accuracy > maxAccuracyM) continue
                 kept += p
                 continue
             }
@@ -75,11 +74,5 @@ object HistoryThinning {
             anchor = p
         }
         return kept
-    }
-
-    /** False for a rejected attempt whose coordinates are only a placeholder. */
-    private fun HeartbeatEntity.hasOwnPosition(): Boolean = when (parsedRejectReason) {
-        RejectReason.NO_FIX, RejectReason.PERMISSION_DENIED -> false
-        else -> true
     }
 }

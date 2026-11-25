@@ -566,7 +566,8 @@
     <string name="history_reject_other">Otro</string>
     <string name="history_fix_age">Antigüedad de la posición</string>
     <string name="history_fix_age_value">%1$d s</string>
-    <string name="history_hide_rejected">Ocultar lecturas rechazadas</string>
+    <string name="history_gap_title">Sin ubicación %1$s</string>
+    <string name="history_gap_attempts">Intentos: %1$d</string>
 
     <string name="common_create">Crear</string>
 

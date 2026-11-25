@@ -566,7 +566,8 @@
     <string name="history_reject_other">Diğer</string>
     <string name="history_fix_age">Konumun yaşı</string>
     <string name="history_fix_age_value">%1$d sn</string>
-    <string name="history_hide_rejected">Reddedilen ölçümleri gizle</string>
+    <string name="history_gap_title">Konum yok %1$s</string>
+    <string name="history_gap_attempts">Denemeler: %1$d</string>
 
     <string name="common_create">Oluştur</string>
 

@@ -566,7 +566,8 @@
     <string name="history_reject_other">மற்றவை</string>
     <string name="history_fix_age">நிலையின் வயது</string>
     <string name="history_fix_age_value">%1$d வி</string>
-    <string name="history_hide_rejected">நிராகரிக்கப்பட்ட அளவீடுகளை மறை</string>
+    <string name="history_gap_title">இருப்பிடம் இல்லை %1$s</string>
+    <string name="history_gap_attempts">முயற்சிகள்: %1$d</string>
 
     <string name="common_create">உருவாக்கு</string>
 

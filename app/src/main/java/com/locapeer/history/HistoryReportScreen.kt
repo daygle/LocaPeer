@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.LocationOff
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
@@ -77,7 +78,6 @@ fun HistoryReportScreen(
     val startTimeOffset by vm.startTimeOffset.collectAsStateWithLifecycle()
     val endTimeOffset by vm.endTimeOffset.collectAsStateWithLifecycle()
     val heartbeats by vm.heartbeats.collectAsStateWithLifecycle()
-    val hideRejected by vm.hideRejected.collectAsStateWithLifecycle()
     val addresses by vm.addresses.collectAsStateWithLifecycle()
     val selfDisplayName by vm.selfDisplayName.collectAsStateWithLifecycle()
 
@@ -244,32 +244,6 @@ fun HistoryReportScreen(
                                 }
                             }
                         }
-
-                        HorizontalDivider(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            thickness = 0.5.dp,
-                            color = MaterialTheme.colorScheme.outlineVariant
-                        )
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 12.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            // Display-only: rejected readings stay stored either way, and
-                            // turning this back off reveals them again immediately.
-                            FilterChip(
-                                selected = hideRejected,
-                                onClick = { vm.setHideRejected(!hideRejected) },
-                                label = {
-                                    Text(
-                                        stringResource(R.string.history_hide_rejected),
-                                        style = MaterialTheme.typography.labelMedium
-                                    )
-                                }
-                            )
-                        }
                     }
                 }
 
@@ -391,15 +365,22 @@ private fun HistoryListTab(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(Modifier.height(8.dp))
-            val newestFirst = heartbeats.asReversed()
+            // Runs of attempts with no position (location off, permission withdrawn) collapse
+            // into one gap line, so a long outage explains itself without flooding the list.
+            val newestFirst = remember(heartbeats) {
+                HistoryListGrouping.group(heartbeats).asReversed()
+            }
             LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(newestFirst, key = { it.id }) { ping ->
-                    HistoryPingCard(
-                        ping = ping,
-                        address = addresses[ping.id],
-                        timeFormat = timeFormat,
-                        onClick = { selectedPing = ping }
-                    )
+                items(newestFirst, key = { it.key }) { entry ->
+                    when (entry) {
+                        is HistoryListEntry.Reading -> HistoryPingCard(
+                            ping = entry.ping,
+                            address = addresses[entry.ping.id],
+                            timeFormat = timeFormat,
+                            onClick = { selectedPing = entry.ping }
+                        )
+                        is HistoryListEntry.Gap -> HistoryGapCard(entry, timeFormat)
+                    }
                 }
                 item { Spacer(Modifier.height(16.dp)) }
             }
@@ -411,6 +392,46 @@ private fun HistoryListTab(
                 address = addresses[ping.id],
                 onDismiss = { selectedPing = null }
             )
+        }
+    }
+}
+
+/** One line standing in for a run of attempts that produced no position. */
+@Composable
+private fun HistoryGapCard(gap: HistoryListEntry.Gap, timeFormat: SimpleDateFormat) {
+    val first = timeFormat.format(Date(gap.firstMs))
+    val span = if (gap.count == 1) first else "$first – ${timeFormat.format(Date(gap.lastMs))}"
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+    ) {
+        Row(
+            // Dimmed like other readings that were never shared.
+            modifier = Modifier
+                .padding(horizontal = 12.dp, vertical = 10.dp)
+                .alpha(0.6f),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                Icons.Default.LocationOff,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(20.dp)
+            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    stringResource(R.string.history_gap_title, span),
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(
+                    rejectReasonLabel(gap.reason) + " · " +
+                        stringResource(R.string.history_gap_attempts, gap.count),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }
@@ -906,17 +927,6 @@ private fun DetailRow(label: String, value: String) {
         )
     }
 }
-
-/**
- * A rejected attempt with no position of its own (no fix, or permission withdrawn at the
- * attempt) is history-list evidence only; plotting its placeholder coordinates would put a
- * point on the map where the device never reported being.
- */
-private fun HeartbeatEntity.hasMappedPosition(): Boolean =
-    isAccepted || when (parsedRejectReason) {
-        RejectReason.NO_FIX, RejectReason.PERMISSION_DENIED -> false
-        else -> lat != 0.0 || lng != 0.0
-    }
 
 /** Localized label for a stored reject-reason code; unknown/legacy values fall back to "Other". */
 @Composable

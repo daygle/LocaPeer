@@ -556,7 +556,8 @@
     <string name="history_reject_other">その他</string>
     <string name="history_fix_age">位置情報の経過時間</string>
     <string name="history_fix_age_value">%1$d秒</string>
-    <string name="history_hide_rejected">却下された記録を非表示</string>
+    <string name="history_gap_title">位置情報なし %1$s</string>
+    <string name="history_gap_attempts">試行回数: %1$d</string>
 
     <string name="common_create">作成</string>
 

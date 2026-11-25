@@ -556,7 +556,8 @@
     <string name="history_reject_other">အခြား</string>
     <string name="history_fix_age">တည်နေရာ သက်တမ်း</string>
     <string name="history_fix_age_value">%1$d စက္ကန့်</string>
-    <string name="history_hide_rejected">ငြင်းပယ်ထားသော ဖတ်ရှုမှုများကို ဖျောက်ရန်</string>
+    <string name="history_gap_title">တည်နေရာ မရှိ %1$s</string>
+    <string name="history_gap_attempts">ကြိုးစားမှု: %1$d</string>
 
     <string name="common_create">ဖန်တီးရန်</string>
 

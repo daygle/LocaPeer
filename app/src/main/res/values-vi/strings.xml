@@ -556,7 +556,8 @@
     <string name="history_reject_other">Khác</string>
     <string name="history_fix_age">Tuổi của vị trí</string>
     <string name="history_fix_age_value">%1$d giây</string>
-    <string name="history_hide_rejected">Ẩn các lần đọc bị từ chối</string>
+    <string name="history_gap_title">Không có vị trí %1$s</string>
+    <string name="history_gap_attempts">Số lần thử: %1$d</string>
 
     <string name="common_create">Tạo</string>
 

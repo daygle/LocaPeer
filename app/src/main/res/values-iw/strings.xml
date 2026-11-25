@@ -576,7 +576,8 @@
     <string name="history_reject_other">אחר</string>
     <string name="history_fix_age">גיל המיקום</string>
     <string name="history_fix_age_value">%1$d ש׳</string>
-    <string name="history_hide_rejected">הסתרת קריאות שנדחו</string>
+    <string name="history_gap_title">אין מיקום %1$s</string>
+    <string name="history_gap_attempts">ניסיונות: %1$d</string>
 
     <string name="common_create">צור</string>
 

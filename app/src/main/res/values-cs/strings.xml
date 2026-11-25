@@ -586,7 +586,8 @@
     <string name="history_reject_other">Jiné</string>
     <string name="history_fix_age">Stáří polohy</string>
     <string name="history_fix_age_value">%1$d s</string>
-    <string name="history_hide_rejected">Skrýt odmítnuté záznamy</string>
+    <string name="history_gap_title">Bez polohy %1$s</string>
+    <string name="history_gap_attempts">Pokusy: %1$d</string>
 
     <string name="common_create">Vytvořit</string>
 

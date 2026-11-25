@@ -566,7 +566,8 @@
     <string name="history_reject_other">Iba pa</string>
     <string name="history_fix_age">Edad ng posisyon</string>
     <string name="history_fix_age_value">%1$d s</string>
-    <string name="history_hide_rejected">Itago ang mga tinanggihang reading</string>
+    <string name="history_gap_title">Walang lokasyon %1$s</string>
+    <string name="history_gap_attempts">Mga pagsubok: %1$d</string>
 
     <string name="common_create">Gumawa</string>
 

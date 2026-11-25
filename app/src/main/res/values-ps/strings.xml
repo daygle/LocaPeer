@@ -566,7 +566,8 @@
     <string name="history_reject_other">نور</string>
     <string name="history_fix_age">د موقعیت عمر</string>
     <string name="history_fix_age_value">%1$d ث</string>
-    <string name="history_hide_rejected">رد شوي لوستنې پټې کړئ</string>
+    <string name="history_gap_title">موقعیت نشته %1$s</string>
+    <string name="history_gap_attempts">هڅې: %1$d</string>
 
     <string name="common_create">جوړول</string>
 

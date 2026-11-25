@@ -556,7 +556,8 @@
     <string name="history_reject_other">기타</string>
     <string name="history_fix_age">위치 경과 시간</string>
     <string name="history_fix_age_value">%1$d초</string>
-    <string name="history_hide_rejected">거부된 기록 숨기기</string>
+    <string name="history_gap_title">위치 없음 %1$s</string>
+    <string name="history_gap_attempts">시도: %1$d</string>
 
     <string name="common_create">만들기</string>
 

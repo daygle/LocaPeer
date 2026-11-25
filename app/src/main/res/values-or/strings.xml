@@ -566,7 +566,8 @@
     <string name="history_reject_other">ଅନ୍ୟ</string>
     <string name="history_fix_age">ସ୍ଥିତିର ବୟସ</string>
     <string name="history_fix_age_value">%1$d ସେ</string>
-    <string name="history_hide_rejected">ପ୍ରତ୍ୟାଖ୍ୟାତ ରିଡିଂ ଲୁଚାନ୍ତୁ</string>
+    <string name="history_gap_title">ସ୍ଥାନ ନାହିଁ %1$s</string>
+    <string name="history_gap_attempts">ପ୍ରୟାସ: %1$d</string>
 
     <string name="common_create">ତିଆରି କରନ୍ତୁ</string>
 

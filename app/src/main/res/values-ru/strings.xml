@@ -586,7 +586,8 @@
     <string name="history_reject_other">Другое</string>
     <string name="history_fix_age">Возраст данных</string>
     <string name="history_fix_age_value">%1$d с</string>
-    <string name="history_hide_rejected">Скрыть отклонённые записи</string>
+    <string name="history_gap_title">Нет местоположения %1$s</string>
+    <string name="history_gap_attempts">Попытки: %1$d</string>
 
     <string name="common_create">Создать</string>
 

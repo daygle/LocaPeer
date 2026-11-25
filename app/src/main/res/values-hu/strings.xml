@@ -566,7 +566,8 @@
     <string name="history_reject_other">Egyéb</string>
     <string name="history_fix_age">Pozíció kora</string>
     <string name="history_fix_age_value">%1$d mp</string>
-    <string name="history_hide_rejected">Elutasított mérések elrejtése</string>
+    <string name="history_gap_title">Nincs hely %1$s</string>
+    <string name="history_gap_attempts">Próbálkozások: %1$d</string>
 
     <string name="common_create">Létrehozás</string>
 

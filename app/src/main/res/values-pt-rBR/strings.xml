@@ -567,7 +567,8 @@
     <string name="history_reject_other">Outro</string>
     <string name="history_fix_age">Idade da posição</string>
     <string name="history_fix_age_value">%1$d s</string>
-    <string name="history_hide_rejected">Ocultar leituras rejeitadas</string>
+    <string name="history_gap_title">Sem localização %1$s</string>
+    <string name="history_gap_attempts">Tentativas: %1$d</string>
 
     <!-- ── Telas de geocerca ──────────────────────────────────────────────── -->
     <string name="geo_cd_add_area">Adicionar área de geocerca</string>

@@ -566,7 +566,8 @@
     <string name="history_reject_other">ሌላ</string>
     <string name="history_fix_age">የቦታው ዕድሜ</string>
     <string name="history_fix_age_value">%1$d ሰ</string>
-    <string name="history_hide_rejected">ውድቅ የተደረጉ ንባቦችን ደብቅ</string>
+    <string name="history_gap_title">ቦታ የለም %1$s</string>
+    <string name="history_gap_attempts">ሙከራዎች: %1$d</string>
 
     <string name="common_create">ፍጠር</string>
 

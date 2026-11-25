@@ -566,7 +566,8 @@
     <string name="history_reject_other">इतर</string>
     <string name="history_fix_age">स्थानाचे वय</string>
     <string name="history_fix_age_value">%1$d से</string>
-    <string name="history_hide_rejected">नाकारलेली रीडिंग लपवा</string>
+    <string name="history_gap_title">स्थान नाही %1$s</string>
+    <string name="history_gap_attempts">प्रयत्न: %1$d</string>
 
     <string name="common_create">तयार करा</string>
 

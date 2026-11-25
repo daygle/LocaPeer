@@ -556,7 +556,8 @@
     <string name="history_reject_other">Ndị ọzọ</string>
     <string name="history_fix_age">Afọ ọnọdụ</string>
     <string name="history_fix_age_value">%1$d s</string>
-    <string name="history_hide_rejected">Zoo ọgụgụ ndị ajụrụ</string>
+    <string name="history_gap_title">Enweghị ọnọdụ %1$s</string>
+    <string name="history_gap_attempts">Mgbalị: %1$d</string>
 
     <string name="common_create">Mepụta</string>
 

@@ -566,7 +566,8 @@
     <string name="history_reject_other">ਹੋਰ</string>
     <string name="history_fix_age">ਸਥਿਤੀ ਦੀ ਉਮਰ</string>
     <string name="history_fix_age_value">%1$d ਸ</string>
-    <string name="history_hide_rejected">ਰੱਦ ਕੀਤੀਆਂ ਰੀਡਿੰਗਾਂ ਲੁਕਾਓ</string>
+    <string name="history_gap_title">ਕੋਈ ਟਿਕਾਣਾ ਨਹੀਂ %1$s</string>
+    <string name="history_gap_attempts">ਕੋਸ਼ਿਸ਼ਾਂ: %1$d</string>
 
     <string name="common_create">ਬਣਾਓ</string>
 
