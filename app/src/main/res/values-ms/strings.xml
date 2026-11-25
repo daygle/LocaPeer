@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">Padam Lokasi</string>
     <string name="contacts_last_seen">Kali terakhir dilihat: %1$s</string>
     <string name="contacts_no_location_yet">Belum ada data lokasi</string>
+    <string name="contacts_last_updated">Kemas kini terakhir: %1$s</string>
+    <string name="contacts_last_updated_paused">Kemas kini terakhir: %1$s · Perkongsian dijeda</string>
+    <string name="contacts_sharing_paused">Perkongsian dijeda</string>
     <string name="contacts_view_sharing_settings">Tetapan Perkongsian</string>
     <string name="contacts_view_location_history">Sejarah Lokasi</string>
     <string name="contacts_rename_contact">Namakan Semula Kenalan</string>
@@ -544,6 +547,21 @@
     <string name="history_within">dalam ±%1$s</string>
     <string name="history_detail_movement">Pergerakan</string>
     <string name="history_movement_desc">%1$s %2$s menghala %3$s</string>
+    <string name="history_rejected">Ditolak</string>
+    <string name="history_reject_reason">Sebab penolakan</string>
+    <string name="history_reject_too_imprecise">Terlalu tidak tepat</string>
+    <string name="history_reject_stale">Kedudukan lapuk</string>
+    <string name="history_reject_no_fix">Tiada kedudukan</string>
+    <string name="history_reject_permission_denied">Kebenaran lokasi ditolak</string>
+    <string name="history_reject_other">Lain-lain</string>
+    <string name="history_fix_age">Usia kedudukan</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Sumber</string>
+    <string name="history_source_network">Rangkaian</string>
+    <string name="history_source_fused">Gabungan</string>
+    <string name="history_detail_fix_taken">Kedudukan diambil</string>
+    <string name="history_gap_title">Tiada lokasi %1$s</string>
+    <string name="history_gap_attempts">Percubaan: %1$d</string>
 
     <string name="common_create">Cipta</string>
 

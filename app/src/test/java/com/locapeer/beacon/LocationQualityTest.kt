@@ -12,21 +12,11 @@ class LocationQualityTest {
     private val goodReading = ReadingQuality(accuracyMeters = 12f, fixAgeSeconds = 5, hasFix = true)
 
     @Test
-    fun `settings select a separate threshold for each consumer`() {
-        val config = LocationQualityConfig.fromSettings(
-            AppSettings(sendMaxAccuracyMeters = 75, historyMaxAccuracyMeters = 150)
-        )
+    fun `sharing thresholds come from the send-accuracy setting`() {
+        val sharing = SharingQuality.thresholds(AppSettings(sendMaxAccuracyMeters = 75))
 
-        assertEquals(75, config.sharing.maxAccuracyMeters)
-        assertEquals(LocationQualityConfig.DEFAULT_MAX_FIX_AGE_SECONDS, config.sharing.maxFixAgeSeconds)
-        // History shows everything by default; its accuracy value is the existing display filter.
-        assertEquals(150, config.history.maxAccuracyMeters)
-        assertEquals(0, config.history.maxFixAgeSeconds)
-        // These consumers take all readings and do their own quality handling from the flags.
-        assertEquals(0, config.analytics.maxAccuracyMeters)
-        assertEquals(0, config.analytics.maxFixAgeSeconds)
-        assertEquals(0, config.tripDetection.maxAccuracyMeters)
-        assertEquals(0, config.tripDetection.maxFixAgeSeconds)
+        assertEquals(75, sharing.maxAccuracyMeters)
+        assertEquals(SharingQuality.DEFAULT_MAX_FIX_AGE_SECONDS, sharing.maxFixAgeSeconds)
     }
 
     @Test

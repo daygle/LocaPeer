@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">ಸ್ಥಳಗಳನ್ನು ಅಳಿಸಿ</string>
     <string name="contacts_last_seen">ಕೊನೆಯದಾಗಿ ನೋಡಿದ್ದು: %1$s</string>
     <string name="contacts_no_location_yet">ಇನ್ನೂ ಯಾವುದೇ ಸ್ಥಳ ಡೇಟಾ ಇಲ್ಲ</string>
+    <string name="contacts_last_updated">ಕೊನೆಯ ಅಪ್‌ಡೇಟ್: %1$s</string>
+    <string name="contacts_last_updated_paused">ಕೊನೆಯ ಅಪ್‌ಡೇಟ್: %1$s · ಹಂಚಿಕೆ ವಿರಾಮದಲ್ಲಿದೆ</string>
+    <string name="contacts_sharing_paused">ಹಂಚಿಕೆ ವಿರಾಮದಲ್ಲಿದೆ</string>
     <string name="contacts_view_sharing_settings">ಹಂಚಿಕೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
     <string name="contacts_view_location_history">ಸ್ಥಳದ ಇತಿಹಾಸ</string>
     <string name="contacts_rename_contact">ಸಂಪರ್ಕವನ್ನು ಮರುಹೆಸರಿಸಿ</string>
@@ -554,6 +557,21 @@
     <string name="history_within">±%1$s ಒಳಗೆ</string>
     <string name="history_detail_movement">ಚಲನೆ</string>
     <string name="history_movement_desc">%1$s %2$s ದಿಕ್ಕಿನಲ್ಲಿ %3$s</string>
+    <string name="history_rejected">ತಿರಸ್ಕರಿಸಲಾಗಿದೆ</string>
+    <string name="history_reject_reason">ತಿರಸ್ಕಾರದ ಕಾರಣ</string>
+    <string name="history_reject_too_imprecise">ತುಂಬಾ ನಿಖರವಲ್ಲ</string>
+    <string name="history_reject_stale">ಹಳೆಯ ಸ್ಥಾನ</string>
+    <string name="history_reject_no_fix">ಸ್ಥಾನವಿಲ್ಲ</string>
+    <string name="history_reject_permission_denied">ಸ್ಥಳ ಅನುಮತಿ ನಿರಾಕರಿಸಲಾಗಿದೆ</string>
+    <string name="history_reject_other">ಇತರೆ</string>
+    <string name="history_fix_age">ಸ್ಥಾನದ ವಯಸ್ಸು</string>
+    <string name="history_fix_age_value">%1$d ಸೆ</string>
+    <string name="history_detail_source">ಮೂಲ</string>
+    <string name="history_source_network">ನೆಟ್‌ವರ್ಕ್</string>
+    <string name="history_source_fused">ಸಂಯೋಜಿತ</string>
+    <string name="history_detail_fix_taken">ಸ್ಥಾನ ಪಡೆದ ಸಮಯ</string>
+    <string name="history_gap_title">ಸ್ಥಳವಿಲ್ಲ %1$s</string>
+    <string name="history_gap_attempts">ಪ್ರಯತ್ನಗಳು: %1$d</string>
 
     <string name="common_create">ರಚಿಸಿ</string>
 

@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Burahin ang mga Lokasyon</string>
     <string name="contacts_last_seen">Huling nakita: %1$s</string>
     <string name="contacts_no_location_yet">Wala pang data ng lokasyon</string>
+    <string name="contacts_last_updated">Huling na-update: %1$s</string>
+    <string name="contacts_last_updated_paused">Huling na-update: %1$s · Naka-pause ang pagbabahagi</string>
+    <string name="contacts_sharing_paused">Naka-pause ang pagbabahagi</string>
     <string name="contacts_view_sharing_settings">Mga Setting ng Pagbabahagi</string>
     <string name="contacts_view_location_history">Kasaysayan ng Lokasyon</string>
     <string name="contacts_rename_contact">Palitan ang Pangalan ng Contact</string>
@@ -554,6 +557,21 @@
     <string name="history_within">sa loob ng ±%1$s</string>
     <string name="history_detail_movement">Galaw</string>
     <string name="history_movement_desc">%1$s %2$s papunta sa %3$s</string>
+    <string name="history_rejected">Tinanggihan</string>
+    <string name="history_reject_reason">Dahilan ng pagtanggi</string>
+    <string name="history_reject_too_imprecise">Masyadong hindi tumpak</string>
+    <string name="history_reject_stale">Lumang posisyon</string>
+    <string name="history_reject_no_fix">Walang posisyon</string>
+    <string name="history_reject_permission_denied">Tinanggihan ang pahintulot sa lokasyon</string>
+    <string name="history_reject_other">Iba pa</string>
+    <string name="history_fix_age">Edad ng posisyon</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Pinagmulan</string>
+    <string name="history_source_network">Network</string>
+    <string name="history_source_fused">Pinagsama</string>
+    <string name="history_detail_fix_taken">Oras ng pagkuha ng posisyon</string>
+    <string name="history_gap_title">Walang lokasyon %1$s</string>
+    <string name="history_gap_attempts">Mga pagsubok: %1$d</string>
 
     <string name="common_create">Gumawa</string>
 

@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">Pa Ipò Rẹ́</string>
     <string name="contacts_last_seen">Ìgbà ìkẹyìn tí a rí i: %1$s</string>
     <string name="contacts_no_location_yet">Kò sí ìsọfúnni ipò ugbu a</string>
+    <string name="contacts_last_updated">Ìmúdójúìwọ̀n tó kẹ́yìn: %1$s</string>
+    <string name="contacts_last_updated_paused">Ìmúdójúìwọ̀n tó kẹ́yìn: %1$s · A ti dá pínpín dúró</string>
+    <string name="contacts_sharing_paused">A ti dá pínpín dúró</string>
     <string name="contacts_view_sharing_settings">Ètò Ìpínpín</string>
     <string name="contacts_view_location_history">Ìtàn Ipò</string>
     <string name="contacts_rename_contact">Nye kọntaktị aha ọzọ</string>
@@ -544,6 +547,21 @@
     <string name="history_within">n\'ime ±%1$s</string>
     <string name="history_detail_movement">Mmegharị</string>
     <string name="history_movement_desc">%1$s %2$s na-aga %3$s</string>
+    <string name="history_rejected">A kọ̀ ọ́</string>
+    <string name="history_reject_reason">Ìdí ìkọ̀sílẹ̀</string>
+    <string name="history_reject_too_imprecise">Kò péye tó</string>
+    <string name="history_reject_stale">Ipò àtijọ́</string>
+    <string name="history_reject_no_fix">Kò sí ipò</string>
+    <string name="history_reject_permission_denied">A kọ ìyọ̀ǹda ipò</string>
+    <string name="history_reject_other">Òmíràn</string>
+    <string name="history_fix_age">Ọjọ́ orí ipò</string>
+    <string name="history_fix_age_value">%1$d ìṣ</string>
+    <string name="history_detail_source">Orísun</string>
+    <string name="history_source_network">Nẹ́tíwọ̀ọ̀kì</string>
+    <string name="history_source_fused">Àdàpọ̀</string>
+    <string name="history_detail_fix_taken">Àkókò tí a gba ipò</string>
+    <string name="history_gap_title">Kò sí ipò %1$s</string>
+    <string name="history_gap_attempts">Ìgbìyànjú: %1$d</string>
 
     <string name="common_create">Mepụta</string>
 

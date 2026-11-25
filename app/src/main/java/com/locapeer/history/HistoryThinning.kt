@@ -12,9 +12,10 @@ import com.locapeer.util.GeoMath
  * (missed-heartbeat alerts, overdue pins) and retention are untouched, and
  * changing the setting re-filters existing history retroactively.
  *
- * Rejected readings are passed through untouched and never become the distance
+ * Rejected readings are never distance-thinned and never become the distance
  * anchor: they are kept as evidence of an attempt (the history view renders them
- * dimmed), but they must not move or thin the accepted breadcrumb.
+ * dimmed), but they must not move or thin the accepted breadcrumb. The accuracy
+ * threshold does apply to them, as it promises to hide every coarse point.
  */
 object HistoryThinning {
 
@@ -27,10 +28,13 @@ object HistoryThinning {
         maxAccuracyM: Int,
         minDistanceM: Int
     ): List<HeartbeatEntity> {
-        if (points.size <= 1) return points
+        if (points.isEmpty()) return points
         val filterAcc = maxAccuracyM > 0
         val filterDist = minDistanceM > 0
         if (!filterAcc && !filterDist) return points
+        // A lone accepted point is the latest position and always kept. A lone rejected one
+        // still goes through the loop, so the accuracy threshold can hide it.
+        if (points.size == 1 && points[0].isAccepted) return points
 
         val kept = ArrayList<HeartbeatEntity>(points.size)
         var anchor: HeartbeatEntity? = null
@@ -42,7 +46,12 @@ object HistoryThinning {
             val p = points[i]
 
             // Keep rejected attempts, but keep them out of the accepted trail's geometry.
+            // The user's "hide low-accuracy points" threshold still applies to a rejected
+            // reading that carries a position: that setting promises to hide every coarse
+            // point, and a too-imprecise rejection is exactly such a point. Attempts with no
+            // position (no fix, permission withdrawn) have no meaningful radius and stay.
             if (!p.isAccepted) {
+                if (filterAcc && p.hasMappedPosition() && p.accuracy > maxAccuracyM) continue
                 kept += p
                 continue
             }

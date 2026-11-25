@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">స్థానాలను తొలగించు</string>
     <string name="contacts_last_seen">చివరిగా చూసినది: %1$s</string>
     <string name="contacts_no_location_yet">ఇంకా స్థాన డేటా లేదు</string>
+    <string name="contacts_last_updated">చివరిగా నవీకరించబడింది: %1$s</string>
+    <string name="contacts_last_updated_paused">చివరిగా నవీకరించబడింది: %1$s · షేరింగ్ పాజ్ చేయబడింది</string>
+    <string name="contacts_sharing_paused">షేరింగ్ పాజ్ చేయబడింది</string>
     <string name="contacts_view_sharing_settings">షేరింగ్ సెట్టింగ్‌లు</string>
     <string name="contacts_view_location_history">స్థాన చరిత్ర</string>
     <string name="contacts_rename_contact">పరిచయం పేరు మార్చు</string>
@@ -554,6 +557,21 @@
     <string name="history_within">±%1$s లోపల</string>
     <string name="history_detail_movement">కదలిక</string>
     <string name="history_movement_desc">%1$s %2$s దిశలో %3$s</string>
+    <string name="history_rejected">తిరస్కరించబడింది</string>
+    <string name="history_reject_reason">తిరస్కరణ కారణం</string>
+    <string name="history_reject_too_imprecise">చాలా ఖచ్చితంగా లేదు</string>
+    <string name="history_reject_stale">పాత స్థానం</string>
+    <string name="history_reject_no_fix">స్థానం లేదు</string>
+    <string name="history_reject_permission_denied">లొకేషన్ అనుమతి తిరస్కరించబడింది</string>
+    <string name="history_reject_other">ఇతర</string>
+    <string name="history_fix_age">స్థానం వయస్సు</string>
+    <string name="history_fix_age_value">%1$d సె</string>
+    <string name="history_detail_source">మూలం</string>
+    <string name="history_source_network">నెట్‌వర్క్</string>
+    <string name="history_source_fused">సంయుక్త</string>
+    <string name="history_detail_fix_taken">స్థానం తీసుకున్న సమయం</string>
+    <string name="history_gap_title">స్థానం లేదు %1$s</string>
+    <string name="history_gap_attempts">ప్రయత్నాలు: %1$d</string>
 
     <string name="common_create">సృష్టించు</string>
 

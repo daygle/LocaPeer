@@ -45,6 +45,8 @@ import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PrecisionMode
+import com.locapeer.data.entity.ReadingStatus
+import com.locapeer.data.entity.RejectReason
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.data.entity.scheduleRules
 import com.locapeer.sharing.SharingSchedule
@@ -173,6 +175,12 @@ class HeartbeatService : LifecycleService() {
     @Volatile private var lastFixCapturedAtMs = 0L
     /** Provider behind the reported fix ("gps", "network", ...); empty when unknown. */
     @Volatile private var lastFixProvider = ""
+    /**
+     * Monotonic capture time of the same fix (Location.elapsedRealtimeNanos, 0 = unknown).
+     * Fix age is measured on this clock: the wall clock can be set hours off by the user,
+     * which would make every fresh fix look stale and silently stop sharing.
+     */
+    @Volatile private var lastFixElapsedNanos = 0L
     /**
      * Consecutive cadence attempts rejected by the sharing quality gate. Drives the bounded
      * backoff in [AttemptCadence]; reset by the first accepted attempt.
@@ -337,7 +345,8 @@ class HeartbeatService : LifecycleService() {
                 // fixes would wobble the resting pin (and could push lastAccuracy past
                 // the send gate, silencing heartbeats for the whole stay).
                 val stationaryHold = currentMotionState == MotionState.STATIONARY
-                if (fixSelector.select(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos, stationaryHold)) {
+                val selected = fixSelector.select(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos, stationaryHold)
+                if (selected) {
                     lastLat = loc.latitude
                     lastLng = loc.longitude
                     lastAccuracy = loc.accuracy
@@ -346,6 +355,7 @@ class HeartbeatService : LifecycleService() {
                     // than whichever provider delivered last.
                     lastFixCapturedAtMs = loc.time
                     lastFixProvider = loc.provider ?: ""
+                    lastFixElapsedNanos = loc.elapsedRealtimeNanos
                     lastBearing = if (loc.hasBearing()) loc.bearing else 0f
                     // GPS altitude is often missing (indoors, cold fix); keep the last known
                     // reading rather than flicker to a misleading 0 m / sea level.
@@ -365,8 +375,10 @@ class HeartbeatService : LifecycleService() {
                 // broadcast was held for a fresh fix. Gate on the accuracy of the fix
                 // actually being reported (lastAccuracy, i.e. post-selector): a blocked
                 // pulse would only be withheld again, re-triggering on every fix until
-                // GPS sharpens.
-                if (isStarted && (lastPulseElapsedMs == 0L || awaitingFreshFix) &&
+                // GPS sharpens. The fresh-fix hold only lifts when this fix actually became
+                // the reported position: a fix the selector held back leaves the pre-gap
+                // position in place, which must not be released as current.
+                if (isStarted && (lastPulseElapsedMs == 0L || (awaitingFreshFix && selected)) &&
                     !sharingRejects(lastAccuracy)
                 ) {
                     awaitingFreshFix = false
@@ -660,8 +672,9 @@ class HeartbeatService : LifecycleService() {
             // still has to be recorded, or a poor provider could leave another silent gap.
             // The hold only suppresses the broadcast (inside broadcastHeartbeat).
             // The cadence follows the last ATTEMPT: broadcastHeartbeat returns true for a
-            // rejected attempt too, so a run of rejections can never leave the loop waiting
-            // on a success that does not come.
+            // rejected attempt that carries a position too, so a run of rejections can never
+            // leave the loop waiting on a success that does not come. Only an attempt with no
+            // position at all returns false, so the first fix still pulses immediately.
             if (broadcastHeartbeat()) {
                 lastPulseElapsedMs = SystemClock.elapsedRealtime()
             }
@@ -1065,6 +1078,9 @@ class HeartbeatService : LifecycleService() {
             // until a live fix lands (cleared in the location callback) - except in
             // SOS, where a stale position still beats none.
             if (!isSos) awaitingFreshFix = true
+            // The held fix predates the gap too: drop the selector's baseline so the first
+            // live fix replaces it instead of being held against an old, sharper reading.
+            fixSelector.reset()
             gpsSuspendedBySchedule = false
         }
         try {
@@ -1223,6 +1239,11 @@ class HeartbeatService : LifecycleService() {
                     lastLat = loc.latitude
                     lastLng = loc.longitude
                     lastAccuracy = loc.accuracy
+                    // The forced fix replaces the reported position, so its capture
+                    // metadata must replace the previous fix's too.
+                    lastFixCapturedAtMs = loc.time
+                    lastFixProvider = loc.provider ?: ""
+                    lastFixElapsedNanos = loc.elapsedRealtimeNanos
                     if (loc.hasBearing()) lastBearing = loc.bearing
                     if (loc.hasAltitude()) lastAltitude = loc.altitude
                     // This forced position bypasses the selector; drop its baseline so the
@@ -1276,7 +1297,7 @@ class HeartbeatService : LifecycleService() {
     private fun sharingRejects(accuracyM: Float): Boolean =
         !LocationQualityGate.evaluate(
             ReadingQuality(accuracyM, fixAgeSeconds = 0L, hasFix = true),
-            LocationQualityConfig.fromSettings(currentSettings).sharing,
+            SharingQuality.thresholds(currentSettings),
             bypass = isSos,
         ).accepted
 
@@ -1285,6 +1306,7 @@ class HeartbeatService : LifecycleService() {
      * always recorded on a cadence pulse (accepted or rejected), and only an accepted
      * reading is turned into a sharing payload. Returns true when the attempt was handled,
      * so the next pulse can be scheduled from the attempt rather than from the last success.
+     * Returns false only when no position exists at all (see the return statement).
      */
     private fun broadcastHeartbeat(isSos: Boolean = this.isSos): Boolean {
         // Snapshot the reported fix once, on the main thread, before anything async:
@@ -1301,6 +1323,7 @@ class HeartbeatService : LifecycleService() {
         val fixAltitude = lastAltitude
         val fixCapturedAt = lastFixCapturedAtMs
         val fixProvider = lastFixProvider
+        val fixElapsedNanos = lastFixElapsedNanos
         // Stored/broadcast label fuses the GPS classifier with the Activity Recognition
         // reading (staleness-aware); interval selection stays keyed off the cadence state.
         val motionStateLabel = MotionFusion.fuse(currentMotionState, arMotionState, arIsStale()).name
@@ -1309,9 +1332,16 @@ class HeartbeatService : LifecycleService() {
         // snapshotted here so the stored row and the log describe the same reading.
         val attemptTimeMs = System.currentTimeMillis()
         val hasFix = fixLat != 0.0 || fixLng != 0.0
-        val fixAgeSeconds = if (hasFix && fixCapturedAt > 0L) {
-            ((attemptTimeMs - fixCapturedAt) / 1000L).coerceAtLeast(0L)
-        } else 0L
+        // Measured on the monotonic clock: a wall clock set hours off would otherwise make
+        // every fix look stale. The wall-clock difference is only a fallback for a fix that
+        // carries no elapsed-realtime stamp.
+        val fixAgeSeconds = when {
+            !hasFix -> 0L
+            fixElapsedNanos > 0L ->
+                ((SystemClock.elapsedRealtimeNanos() - fixElapsedNanos) / 1_000_000_000L).coerceAtLeast(0L)
+            fixCapturedAt > 0L -> ((attemptTimeMs - fixCapturedAt) / 1000L).coerceAtLeast(0L)
+            else -> 0L
+        }
         val permissionGranted =
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -1336,7 +1366,7 @@ class HeartbeatService : LifecycleService() {
 
         // Quality is data: evaluate each consumer's policy, but never use the verdict to
         // throw the reading away. SOS bypasses the gate, as it always has.
-        val sharingThresholds = LocationQualityConfig.fromSettings(currentSettings).sharing
+        val sharingThresholds = SharingQuality.thresholds(currentSettings)
         // While stationary the FixSelector deliberately holds the last sharp fix instead of
         // wobbling to each coarse poll, so that position can be old without becoming wrong:
         // the device provably has not moved. Age is still recorded on the reading; only the
@@ -1346,11 +1376,19 @@ class HeartbeatService : LifecycleService() {
         } else {
             sharingThresholds
         }
-        val verdict = LocationQualityGate.evaluate(
+        val gateVerdict = LocationQualityGate.evaluate(
             ReadingQuality(fixAccuracy, fixAgeSeconds, hasFix, permissionGranted),
             gateThresholds,
             bypass = isSos,
         )
+        // During the fresh-fix hold the cached position predates the schedule window. It is
+        // never broadcast, so it must not be stored as accepted either: an accepted row would
+        // become the own pin and the newest history point, stamped now, at an old position.
+        val verdict = if (gateVerdict.accepted && !isSos && awaitingFreshFix) {
+            QualityVerdict(ReadingStatus.REJECTED, RejectReason.STALE)
+        } else {
+            gateVerdict
+        }
         if (cadencePulse) {
             if (verdict.accepted) consecutiveRejections = 0 else consecutiveRejections++
         }
@@ -1569,7 +1607,11 @@ class HeartbeatService : LifecycleService() {
                 Log.e(TAG, "Failed to send heartbeat", e)
             }
         }
-        return true
+        // An attempt without any position does not count as a pulse: the location callback
+        // pulses as soon as the first fix lands only while lastPulseElapsedMs is still 0, and
+        // counting an empty startup attempt would hold that first position back a whole
+        // interval. Cadence spacing is unaffected; it follows lastAttemptElapsedMs.
+        return hasFix
     }
 
     @SuppressLint("MissingPermission")
@@ -1590,6 +1632,7 @@ class HeartbeatService : LifecycleService() {
                             lastAccuracy = loc.accuracy
                             lastFixCapturedAtMs = loc.time
                             lastFixProvider = loc.provider ?: ""
+                            lastFixElapsedNanos = loc.elapsedRealtimeNanos
                             // Seed the outlier filter too, so the first live fix
                             // is sanity-checked against this cached position.
                             locationFilter.accept(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)

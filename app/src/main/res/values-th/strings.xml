@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">ลบตำแหน่ง</string>
     <string name="contacts_last_seen">เห็นล่าสุด: %1$s</string>
     <string name="contacts_no_location_yet">ยังไม่มีข้อมูลตำแหน่ง</string>
+    <string name="contacts_last_updated">อัปเดตล่าสุด: %1$s</string>
+    <string name="contacts_last_updated_paused">อัปเดตล่าสุด: %1$s · หยุดการแชร์ชั่วคราว</string>
+    <string name="contacts_sharing_paused">หยุดการแชร์ชั่วคราว</string>
     <string name="contacts_view_sharing_settings">การตั้งค่าการแชร์</string>
     <string name="contacts_view_location_history">ประวัติตำแหน่ง</string>
     <string name="contacts_rename_contact">เปลี่ยนชื่อผู้ติดต่อ</string>
@@ -544,6 +547,21 @@
     <string name="history_within">ภายใน ±%1$s</string>
     <string name="history_detail_movement">การเคลื่อนไหว</string>
     <string name="history_movement_desc">%1$s %2$s มุ่งหน้า %3$s</string>
+    <string name="history_rejected">ถูกปฏิเสธ</string>
+    <string name="history_reject_reason">เหตุผลที่ปฏิเสธ</string>
+    <string name="history_reject_too_imprecise">ไม่แม่นยำพอ</string>
+    <string name="history_reject_stale">ตำแหน่งเก่า</string>
+    <string name="history_reject_no_fix">ไม่มีตำแหน่ง</string>
+    <string name="history_reject_permission_denied">ถูกปฏิเสธสิทธิ์ตำแหน่ง</string>
+    <string name="history_reject_other">อื่นๆ</string>
+    <string name="history_fix_age">อายุของตำแหน่ง</string>
+    <string name="history_fix_age_value">%1$d วิ</string>
+    <string name="history_detail_source">แหล่งที่มา</string>
+    <string name="history_source_network">เครือข่าย</string>
+    <string name="history_source_fused">แบบผสม</string>
+    <string name="history_detail_fix_taken">เวลาที่ได้ตำแหน่ง</string>
+    <string name="history_gap_title">ไม่มีตำแหน่ง %1$s</string>
+    <string name="history_gap_attempts">จำนวนครั้ง: %1$d</string>
 
     <string name="common_create">สร้าง</string>
 

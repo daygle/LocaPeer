@@ -77,6 +77,8 @@ updates:
           - "junit*"
           - "org.mockito*"
           - "androidx.test*"
+          - "org.robolectric*"
+          - "io.github.takahirom.roborazzi*"
 
   # -----------------------------------------------------------------------------------------
   # GitHub Actions ecosystem: keep CI actions fresh

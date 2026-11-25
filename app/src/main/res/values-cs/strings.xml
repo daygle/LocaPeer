@@ -269,6 +269,9 @@
     <string name="contacts_bulk_delete_locations">Smazat polohy</string>
     <string name="contacts_last_seen">Naposledy online: %1$s</string>
     <string name="contacts_no_location_yet">Zatím žádné údaje o poloze</string>
+    <string name="contacts_last_updated">Naposledy aktualizováno: %1$s</string>
+    <string name="contacts_last_updated_paused">Naposledy aktualizováno: %1$s · Sdílení pozastaveno</string>
+    <string name="contacts_sharing_paused">Sdílení pozastaveno</string>
     <string name="contacts_view_sharing_settings">Nastavení sdílení</string>
     <string name="contacts_view_location_history">Historie polohy</string>
     <string name="contacts_rename_contact">Přejmenovat kontakt</string>
@@ -574,6 +577,21 @@
     <string name="history_within">v rozmezí ±%1$s</string>
     <string name="history_detail_movement">Pohyb</string>
     <string name="history_movement_desc">%1$s %2$s, směr %3$s</string>
+    <string name="history_rejected">Odmítnuto</string>
+    <string name="history_reject_reason">Důvod odmítnutí</string>
+    <string name="history_reject_too_imprecise">Příliš nepřesné</string>
+    <string name="history_reject_stale">Zastaralá poloha</string>
+    <string name="history_reject_no_fix">Bez polohy</string>
+    <string name="history_reject_permission_denied">Oprávnění k poloze zamítnuto</string>
+    <string name="history_reject_other">Jiné</string>
+    <string name="history_fix_age">Stáří polohy</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Zdroj</string>
+    <string name="history_source_network">Síť</string>
+    <string name="history_source_fused">Kombinovaný</string>
+    <string name="history_detail_fix_taken">Poloha zjištěna</string>
+    <string name="history_gap_title">Bez polohy %1$s</string>
+    <string name="history_gap_attempts">Pokusy: %1$d</string>
 
     <string name="common_create">Vytvořit</string>
 

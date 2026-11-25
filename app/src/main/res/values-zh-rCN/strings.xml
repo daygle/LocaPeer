@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">删除位置</string>
     <string name="contacts_last_seen">最后上线: %1$s</string>
     <string name="contacts_no_location_yet">尚无位置数据</string>
+    <string name="contacts_last_updated">上次更新：%1$s</string>
+    <string name="contacts_last_updated_paused">上次更新：%1$s · 共享已暂停</string>
+    <string name="contacts_sharing_paused">共享已暂停</string>
     <string name="contacts_view_sharing_settings">查看共享设置</string>
     <string name="contacts_view_location_history">查看位置历史</string>
     <string name="contacts_rename_contact">重命名联系人</string>
@@ -544,6 +547,21 @@
     <string name="history_within">±%1$s 以内</string>
     <string name="history_detail_movement">运动</string>
     <string name="history_movement_desc">%1$s %2$s 朝向 %3$s</string>
+    <string name="history_rejected">已拒绝</string>
+    <string name="history_reject_reason">拒绝原因</string>
+    <string name="history_reject_too_imprecise">精度不足</string>
+    <string name="history_reject_stale">过时的位置</string>
+    <string name="history_reject_no_fix">无位置</string>
+    <string name="history_reject_permission_denied">位置权限被拒绝</string>
+    <string name="history_reject_other">其他</string>
+    <string name="history_fix_age">位置时长</string>
+    <string name="history_fix_age_value">%1$d 秒</string>
+    <string name="history_detail_source">来源</string>
+    <string name="history_source_network">网络</string>
+    <string name="history_source_fused">综合</string>
+    <string name="history_detail_fix_taken">定位时间</string>
+    <string name="history_gap_title">无位置 %1$s</string>
+    <string name="history_gap_attempts">尝试次数：%1$d</string>
 
     <string name="common_create">创建</string>
 

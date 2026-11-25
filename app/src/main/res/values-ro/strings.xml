@@ -267,6 +267,9 @@
     <string name="contacts_bulk_delete_locations">Ștergeți locațiile</string>
     <string name="contacts_last_seen">Văzut ultima dată: %1$s</string>
     <string name="contacts_no_location_yet">Nicio dată de locație încă</string>
+    <string name="contacts_last_updated">Ultima actualizare: %1$s</string>
+    <string name="contacts_last_updated_paused">Ultima actualizare: %1$s · Partajare întreruptă</string>
+    <string name="contacts_sharing_paused">Partajare întreruptă</string>
     <string name="contacts_view_sharing_settings">Setări de partajare</string>
     <string name="contacts_view_location_history">Istoricul locațiilor</string>
     <string name="contacts_rename_contact">Redenumiți contactul</string>
@@ -564,6 +567,21 @@
     <string name="history_within">în limita a ±%1$s</string>
     <string name="history_detail_movement">Mișcare</string>
     <string name="history_movement_desc">%1$s %2$s, direcție %3$s</string>
+    <string name="history_rejected">Respinsă</string>
+    <string name="history_reject_reason">Motivul respingerii</string>
+    <string name="history_reject_too_imprecise">Prea imprecisă</string>
+    <string name="history_reject_stale">Poziție învechită</string>
+    <string name="history_reject_no_fix">Fără poziție</string>
+    <string name="history_reject_permission_denied">Permisiunea de localizare refuzată</string>
+    <string name="history_reject_other">Altul</string>
+    <string name="history_fix_age">Vechimea poziției</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Sursă</string>
+    <string name="history_source_network">Rețea</string>
+    <string name="history_source_fused">Combinată</string>
+    <string name="history_detail_fix_taken">Poziție determinată</string>
+    <string name="history_gap_title">Fără locație %1$s</string>
+    <string name="history_gap_attempts">Încercări: %1$d</string>
 
     <string name="common_create">Creați</string>
 

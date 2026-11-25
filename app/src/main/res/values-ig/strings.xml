@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">Hichapụ Ebe</string>
     <string name="contacts_last_seen">Hụrụ ikpeazụ: %1$s</string>
     <string name="contacts_no_location_yet">Enweghị data ebe ugbu a</string>
+    <string name="contacts_last_updated">Emelitere ikpeazụ: %1$s</string>
+    <string name="contacts_last_updated_paused">Emelitere ikpeazụ: %1$s · Akwụsịtụrụ ịkekọrịta</string>
+    <string name="contacts_sharing_paused">Akwụsịtụrụ ịkekọrịta</string>
     <string name="contacts_view_sharing_settings">Ntọala Nkekọrịta</string>
     <string name="contacts_view_location_history">Akụkọ Ebe</string>
     <string name="contacts_rename_contact">Nye kọntaktị aha ọzọ</string>
@@ -544,6 +547,21 @@
     <string name="history_within">n\'ime ±%1$s</string>
     <string name="history_detail_movement">Mmegharị</string>
     <string name="history_movement_desc">%1$s %2$s na-aga %3$s</string>
+    <string name="history_rejected">Ajụrụ</string>
+    <string name="history_reject_reason">Ihe kpatara ajụjụ</string>
+    <string name="history_reject_too_imprecise">Ezighi ezi nke ukwuu</string>
+    <string name="history_reject_stale">Ọnọdụ ochie</string>
+    <string name="history_reject_no_fix">Enweghị ọnọdụ</string>
+    <string name="history_reject_permission_denied">Ajụrụ ikike ọnọdụ</string>
+    <string name="history_reject_other">Ndị ọzọ</string>
+    <string name="history_fix_age">Afọ ọnọdụ</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Isi mmalite</string>
+    <string name="history_source_network">Netwọk</string>
+    <string name="history_source_fused">Ejikọtara</string>
+    <string name="history_detail_fix_taken">Oge e weere ọnọdụ</string>
+    <string name="history_gap_title">Enweghị ọnọdụ %1$s</string>
+    <string name="history_gap_attempts">Mgbalị: %1$d</string>
 
     <string name="common_create">Mepụta</string>
 

@@ -269,6 +269,9 @@
     <string name="contacts_bulk_delete_locations">Usuń lokalizacje</string>
     <string name="contacts_last_seen">Ostatnio widziano: %1$s</string>
     <string name="contacts_no_location_yet">Brak danych lokalizacji</string>
+    <string name="contacts_last_updated">Ostatnia aktualizacja: %1$s</string>
+    <string name="contacts_last_updated_paused">Ostatnia aktualizacja: %1$s · Udostępnianie wstrzymane</string>
+    <string name="contacts_sharing_paused">Udostępnianie wstrzymane</string>
     <string name="contacts_view_sharing_settings">Ustawienia udostępniania</string>
     <string name="contacts_view_location_history">Historia lokalizacji</string>
     <string name="contacts_rename_contact">Zmień nazwę kontaktu</string>
@@ -574,6 +577,21 @@
     <string name="history_within">w promieniu ±%1$s</string>
     <string name="history_detail_movement">Ruch</string>
     <string name="history_movement_desc">%1$s %2$s, kurs %3$s</string>
+    <string name="history_rejected">Odrzucony</string>
+    <string name="history_reject_reason">Powód odrzucenia</string>
+    <string name="history_reject_too_imprecise">Zbyt niedokładny</string>
+    <string name="history_reject_stale">Nieaktualna pozycja</string>
+    <string name="history_reject_no_fix">Brak pozycji</string>
+    <string name="history_reject_permission_denied">Odmowa dostępu do lokalizacji</string>
+    <string name="history_reject_other">Inne</string>
+    <string name="history_fix_age">Wiek pozycji</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_detail_source">Źródło</string>
+    <string name="history_source_network">Sieć</string>
+    <string name="history_source_fused">Łączone</string>
+    <string name="history_detail_fix_taken">Pozycja ustalona</string>
+    <string name="history_gap_title">Brak lokalizacji %1$s</string>
+    <string name="history_gap_attempts">Próby: %1$d</string>
 
     <string name="common_create">Utwórz</string>
 

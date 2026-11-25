@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">स्थान हटाएँ</string>
     <string name="contacts_last_seen">अंतिम बार देखा गया: %1$s</string>
     <string name="contacts_no_location_yet">अभी कोई स्थान डेटा नहीं</string>
+    <string name="contacts_last_updated">अंतिम अपडेट: %1$s</string>
+    <string name="contacts_last_updated_paused">अंतिम अपडेट: %1$s · शेयरिंग रोकी गई</string>
+    <string name="contacts_sharing_paused">शेयरिंग रोकी गई</string>
     <string name="contacts_view_sharing_settings">साझाकरण सेटिंग्स</string>
     <string name="contacts_view_location_history">स्थान इतिहास</string>
     <string name="contacts_rename_contact">संपर्क का नाम बदलें</string>
@@ -554,6 +557,21 @@
     <string name="history_within">±%1$s के भीतर</string>
     <string name="history_detail_movement">गति</string>
     <string name="history_movement_desc">%1$s %2$s, दिशा %3$s</string>
+    <string name="history_rejected">अस्वीकृत</string>
+    <string name="history_reject_reason">अस्वीकृति का कारण</string>
+    <string name="history_reject_too_imprecise">बहुत अशुद्ध</string>
+    <string name="history_reject_stale">पुरानी स्थिति</string>
+    <string name="history_reject_no_fix">कोई स्थिति नहीं</string>
+    <string name="history_reject_permission_denied">लोकेशन अनुमति अस्वीकृत</string>
+    <string name="history_reject_other">अन्य</string>
+    <string name="history_fix_age">स्थिति की आयु</string>
+    <string name="history_fix_age_value">%1$d से</string>
+    <string name="history_detail_source">स्रोत</string>
+    <string name="history_source_network">नेटवर्क</string>
+    <string name="history_source_fused">संयुक्त</string>
+    <string name="history_detail_fix_taken">स्थिति ली गई</string>
+    <string name="history_gap_title">कोई स्थान नहीं %1$s</string>
+    <string name="history_gap_attempts">प्रयास: %1$d</string>
 
     <string name="common_create">बनाएँ</string>
 

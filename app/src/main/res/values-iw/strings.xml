@@ -267,6 +267,9 @@
     <string name="contacts_bulk_delete_locations">מחק מיקומים</string>
     <string name="contacts_last_seen">נראה לאחרונה: %1$s</string>
     <string name="contacts_no_location_yet">עדיין אין נתוני מיקום</string>
+    <string name="contacts_last_updated">עודכן לאחרונה: %1$s</string>
+    <string name="contacts_last_updated_paused">עודכן לאחרונה: %1$s · השיתוף מושהה</string>
+    <string name="contacts_sharing_paused">השיתוף מושהה</string>
     <string name="contacts_view_sharing_settings">הגדרות שיתוף</string>
     <string name="contacts_view_location_history">היסטוריית מיקום</string>
     <string name="contacts_rename_contact">שנה שם איש קשר</string>
@@ -564,6 +567,21 @@
     <string name="history_within">בטווח ±%1$s</string>
     <string name="history_detail_movement">תנועה</string>
     <string name="history_movement_desc">%1$s %2$s בכיוון %3$s</string>
+    <string name="history_rejected">נדחה</string>
+    <string name="history_reject_reason">סיבת הדחייה</string>
+    <string name="history_reject_too_imprecise">לא מדויק מדי</string>
+    <string name="history_reject_stale">מיקום ישן</string>
+    <string name="history_reject_no_fix">אין מיקום</string>
+    <string name="history_reject_permission_denied">הרשאת המיקום נדחתה</string>
+    <string name="history_reject_other">אחר</string>
+    <string name="history_fix_age">גיל המיקום</string>
+    <string name="history_fix_age_value">%1$d ש׳</string>
+    <string name="history_detail_source">מקור</string>
+    <string name="history_source_network">רשת</string>
+    <string name="history_source_fused">משולב</string>
+    <string name="history_detail_fix_taken">מועד קביעת המיקום</string>
+    <string name="history_gap_title">אין מיקום %1$s</string>
+    <string name="history_gap_attempts">ניסיונות: %1$d</string>
 
     <string name="common_create">צור</string>
 

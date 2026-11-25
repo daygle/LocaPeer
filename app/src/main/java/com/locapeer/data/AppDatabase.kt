@@ -19,10 +19,9 @@ import com.locapeer.data.entity.*
         CircleEntity::class,
         CircleMemberEntity::class,
         ContactAddReceiptEntity::class,
-        MessageReactionEntity::class,
-        LocationRejectAggregateEntity::class
+        MessageReactionEntity::class
     ],
-    version = 18,
+    version = 19,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -39,5 +38,4 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun pendingRequestDao(): PendingRequestDao
     abstract fun circleDao(): CircleDao
     abstract fun contactAddReceiptDao(): ContactAddReceiptDao
-    abstract fun locationRejectAggregateDao(): LocationRejectAggregateDao
 }

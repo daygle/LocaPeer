@@ -347,11 +347,22 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v19: drops `location_reject_aggregates`. The hourly summaries of old rejected readings
+     * were written but never read or shown anywhere, so rejected readings are now simply
+     * deleted once their 7-day window ends. Nothing else changes.
+     */
+    private val MIGRATION_18_19 = object : Migration(18, 19) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("DROP TABLE IF EXISTS `location_reject_aggregates`")
+        }
+    }
+
     val ALL_MIGRATIONS = arrayOf(
         MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6,
         MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11,
         MIGRATION_11_12, MIGRATION_12_13, MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16,
-        MIGRATION_16_17, MIGRATION_17_18
+        MIGRATION_16_17, MIGRATION_17_18, MIGRATION_18_19
     )
 
     @Provides
@@ -385,5 +396,4 @@ object DatabaseModule {
     @Provides fun providePendingRequestDao(db: AppDatabase): PendingRequestDao = db.pendingRequestDao()
     @Provides fun provideCircleDao(db: AppDatabase): CircleDao = db.circleDao()
     @Provides fun provideContactAddReceiptDao(db: AppDatabase): ContactAddReceiptDao = db.contactAddReceiptDao()
-    @Provides fun provideLocationRejectAggregateDao(db: AppDatabase): com.locapeer.data.dao.LocationRejectAggregateDao = db.locationRejectAggregateDao()
 }

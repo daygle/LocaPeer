@@ -20,55 +20,27 @@ data class QualityThresholds(
     val fixAgeGateEnabled: Boolean get() = maxFixAgeSeconds > 0
 }
 
-/**
- * The single quality-policy object, resolved once per reading and shared by every consumer.
- *
- * Previously the app had one capture-time discard (the send-accuracy setting), which also
- * stopped the reading from reaching local history and left no record behind. Each consumer
- * now names its own bar:
- *
- * - [sharing] - contacts and live sharing. A reading that fails this is stored as rejected
- *   and never enters a sharing payload.
- * - [history] - the user's own timeline. It shows everything by default; the history view
- *   applies this threshold only as an explicit "hide low-accuracy" display toggle.
- * - [analytics] / [tripDetection] - deliberately unrestricted: quality is stored as data,
- *   so these consumers carry the flags and choose for themselves. Trip detection keeps
- *   its existing multi-sample hysteresis and never flips on a single reading.
- */
-data class LocationQualityConfig(
-    val sharing: QualityThresholds,
-    val history: QualityThresholds,
-    val analytics: QualityThresholds,
-    val tripDetection: QualityThresholds,
-) {
-    companion object {
-        /**
-         * A fix older than this is treated as stale for sharing even if it is accurate.
-         *
-         * Deliberately generous: the longest normal cadence is the 30-minute low-battery
-         * interval, and the stationary profile can hold a sharp fix across several coarse
-         * polls, so anything near the cadence would newly silence a healthy device. An hour
-         * only rejects a position that is genuinely from a dead provider.
-         */
-        const val DEFAULT_MAX_FIX_AGE_SECONDS = 3600
+/** The sharing quality policy: what contacts and live sharing are willing to receive. */
+object SharingQuality {
+    /**
+     * A fix older than this is treated as stale for sharing even if it is accurate.
+     *
+     * Deliberately generous: the longest normal cadence is the 30-minute low-battery
+     * interval, and the stationary profile can hold a sharp fix across several coarse
+     * polls, so anything near the cadence would newly silence a healthy device. An hour
+     * only rejects a position that is genuinely from a dead provider.
+     */
+    const val DEFAULT_MAX_FIX_AGE_SECONDS = 3600
 
-        /**
-         * Resolves the per-consumer policy from settings. The accuracy values are the
-         * existing `sendMaxAccuracyMeters` / `historyMaxAccuracyMeters` settings unchanged.
-         */
-        fun fromSettings(settings: AppSettings): LocationQualityConfig = LocationQualityConfig(
-            sharing = QualityThresholds(
-                maxAccuracyMeters = settings.sendMaxAccuracyMeters,
-                maxFixAgeSeconds = DEFAULT_MAX_FIX_AGE_SECONDS,
-            ),
-            history = QualityThresholds(
-                maxAccuracyMeters = settings.historyMaxAccuracyMeters,
-                maxFixAgeSeconds = 0,
-            ),
-            analytics = QualityThresholds(),
-            tripDetection = QualityThresholds(),
-        )
-    }
+    /**
+     * Thresholds for sharing. A reading that fails them is stored as rejected and never
+     * enters a sharing payload. The accuracy value is the existing `sendMaxAccuracyMeters`
+     * setting unchanged.
+     */
+    fun thresholds(settings: AppSettings): QualityThresholds = QualityThresholds(
+        maxAccuracyMeters = settings.sendMaxAccuracyMeters,
+        maxFixAgeSeconds = DEFAULT_MAX_FIX_AGE_SECONDS,
+    )
 }
 
 /** The quality facts recorded for one reading attempt, independent of any consumer. */

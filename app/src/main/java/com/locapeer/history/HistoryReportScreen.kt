@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.LocationOff
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
@@ -50,6 +51,7 @@ import java.util.Date
 // Locale.US below formats the time pickers' "%02d:%02d" as ASCII digits on purpose: it is
 // a machine-formatted value, not localized text.
 import java.util.Locale
+import java.util.SimpleTimeZone
 import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -77,7 +79,6 @@ fun HistoryReportScreen(
     val startTimeOffset by vm.startTimeOffset.collectAsStateWithLifecycle()
     val endTimeOffset by vm.endTimeOffset.collectAsStateWithLifecycle()
     val heartbeats by vm.heartbeats.collectAsStateWithLifecycle()
-    val hideLowAccuracy by vm.hideLowAccuracy.collectAsStateWithLifecycle()
     val addresses by vm.addresses.collectAsStateWithLifecycle()
     val selfDisplayName by vm.selfDisplayName.collectAsStateWithLifecycle()
 
@@ -244,32 +245,6 @@ fun HistoryReportScreen(
                                 }
                             }
                         }
-
-                        HorizontalDivider(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            thickness = 0.5.dp,
-                            color = MaterialTheme.colorScheme.outlineVariant
-                        )
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 12.dp, vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            // Display-only: rejected readings stay stored either way, and
-                            // turning this back off reveals them again immediately.
-                            FilterChip(
-                                selected = hideLowAccuracy,
-                                onClick = { vm.setHideLowAccuracy(!hideLowAccuracy) },
-                                label = {
-                                    Text(
-                                        stringResource(R.string.settings_hide_low_accuracy),
-                                        style = MaterialTheme.typography.labelMedium
-                                    )
-                                }
-                            )
-                        }
                     }
                 }
 
@@ -391,15 +366,22 @@ private fun HistoryListTab(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(Modifier.height(8.dp))
-            val newestFirst = heartbeats.asReversed()
+            // Runs of attempts with no position (location off, permission withdrawn) collapse
+            // into one gap line, so a long outage explains itself without flooding the list.
+            val newestFirst = remember(heartbeats) {
+                HistoryListGrouping.group(heartbeats).asReversed()
+            }
             LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(newestFirst, key = { it.id }) { ping ->
-                    HistoryPingCard(
-                        ping = ping,
-                        address = addresses[ping.id],
-                        timeFormat = timeFormat,
-                        onClick = { selectedPing = ping }
-                    )
+                items(newestFirst, key = { it.key }) { entry ->
+                    when (entry) {
+                        is HistoryListEntry.Reading -> HistoryPingCard(
+                            ping = entry.ping,
+                            address = addresses[entry.ping.id],
+                            timeFormat = timeFormat,
+                            onClick = { selectedPing = entry.ping }
+                        )
+                        is HistoryListEntry.Gap -> HistoryGapCard(entry, timeFormat)
+                    }
                 }
                 item { Spacer(Modifier.height(16.dp)) }
             }
@@ -411,6 +393,46 @@ private fun HistoryListTab(
                 address = addresses[ping.id],
                 onDismiss = { selectedPing = null }
             )
+        }
+    }
+}
+
+/** One line standing in for a run of attempts that produced no position. */
+@Composable
+private fun HistoryGapCard(gap: HistoryListEntry.Gap, timeFormat: SimpleDateFormat) {
+    val first = timeFormat.format(Date(gap.firstMs))
+    val span = if (gap.count == 1) first else "$first – ${timeFormat.format(Date(gap.lastMs))}"
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+    ) {
+        Row(
+            // Dimmed like other readings that were never shared.
+            modifier = Modifier
+                .padding(horizontal = 12.dp, vertical = 10.dp)
+                .alpha(0.6f),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                Icons.Default.LocationOff,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(20.dp)
+            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    stringResource(R.string.history_gap_title, span),
+                    style = MaterialTheme.typography.bodySmall,
+                    fontWeight = FontWeight.Medium
+                )
+                Text(
+                    rejectReasonLabel(gap.reason) + " · " +
+                        stringResource(R.string.history_gap_attempts, gap.count),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }
@@ -486,23 +508,7 @@ private fun HistoryMapTab(
             if (acceptedPings.size >= 2) {
                 add(MapLine(acceptedPings.map { LatLng(it.lat, it.lng) }, lineArgb, widthDp = 3f))
             }
-            // A dotted trail through the rejected attempts: alternating short segments read
-            // as a separate, uncertain path instead of joining the solid line.
-            val dottedArgb = android.graphics.Color.argb(150, 128, 128, 128)
-            var index = 0
-            while (index + 1 < rejectedPings.size) {
-                add(
-                    MapLine(
-                        listOf(
-                            LatLng(rejectedPings[index].lat, rejectedPings[index].lng),
-                            LatLng(rejectedPings[index + 1].lat, rejectedPings[index + 1].lng)
-                        ),
-                        dottedArgb,
-                        widthDp = 2f
-                    )
-                )
-                index += 2
-            }
+            // Rejected readings get no line of their own: they show as dimmed dots only.
         }
     }
     val markers = remember(mappedPings, selectedId) {
@@ -877,6 +883,20 @@ private fun HistoryPingDetailDialog(
                     DetailRow(stringResource(R.string.map_stat_elevation), DisplayFormat.elevationValue(ping.altitude))
                 }
                 DetailRow(stringResource(R.string.map_stat_battery), "${ping.battery}%")
+                // Which provider produced the fix: the first thing to check when a reading
+                // was imprecise. Only this device's own readings record it.
+                if (ping.source.isNotBlank()) {
+                    DetailRow(stringResource(R.string.history_detail_source), sourceLabel(ping.source))
+                }
+                // When the provider actually took the fix, in the wearer's time zone at that
+                // moment. Own readings only (the same rows that record a source): contacts'
+                // readings carry neither a real capture time nor an offset.
+                if (ping.source.isNotBlank() && ping.capturedAt > 0L) {
+                    DetailRow(
+                        stringResource(R.string.history_detail_fix_taken),
+                        captureTimeLabel(ping.capturedAt, ping.capturedAtOffsetMinutes)
+                    )
+                }
                 if (!ping.isAccepted) {
                     DetailRow(
                         stringResource(R.string.history_reject_reason),
@@ -908,15 +928,29 @@ private fun DetailRow(label: String, value: String) {
 }
 
 /**
- * A rejected attempt with no position of its own (no fix, or permission withdrawn at the
- * attempt) is history-list evidence only; plotting its placeholder coordinates would put a
- * point on the map where the device never reported being.
+ * [capturedAtMs] as a clock time in the zone the device was in when the fix was taken. When
+ * that differs from the current zone (the reading was taken while travelling) the stored UTC
+ * offset is appended, so the time is never mistaken for local time here.
  */
-private fun HeartbeatEntity.hasMappedPosition(): Boolean =
-    isAccepted || when (parsedRejectReason) {
-        RejectReason.NO_FIX, RejectReason.PERMISSION_DENIED -> false
-        else -> lat != 0.0 || lng != 0.0
-    }
+private fun captureTimeLabel(capturedAtMs: Long, offsetMinutes: Int): String {
+    val format = SimpleDateFormat(DisplayFormat.timePattern(withSeconds = true), DisplayFormat.locale())
+    format.timeZone = SimpleTimeZone(offsetMinutes * 60_000, "capture")
+    val time = format.format(Date(capturedAtMs))
+    val currentOffsetMinutes = TimeZone.getDefault().getOffset(capturedAtMs) / 60_000
+    if (currentOffsetMinutes == offsetMinutes) return time
+    val sign = if (offsetMinutes < 0) "-" else "+"
+    val abs = kotlin.math.abs(offsetMinutes)
+    return "%s (UTC%s%02d:%02d)".format(Locale.ROOT, time, sign, abs / 60, abs % 60)
+}
+
+/** Readable name for a stored location provider; an unrecognised provider is shown as stored. */
+@Composable
+private fun sourceLabel(source: String): String = when (source.lowercase()) {
+    "gps" -> "GPS"
+    "network" -> stringResource(R.string.history_source_network)
+    "fused" -> stringResource(R.string.history_source_fused)
+    else -> source
+}
 
 /** Localized label for a stored reject-reason code; unknown/legacy values fall back to "Other". */
 @Composable

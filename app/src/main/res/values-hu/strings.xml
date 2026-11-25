@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Helyadatok törlése</string>
     <string name="contacts_last_seen">Utoljára látva: %1$s</string>
     <string name="contacts_no_location_yet">Még nincs helyadat</string>
+    <string name="contacts_last_updated">Utoljára frissítve: %1$s</string>
+    <string name="contacts_last_updated_paused">Utoljára frissítve: %1$s · Megosztás szüneteltetve</string>
+    <string name="contacts_sharing_paused">Megosztás szüneteltetve</string>
     <string name="contacts_view_sharing_settings">Megosztási beállítások</string>
     <string name="contacts_view_location_history">Helyelőzmények</string>
     <string name="contacts_rename_contact">Névjegy átnevezése</string>
@@ -554,6 +557,21 @@
     <string name="history_within">±%1$s tartományon belül</string>
     <string name="history_detail_movement">Mozgás</string>
     <string name="history_movement_desc">%1$s %2$s, irány: %3$s</string>
+    <string name="history_rejected">Elutasítva</string>
+    <string name="history_reject_reason">Elutasítás oka</string>
+    <string name="history_reject_too_imprecise">Túl pontatlan</string>
+    <string name="history_reject_stale">Elavult pozíció</string>
+    <string name="history_reject_no_fix">Nincs pozíció</string>
+    <string name="history_reject_permission_denied">Helyhozzáférés megtagadva</string>
+    <string name="history_reject_other">Egyéb</string>
+    <string name="history_fix_age">Pozíció kora</string>
+    <string name="history_fix_age_value">%1$d mp</string>
+    <string name="history_detail_source">Forrás</string>
+    <string name="history_source_network">Hálózat</string>
+    <string name="history_source_fused">Kombinált</string>
+    <string name="history_detail_fix_taken">Pozíció rögzítve</string>
+    <string name="history_gap_title">Nincs hely %1$s</string>
+    <string name="history_gap_attempts">Próbálkozások: %1$d</string>
 
     <string name="common_create">Létrehozás</string>
 

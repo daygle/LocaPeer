@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">ਟਿਕਾਣੇ ਮਿਟਾਓ</string>
     <string name="contacts_last_seen">ਆਖਰੀ ਵਾਰ ਦੇਖਿਆ ਗਿਆ: %1$s</string>
     <string name="contacts_no_location_yet">ਅਜੇ ਤੱਕ ਕੋਈ ਟਿਕਾਣਾ ਡਾਟਾ ਨਹੀਂ ਹੈ</string>
+    <string name="contacts_last_updated">ਆਖਰੀ ਅੱਪਡੇਟ: %1$s</string>
+    <string name="contacts_last_updated_paused">ਆਖਰੀ ਅੱਪਡੇਟ: %1$s · ਸਾਂਝਾਕਰਨ ਰੁਕਿਆ ਹੋਇਆ</string>
+    <string name="contacts_sharing_paused">ਸਾਂਝਾਕਰਨ ਰੁਕਿਆ ਹੋਇਆ</string>
     <string name="contacts_view_sharing_settings">ਸਾਂਝਾ ਕਰਨ ਦੀਆਂ ਸੈਟਿੰਗਾਂ</string>
     <string name="contacts_view_location_history">ਟਿਕਾਣਾ ਇਤਿਹਾਸ</string>
     <string name="contacts_rename_contact">ਸੰਪਰਕ ਦਾ ਨਾਂ ਬਦਲੋ</string>
@@ -554,6 +557,21 @@
     <string name="history_within">±%1$s ਦੇ ਅੰਦਰ</string>
     <string name="history_detail_movement">ਗਤੀ</string>
     <string name="history_movement_desc">%1$s %2$s ਵੱਲ ਜਾ ਰਿਹਾ ਹੈ %3$s</string>
+    <string name="history_rejected">ਰੱਦ ਕੀਤਾ</string>
+    <string name="history_reject_reason">ਰੱਦ ਕਰਨ ਦਾ ਕਾਰਨ</string>
+    <string name="history_reject_too_imprecise">ਬਹੁਤ ਗਲਤ</string>
+    <string name="history_reject_stale">ਪੁਰਾਣੀ ਸਥਿਤੀ</string>
+    <string name="history_reject_no_fix">ਕੋਈ ਸਥਿਤੀ ਨਹੀਂ</string>
+    <string name="history_reject_permission_denied">ਟਿਕਾਣਾ ਇਜਾਜ਼ਤ ਨਾਮਨਜ਼ੂਰ</string>
+    <string name="history_reject_other">ਹੋਰ</string>
+    <string name="history_fix_age">ਸਥਿਤੀ ਦੀ ਉਮਰ</string>
+    <string name="history_fix_age_value">%1$d ਸ</string>
+    <string name="history_detail_source">ਸਰੋਤ</string>
+    <string name="history_source_network">ਨੈੱਟਵਰਕ</string>
+    <string name="history_source_fused">ਸੰਯੁਕਤ</string>
+    <string name="history_detail_fix_taken">ਸਥਿਤੀ ਲਈ ਗਈ</string>
+    <string name="history_gap_title">ਕੋਈ ਟਿਕਾਣਾ ਨਹੀਂ %1$s</string>
+    <string name="history_gap_attempts">ਕੋਸ਼ਿਸ਼ਾਂ: %1$d</string>
 
     <string name="common_create">ਬਣਾਓ</string>
 

@@ -161,6 +161,12 @@ internal fun QrScannerView(
                     }
                 } else if (state.type == CameraState.Type.OPEN) {
                     // A later attempt got the camera, so the failure message no longer applies.
+                    // CameraX also reopens a camera that was merely in use on its own; drop
+                    // any retry queued by the earlier error, or it would tear down this
+                    // working camera and restart the preview a few seconds later.
+                    handler.removeCallbacksAndMessages(null)
+                    // Re-arm, so a failure after this recovery is reported and retried again.
+                    reportedUnavailable.set(false)
                     currentOnCameraAvailable()
                 }
             }

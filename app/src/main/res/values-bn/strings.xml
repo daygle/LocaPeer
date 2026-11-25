@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">অবস্থান মুছুন</string>
     <string name="contacts_last_seen">সর্বশেষ দেখা: %1$s</string>
     <string name="contacts_no_location_yet">এখনও কোনো অবস্থানের ডেটা নেই</string>
+    <string name="contacts_last_updated">সর্বশেষ আপডেট: %1$s</string>
+    <string name="contacts_last_updated_paused">সর্বশেষ আপডেট: %1$s · শেয়ারিং বিরতিতে</string>
+    <string name="contacts_sharing_paused">শেয়ারিং বিরতিতে</string>
     <string name="contacts_view_sharing_settings">শেয়ারিং সেটিংস</string>
     <string name="contacts_view_location_history">অবস্থানের ইতিহাস</string>
     <string name="contacts_rename_contact">পরিচিতির নাম পরিবর্তন করুন</string>
@@ -554,6 +557,21 @@
     <string name="history_within">±%1$s-এর মধ্যে</string>
     <string name="history_detail_movement">চলাচল</string>
     <string name="history_movement_desc">%1$s %2$s দিক %3$s</string>
+    <string name="history_rejected">প্রত্যাখ্যাত</string>
+    <string name="history_reject_reason">প্রত্যাখ্যানের কারণ</string>
+    <string name="history_reject_too_imprecise">যথেষ্ট নির্ভুল নয়</string>
+    <string name="history_reject_stale">পুরনো অবস্থান</string>
+    <string name="history_reject_no_fix">অবস্থান নেই</string>
+    <string name="history_reject_permission_denied">লোকেশন অনুমতি প্রত্যাখ্যাত</string>
+    <string name="history_reject_other">অন্যান্য</string>
+    <string name="history_fix_age">অবস্থানের বয়স</string>
+    <string name="history_fix_age_value">%1$d সে</string>
+    <string name="history_detail_source">উৎস</string>
+    <string name="history_source_network">নেটওয়ার্ক</string>
+    <string name="history_source_fused">সমন্বিত</string>
+    <string name="history_detail_fix_taken">অবস্থান নেওয়ার সময়</string>
+    <string name="history_gap_title">কোনো অবস্থান নেই %1$s</string>
+    <string name="history_gap_attempts">চেষ্টা: %1$d</string>
 
     <string name="common_create">তৈরি করুন</string>
 
