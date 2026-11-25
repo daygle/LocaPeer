@@ -17,8 +17,26 @@ interface MessageDao {
     @Delete
     suspend fun delete(message: MessageEntity)
 
-    @Query("SELECT * FROM messages WHERE peerId = :peerId AND isBlocked = 0 ORDER BY timestamp ASC")
-    fun getMessagesForPeer(peerId: String): Flow<List<MessageEntity>>
+    /**
+     * The newest [limit] visible messages of a thread (contact device id, or circle id for a
+     * circle), oldest first, for the chat screens. The Base64 media column is returned as NULL:
+     * this Flow re-runs on every messages-table write (each delivery tick and read receipt), and
+     * reading up to ~200 KB of media per row each time made long media-heavy chats slow. Bubbles
+     * load their own bytes through [getMediaBase64] when shown.
+     */
+    @Query(
+        "SELECT id, peerId, senderPublicKeyHex, content, timestamp, isMine, deliveryState, isRead, " +
+            "nostrEventId, nostrEventIdsByMember, isBlocked, groupId, contentType, NULL AS mediaBase64, " +
+            "mediaDurationMs, mediaFilename, mediaMimeType, reaction, peerReaction, remoteMessageId " +
+            "FROM (SELECT * FROM messages WHERE peerId = :peerId AND isBlocked = 0 " +
+            "ORDER BY timestamp DESC, id DESC LIMIT :limit) " +
+            "ORDER BY timestamp ASC, id ASC"
+    )
+    fun getRecentMessagesForPeer(peerId: String, limit: Int): Flow<List<MessageEntity>>
+
+    /** A single message's Base64 media bytes (see [getRecentMessagesForPeer]). */
+    @Query("SELECT mediaBase64 FROM messages WHERE id = :messageId")
+    suspend fun getMediaBase64(messageId: String): String?
 
     /**
      * Latest visible message per 1:1 conversation, newest first. The "latest row" lookup runs
@@ -107,7 +125,7 @@ interface MessageDao {
     suspend fun existsById(id: String): Boolean
 
     // --- Group / circle conversations. A group message stores the circle id in both peerId
-    // (thread key, so getMessagesForPeer works unchanged) and groupId (marker). ---
+    // (thread key, so getRecentMessagesForPeer works unchanged) and groupId (marker). ---
 
     /** Latest message per circle, newest first. Used to build the group conversation list. The
      *  lookup runs once per circle, not once per message row (see [getConversationSummaries]). */

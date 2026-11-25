@@ -40,6 +40,7 @@ import androidx.compose.material3.*
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.flatMapLatest
 import com.locapeer.ui.components.VisibleConversation
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
@@ -76,7 +77,7 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import android.util.Patterns
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 @Composable
 fun ChatScreen(
     peerId: String,
@@ -85,7 +86,11 @@ fun ChatScreen(
     onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
     vm: MessagingViewModel = hiltViewModel()
 ) {
-    val messagesFlow = remember(peerId) { vm.getMessages(peerId) }
+    // The newest page first; scrolling to the top raises the limit (see LoadOlderMessagesAtTop).
+    // flatMapLatest keeps showing the current page until the bigger one arrives, so the list
+    // never flashes empty while it grows.
+    val messageLimit = remember(peerId) { kotlinx.coroutines.flow.MutableStateFlow(CHAT_PAGE_SIZE) }
+    val messagesFlow = remember(peerId) { messageLimit.flatMapLatest { vm.getMessages(peerId, it) } }
     val messages by messagesFlow.collectAsStateWithLifecycle(initialValue = emptyList())
     val typingPeers by vm.typingPeers.collectAsStateWithLifecycle()
     val isPeerTyping = typingPeers.containsKey(peerId)
@@ -147,10 +152,10 @@ fun ChatScreen(
 
     VisibleConversation(peerId)
     LaunchedEffect(peerId) { vm.markRead(peerId) }
-    // Count from the previous emission, so the first load can jump straight to the newest
-    // message while later arrivals only follow when the user is already at the bottom.
-    var previousMessageCount by remember(peerId) { mutableIntStateOf(0) }
-    LaunchedEffect(messages.size) {
+    // Keyed on the newest message, not the list size: loading an older page grows the list at
+    // the top, and following that as an "arrival" would yank the reader to the bottom.
+    var previousNewestId by remember(peerId) { mutableStateOf<String?>(null) }
+    LaunchedEffect(messages.lastOrNull()?.id) {
         if (messages.isEmpty()) return@LaunchedEffect
         // Also mark messages arriving while the screen is open, otherwise a conversation the
         // user is actively reading still accrues an unread badge (and withholds the read
@@ -161,13 +166,14 @@ fun ChatScreen(
         val nearBottom = listState.layoutInfo.visibleItemsInfo.lastOrNull()
             ?.let { it.index >= messages.size - 3 } ?: false
         // A message the user just sent always brings them to the bottom, wherever they were.
-        val sentByMe = messages.size > previousMessageCount && messages.last().isMine
+        val sentByMe = previousNewestId != null && messages.last().isMine
         when {
-            previousMessageCount == 0 -> listState.scrollToItem(messages.size - 1)
+            previousNewestId == null -> listState.scrollToItem(messages.size - 1)
             nearBottom || sentByMe -> listState.animateScrollToItem(messages.size - 1)
         }
-        previousMessageCount = messages.size
+        previousNewestId = messages.last().id
     }
+    LoadOlderMessagesAtTop(listState, messages.size, messageLimit, ready = previousNewestId != null)
 
     if (showDeleteConversationDialog) {
         AlertDialog(
@@ -392,7 +398,9 @@ fun ChatScreen(
             verticalArrangement = Arrangement.spacedBy(4.dp),
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
-            items(messages, key = { it.id }) { msg ->
+            items(messages, key = { it.id }) { row ->
+                // Rows arrive without media bytes; the bubble's own are loaded on demand.
+                val msg = withMedia(row, vm::cachedMedia, vm::loadMedia)
                 SwipeToDeleteMessage(
                     msg = msg,
                     onDeleteLocal = { vm.deleteMessage(msg) },
