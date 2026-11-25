@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">Itikio kutoka kwa mwasiliani</string>
     <string name="peer_temp_share_sharing_off">Kushiriki eneo kumezimwa, kwa hivyo hakuna kinachotumwa kwa %1$s, hata wakati wa kushiriki kwa muda.</string>
     <string name="peer_send_needs_receive">%1$s pia anahitaji kuruhusu kupokea eneo lako katika programu yake, la sivyo masasisho yako yatapuuzwa.</string>
+    <string name="perm_exact_alarm_title">Kengele na vikumbusho</string>
+    <string name="perm_exact_alarm_granted">Masasisho yanabaki kwa wakati hata simu ikiwa haitumiki</string>
+    <string name="perm_exact_alarm_denied">Gusa ili kuruhusu, ili masasisho yabaki kwa wakati hata simu ikiwa haitumiki</string>
 </resources>

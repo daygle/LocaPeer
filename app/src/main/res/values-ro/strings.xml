@@ -1043,4 +1043,7 @@
     <string name="chat_cd_reaction_from_contact">Reacție de la contact</string>
     <string name="peer_temp_share_sharing_off">Partajarea locației este dezactivată, deci nu se trimite nimic către %1$s, nici măcar în timpul unei partajări temporare.</string>
     <string name="peer_send_needs_receive">%1$s trebuie să permită și primirea locației dvs. în aplicația sa, altfel actualizările dvs. sunt ignorate.</string>
+    <string name="perm_exact_alarm_title">Alarme și mementouri</string>
+    <string name="perm_exact_alarm_granted">Actualizările rămân la timp chiar și când telefonul este inactiv</string>
+    <string name="perm_exact_alarm_denied">Atingeți pentru a permite, ca actualizările să rămână la timp când telefonul este inactiv</string>
 </resources>

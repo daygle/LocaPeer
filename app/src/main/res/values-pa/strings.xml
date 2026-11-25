@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">ਸੰਪਰਕ ਤੋਂ ਪ੍ਰਤੀਕਿਰਿਆ</string>
     <string name="peer_temp_share_sharing_off">ਟਿਕਾਣਾ ਸਾਂਝਾਕਰਨ ਬੰਦ ਹੈ, ਇਸ ਲਈ ਅਸਥਾਈ ਸਾਂਝਾਕਰਨ ਦੌਰਾਨ ਵੀ %1$s ਨੂੰ ਕੁਝ ਨਹੀਂ ਭੇਜਿਆ ਜਾਂਦਾ।</string>
     <string name="peer_send_needs_receive">%1$s ਨੂੰ ਵੀ ਆਪਣੀ ਐਪ ਵਿੱਚ ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਪ੍ਰਾਪਤ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣੀ ਪਵੇਗੀ, ਨਹੀਂ ਤਾਂ ਤੁਹਾਡੇ ਅੱਪਡੇਟ ਅਣਡਿੱਠੇ ਕੀਤੇ ਜਾਣਗੇ।</string>
+    <string name="perm_exact_alarm_title">ਅਲਾਰਮ ਅਤੇ ਰੀਮਾਈਂਡਰ</string>
+    <string name="perm_exact_alarm_granted">ਫ਼ੋਨ ਵਿਹਲਾ ਹੋਣ \'ਤੇ ਵੀ ਅੱਪਡੇਟ ਸਮੇਂ ਸਿਰ ਰਹਿੰਦੇ ਹਨ</string>
+    <string name="perm_exact_alarm_denied">ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ ਟੈਪ ਕਰੋ, ਤਾਂ ਜੋ ਫ਼ੋਨ ਵਿਹਲਾ ਹੋਣ \'ਤੇ ਵੀ ਅੱਪਡੇਟ ਸਮੇਂ ਸਿਰ ਰਹਿਣ</string>
 </resources>

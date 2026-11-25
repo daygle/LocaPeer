@@ -1011,4 +1011,7 @@
     <string name="chat_cd_reaction_from_contact">Tindak balas daripada kenalan</string>
     <string name="peer_temp_share_sharing_off">Perkongsian lokasi dimatikan, jadi tiada apa-apa dihantar kepada %1$s, walaupun semasa perkongsian sementara.</string>
     <string name="peer_send_needs_receive">%1$s juga perlu membenarkan penerimaan lokasi anda dalam aplikasinya. Jika tidak, kemas kini anda akan diabaikan.</string>
+    <string name="perm_exact_alarm_title">Penggera &amp; peringatan</string>
+    <string name="perm_exact_alarm_granted">Kemas kini kekal tepat pada masanya semasa telefon melahu</string>
+    <string name="perm_exact_alarm_denied">Ketik untuk membenarkan, supaya kemas kini kekal tepat pada masanya semasa telefon melahu</string>
 </resources>

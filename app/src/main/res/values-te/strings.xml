@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">పరిచయం నుండి ప్రతిస్పందన</string>
     <string name="peer_temp_share_sharing_off">స్థానం భాగస్వామ్యం ఆఫ్‌లో ఉంది, కాబట్టి తాత్కాలిక భాగస్వామ్యం సమయంలో కూడా %1$sకి ఏమీ పంపబడదు.</string>
     <string name="peer_send_needs_receive">%1$s కూడా తమ యాప్‌లో మీ స్థానాన్ని స్వీకరించడానికి అనుమతించాలి, లేదంటే మీ అప్‌డేట్‌లు విస్మరించబడతాయి.</string>
+    <string name="perm_exact_alarm_title">అలారాలు &amp; రిమైండర్‌లు</string>
+    <string name="perm_exact_alarm_granted">ఫోన్ నిష్క్రియంగా ఉన్నా అప్‌డేట్‌లు సమయానికి వస్తాయి</string>
+    <string name="perm_exact_alarm_denied">అనుమతించడానికి నొక్కండి, దాంతో ఫోన్ నిష్క్రియంగా ఉన్నా అప్‌డేట్‌లు సమయానికి వస్తాయి</string>
 </resources>

@@ -1022,4 +1022,7 @@
     <string name="chat_cd_reaction_from_contact">Réaction du contact</string>
     <string name="peer_temp_share_sharing_off">Le partage de localisation est désactivé : rien n\'est envoyé à %1$s, même pendant un partage temporaire.</string>
     <string name="peer_send_needs_receive">%1$s doit aussi autoriser la réception de votre localisation dans son application, sinon vos mises à jour sont ignorées.</string>
+    <string name="perm_exact_alarm_title">Alarmes et rappels</string>
+    <string name="perm_exact_alarm_granted">Les mises à jour restent à l\'heure quand le téléphone est inactif</string>
+    <string name="perm_exact_alarm_denied">Appuyez pour autoriser, afin que les mises à jour restent à l\'heure quand le téléphone est inactif</string>
 </resources>

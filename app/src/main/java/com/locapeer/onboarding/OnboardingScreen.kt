@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.shouldShowRationale
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.locapeer.R
 
@@ -50,7 +51,7 @@ fun OnboardingScreen(
     val context = LocalContext.current
 
     val basicPermissionsState = rememberMultiplePermissionsState(
-        permissions = PermissionManager.REQUIRED_PERMISSIONS + PermissionManager.OPTIONAL_PERMISSIONS
+        permissions = PermissionManager.LOCATION_PERMISSIONS + PermissionManager.OPTIONAL_PERMISSIONS
     )
 
     val backgroundLocationLauncher = rememberLauncherForActivityResult(
@@ -410,12 +411,18 @@ private fun PermissionsStep(
 
     Spacer(Modifier.height(48.dp))
 
-    // Gate advancing on the required permissions only. The optional ones (e.g.
-    // Activity Recognition) are requested in the same prompt but their denial must
-    // not block onboarding - tracking still works without them.
-    val requiredGranted = permissionsState.permissions
-        .filter { it.permission in PermissionManager.REQUIRED_PERMISSIONS }
-        .all { it.status.isGranted }
+    // Advance once location is granted at either precision: "Approximate" (coarse only) is a
+    // valid choice the app works with, and requiring both left anyone who picked it stuck here.
+    // The optional ones (notifications, camera, activity recognition) are requested in the same
+    // prompt but their denial must not block onboarding - tracking still works without them.
+    val locationStates = permissionsState.permissions.filter { it.permission in PermissionManager.LOCATION_PERMISSIONS }
+    val requiredGranted = locationStates.any { it.status.isGranted }
+    // After a refusal or two Android stops showing the location prompt, and the button would
+    // then silently do nothing. Once asked and no longer promptable, send the user to the app's
+    // system settings instead, where location can still be allowed.
+    val context = LocalContext.current
+    var asked by remember { mutableStateOf(false) }
+    val canStillPrompt = locationStates.any { it.status.shouldShowRationale }
 
     // Explain what's about to be asked - especially the optional physical-activity
     // access - before the system dialogs appear, so the prompts have context.
@@ -437,6 +444,7 @@ private fun PermissionsStep(
             confirmButton = {
                 TextButton(onClick = {
                     showRationale = false
+                    asked = true
                     permissionsState.launchMultiplePermissionRequest()
                 }) { Text(stringResource(R.string.common_continue)) }
             },
@@ -450,7 +458,10 @@ private fun PermissionsStep(
         LaunchedEffect(Unit) { onNext() }
     } else {
         Button(
-            onClick = { showRationale = true },
+            onClick = {
+                if (asked && !canStillPrompt) PermissionManager.openAppDetailsSettings(context)
+                else showRationale = true
+            },
             modifier = Modifier.fillMaxWidth().height(56.dp),
             shape = RoundedCornerShape(16.dp)
         ) {

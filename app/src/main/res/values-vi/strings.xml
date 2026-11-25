@@ -1011,4 +1011,7 @@
     <string name="chat_cd_reaction_from_contact">Cảm xúc từ liên hệ</string>
     <string name="peer_temp_share_sharing_off">Chia sẻ vị trí đang tắt, vì vậy không có gì được gửi đến %1$s, kể cả trong thời gian chia sẻ tạm thời.</string>
     <string name="peer_send_needs_receive">%1$s cũng phải cho phép nhận vị trí của bạn trong ứng dụng của họ, nếu không các cập nhật của bạn sẽ bị bỏ qua.</string>
+    <string name="perm_exact_alarm_title">Chuông báo và lời nhắc</string>
+    <string name="perm_exact_alarm_granted">Cập nhật vẫn đúng giờ khi điện thoại ở chế độ chờ</string>
+    <string name="perm_exact_alarm_denied">Nhấn để cho phép, để cập nhật vẫn đúng giờ khi điện thoại ở chế độ chờ</string>
 </resources>

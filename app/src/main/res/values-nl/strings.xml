@@ -1022,4 +1022,7 @@
     <string name="chat_cd_reaction_from_contact">Reactie van contact</string>
     <string name="peer_temp_share_sharing_off">Locatie delen staat uit, dus er wordt niets naar %1$s gestuurd, ook niet tijdens tijdelijk delen.</string>
     <string name="peer_send_needs_receive">%1$s moet in de eigen app ook het ontvangen van je locatie toestaan, anders worden je updates genegeerd.</string>
+    <string name="perm_exact_alarm_title">Wekkers en herinneringen</string>
+    <string name="perm_exact_alarm_granted">Updates blijven op tijd, ook als je telefoon inactief is</string>
+    <string name="perm_exact_alarm_denied">Tik om toe te staan, zodat updates op tijd blijven als je telefoon inactief is</string>
 </resources>

@@ -274,6 +274,13 @@ class SettingsViewModel @Inject constructor(
 
     fun setHeartbeatEnabled(enabled: Boolean) {
         viewModelScope.launch {
+            // While supervised, location must keep reaching the supervisor: pause, the share
+            // switch, the schedule and precision toward them are locked, and this switch stops
+            // location to everyone, so it is locked the same way (a restored backup included).
+            if (!enabled && prefs.settings.first().supervisionActive) {
+                Log.w(TAG, "Refusing to turn location sharing off while supervised")
+                return@launch
+            }
             if (enabled) {
                 val hasLocation = context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
                                  context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED

@@ -1051,4 +1051,7 @@
     <string name="geo_file_failed">Could not read or write that file</string>
     <string name="peer_temp_share_sharing_off">Location sharing is turned off, so nothing is sent to %1$s, even during a temporary share.</string>
     <string name="peer_send_needs_receive">%1$s also has to allow receiving your location in their app, otherwise your updates are ignored.</string>
+    <string name="perm_exact_alarm_title">Alarms &amp; reminders</string>
+    <string name="perm_exact_alarm_granted">Updates stay on time while your phone is idle</string>
+    <string name="perm_exact_alarm_denied">Tap to allow, so updates stay on time while your phone is idle</string>
 </resources>

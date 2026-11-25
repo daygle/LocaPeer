@@ -1026,4 +1026,7 @@
     <string name="chat_cd_reaction_from_contact">Kişiden gelen tepki</string>
     <string name="peer_temp_share_sharing_off">Konum paylaşımı kapalı, bu yüzden geçici paylaşım sırasında bile %1$s kişisine hiçbir şey gönderilmez.</string>
     <string name="peer_send_needs_receive">%1$s kişisinin de kendi uygulamasında konumunuzu almaya izin vermesi gerekir, aksi halde güncellemeleriniz yok sayılır.</string>
+    <string name="perm_exact_alarm_title">Alarmlar ve hatırlatıcılar</string>
+    <string name="perm_exact_alarm_granted">Telefon boştayken bile güncellemeler zamanında gelir</string>
+    <string name="perm_exact_alarm_denied">İzin vermek için dokunun; böylece telefon boştayken bile güncellemeler zamanında gelir</string>
 </resources>

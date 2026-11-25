@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">Reakció a névjegytől</string>
     <string name="peer_temp_share_sharing_off">A helymegosztás ki van kapcsolva, így %1$s semmit sem kap, ideiglenes megosztás alatt sem.</string>
     <string name="peer_send_needs_receive">%1$s alkalmazásában is engedélyezni kell az Ön helyzetének fogadását, különben a frissítései figyelmen kívül maradnak.</string>
+    <string name="perm_exact_alarm_title">Ébresztések és emlékeztetők</string>
+    <string name="perm_exact_alarm_granted">A frissítések pontosak maradnak, amikor a telefon tétlen</string>
+    <string name="perm_exact_alarm_denied">Koppintson az engedélyezéshez, hogy a frissítések tétlen telefonon is pontosak maradjanak</string>
 </resources>

@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">পরিচিতির প্রতিক্রিয়া</string>
     <string name="peer_temp_share_sharing_off">অবস্থান শেয়ারিং বন্ধ আছে, তাই অস্থায়ী শেয়ারের সময়ও %1$s-কে কিছু পাঠানো হয় না।</string>
     <string name="peer_send_needs_receive">%1$s-কেও তাদের অ্যাপে আপনার অবস্থান গ্রহণের অনুমতি দিতে হবে, নইলে আপনার আপডেট উপেক্ষা করা হবে।</string>
+    <string name="perm_exact_alarm_title">অ্যালার্ম ও রিমাইন্ডার</string>
+    <string name="perm_exact_alarm_granted">ফোন নিষ্ক্রিয় থাকলেও আপডেট সময়মতো হয়</string>
+    <string name="perm_exact_alarm_denied">অনুমতি দিতে ট্যাপ করুন, যাতে ফোন নিষ্ক্রিয় থাকলেও আপডেট সময়মতো হয়</string>
 </resources>

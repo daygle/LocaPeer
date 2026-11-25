@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">Αντίδραση από επαφή</string>
     <string name="peer_temp_share_sharing_off">Η κοινοποίηση τοποθεσίας είναι απενεργοποιημένη, οπότε δεν αποστέλλεται τίποτα στον/στην %1$s, ούτε κατά την προσωρινή κοινοποίηση.</string>
     <string name="peer_send_needs_receive">Ο/Η %1$s πρέπει επίσης να επιτρέπει τη λήψη της τοποθεσίας σας στην εφαρμογή του/της, αλλιώς οι ενημερώσεις σας αγνοούνται.</string>
+    <string name="perm_exact_alarm_title">Ξυπνητήρια και υπενθυμίσεις</string>
+    <string name="perm_exact_alarm_granted">Οι ενημερώσεις παραμένουν στην ώρα τους όταν το τηλέφωνο είναι αδρανές</string>
+    <string name="perm_exact_alarm_denied">Πατήστε για να επιτρέψετε, ώστε οι ενημερώσεις να παραμένουν στην ώρα τους όταν το τηλέφωνο είναι αδρανές</string>
 </resources>

@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">واکنش از مخاطب</string>
     <string name="peer_temp_share_sharing_off">اشتراک‌گذاری موقعیت خاموش است، بنابراین حتی در زمان اشتراک‌گذاری موقت هیچ چیزی برای %1$s ارسال نمی‌شود.</string>
     <string name="peer_send_needs_receive">%1$s نیز باید در برنامه خود دریافت موقعیت شما را مجاز کند، وگرنه به‌روزرسانی‌های شما نادیده گرفته می‌شوند.</string>
+    <string name="perm_exact_alarm_title">زنگ‌ها و یادآورها</string>
+    <string name="perm_exact_alarm_granted">به‌روزرسانی‌ها حتی هنگام بیکاری تلفن به‌موقع می‌مانند</string>
+    <string name="perm_exact_alarm_denied">برای اجازه دادن ضربه بزنید تا به‌روزرسانی‌ها هنگام بیکاری تلفن به‌موقع بمانند</string>
 </resources>

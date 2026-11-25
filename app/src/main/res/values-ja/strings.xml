@@ -1010,4 +1010,7 @@
     <string name="chat_cd_reaction_from_contact">連絡先からのリアクション</string>
     <string name="peer_temp_share_sharing_off">位置情報の共有がオフのため、一時的な共有中でも%1$sには何も送信されません。</string>
     <string name="peer_send_needs_receive">%1$sのアプリでもあなたの位置情報の受信を許可する必要があります。許可されていない場合、更新は無視されます。</string>
+    <string name="perm_exact_alarm_title">アラームとリマインダー</string>
+    <string name="perm_exact_alarm_granted">スマートフォンがアイドル状態でも更新が時間どおりに届きます</string>
+    <string name="perm_exact_alarm_denied">タップして許可すると、スマートフォンがアイドル状態でも更新が時間どおりに届きます</string>
 </resources>

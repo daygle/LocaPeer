@@ -1007,4 +1007,7 @@
     <string name="chat_cd_reaction_from_contact">來自聯絡人的回應</string>
     <string name="peer_temp_share_sharing_off">位置分享已關閉，因此即使在臨時分享期間也不會傳送任何內容給 %1$s。</string>
     <string name="peer_send_needs_receive">%1$s 也必須在其應用程式中允許接收您的位置，否則您的更新會被忽略。</string>
+    <string name="perm_exact_alarm_title">鬧鐘與提醒</string>
+    <string name="perm_exact_alarm_granted">即使手機處於閒置狀態，更新也能準時傳送</string>
+    <string name="perm_exact_alarm_denied">輕觸即可允許，讓手機閒置時更新也能準時傳送</string>
 </resources>

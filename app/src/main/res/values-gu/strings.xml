@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">સંપર્ક તરફથી પ્રતિક્રિયા</string>
     <string name="peer_temp_share_sharing_off">સ્થાન શેરિંગ બંધ છે, તેથી અસ્થાયી શેરિંગ દરમિયાન પણ %1$s ને કંઈ મોકલવામાં આવતું નથી.</string>
     <string name="peer_send_needs_receive">%1$s એ પણ તેમની ઍપમાં તમારું સ્થાન મેળવવાની મંજૂરી આપવી પડશે, નહીં તો તમારા અપડેટ્સ અવગણવામાં આવશે.</string>
+    <string name="perm_exact_alarm_title">અલાર્મ અને રિમાઇન્ડર</string>
+    <string name="perm_exact_alarm_granted">ફોન નિષ્ક્રિય હોય ત્યારે પણ અપડેટ સમયસર રહે છે</string>
+    <string name="perm_exact_alarm_denied">મંજૂરી આપવા ટૅપ કરો, જેથી ફોન નિષ્ક્રિય હોય ત્યારે પણ અપડેટ સમયસર રહે</string>
 </resources>

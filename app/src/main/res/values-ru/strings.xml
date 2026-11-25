@@ -1054,4 +1054,7 @@
     <string name="chat_cd_reaction_from_contact">Реакция от контакта</string>
     <string name="peer_temp_share_sharing_off">Передача местоположения выключена, поэтому %1$s ничего не получает, даже во время временной передачи.</string>
     <string name="peer_send_needs_receive">%1$s также должен разрешить получение вашего местоположения в своём приложении, иначе ваши обновления будут игнорироваться.</string>
+    <string name="perm_exact_alarm_title">Будильники и напоминания</string>
+    <string name="perm_exact_alarm_granted">Обновления приходят вовремя, даже когда телефон неактивен</string>
+    <string name="perm_exact_alarm_denied">Нажмите, чтобы разрешить, — тогда обновления будут приходить вовремя, даже когда телефон неактивен</string>
 </resources>

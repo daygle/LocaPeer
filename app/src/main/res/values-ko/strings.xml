@@ -1011,4 +1011,7 @@
     <string name="chat_cd_reaction_from_contact">연락처의 반응</string>
     <string name="peer_temp_share_sharing_off">위치 공유가 꺼져 있어 임시 공유 중에도 %1$s 님에게 아무것도 전송되지 않습니다.</string>
     <string name="peer_send_needs_receive">%1$s 님도 앱에서 내 위치 수신을 허용해야 합니다. 그렇지 않으면 업데이트가 무시됩니다.</string>
+    <string name="perm_exact_alarm_title">알람 및 리마인더</string>
+    <string name="perm_exact_alarm_granted">휴대전화가 유휴 상태일 때도 업데이트가 제시간에 전송됩니다</string>
+    <string name="perm_exact_alarm_denied">휴대전화가 유휴 상태일 때도 업데이트가 제시간에 전송되도록 탭하여 허용하세요</string>
 </resources>

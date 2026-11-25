@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">ଯୋଗାଯୋଗରୁ ପ୍ରତିକ୍ରିୟା</string>
     <string name="peer_temp_share_sharing_off">ଅବସ୍ଥାନ ସେୟାରିଂ ବନ୍ଦ ଅଛି, ତେଣୁ ଅସ୍ଥାୟୀ ସେୟାରିଂ ସମୟରେ ମଧ୍ୟ %1$s ଙ୍କୁ କିଛି ପଠାଯାଏ ନାହିଁ।</string>
     <string name="peer_send_needs_receive">%1$s ମଧ୍ୟ ସେମାନଙ୍କ ଆପରେ ଆପଣଙ୍କ ସ୍ଥାନ ଗ୍ରହଣ କରିବାକୁ ଅନୁମତି ଦେବା ଆବଶ୍ୟକ, ନଚେତ୍ ଆପଣଙ୍କ ଅପଡେଟ୍ ଅଣଦେଖା କରାଯିବ।</string>
+    <string name="perm_exact_alarm_title">ଆଲାର୍ମ ଓ ରିମାଇଣ୍ଡର</string>
+    <string name="perm_exact_alarm_granted">ଫୋନ ନିଷ୍କ୍ରିୟ ଥିଲେ ମଧ୍ୟ ଅପଡେଟ ସମୟରେ ରହେ</string>
+    <string name="perm_exact_alarm_denied">ଅନୁମତି ଦେବାକୁ ଟାପ କରନ୍ତୁ, ଯାହାଦ୍ୱାରା ଫୋନ ନିଷ୍କ୍ରିୟ ଥିଲେ ମଧ୍ୟ ଅପଡେଟ ସମୟରେ ରହିବ</string>
 </resources>

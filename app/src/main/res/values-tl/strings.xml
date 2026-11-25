@@ -1027,4 +1027,7 @@
     <string name="chat_cd_reaction_from_contact">Reaksyon mula sa contact</string>
     <string name="peer_temp_share_sharing_off">Naka-off ang pagbabahagi ng lokasyon, kaya walang ipinapadala kay %1$s, kahit habang may pansamantalang pagbabahagi.</string>
     <string name="peer_send_needs_receive">Kailangan ding payagan ni %1$s ang pagtanggap ng iyong lokasyon sa kanyang app, kung hindi ay hindi papansinin ang iyong mga update.</string>
+    <string name="perm_exact_alarm_title">Mga alarm at paalala</string>
+    <string name="perm_exact_alarm_granted">Nananatiling nasa oras ang mga update kahit naka-idle ang telepono</string>
+    <string name="perm_exact_alarm_denied">I-tap para payagan, para manatiling nasa oras ang mga update kahit naka-idle ang telepono</string>
 </resources>

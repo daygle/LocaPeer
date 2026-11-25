@@ -95,12 +95,24 @@ fun LocationSettingsScreen(
             headerIcon = Icons.Default.LocationOn,
             headerTitle = stringResource(R.string.settings_section_location)
         ) {
+            // Can't be switched off while supervised: it would stop location reaching the
+            // supervisor (see SettingsViewModel.setHeartbeatEnabled). Switching on stays allowed.
+            val sharingLocked = settings.supervisionActive && settings.heartbeatEnabled
             SwitchRow(
                 title = stringResource(R.string.settings_share_location),
                 subtitle = if (settings.heartbeatEnabled) stringResource(R.string.settings_broadcasting) else stringResource(R.string.settings_not_broadcasting),
                 checked = settings.heartbeatEnabled,
-                onCheckedChange = { vm.setHeartbeatEnabled(it) }
+                onCheckedChange = { vm.setHeartbeatEnabled(it) },
+                enabled = !sharingLocked
             )
+            if (sharingLocked) {
+                Text(
+                    stringResource(R.string.peer_sharing_supervisor_locked),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp)
+                )
+            }
             CardDivider()
             SettingsRow(
                 title = stringResource(R.string.settings_update_cadence),

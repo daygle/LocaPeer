@@ -25,6 +25,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.MultiplePermissionsState
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -46,7 +48,9 @@ import com.locapeer.onboarding.PermissionManager
 fun PermissionsScreen(onNavigateBack: () -> Unit) {
     val context = LocalContext.current
 
-    val locationPermission = rememberPermissionState(Manifest.permission.ACCESS_FINE_LOCATION)
+    // Precise and approximate are requested together: Android 12+ ignores a request for fine
+    // location alone, so the row used to do nothing when tapped. Either grant counts.
+    val locationPermissions = rememberMultiplePermissionsState(PermissionManager.LOCATION_PERMISSIONS)
     val cameraPermission = rememberPermissionState(Manifest.permission.CAMERA)
     val notificationPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
         rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS) else null
@@ -57,12 +61,14 @@ fun PermissionsScreen(onNavigateBack: () -> Unit) {
     // user toggles them in system settings), so re-read them whenever we return to the foreground.
     var backgroundLocationGranted by remember { mutableStateOf(PermissionManager.hasBackgroundLocation(context)) }
     var batteryOptimizationIgnored by remember { mutableStateOf(PermissionManager.isIgnoringBatteryOptimizations(context)) }
+    var exactAlarmsAllowed by remember { mutableStateOf(PermissionManager.canScheduleExactAlarms(context)) }
     val lifecycleOwner = LocalLifecycleOwner.current
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_RESUME) {
                 backgroundLocationGranted = PermissionManager.hasBackgroundLocation(context)
                 batteryOptimizationIgnored = PermissionManager.isIgnoringBatteryOptimizations(context)
+                exactAlarmsAllowed = PermissionManager.canScheduleExactAlarms(context)
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
@@ -101,12 +107,7 @@ fun PermissionsScreen(onNavigateBack: () -> Unit) {
                 headerIcon = Icons.Default.Security,
                 headerTitle = stringResource(R.string.settings_permissions)
             ) {
-                RuntimePermissionRow(
-                    title = stringResource(R.string.perm_location_title),
-                    grantedText = stringResource(R.string.perm_location_granted),
-                    deniedText = stringResource(R.string.perm_location_denied),
-                    permission = locationPermission
-                )
+                LocationPermissionRow(locationPermissions)
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     CardDivider()
                     SystemAccessRow(
@@ -140,6 +141,19 @@ fun PermissionsScreen(onNavigateBack: () -> Unit) {
                         grantedText = stringResource(R.string.settings_motion_detection_on),
                         deniedText = stringResource(R.string.settings_motion_detection_off),
                         permission = motionPermission
+                    )
+                }
+                // Android 12+: exact alarms keep updates on time through Doze and let the watchdog
+                // restart a stopped service. From Android 14 the user must allow them here; without
+                // this row there was no way into that setting from the app.
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    CardDivider()
+                    SystemAccessRow(
+                        title = stringResource(R.string.perm_exact_alarm_title),
+                        granted = exactAlarmsAllowed,
+                        grantedText = stringResource(R.string.perm_exact_alarm_granted),
+                        deniedText = stringResource(R.string.perm_exact_alarm_denied),
+                        onClick = { PermissionManager.openExactAlarmSettings(context) }
                     )
                 }
                 CardDivider()
@@ -183,6 +197,36 @@ private fun RuntimePermissionRow(
                 else -> {
                     asked = true
                     permission.launchPermissionRequest()
+                }
+            }
+        }
+    )
+}
+
+/**
+ * The location row: granted when either precise or approximate location is allowed. Tapping asks
+ * for both (the system offers the upgrade to precise when only approximate is granted), and once
+ * the system has stopped prompting it routes to the app's settings, like [RuntimePermissionRow].
+ */
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+private fun LocationPermissionRow(permissions: MultiplePermissionsState) {
+    val context = LocalContext.current
+    val granted = permissions.permissions.any { it.status.isGranted }
+    val precise = permissions.permissions.all { it.status.isGranted }
+    val canStillPrompt = permissions.permissions.any { it.status.shouldShowRationale }
+    var asked by remember { mutableStateOf(false) }
+    PermissionStatusRow(
+        title = stringResource(R.string.perm_location_title),
+        granted = granted,
+        statusText = if (granted) stringResource(R.string.perm_location_granted) else stringResource(R.string.perm_location_denied),
+        onClick = {
+            when {
+                precise -> PermissionManager.openAppDetailsSettings(context)
+                asked && !canStillPrompt -> PermissionManager.openAppDetailsSettings(context)
+                else -> {
+                    asked = true
+                    permissions.launchMultiplePermissionRequest()
                 }
             }
         }

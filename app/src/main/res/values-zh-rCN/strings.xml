@@ -1010,4 +1010,7 @@
     <string name="chat_cd_reaction_from_contact">来自联系人的回应</string>
     <string name="peer_temp_share_sharing_off">位置共享已关闭，因此即使在临时共享期间也不会向 %1$s 发送任何内容。</string>
     <string name="peer_send_needs_receive">%1$s 也必须在其应用中允许接收您的位置，否则您的更新会被忽略。</string>
+    <string name="perm_exact_alarm_title">闹钟和提醒</string>
+    <string name="perm_exact_alarm_granted">即使手机处于闲置状态，更新也能准时发送</string>
+    <string name="perm_exact_alarm_denied">点按即可允许，让手机闲置时更新也能准时发送</string>
 </resources>

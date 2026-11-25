@@ -1020,5 +1020,8 @@
     <string name="chat_cd_reaction_from_contact">Reação do contato</string>
     <string name="peer_temp_share_sharing_off">O compartilhamento de localização está desativado, então nada é enviado para %1$s, nem mesmo durante um compartilhamento temporário.</string>
     <string name="peer_send_needs_receive">%1$s também precisa permitir o recebimento da sua localização no app dele, caso contrário suas atualizações são ignoradas.</string>
+    <string name="perm_exact_alarm_title">Alarmes e lembretes</string>
+    <string name="perm_exact_alarm_granted">As atualizações chegam no horário mesmo com o telefone ocioso</string>
+    <string name="perm_exact_alarm_denied">Toque para permitir, para que as atualizações cheguem no horário mesmo com o telefone ocioso</string>
 </resources>
 
