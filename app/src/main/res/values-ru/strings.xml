@@ -208,7 +208,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">О LocaPeer</string>
-    <string name="settings_about_subtitle">Версия, состояние ретрансляторов, открытый код</string>
+    <string name="settings_about_subtitle">Версия, открытый код, Данные карт</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Изменить отображаемое имя</string>
@@ -695,6 +695,10 @@
     <string name="about_lib_compose_desc">Фреймворк интерфейса</string>
     <string name="about_lib_hilt_desc">Внедрение зависимостей</string>
     <string name="about_lib_room_desc">Локальная база данных</string>
+    <string name="about_lib_sqlcipher_desc">Шифрование базы данных</string>
+    <string name="about_lib_bouncycastle_desc">Криптография</string>
+    <string name="about_lib_secp256k1_desc">Подписи на эллиптических кривых</string>
+    <string name="about_lib_zxing_desc">Сканирование QR-кодов</string>
     <string name="about_map_attribution">Данные карт © участники OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

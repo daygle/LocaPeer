@@ -206,7 +206,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">Over LocaPeer</string>
-    <string name="settings_about_subtitle">Versie, relaystatus, open source</string>
+    <string name="settings_about_subtitle">Versie, open source, Kaartgegevens</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Weergavenaam bewerken</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI-framework</string>
     <string name="about_lib_hilt_desc">Afhankelijkheidsinjectie</string>
     <string name="about_lib_room_desc">Lokale database</string>
+    <string name="about_lib_sqlcipher_desc">Databaseversleuteling</string>
+    <string name="about_lib_bouncycastle_desc">Cryptografie</string>
+    <string name="about_lib_secp256k1_desc">Elliptische-curvehandtekeningen</string>
+    <string name="about_lib_zxing_desc">QR-codes scannen</string>
     <string name="about_map_attribution">Kaartgegevens © OpenStreetMap-bijdragers</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

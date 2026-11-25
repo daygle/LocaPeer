@@ -206,7 +206,7 @@
 
     <!-- Über -->
     <string name="settings_about_locapeer">Über LocaPeer</string>
-    <string name="settings_about_subtitle">Version, Relay-Status, Open Source</string>
+    <string name="settings_about_subtitle">Version, Open Source, Kartendaten</string>
 
     <!-- Dialoge -->
     <string name="settings_edit_display_name">Anzeigename bearbeiten</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI-Framework</string>
     <string name="about_lib_hilt_desc">Abhängigkeitsinjektion</string>
     <string name="about_lib_room_desc">Lokale Datenbank</string>
+    <string name="about_lib_sqlcipher_desc">Datenbankverschlüsselung</string>
+    <string name="about_lib_bouncycastle_desc">Kryptografie</string>
+    <string name="about_lib_secp256k1_desc">Signaturen auf elliptischen Kurven</string>
+    <string name="about_lib_zxing_desc">QR-Codes scannen</string>
     <string name="about_map_attribution">Kartendaten © OpenStreetMap-Mitwirkende</string>
 
     <!-- ── Benachrichtigungen ──────────────────────────────────────────────────── -->

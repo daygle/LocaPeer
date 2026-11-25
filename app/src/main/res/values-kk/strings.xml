@@ -206,7 +206,7 @@
 
     <!-- Туралы -->
     <string name="settings_about_locapeer">LocaPeer туралы</string>
-    <string name="settings_about_subtitle">Нұсқасы, реле күйі, ашық бастапқы код</string>
+    <string name="settings_about_subtitle">Нұсқасы, ашық бастапқы код, Карта деректері</string>
 
     <!-- Диалогтар -->
     <string name="settings_edit_display_name">Көрсетілетін атын өзгерту</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI фреймворкі</string>
     <string name="about_lib_hilt_desc">Тәуелділік инъекциясы</string>
     <string name="about_lib_room_desc">Жергілікті деректер қоры</string>
+    <string name="about_lib_sqlcipher_desc">Деректер қорын шифрлау</string>
+    <string name="about_lib_bouncycastle_desc">Криптография</string>
+    <string name="about_lib_secp256k1_desc">Эллипстік қисық қолтаңбалары</string>
+    <string name="about_lib_zxing_desc">QR кодтарын сканерлеу</string>
     <string name="about_map_attribution">Карта деректері © OpenStreetMap үлес қосушылары</string>
 
     <!-- ── Хабарландырулар ──────────────────────────────────────────────────── -->

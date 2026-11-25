@@ -206,7 +206,7 @@
 
     <!-- Der barê -->
     <string name="settings_about_locapeer">Der barê LocaPeer</string>
-    <string name="settings_about_subtitle">Guherto, rewşa relay, çavkaniya vekirî</string>
+    <string name="settings_about_subtitle">Guherto, çavkaniya vekirî, Daneyên nexşeyê</string>
 
     <!-- Diyalog -->
     <string name="settings_edit_display_name">Navê Nîşandanê Biguhere</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">Çarçoweya UI</string>
     <string name="about_lib_hilt_desc">Derzîkirina pêwendiyan</string>
     <string name="about_lib_room_desc">Danegira herêmî</string>
+    <string name="about_lib_sqlcipher_desc">Şîfrekirina danegirê</string>
+    <string name="about_lib_bouncycastle_desc">Krîptografî</string>
+    <string name="about_lib_secp256k1_desc">Îmzeyên kerika elîptîk</string>
+    <string name="about_lib_zxing_desc">Xwendina koda QR</string>
     <string name="about_map_attribution">Daneyên nexşeyê © Beşdarên OpenStreetMap</string>
 
     <!-- ── Agahdarkirin ──────────────────────────────────────────────────── -->

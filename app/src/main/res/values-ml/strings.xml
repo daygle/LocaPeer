@@ -206,7 +206,7 @@
 
     <!-- വിവരങ്ങൾ -->
     <string name="settings_about_locapeer">LocaPeer-നെ കുറിച്ച്</string>
-    <string name="settings_about_subtitle">പതിപ്പ്, റിലേ സ്റ്റാറ്റസ്, ഓപ്പൺ സോഴ്സ്</string>
+    <string name="settings_about_subtitle">പതിപ്പ്, ഓപ്പൺ സോഴ്സ്, മാപ്പ് ഡാറ്റ</string>
 
     <!-- ഡയലോഗുകൾ -->
     <string name="settings_edit_display_name">പ്രദർശന നാമം മാറ്റുക</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI ഫ്രെയിംവർക്ക്</string>
     <string name="about_lib_hilt_desc">ഡിപെൻഡൻസി ഇഞ്ചക്ഷൻ</string>
     <string name="about_lib_room_desc">ലോക്കൽ ഡാറ്റാബേസ്</string>
+    <string name="about_lib_sqlcipher_desc">ഡാറ്റാബേസ് എൻക്രിപ്ഷൻ</string>
+    <string name="about_lib_bouncycastle_desc">ക്രിപ്റ്റോഗ്രഫി</string>
+    <string name="about_lib_secp256k1_desc">എലിപ്റ്റിക് കർവ് സിഗ്നേച്ചറുകൾ</string>
+    <string name="about_lib_zxing_desc">QR കോഡ് സ്കാനിംഗ്</string>
     <string name="about_map_attribution">മാപ്പ് ഡാറ്റ © OpenStreetMap സംഭാവന ചെയ്തവർ</string>
 
     <!-- ── അറിയിപ്പുകൾ ──────────────────────────────────────────────────── -->

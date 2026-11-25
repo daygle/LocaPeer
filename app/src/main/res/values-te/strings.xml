@@ -206,7 +206,7 @@
 
     <!-- గురించి -->
     <string name="settings_about_locapeer">LocaPeer గురించి</string>
-    <string name="settings_about_subtitle">వెర్షన్, రిలే స్థితి, ఓపెన్ సోర్స్</string>
+    <string name="settings_about_subtitle">వెర్షన్, ఓపెన్ సోర్స్, మ్యాప్ డేటా</string>
 
     <!-- డైలాగ్‌లు -->
     <string name="settings_edit_display_name">ప్రదర్శన పేరును మార్చు</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI ఫ్రేమ్‌వర్క్</string>
     <string name="about_lib_hilt_desc">డిపెండెన్సీ ఇంజెక్షన్</string>
     <string name="about_lib_room_desc">స్థానిక డేటాబేస్</string>
+    <string name="about_lib_sqlcipher_desc">డేటాబేస్ ఎన్‌క్రిప్షన్</string>
+    <string name="about_lib_bouncycastle_desc">క్రిప్టోగ్రఫీ</string>
+    <string name="about_lib_secp256k1_desc">దీర్ఘవృత్తాకార వక్రరేఖ సంతకాలు</string>
+    <string name="about_lib_zxing_desc">QR కోడ్ స్కానింగ్</string>
     <string name="about_map_attribution">మ్యాప్ డేటా © OpenStreetMap సహకారులు</string>
 
     <!-- ── నోటిఫికేషన్లు ──────────────────────────────────────────────────── -->

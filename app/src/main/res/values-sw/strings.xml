@@ -206,7 +206,7 @@
 
     <!-- Kuhusu -->
     <string name="settings_about_locapeer">Kuhusu LocaPeer</string>
-    <string name="settings_about_subtitle">Toleo, hali ya relay, chanzo wazi</string>
+    <string name="settings_about_subtitle">Toleo, chanzo wazi, Data ya ramani</string>
 
     <!-- Mazungumzo -->
     <string name="settings_edit_display_name">Hariri Jina la Maonyesho</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">Mfumo wa UI</string>
     <string name="about_lib_hilt_desc">Uingizaji wa utegemezi</string>
     <string name="about_lib_room_desc">Hifadhidata ya ndani</string>
+    <string name="about_lib_sqlcipher_desc">Usimbaji fiche wa hifadhidata</string>
+    <string name="about_lib_bouncycastle_desc">Kriptografia</string>
+    <string name="about_lib_secp256k1_desc">Sahihi za mkunjo duara</string>
+    <string name="about_lib_zxing_desc">Uchanganuzi wa nambari za QR</string>
     <string name="about_map_attribution">Data ya ramani © wachangiaji wa OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

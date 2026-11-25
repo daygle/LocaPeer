@@ -206,7 +206,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">LocaPeer کے بارے میں</string>
-    <string name="settings_about_subtitle">ورژن، ریلے کی حالت، اوپن سورس</string>
+    <string name="settings_about_subtitle">ورژن، اوپن سورس، نقشہ ڈیٹا</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">ڈسپلے نام میں ترمیم کریں</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI فریم ورک</string>
     <string name="about_lib_hilt_desc">ڈیپینڈنسی انجیکشن</string>
     <string name="about_lib_room_desc">مقامی ڈیٹابیس</string>
+    <string name="about_lib_sqlcipher_desc">ڈیٹابیس کی خفیہ کاری</string>
+    <string name="about_lib_bouncycastle_desc">کرپٹوگرافی</string>
+    <string name="about_lib_secp256k1_desc">بیضوی منحنی دستخط</string>
+    <string name="about_lib_zxing_desc">QR کوڈ اسکیننگ</string>
     <string name="about_map_attribution">نقشہ ڈیٹا © OpenStreetMap معاونین</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

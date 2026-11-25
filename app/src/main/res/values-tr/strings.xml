@@ -206,7 +206,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">LocaPeer Hakkında</string>
-    <string name="settings_about_subtitle">Sürüm, aktarıcı durumu, açık kaynak</string>
+    <string name="settings_about_subtitle">Sürüm, açık kaynak, Harita verileri</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Görünen Adı Düzenle</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">Arayüz çatısı</string>
     <string name="about_lib_hilt_desc">Bağımlılık enjeksiyonu</string>
     <string name="about_lib_room_desc">Yerel veritabanı</string>
+    <string name="about_lib_sqlcipher_desc">Veritabanı şifreleme</string>
+    <string name="about_lib_bouncycastle_desc">Kriptografi</string>
+    <string name="about_lib_secp256k1_desc">Eliptik eğri imzaları</string>
+    <string name="about_lib_zxing_desc">QR kodu tarama</string>
     <string name="about_map_attribution">Harita verileri © OpenStreetMap katkıda bulunanları</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

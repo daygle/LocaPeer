@@ -206,7 +206,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">Tungkol sa LocaPeer</string>
-    <string name="settings_about_subtitle">Bersyon, status ng relay, open source</string>
+    <string name="settings_about_subtitle">Bersyon, open source, Data ng mapa</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">I-edit ang Display Name</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">Framework ng UI</string>
     <string name="about_lib_hilt_desc">Pag-iniksyon ng dependency</string>
     <string name="about_lib_room_desc">Lokal na database</string>
+    <string name="about_lib_sqlcipher_desc">Pag-encrypt ng database</string>
+    <string name="about_lib_bouncycastle_desc">Kriptograpiya</string>
+    <string name="about_lib_secp256k1_desc">Mga lagda sa elliptic curve</string>
+    <string name="about_lib_zxing_desc">Pag-scan ng QR code</string>
     <string name="about_map_attribution">Data ng mapa © mga contributor ng OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

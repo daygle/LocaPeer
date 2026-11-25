@@ -247,7 +247,7 @@ line instead, pass the same values as Gradle properties:
 - **Cross-Relay Suppression Defense**: Recent event IDs are cached only AFTER their Schnorr signature verifies, so a forged-event attack can't poison the cache and silence a genuine event that arrives later. The recent-ID cache keeps a separate window of up to 500 IDs per sender (2,000 in total), so one peer flooding events can only push out its own entries; it is persisted in DataStore every 100 events.
 - **App Lock**: Optional biometric or device-credential prompt at launch, with a user-chosen re-lock grace period. Whole-process backgrounding (via `ProcessLifecycleOwner`) - not per-Activity stop - controls re-lock, so a transient system permission dialog doesn't sign you out mid-task. No static PIN to compromise; the device's own biometrics are the only keys. On Android 11+ the unlock is bound to a per-use Android Keystore key: the app opens only after that key has actually been used, so a spoofed "success" callback isn't enough. Android 8–10 can't bind a device PIN to a key, so there the system prompt's result is trusted.
 - **UI Hardening**: `FLAG_SECURE` prevents screenshots and screen recordings across the whole app, and the private-key reveal screen warns the user to treat the key like a password.
-- **Open Attributions**: The About screen lists the open-source libraries the app depends on (MapLibre, OkHttp, Jetpack Compose, Hilt, Room) and credits OpenStreetMap contributors for map data.
+- **Open Attributions**: The About screen lists the open-source libraries the app depends on (MapLibre, OkHttp, Jetpack Compose, Hilt, Room, SQLCipher, Bouncy Castle, secp256k1, ZXing) and credits OpenStreetMap contributors for map data.
 
 ## License
 

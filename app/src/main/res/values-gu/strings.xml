@@ -206,7 +206,7 @@
 
     <!-- વિશે -->
     <string name="settings_about_locapeer">LocaPeer વિશે</string>
-    <string name="settings_about_subtitle">સંસ્કરણ, રિલે સ્થિતિ, ઓપન સોર્સ</string>
+    <string name="settings_about_subtitle">સંસ્કરણ, ઓપન સોર્સ, નકશો ડેટા</string>
 
     <!-- સંવાદો -->
     <string name="settings_edit_display_name">નામ સંપાદિત કરો</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI ફ્રેમવર્ક</string>
     <string name="about_lib_hilt_desc">ડિપેન્ડન્સી ઇન્જેક્શન</string>
     <string name="about_lib_room_desc">સ્થાનિક ડેટાબેઝ</string>
+    <string name="about_lib_sqlcipher_desc">ડેટાબેઝ એન્ક્રિપ્શન</string>
+    <string name="about_lib_bouncycastle_desc">ક્રિપ્ટોગ્રાફી</string>
+    <string name="about_lib_secp256k1_desc">અંડાકાર વક્ર હસ્તાક્ષરો</string>
+    <string name="about_lib_zxing_desc">QR કોડ સ્કેનિંગ</string>
     <string name="about_map_attribution">નકશો ડેટા © OpenStreetMap યોગદાનકર્તાઓ</string>
 
     <!-- ── સૂચનાઓ ──────────────────────────────────────────────────── -->

@@ -210,7 +210,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">حول LocaPeer</string>
-    <string name="settings_about_subtitle">الإصدار، حالة المرحّلات، المصدر المفتوح</string>
+    <string name="settings_about_subtitle">الإصدار، المصدر المفتوح، بيانات الخريطة</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">تعديل الاسم المعروض</string>
@@ -721,6 +721,10 @@
     <string name="about_lib_compose_desc">إطار عمل الواجهة</string>
     <string name="about_lib_hilt_desc">حقن التبعيات</string>
     <string name="about_lib_room_desc">قاعدة بيانات محلية</string>
+    <string name="about_lib_sqlcipher_desc">تشفير قاعدة البيانات</string>
+    <string name="about_lib_bouncycastle_desc">التشفير</string>
+    <string name="about_lib_secp256k1_desc">توقيعات المنحنى الإهليلجي</string>
+    <string name="about_lib_zxing_desc">مسح رمز QR</string>
     <string name="about_map_attribution">بيانات الخريطة © مساهمو OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

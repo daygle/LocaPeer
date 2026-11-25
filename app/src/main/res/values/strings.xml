@@ -248,7 +248,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">About LocaPeer</string>
-    <string name="settings_about_subtitle">Version, relay status, open source</string>
+    <string name="settings_about_subtitle">Version, open source, map data</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Edit Display Name</string>
@@ -825,6 +825,10 @@
     <string name="about_lib_compose_desc">UI framework</string>
     <string name="about_lib_hilt_desc">Dependency injection</string>
     <string name="about_lib_room_desc">Local database</string>
+    <string name="about_lib_sqlcipher_desc">Database encryption</string>
+    <string name="about_lib_bouncycastle_desc">Cryptography</string>
+    <string name="about_lib_secp256k1_desc">Elliptic curve signatures</string>
+    <string name="about_lib_zxing_desc">QR code scanning</string>
     <string name="about_map_attribution">Map data © OpenStreetMap contributors</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

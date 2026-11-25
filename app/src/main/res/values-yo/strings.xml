@@ -205,7 +205,7 @@
 
     <!-- Nípa -->
     <string name="settings_about_locapeer">Nípa LocaPeer</string>
-    <string name="settings_about_subtitle">Toleo, ọkwa relay, orisun ṣiṣi</string>
+    <string name="settings_about_subtitle">Toleo, orisun ṣiṣi, Data máàpù</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Ṣatunkọ Orukọ Ìfarahàn</string>
@@ -656,6 +656,10 @@
     <string name="about_lib_compose_desc">Àgbékalẹ̀ UI</string>
     <string name="about_lib_hilt_desc">Ìfakọsẹ̀ ìgbára</string>
     <string name="about_lib_room_desc">Ibi ìpamọ́ data agbègbè</string>
+    <string name="about_lib_sqlcipher_desc">Àṣírí ibi ìpamọ́ data</string>
+    <string name="about_lib_bouncycastle_desc">Kriptografi</string>
+    <string name="about_lib_secp256k1_desc">Àwọn ìfọwọ́sí elliptic curve</string>
+    <string name="about_lib_zxing_desc">Ṣíṣàyẹ̀wò koodu QR</string>
     <string name="about_map_attribution">Data máàpù © ndị nyere aka na OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

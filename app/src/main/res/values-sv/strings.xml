@@ -206,7 +206,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">Om LocaPeer</string>
-    <string name="settings_about_subtitle">Version, relästatus, öppen källkod</string>
+    <string name="settings_about_subtitle">Version, öppen källkod, Kartdata</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Redigera visningsnamn</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI-ramverk</string>
     <string name="about_lib_hilt_desc">Beroendeinjektion</string>
     <string name="about_lib_room_desc">Lokal databas</string>
+    <string name="about_lib_sqlcipher_desc">Databaskryptering</string>
+    <string name="about_lib_bouncycastle_desc">Kryptografi</string>
+    <string name="about_lib_secp256k1_desc">Signaturer på elliptiska kurvor</string>
+    <string name="about_lib_zxing_desc">Skanna QR-koder</string>
     <string name="about_map_attribution">Kartdata © OpenStreetMap-bidragsgivare</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

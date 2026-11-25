@@ -206,7 +206,7 @@
 
     <!-- ስለ -->
     <string name="settings_about_locapeer">ስለ LocaPeer</string>
-    <string name="settings_about_subtitle">ስሪት፣ የሪሌይ ሁኔታ፣ ክፍት ምንጭ</string>
+    <string name="settings_about_subtitle">ስሪት፣ ክፍት ምንጭ፣ የካርታ ውሂብ</string>
 
     <!-- ንግግሮች -->
     <string name="settings_edit_display_name">የሚታይ ስም ቀይር</string>
@@ -670,6 +670,10 @@
     <string name="about_lib_compose_desc">የUI መዋቅር</string>
     <string name="about_lib_hilt_desc">የጥገኝነት መርፌ</string>
     <string name="about_lib_room_desc">የአካባቢ የውሂብ ጎታ</string>
+    <string name="about_lib_sqlcipher_desc">የውሂብ ጎታ ምስጠራ</string>
+    <string name="about_lib_bouncycastle_desc">ክሪፕቶግራፊ</string>
+    <string name="about_lib_secp256k1_desc">የኤሊፕቲክ ኩርቭ ፊርማዎች</string>
+    <string name="about_lib_zxing_desc">QR ኮድ ስካን</string>
     <string name="about_map_attribution">የካርታ ውሂብ © OpenStreetMap አስተዋጽዖ አድራጊዎች</string>
 
     <!-- ── ማሳወቂያዎች ──────────────────────────────────────────────────── -->

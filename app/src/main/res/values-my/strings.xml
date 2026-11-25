@@ -205,7 +205,7 @@
 
     <!-- အကြောင်း -->
     <string name="settings_about_locapeer">LocaPeer အကြောင်း</string>
-    <string name="settings_about_subtitle">ဗားရှင်း၊ ရီလေး အခြေအနေ၊ ပွင့်လင်းရင်းမြစ်</string>
+    <string name="settings_about_subtitle">ဗားရှင်း၊ ပွင့်လင်းရင်းမြစ်၊ မြေပုံဒေတာ</string>
 
     <!-- ဒိုင်ယာလော့ဂ်များ -->
     <string name="settings_edit_display_name">အမည်ကို ပြင်ဆင်ရန်</string>
@@ -656,6 +656,10 @@
     <string name="about_lib_compose_desc">UI ဖရိမ်ဝပ်</string>
     <string name="about_lib_hilt_desc">မှီခိုမှု ထည့်သွင်းခြင်း</string>
     <string name="about_lib_room_desc">စက်တွင်း ဒေတာဘေ့စ်</string>
+    <string name="about_lib_sqlcipher_desc">ဒေတာဘေ့စ် စာဝှက်ခြင်း</string>
+    <string name="about_lib_bouncycastle_desc">ကုဒ်ဝှက်ပညာ</string>
+    <string name="about_lib_secp256k1_desc">ဘဲဥပုံမျဉ်းကွေ့ လက်မှတ်များ</string>
+    <string name="about_lib_zxing_desc">QR ကုဒ် စကင်န်ဖတ်ခြင်း</string>
     <string name="about_map_attribution">မြေပုံဒေတာ © OpenStreetMap ပါဝင်ကူညီသူများ</string>
 
     <!-- ── အသိပေးချက်များ ──────────────────────────────────────────────────── -->

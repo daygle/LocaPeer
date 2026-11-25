@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.locapeer.R
 
@@ -23,8 +24,8 @@ import com.locapeer.R
 @Composable
 fun AboutScreen(
     onNavigateBack: () -> Unit,
-    versionName: String = "1.1.37",
-    versionCode: Int = 41,
+    versionName: String,
+    versionCode: Int,
 ) {
     Scaffold(
         topBar = {
@@ -107,15 +108,25 @@ fun AboutScreen(
                         "OkHttp" to stringResource(R.string.about_lib_okhttp_desc),
                         "Jetpack Compose" to stringResource(R.string.about_lib_compose_desc),
                         "Hilt" to stringResource(R.string.about_lib_hilt_desc),
-                        "Room" to stringResource(R.string.about_lib_room_desc)
+                        "Room" to stringResource(R.string.about_lib_room_desc),
+                        "SQLCipher" to stringResource(R.string.about_lib_sqlcipher_desc),
+                        "Bouncy Castle" to stringResource(R.string.about_lib_bouncycastle_desc),
+                        "secp256k1" to stringResource(R.string.about_lib_secp256k1_desc),
+                        "ZXing" to stringResource(R.string.about_lib_zxing_desc)
                     ).forEach { (lib, desc) ->
                         Row(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalAlignment = Alignment.Top
                         ) {
                             Text(lib, style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold)
-                            Text(desc, style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(
+                                desc,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                textAlign = TextAlign.End,
+                                modifier = Modifier.weight(1f)
+                            )
                         }
                     }
                 }

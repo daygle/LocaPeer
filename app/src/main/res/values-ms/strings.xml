@@ -205,7 +205,7 @@
 
     <!-- About -->
     <string name="settings_about_locapeer">Perihal LocaPeer</string>
-    <string name="settings_about_subtitle">Versi, status geganti, sumber terbuka</string>
+    <string name="settings_about_subtitle">Versi, sumber terbuka, Data peta</string>
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">Sunting Nama Paparan</string>
@@ -656,6 +656,10 @@
     <string name="about_lib_compose_desc">Rangka kerja UI</string>
     <string name="about_lib_hilt_desc">Suntikan kebergantungan</string>
     <string name="about_lib_room_desc">Pangkalan data setempat</string>
+    <string name="about_lib_sqlcipher_desc">Penyulitan pangkalan data</string>
+    <string name="about_lib_bouncycastle_desc">Kriptografi</string>
+    <string name="about_lib_secp256k1_desc">Tandatangan lengkung eliptik</string>
+    <string name="about_lib_zxing_desc">Pengimbasan kod QR</string>
     <string name="about_map_attribution">Data peta © penyumbang OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

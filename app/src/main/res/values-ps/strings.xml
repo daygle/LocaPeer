@@ -206,7 +206,7 @@
 
     <!-- په اړه -->
     <string name="settings_about_locapeer">د LocaPeer په اړه</string>
-    <string name="settings_about_subtitle">نسخه، د ریلی حالت، خلاص سرچینه</string>
+    <string name="settings_about_subtitle">نسخه، خلاص سرچینه، د نقشې ډاټا</string>
 
     <!-- ډیالوګونه -->
     <string name="settings_edit_display_name">نوم بدلول</string>
@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI چوکاټ</string>
     <string name="about_lib_hilt_desc">تزریق انحصار</string>
     <string name="about_lib_room_desc">محلي ډیټابیس</string>
+    <string name="about_lib_sqlcipher_desc">ډیټابیس کوډ کول</string>
+    <string name="about_lib_bouncycastle_desc">کرپټوګرافي</string>
+    <string name="about_lib_secp256k1_desc">د بیضوي منحني لاسلیکونه</string>
+    <string name="about_lib_zxing_desc">د QR کوډ سکین کول</string>
     <string name="about_map_attribution">د نقشې ډاټا © د OpenStreetMap مرسته کونکي</string>
 
     <!-- ── خبرتیاوې ──────────────────────────────────────────────────── -->

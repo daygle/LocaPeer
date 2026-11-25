@@ -205,7 +205,7 @@
 
     <!-- 关于 -->
     <string name="settings_about_locapeer">关于 LocaPeer</string>
-    <string name="settings_about_subtitle">版本、中继状态、开源</string>
+    <string name="settings_about_subtitle">版本、开源、地图数据</string>
 
     <!-- 对话框 -->
     <string name="settings_edit_display_name">编辑显示名称</string>
@@ -656,6 +656,10 @@
     <string name="about_lib_compose_desc">UI 框架</string>
     <string name="about_lib_hilt_desc">依赖注入</string>
     <string name="about_lib_room_desc">本地数据库</string>
+    <string name="about_lib_sqlcipher_desc">数据库加密</string>
+    <string name="about_lib_bouncycastle_desc">密码学</string>
+    <string name="about_lib_secp256k1_desc">椭圆曲线签名</string>
+    <string name="about_lib_zxing_desc">二维码扫描</string>
     <string name="about_map_attribution">地图数据 © OpenStreetMap 贡献者</string>
 
     <!-- ── 通知 ──────────────────────────────────────────────────── -->

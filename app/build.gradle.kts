@@ -157,6 +157,18 @@ android {
     testOptions {
         // Let JVM unit tests touch stubbed android.* APIs (e.g. Log) without crashing
         unitTests.isReturnDefaultValues = true
+        // AboutScreenScreenshotTest inflates the real localized resources and draws them with
+        // Robolectric's native graphics backend, so unit tests need the merged debug resources.
+        unitTests.isIncludeAndroidResources = true
+        // The screenshot test verifies against the golden PNGs in app/src/test/screenshots by
+        // default, so CI's existing testDebugUnitTest step catches a row-layout regression.
+        // Re-record them with -Proborazzi.test.record=true after an intended layout change.
+        val recordScreenshots =
+            providers.gradleProperty("roborazzi.test.record").getOrElse("false").toBoolean()
+        unitTests.all {
+            it.systemProperty("roborazzi.test.record", recordScreenshots.toString())
+            it.systemProperty("roborazzi.test.verify", (!recordScreenshots).toString())
+        }
     }
 
     // Room writes KSP-exported schema JSONs to app/schemas/ at build time. The instrumented
@@ -267,6 +279,14 @@ dependencies {
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.mockito.core)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.androidx.test.junit)
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.compose.ui.test.junit4)
+    // Supplies the host activity createComposeRule() launches inside Robolectric.
+    debugImplementation(libs.compose.ui.test.manifest)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.room.testing)
