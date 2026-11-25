@@ -46,16 +46,23 @@ interface HeartbeatDao {
         insertAllForExistingPeers(heartbeats)
     }
 
+    /**
+     * The user's own history view, which must show every stored reading - accepted and
+     * rejected - so a gap in the shared trail can be explained from the same timeline.
+     */
     @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId AND timestamp >= :dayStart AND timestamp < :dayEnd ORDER BY timestamp ASC")
     fun getHeartbeatsForDay(deviceId: String, dayStart: Long, dayEnd: Long): Flow<List<HeartbeatEntity>>
 
-    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId ORDER BY timestamp DESC LIMIT 1")
+    // "Latest position" consumers (own pin, map centring, geofence/proximity baselines)
+    // must only ever see an accepted reading: a rejected attempt is a record for history
+    // and diagnostics, never a position to show or act on.
+    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId AND status = 'accepted' ORDER BY timestamp DESC LIMIT 1")
     suspend fun getLatestHeartbeat(deviceId: String): HeartbeatEntity?
 
-    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId ORDER BY receivedAt DESC, timestamp DESC LIMIT 1")
+    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId AND status = 'accepted' ORDER BY receivedAt DESC, timestamp DESC LIMIT 1")
     suspend fun getLatestReceivedHeartbeat(deviceId: String): HeartbeatEntity?
 
-    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId ORDER BY timestamp DESC LIMIT 1")
+    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId AND status = 'accepted' ORDER BY timestamp DESC LIMIT 1")
     fun observeLatestHeartbeat(deviceId: String): Flow<HeartbeatEntity?>
 
     @Query("SELECT COUNT(*) FROM heartbeats WHERE deviceId = :deviceId AND timestamp = :timestamp")
@@ -66,9 +73,11 @@ interface HeartbeatDao {
     // last-inserted row (max receivedAt) can be an older location. timestamp always picks the
     // newest actual fix and can't tie, so the join never returns duplicate rows per device.
     // The chosen row still carries its own receivedAt for the clock-skew-safe overdue check.
+    // Rejected rows are excluded: they are ingest evidence, not the contact's position.
     @Query(
         "SELECT h.* FROM heartbeats h INNER JOIN (" +
-            "SELECT deviceId, MAX(timestamp) AS maxTs FROM heartbeats GROUP BY deviceId" +
+            "SELECT deviceId, MAX(timestamp) AS maxTs FROM heartbeats " +
+            "WHERE status = 'accepted' GROUP BY deviceId" +
             ") latest ON h.deviceId = latest.deviceId AND h.timestamp = latest.maxTs"
     )
     fun getLatestHeartbeatPerDevice(): Flow<List<HeartbeatEntity>>
@@ -84,4 +93,15 @@ interface HeartbeatDao {
 
     @Query("DELETE FROM heartbeats WHERE deviceId = :deviceId AND timestamp < :before")
     suspend fun deleteOlderThanForDevice(deviceId: String, before: Long)
+
+    /**
+     * Rejected readings still holding full detail in [from, to), for the retention job's
+     * hourly downsampling. Accepted rows are covered by the existing retention policy.
+     */
+    @Query("SELECT * FROM heartbeats WHERE status = 'rejected' AND timestamp >= :from AND timestamp < :to ORDER BY timestamp ASC")
+    suspend fun getRejectedBetween(from: Long, to: Long): List<HeartbeatEntity>
+
+    /** Drops rejected readings past the full-detail window, after they were aggregated. */
+    @Query("DELETE FROM heartbeats WHERE status = 'rejected' AND timestamp < :before")
+    suspend fun deleteRejectedOlderThan(before: Long)
 }

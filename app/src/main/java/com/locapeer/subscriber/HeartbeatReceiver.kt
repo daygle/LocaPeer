@@ -937,7 +937,12 @@ class HeartbeatReceiver @Inject constructor(
                 // watchdog multiplies this by 1000 then ×2; an unbounded value would either
                 // overflow or push the alert threshold so far out that a peer could silently
                 // suppress their own missed-location alerts by claiming a huge interval.
-                expectedIntervalSeconds = payload.expectedIntervalSeconds.coerceIn(0L, MAX_EXPECTED_INTERVAL_S)
+                expectedIntervalSeconds = payload.expectedIntervalSeconds.coerceIn(0L, MAX_EXPECTED_INTERVAL_S),
+                // Quality metadata for a received reading: the sender's own timestamp is the
+                // closest thing to a capture time we get, so the age is measured from it.
+                // Provider and device offset are not part of the wire payload and stay empty.
+                capturedAt = timestampMs,
+                fixAgeSeconds = ((now - timestampMs) / 1000L).coerceAtLeast(0L)
             )
             // Replayed (old) heartbeats are history backfill: recording them is correct,
             // but alerting on them is not - the situation they describe is long over.

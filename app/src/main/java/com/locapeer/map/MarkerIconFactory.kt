@@ -187,10 +187,21 @@ object MarkerIconFactory {
         drawCircle(bx, by, br * 0.26f, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = ink })
     }
 
-    /** Small filled circle for intermediate waypoint markers on the history map. */
-    fun createDotIcon(context: Context, pinColor: String, isSos: Boolean = false, isSelected: Boolean = false): BitmapDrawable {
+    /**
+     * Small filled circle for intermediate waypoint markers on the history map. [alpha] below
+     * 1 dims the dot (and its border); the history view uses that for rejected readings so
+     * they stay visible without reading as part of the trusted trail.
+     */
+    fun createDotIcon(
+        context: Context,
+        pinColor: String,
+        isSos: Boolean = false,
+        isSelected: Boolean = false,
+        alpha: Float = 1f,
+    ): BitmapDrawable {
         val safePinColor = normalizeHexColor(pinColor)
-        val key = "dot-$safePinColor-$isSos-$isSelected"
+        val alphaByte = (alpha.coerceIn(0f, 1f) * 255f).toInt()
+        val key = "dot-$safePinColor-$isSos-$isSelected-$alphaByte"
         cache.get(key)?.let { return it.toDrawable(context.resources) }
 
         val dp = context.resources.displayMetrics.density
@@ -214,9 +225,11 @@ object MarkerIconFactory {
                 })
             }
 
-            drawCircle(cx, cx, radius, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = fillColor })
+            val dimmedFill = (fillColor and 0x00FFFFFF) or (alphaByte shl 24)
+            val dimmedBorder = (0xFFFFFF or (alphaByte shl 24))
+            drawCircle(cx, cx, radius, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = dimmedFill })
             drawCircle(cx, cx, radius, Paint(Paint.ANTI_ALIAS_FLAG).apply {
-                color = 0xFFFFFFFF.toInt()
+                color = dimmedBorder
                 style = Paint.Style.STROKE
                 strokeWidth = dp * if (isSelected) 2f else 1.5f
             })

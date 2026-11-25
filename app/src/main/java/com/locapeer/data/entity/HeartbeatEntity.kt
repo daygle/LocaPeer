@@ -31,5 +31,33 @@ data class HeartbeatEntity(
     /** Altitude in metres from GPS. 0 when unavailable. */
     val altitude: Double = 0.0,
     /** Sender's heartbeat interval in seconds when this ping was sent. */
-    val expectedIntervalSeconds: Long
-)
+    val expectedIntervalSeconds: Long,
+    /**
+     * UTC epoch millis at which the provider captured the fix. [timestamp] is the moment
+     * the attempt was ingested, which can differ by up to [fixAgeSeconds]. 0 on rows
+     * written before v18, where the capture time was not recorded.
+     */
+    val capturedAt: Long = 0L,
+    /**
+     * The device's UTC offset in minutes at [capturedAt], so the stored UTC instant can be
+     * rendered in the wall-clock time the wearer actually saw.
+     */
+    val capturedAtOffsetMinutes: Int = 0,
+    /** Provider that produced the fix (e.g. "gps", "network", "fused"); empty if unknown. */
+    val source: String = "",
+    /** receivedAt - capturedAt in seconds. How old the fix already was when it arrived. */
+    val fixAgeSeconds: Long = 0L,
+    /**
+     * [ReadingStatus.dbValue] assigned at ingest. Received peer heartbeats are always
+     * accepted; only this device's own attempts can be rejected.
+     */
+    val status: String = ReadingStatus.ACCEPTED.dbValue,
+    /** [RejectReason.code] when [status] is rejected, null otherwise. */
+    val rejectReason: String? = null
+) {
+    /** True when this reading passed the sharing quality gate. */
+    val isAccepted: Boolean get() = status == ReadingStatus.ACCEPTED.dbValue
+
+    /** The parsed reject reason, or null for an accepted/legacy row. */
+    val parsedRejectReason: RejectReason? get() = RejectReason.fromCode(rejectReason)
+}

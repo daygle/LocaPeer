@@ -65,6 +65,7 @@ import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 import kotlinx.serialization.json.Json
 import java.time.Instant
+import java.util.TimeZone
 import javax.inject.Inject
 
 private const val TAG = "HeartbeatService"
@@ -168,6 +169,15 @@ class HeartbeatService : LifecycleService() {
     @Volatile private var lastSpeed = 0f
     @Volatile private var lastBearing = 0f
     @Volatile private var lastAltitude = 0.0
+    /** UTC capture time of the fix currently behind lastLat/lastLng (0 = unknown). */
+    @Volatile private var lastFixCapturedAtMs = 0L
+    /** Provider behind the reported fix ("gps", "network", ...); empty when unknown. */
+    @Volatile private var lastFixProvider = ""
+    /**
+     * Consecutive cadence attempts rejected by the sharing quality gate. Drives the bounded
+     * backoff in [AttemptCadence]; reset by the first accepted attempt.
+     */
+    private var consecutiveRejections = 0
     private var currentSettings = AppSettings()
 
     /**
@@ -221,10 +231,12 @@ class HeartbeatService : LifecycleService() {
     /** Set by [pulseNow]: the next pulse is a deliberate early one (first fix, confirmed
      *  departure, SOS, fresh fix after a schedule gap) and must not wait out the cadence. */
     @Volatile private var forcePulse = false
-    /** Elapsed time of the last heartbeat written to local history (0 = none yet). While a
-     *  contact is watching live, pulses run every few seconds but history is only written
-     *  once the user's normal cadence has elapsed since this point. */
-    @Volatile private var lastHistoryElapsedMs = 0L
+    /** Elapsed time of the last cadence ATTEMPT (0 = none yet), accepted or rejected. While
+     *  a contact is watching live, pulses run every few seconds but a reading is only stored
+     *  once the user's normal cadence has elapsed since this point. Rejected attempts count
+     *  too: deriving the cadence from the last success is what let a run of rejections leave
+     *  no trace and stall the timeline. */
+    @Volatile private var lastAttemptElapsedMs = 0L
     /** Elapsed-time deadline until which GPS is boosted to high accuracy (see CLASSIFY_BOOST_MS). */
     @Volatile private var classificationBoostUntilMs = 0L
     /** Elapsed-time deadline until which GPS stays high-accuracy after settling, to sharpen
@@ -329,6 +341,11 @@ class HeartbeatService : LifecycleService() {
                     lastLat = loc.latitude
                     lastLng = loc.longitude
                     lastAccuracy = loc.accuracy
+                    // Capture metadata travels with the selected fix, so a stored reading's
+                    // fix age and provider describe the position it actually carries rather
+                    // than whichever provider delivered last.
+                    lastFixCapturedAtMs = loc.time
+                    lastFixProvider = loc.provider ?: ""
                     lastBearing = if (loc.hasBearing()) loc.bearing else 0f
                     // GPS altitude is often missing (indoors, cold fix); keep the last known
                     // reading rather than flicker to a misleading 0 m / sea level.
@@ -337,6 +354,10 @@ class HeartbeatService : LifecycleService() {
                 } else {
                     diagnostics.onSelectorHeld()
                 }
+                // Trip/driving classification deliberately sees the reading even when the
+                // sharing gate will later reject it: speed is evidence about motion, not a
+                // position to publish. onMotionSample keeps its multi-sample hysteresis, so
+                // no single reading (rejected or not) can flip the mode.
                 speed?.let { onMotionSample(MotionMath.classify(it)) }
                 // Two cases need a pulse as soon as a usable fix exists: no heartbeat has
                 // gone out yet (empty lastLocation cache at start, so the initial pulse
@@ -346,7 +367,7 @@ class HeartbeatService : LifecycleService() {
                 // pulse would only be withheld again, re-triggering on every fix until
                 // GPS sharpens.
                 if (isStarted && (lastPulseElapsedMs == 0L || awaitingFreshFix) &&
-                    !sendGateBlocks(lastAccuracy)
+                    !sharingRejects(lastAccuracy)
                 ) {
                     awaitingFreshFix = false
                     pulseNow()
@@ -625,7 +646,7 @@ class HeartbeatService : LifecycleService() {
             // out the remainder instead. Deliberate early pulses (pulseNow) are exempt.
             if (!forced && !isSos && !liveNow) {
                 val remaining = remainingCadenceMs(
-                    lastHistoryElapsedMs, SystemClock.elapsedRealtime(),
+                    lastAttemptElapsedMs, SystemClock.elapsedRealtime(),
                     intervalManager.cadenceIntervalMillis(currentSettings)
                 )
                 if (remaining > CADENCE_EARLY_TOLERANCE_MS) {
@@ -635,14 +656,18 @@ class HeartbeatService : LifecycleService() {
                 }
             }
 
-            // While the fresh-fix hold is set the cached position predates the schedule
-            // window and must not be broadcast; the location callback pulses as soon as
-            // a live fix lands. SOS bypasses the hold - stale beats silent in an emergency.
-            if ((isSos || !awaitingFreshFix) && broadcastHeartbeat()) {
+            // The attempt always runs, even during the fresh-fix hold: a rejected reading
+            // still has to be recorded, or a poor provider could leave another silent gap.
+            // The hold only suppresses the broadcast (inside broadcastHeartbeat).
+            // The cadence follows the last ATTEMPT: broadcastHeartbeat returns true for a
+            // rejected attempt too, so a run of rejections can never leave the loop waiting
+            // on a success that does not come.
+            if (broadcastHeartbeat()) {
                 lastPulseElapsedMs = SystemClock.elapsedRealtime()
             }
 
-            val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
+            val baseInterval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
+            val interval = AttemptCadence.nextDelayMs(baseInterval, consecutiveRejections)
             handler.postDelayed(this, interval)
             if (interval >= DOZE_BACKSTOP_MIN_DELAY_MS) armDozeBackstop(interval)
         }
@@ -1232,7 +1257,8 @@ class HeartbeatService : LifecycleService() {
             handler.post(heartbeatRunnable)
             return
         }
-        val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
+        val baseInterval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
+        val interval = AttemptCadence.nextDelayMs(baseInterval, consecutiveRejections)
         val elapsed = SystemClock.elapsedRealtime() - lastPulseElapsedMs
         val delay = (interval - elapsed).coerceAtLeast(0L)
         handler.postDelayed(heartbeatRunnable, delay)
@@ -1243,16 +1269,23 @@ class HeartbeatService : LifecycleService() {
     }
 
     /**
-     * Sender-side accuracy gate: true when a fix this coarse must be withheld from
-     * local history and peers. Never blocks in SOS - a coarse emergency position
-     * still beats none. 0 (the default) never blocks.
+     * True when the sharing consumer would reject a fix of this accuracy right now. Used by
+     * the location callback to decide whether a fresh fix can trigger an immediate pulse;
+     * the stored verdict itself is decided in [broadcastHeartbeat] and kept either way.
      */
-    private fun sendGateBlocks(accuracyM: Float): Boolean {
-        val gate = currentSettings.sendMaxAccuracyMeters
-        return !isSos && gate > 0 && accuracyM > gate
-    }
+    private fun sharingRejects(accuracyM: Float): Boolean =
+        !LocationQualityGate.evaluate(
+            ReadingQuality(accuracyM, fixAgeSeconds = 0L, hasFix = true),
+            LocationQualityConfig.fromSettings(currentSettings).sharing,
+            bypass = isSos,
+        ).accepted
 
-    /** Returns false when no heartbeat was recorded because no location fix exists yet. */
+    /**
+     * Runs one ingest attempt. The reading is evaluated against the sharing thresholds,
+     * always recorded on a cadence pulse (accepted or rejected), and only an accepted
+     * reading is turned into a sharing payload. Returns true when the attempt was handled,
+     * so the next pulse can be scheduled from the attempt rather than from the last success.
+     */
     private fun broadcastHeartbeat(isSos: Boolean = this.isSos): Boolean {
         // Snapshot the reported fix once, on the main thread, before anything async:
         // the fields are individually @Volatile but written as a group by the location
@@ -1266,20 +1299,23 @@ class HeartbeatService : LifecycleService() {
         val fixSpeed = lastSpeed
         val fixBearing = lastBearing
         val fixAltitude = lastAltitude
+        val fixCapturedAt = lastFixCapturedAtMs
+        val fixProvider = lastFixProvider
         // Stored/broadcast label fuses the GPS classifier with the Activity Recognition
         // reading (staleness-aware); interval selection stays keyed off the cadence state.
         val motionStateLabel = MotionFusion.fuse(currentMotionState, arMotionState, arIsStale()).name
 
-        if (fixLat == 0.0 && fixLng == 0.0) {
-            Log.d(TAG, "Skipping heartbeat: no location fixed yet")
-            return false
-        }
-        // Sender-side accuracy gate: withhold a fix we don't trust from both local
-        // history and peers, so a coarse cell fix doesn't paint a misleading pin.
-        if (sendGateBlocks(fixAccuracy)) {
-            Log.d(TAG, "Skipping heartbeat: accuracy ${fixAccuracy}m worse than gate ${currentSettings.sendMaxAccuracyMeters}m")
-            return false
-        }
+        // When this attempt happened, and how old the fix it carries already was. Both are
+        // snapshotted here so the stored row and the log describe the same reading.
+        val attemptTimeMs = System.currentTimeMillis()
+        val hasFix = fixLat != 0.0 || fixLng != 0.0
+        val fixAgeSeconds = if (hasFix && fixCapturedAt > 0L) {
+            ((attemptTimeMs - fixCapturedAt) / 1000L).coerceAtLeast(0L)
+        } else 0L
+        val permissionGranted =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
         // Low-battery profile transitions are handled by the pulse runnable and the
         // battery event receiver; here the level is only read for the payload.
         val battery = getBatteryLevel()
@@ -1293,17 +1329,50 @@ class HeartbeatService : LifecycleService() {
         // Decided here, on the main thread, alongside the other snapshots.
         val nowElapsed = SystemClock.elapsedRealtime()
         val livePulse = !isSos && intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
-        val cadencePulse = !livePulse || lastHistoryElapsedMs == 0L ||
-            nowElapsed - lastHistoryElapsedMs >= intervalManager.cadenceIntervalMillis(currentSettings)
-        if (cadencePulse) lastHistoryElapsedMs = nowElapsed
+        val cadencePulse = !livePulse || lastAttemptElapsedMs == 0L ||
+            nowElapsed - lastAttemptElapsedMs >= intervalManager.cadenceIntervalMillis(currentSettings)
+        if (cadencePulse) lastAttemptElapsedMs = nowElapsed
         val liveViewers: Set<String> = if (livePulse) intervalManager.liveViewers() else emptySet()
+
+        // Quality is data: evaluate each consumer's policy, but never use the verdict to
+        // throw the reading away. SOS bypasses the gate, as it always has.
+        val sharingThresholds = LocationQualityConfig.fromSettings(currentSettings).sharing
+        // While stationary the FixSelector deliberately holds the last sharp fix instead of
+        // wobbling to each coarse poll, so that position can be old without becoming wrong:
+        // the device provably has not moved. Age is still recorded on the reading; only the
+        // staleness gate is lifted for this attempt. A moving device has no such excuse.
+        val gateThresholds = if (currentMotionState == MotionState.STATIONARY) {
+            sharingThresholds.copy(maxFixAgeSeconds = 0)
+        } else {
+            sharingThresholds
+        }
+        val verdict = LocationQualityGate.evaluate(
+            ReadingQuality(fixAccuracy, fixAgeSeconds, hasFix, permissionGranted),
+            gateThresholds,
+            bypass = isSos,
+        )
+        if (cadencePulse) {
+            if (verdict.accepted) consecutiveRejections = 0 else consecutiveRejections++
+        }
+        // One line per attempt, accepted or rejected, including the reason. The old code
+        // was silent on rejection, which is why a six-reading gap took a manual
+        // investigation to explain.
+        Log.i(
+            TAG,
+            "Reading attempt: status=${verdict.status.dbValue} " +
+                "reason=${verdict.rejectReason?.code ?: "none"} accuracy=${fixAccuracy}m " +
+                "fixAge=${fixAgeSeconds}s source=${fixProvider.ifBlank { "unknown" }} " +
+                "cadence=$cadencePulse live=$livePulse sos=$isSos",
+        )
+        val captureOffsetMinutes = TimeZone.getDefault()
+            .getOffset(if (fixCapturedAt > 0L) fixCapturedAt else attemptTimeMs) / 60_000
 
         lifecycleScope.launch {
             try {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val settings = prefs.settings.first()
 
-                val nowMs = System.currentTimeMillis()
+                val nowMs = attemptTimeMs
                 // Every contact - watching or not - is told the normal cadence. Live pulses
                 // are a bonus on top of it: once a watcher closes the map (or for contacts
                 // who never get the live pulses), their overdue pin and missed-update alert
@@ -1311,6 +1380,9 @@ class HeartbeatService : LifecycleService() {
                 // last 5s pulse. Watchers detect live streaming from the arrival gaps.
                 val cadenceIntervalSec = (if (isSos) intervalManager.getIntervalMillis(settings)
                     else intervalManager.cadenceIntervalMillis(settings)) / 1000
+                // Every cadence attempt is stored, including the rejected ones, so the
+                // timeline has no hole and a gap can be explained from the stored reason.
+                // Live-only pulses still do not add history rows, exactly as before.
                 if (cadencePulse) heartbeatDao.insert(
                     HeartbeatEntity(
                         deviceId = pubHex,
@@ -1327,9 +1399,27 @@ class HeartbeatService : LifecycleService() {
                         speed = fixSpeed,
                         bearing = fixBearing,
                         altitude = fixAltitude,
-                        expectedIntervalSeconds = cadenceIntervalSec
+                        expectedIntervalSeconds = cadenceIntervalSec,
+                        capturedAt = fixCapturedAt,
+                        capturedAtOffsetMinutes = captureOffsetMinutes,
+                        source = fixProvider,
+                        fixAgeSeconds = fixAgeSeconds,
+                        status = verdict.status.dbValue,
+                        rejectReason = verdict.rejectReason?.code
                     )
                 )
+
+                // Egress gate: a rejected reading stays in history and logs, but must never
+                // enter a contacts/live-sharing payload.
+                if (!verdict.accepted) return@launch
+                // No position to share (an SOS attempt can reach here with no fix at all);
+                // broadcasting 0,0 would be worse than silence.
+                if (!hasFix) return@launch
+                // GPS just resumed after a schedule suspension: the cached position predates
+                // the window and must not be shipped stamped as current. The reading above is
+                // still kept, and the location callback pulses as soon as a live fix lands.
+                // SOS bypasses the hold - stale beats silent in an emergency.
+                if (!isSos && awaitingFreshFix) return@launch
 
                 // Skip remote broadcast if there's no network connection to avoid
                 // wasting battery on failed radio activity and crypto. SOS is exempt: the
@@ -1498,6 +1588,8 @@ class HeartbeatService : LifecycleService() {
                             lastLat = loc.latitude
                             lastLng = loc.longitude
                             lastAccuracy = loc.accuracy
+                            lastFixCapturedAtMs = loc.time
+                            lastFixProvider = loc.provider ?: ""
                             // Seed the outlier filter too, so the first live fix
                             // is sanity-checked against this cached position.
                             locationFilter.accept(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)

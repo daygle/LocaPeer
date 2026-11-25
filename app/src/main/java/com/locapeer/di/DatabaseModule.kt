@@ -319,11 +319,39 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v18: every ingest attempt becomes a stored reading. Adds the capture time/offset,
+     * provider, fix age and accept/reject verdict to `heartbeats` (existing rows are
+     * accepted, as they were only ever written after the old gate), plus the hourly
+     * aggregate table that replaces rejected rows after their 7-day detail window.
+     * Purely additive: no existing column or row is rewritten.
+     */
+    private val MIGRATION_17_18 = object : Migration(17, 18) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE heartbeats ADD COLUMN capturedAt INTEGER NOT NULL DEFAULT 0")
+            db.execSQL("ALTER TABLE heartbeats ADD COLUMN capturedAtOffsetMinutes INTEGER NOT NULL DEFAULT 0")
+            db.execSQL("ALTER TABLE heartbeats ADD COLUMN source TEXT NOT NULL DEFAULT ''")
+            db.execSQL("ALTER TABLE heartbeats ADD COLUMN fixAgeSeconds INTEGER NOT NULL DEFAULT 0")
+            db.execSQL("ALTER TABLE heartbeats ADD COLUMN status TEXT NOT NULL DEFAULT 'accepted'")
+            db.execSQL("ALTER TABLE heartbeats ADD COLUMN rejectReason TEXT DEFAULT NULL")
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `location_reject_aggregates` (" +
+                    "`deviceId` TEXT NOT NULL, `hourStartUtcMs` INTEGER NOT NULL, " +
+                    "`rejectedCount` INTEGER NOT NULL, `medianAccuracyMeters` REAL NOT NULL, " +
+                    "PRIMARY KEY(`deviceId`, `hourStartUtcMs`))"
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS `index_location_reject_aggregates_hourStartUtcMs` " +
+                    "ON `location_reject_aggregates` (`hourStartUtcMs`)"
+            )
+        }
+    }
+
     val ALL_MIGRATIONS = arrayOf(
         MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6,
         MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11,
         MIGRATION_11_12, MIGRATION_12_13, MIGRATION_13_14, MIGRATION_14_15, MIGRATION_15_16,
-        MIGRATION_16_17
+        MIGRATION_16_17, MIGRATION_17_18
     )
 
     @Provides
@@ -357,4 +385,5 @@ object DatabaseModule {
     @Provides fun providePendingRequestDao(db: AppDatabase): PendingRequestDao = db.pendingRequestDao()
     @Provides fun provideCircleDao(db: AppDatabase): CircleDao = db.circleDao()
     @Provides fun provideContactAddReceiptDao(db: AppDatabase): ContactAddReceiptDao = db.contactAddReceiptDao()
+    @Provides fun provideLocationRejectAggregateDao(db: AppDatabase): com.locapeer.data.dao.LocationRejectAggregateDao = db.locationRejectAggregateDao()
 }

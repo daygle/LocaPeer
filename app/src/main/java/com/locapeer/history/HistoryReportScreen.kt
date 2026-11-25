@@ -19,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -36,6 +37,7 @@ import com.locapeer.map.MapMarker
 import com.locapeer.map.MarkerAnchor
 import com.locapeer.beacon.MotionState
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.data.entity.RejectReason
 import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.components.TimePickerDialog
@@ -75,6 +77,7 @@ fun HistoryReportScreen(
     val startTimeOffset by vm.startTimeOffset.collectAsStateWithLifecycle()
     val endTimeOffset by vm.endTimeOffset.collectAsStateWithLifecycle()
     val heartbeats by vm.heartbeats.collectAsStateWithLifecycle()
+    val hideLowAccuracy by vm.hideLowAccuracy.collectAsStateWithLifecycle()
     val addresses by vm.addresses.collectAsStateWithLifecycle()
     val selfDisplayName by vm.selfDisplayName.collectAsStateWithLifecycle()
 
@@ -240,6 +243,32 @@ fun HistoryReportScreen(
                                     )
                                 }
                             }
+                        }
+
+                        HorizontalDivider(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            thickness = 0.5.dp,
+                            color = MaterialTheme.colorScheme.outlineVariant
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // Display-only: rejected readings stay stored either way, and
+                            // turning this back off reveals them again immediately.
+                            FilterChip(
+                                selected = hideLowAccuracy,
+                                onClick = { vm.setHideLowAccuracy(!hideLowAccuracy) },
+                                label = {
+                                    Text(
+                                        stringResource(R.string.settings_hide_low_accuracy),
+                                        style = MaterialTheme.typography.labelMedium
+                                    )
+                                }
+                            )
                         }
                     }
                 }
@@ -423,12 +452,19 @@ private fun HistoryMapTab(
         mv.animateTo(ping.lat - latOffset, ping.lng)
     }
 
+    // A no_fix / permission_denied attempt has no position of its own - its coordinates are
+    // only a placeholder for the row - so it stays in the list but never on the map.
+    val mappedPings = remember(heartbeats) { heartbeats.filter { it.hasMappedPosition() } }
+    val acceptedPings = remember(mappedPings) { mappedPings.filter { it.isAccepted } }
+    val rejectedPings = remember(mappedPings) { mappedPings.filterNot { it.isAccepted } }
+
     // Only fit the viewport when the day's data changes - selecting a pin must not yank the
     // camera back out. A single fix has no bounds to fit, so it gets a useful neighbourhood view.
-    LaunchedEffect(heartbeats, map) {
+    LaunchedEffect(mappedPings, map) {
         val mv = map ?: return@LaunchedEffect
+        if (mappedPings.isEmpty()) return@LaunchedEffect
         mv.fit(
-            heartbeats.map { LatLng(it.lat, it.lng) },
+            mappedPings.map { LatLng(it.lat, it.lng) },
             paddingPx = 64,
             animate = false,
             singlePointZoom = MapGeometry.fromLegacyZoom(14.0)
@@ -436,19 +472,44 @@ private fun HistoryMapTab(
     }
 
     val selectedId = selectedPing?.id
-    val lines = remember(heartbeats) {
+    val lines = remember(acceptedPings, rejectedPings) {
         // Stored rows can predate the current validation, so check before parsing.
-        val pinColor = normalizeHexColor(heartbeats.last().pinColor)
+        val pinColor = normalizeHexColor((acceptedPings.lastOrNull() ?: rejectedPings.lastOrNull())?.pinColor.orEmpty())
         val lineArgb = if (pinColor.isNotEmpty())
             pinColor.toColorInt().let {
                 android.graphics.Color.argb(200, android.graphics.Color.red(it), android.graphics.Color.green(it), android.graphics.Color.blue(it))
             }
         else android.graphics.Color.argb(200, 66, 133, 244)
-        listOf(MapLine(heartbeats.map { LatLng(it.lat, it.lng) }, lineArgb, widthDp = 3f))
+        buildList {
+            // The solid breadcrumb is built from accepted readings only, so a coarse outlier
+            // can never pull the drawn path off the trail the user actually shared.
+            if (acceptedPings.size >= 2) {
+                add(MapLine(acceptedPings.map { LatLng(it.lat, it.lng) }, lineArgb, widthDp = 3f))
+            }
+            // A dotted trail through the rejected attempts: alternating short segments read
+            // as a separate, uncertain path instead of joining the solid line.
+            val dottedArgb = android.graphics.Color.argb(150, 128, 128, 128)
+            var index = 0
+            while (index + 1 < rejectedPings.size) {
+                add(
+                    MapLine(
+                        listOf(
+                            LatLng(rejectedPings[index].lat, rejectedPings[index].lng),
+                            LatLng(rejectedPings[index + 1].lat, rejectedPings[index + 1].lng)
+                        ),
+                        dottedArgb,
+                        widthDp = 2f
+                    )
+                )
+                index += 2
+            }
+        }
     }
-    val markers = remember(heartbeats, selectedId) {
-        heartbeats.mapIndexed { index, ping ->
-            val isLatest = index == heartbeats.lastIndex
+    val markers = remember(mappedPings, selectedId) {
+        val latestAcceptedId = acceptedPings.lastOrNull()?.id
+        mappedPings.map { ping ->
+            val isLatest = ping.id == latestAcceptedId
+            val isRejected = !ping.isAccepted
             val isSelected = ping.id == selectedId
             val icon = if (isLatest) {
                 MarkerIconFactory.create(
@@ -462,9 +523,12 @@ private fun HistoryMapTab(
             } else {
                 MarkerIconFactory.createDotIcon(
                     context = context,
-                    pinColor = ping.pinColor,
+                    // Rejected points are dimmed grey: visible, but obviously not part of
+                    // the trusted trail.
+                    pinColor = if (isRejected) "#9E9E9E" else ping.pinColor,
                     isSos = ping.isSos,
-                    isSelected = isSelected
+                    isSelected = isSelected,
+                    alpha = if (isRejected) 0.45f else 1f
                 )
             }
             MapMarker(
@@ -476,7 +540,8 @@ private fun HistoryMapTab(
                 zIndex = when {
                     isSelected -> 2f
                     isLatest -> 1f
-                    else -> 0f
+                    isRejected -> 0f
+                    else -> 0.5f
                 }
             )
         }
@@ -575,6 +640,35 @@ private fun HistoryMapTab(
                         }
                     }
 
+                    if (!ping.isAccepted) {
+                        Spacer(Modifier.height(6.dp))
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Surface(
+                                color = MaterialTheme.colorScheme.surfaceVariant,
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Text(
+                                    stringResource(R.string.history_rejected),
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            }
+                            Text(
+                                rejectReasonLabel(ping.parsedRejectReason),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Text(
+                                stringResource(R.string.history_fix_age_value, ping.fixAgeSeconds),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+
                     Spacer(Modifier.height(4.dp))
                     MotionChip(ping.motionState)
                 }
@@ -601,7 +695,11 @@ private fun HistoryPingCard(
         )
     ) {
         Row(
-            modifier = Modifier.padding(12.dp),
+            // Rejected readings are still listed, but visibly dimmed so they never read as
+            // a shared position the contact actually received.
+            modifier = Modifier
+                .padding(12.dp)
+                .alpha(if (ping.isAccepted) 1f else 0.6f),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -627,6 +725,7 @@ private fun HistoryPingCard(
             VerticalDivider(modifier = Modifier.height(56.dp))
 
             Column(modifier = Modifier.weight(1f)) {
+                val hasPosition = ping.hasMappedPosition()
                 if (!address.isNullOrBlank()) {
                     Text(
                         address,
@@ -634,15 +733,25 @@ private fun HistoryPingCard(
                         fontWeight = FontWeight.Medium,
                         maxLines = 2
                     )
-                    Spacer(Modifier.height(2.dp))
+                    if (hasPosition) {
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            "%.5f°, %.5f°".format(ping.lat, ping.lng),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                } else if (hasPosition) {
                     Text(
                         "%.5f°, %.5f°".format(ping.lat, ping.lng),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Medium
                     )
                 } else {
+                    // No position was captured for this attempt - show why instead of a
+                    // placeholder 0,0 that never existed.
                     Text(
-                        "%.5f°, %.5f°".format(ping.lat, ping.lng),
+                        rejectReasonLabel(ping.parsedRejectReason),
                         style = MaterialTheme.typography.bodySmall,
                         fontWeight = FontWeight.Medium
                     )
@@ -667,6 +776,13 @@ private fun HistoryPingCard(
                     if (ping.altitude != 0.0) {
                         Text(
                             "⛰ ${DisplayFormat.elevationValue(ping.altitude)}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    if (!ping.isAccepted) {
+                        Text(
+                            rejectReasonLabel(ping.parsedRejectReason),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -752,13 +868,25 @@ private fun HistoryPingDetailDialog(
                 if (!address.isNullOrBlank()) {
                     DetailRow(stringResource(R.string.history_detail_location), address)
                 }
-                DetailRow(stringResource(R.string.history_detail_coordinates), "%.5f°, %.5f°".format(ping.lat, ping.lng))
+                if (ping.hasMappedPosition()) {
+                    DetailRow(stringResource(R.string.history_detail_coordinates), "%.5f°, %.5f°".format(ping.lat, ping.lng))
+                }
                 DetailRow(stringResource(R.string.map_stat_accuracy), stringResource(R.string.history_within, DisplayFormat.distanceValue(ping.accuracy.toDouble())))
                 DetailRow(stringResource(R.string.history_detail_movement), motionDescription(ping.motionState, ping.speed, ping.bearing, stringResource(R.string.history_movement_desc)))
                 if (ping.altitude != 0.0) {
                     DetailRow(stringResource(R.string.map_stat_elevation), DisplayFormat.elevationValue(ping.altitude))
                 }
                 DetailRow(stringResource(R.string.map_stat_battery), "${ping.battery}%")
+                if (!ping.isAccepted) {
+                    DetailRow(
+                        stringResource(R.string.history_reject_reason),
+                        rejectReasonLabel(ping.parsedRejectReason)
+                    )
+                    DetailRow(
+                        stringResource(R.string.history_fix_age),
+                        stringResource(R.string.history_fix_age_value, ping.fixAgeSeconds)
+                    )
+                }
             }
         }
     )
@@ -778,6 +906,29 @@ private fun DetailRow(label: String, value: String) {
         )
     }
 }
+
+/**
+ * A rejected attempt with no position of its own (no fix, or permission withdrawn at the
+ * attempt) is history-list evidence only; plotting its placeholder coordinates would put a
+ * point on the map where the device never reported being.
+ */
+private fun HeartbeatEntity.hasMappedPosition(): Boolean =
+    isAccepted || when (parsedRejectReason) {
+        RejectReason.NO_FIX, RejectReason.PERMISSION_DENIED -> false
+        else -> lat != 0.0 || lng != 0.0
+    }
+
+/** Localized label for a stored reject-reason code; unknown/legacy values fall back to "Other". */
+@Composable
+private fun rejectReasonLabel(reason: RejectReason?): String = stringResource(
+    when (reason) {
+        RejectReason.TOO_IMPRECISE -> R.string.history_reject_too_imprecise
+        RejectReason.STALE -> R.string.history_reject_stale
+        RejectReason.NO_FIX -> R.string.history_reject_no_fix
+        RejectReason.PERMISSION_DENIED -> R.string.history_reject_permission_denied
+        RejectReason.OTHER, null -> R.string.history_reject_other
+    }
+)
 
 /**
  * Full-sentence description of motion for the detail popup, e.g. "Driving 48 km/h heading NE".

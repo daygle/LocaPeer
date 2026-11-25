@@ -1,6 +1,8 @@
 package com.locapeer.history
 
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.data.entity.ReadingStatus
+import com.locapeer.data.entity.RejectReason
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Test
@@ -8,7 +10,13 @@ import org.junit.Test
 class HistoryThinningTest {
 
     // ~0.001° latitude ≈ 111m; tests sit on the equator so the conversion is uniform.
-    private fun point(id: Long, northMetres: Double, isSos: Boolean = false, accuracy: Float = 10f) = HeartbeatEntity(
+    private fun point(
+        id: Long,
+        northMetres: Double,
+        isSos: Boolean = false,
+        accuracy: Float = 10f,
+        accepted: Boolean = true,
+    ) = HeartbeatEntity(
         id = id,
         deviceId = "dev",
         displayName = "Test",
@@ -19,7 +27,9 @@ class HistoryThinningTest {
         battery = 100,
         motionState = "STATIONARY",
         isSos = isSos,
-        expectedIntervalSeconds = 900
+        expectedIntervalSeconds = 900,
+        status = if (accepted) ReadingStatus.ACCEPTED.dbValue else ReadingStatus.REJECTED.dbValue,
+        rejectReason = if (accepted) null else RejectReason.TOO_IMPRECISE.code
     )
 
     private fun ids(points: List<HeartbeatEntity>) = points.map { it.id }
@@ -107,6 +117,43 @@ class HistoryThinningTest {
         )
         // 1 is good, 2 is SOS (kept), 3 is last (kept).
         assertEquals(listOf(1L, 2L, 3L), ids(HistoryThinning.process(points, 100, 0)))
+    }
+
+    @Test
+    fun `rejected readings are kept but never anchor the accepted trail`() {
+        val points = listOf(
+            point(1, 0.0),                               // accepted anchor
+            point(2, 80.0, accuracy = 900f, accepted = false), // rejected, would anchor wrongly
+            point(3, 120.0),                             // accepted, 120m from the real anchor
+            point(4, 400.0)                              // latest accepted
+        )
+
+        // If the rejected point became the distance anchor, point 3 (40m from it) would be
+        // thinned away. It must survive, and the rejected point must still be listed.
+        assertEquals(listOf(1L, 2L, 3L, 4L), ids(HistoryThinning.process(points, 0, 100)))
+    }
+
+    @Test
+    fun `rejected readings are not dropped by the accuracy filter`() {
+        val points = listOf(
+            point(1, 0.0),
+            point(2, 50.0, accuracy = 900f, accepted = false),
+            point(3, 400.0)
+        )
+        // The coarse rejected attempt is evidence, not a trail point: the accuracy filter
+        // does not remove it (the history view decides that with its own toggle).
+        assertEquals(listOf(1L, 2L, 3L), ids(HistoryThinning.process(points, 100, 0)))
+    }
+
+    @Test
+    fun `a rejected final reading does not hide the latest accepted point`() {
+        val points = listOf(
+            point(1, 0.0),
+            point(2, 20.0),
+            point(3, 25.0, accuracy = 900f, accepted = false)
+        )
+        // The latest accepted point (2) must be kept even though the newest row is rejected.
+        assertEquals(listOf(1L, 2L, 3L), ids(HistoryThinning.process(points, 0, 100)))
     }
 
     @Test

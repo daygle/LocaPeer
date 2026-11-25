@@ -63,6 +63,14 @@ class HistoryReportViewModel @Inject constructor(
     private val _endTimeOffset = MutableStateFlow(DAY_MS - 1) // ms from day start
     val endTimeOffset: StateFlow<Long> = _endTimeOffset
 
+    /**
+     * Display-only toggle for rejected/low-accuracy readings. Off by default: the point of
+     * retention is that the user can see the attempts that were not shared. It never deletes
+     * anything, so turning it off brings the readings straight back.
+     */
+    private val _hideLowAccuracy = MutableStateFlow(false)
+    val hideLowAccuracy: StateFlow<Boolean> = _hideLowAccuracy
+
     val heartbeats: StateFlow<List<HeartbeatEntity>> =
         combine(_selectedPeerId, _selectedDayStart, _startTimeOffset, _endTimeOffset) { peerId, dayStart, startOff, endOff ->
             if (peerId == null) {
@@ -82,11 +90,18 @@ class HistoryReportViewModel @Inject constructor(
         }
             .flatMapLatest { it }
             .combine(
-                prefs.settings
-                    .map { it.historyMinDistanceMeters to it.historyMaxAccuracyMeters }
-                    .distinctUntilChanged()
-            ) { pings, (minDistanceM, maxAccuracyM) ->
-                HistoryThinning.process(pings, maxAccuracyM, minDistanceM)
+                combine(prefs.settings, _hideLowAccuracy) { settings, hide ->
+                    HistoryDisplay(
+                        minDistanceM = settings.historyMinDistanceMeters,
+                        maxAccuracyM = settings.historyMaxAccuracyMeters,
+                        hideLowAccuracy = hide,
+                    )
+                }.distinctUntilChanged()
+            ) { pings, display ->
+                // History is the user's own view: every reading is shown unless the user
+                // explicitly asks to hide the low-accuracy/rejected ones.
+                val visible = if (display.hideLowAccuracy) pings.filter { it.isAccepted } else pings
+                HistoryThinning.process(visible, display.maxAccuracyM, display.minDistanceM)
             }
             // A full day of pings is thinned with distance math per point; keep it off Main.
             .flowOn(Dispatchers.Default)
@@ -118,7 +133,9 @@ class HistoryReportViewModel @Inject constructor(
                         return@collectLatest
                     }
                     val cached = _addresses.value
-                    val pending = pings.filter { it.id !in cached }
+                    // Only accepted readings have a position worth geocoding: a no-fix row's
+                    // placeholder coordinates must not become an address lookup.
+                    val pending = pings.filter { it.id !in cached && it.isAccepted }
                     pending.forEachIndexed { index, ping ->
                         if (index > 0) delay(250)
                         val addr = Geocoding.reverseGeocode(context, ping.lat, ping.lng)
@@ -132,6 +149,10 @@ class HistoryReportViewModel @Inject constructor(
     fun selectPeer(peerId: String) {
         _selectedPeerId.value = peerId
         _addresses.value = emptyMap()
+    }
+
+    fun setHideLowAccuracy(hide: Boolean) {
+        _hideLowAccuracy.value = hide
     }
 
     fun selectDay(dayStartMs: Long) {
@@ -165,6 +186,12 @@ class HistoryReportViewModel @Inject constructor(
     }
 
     fun isToday(): Boolean = _selectedDayStart.value == todayStartMs()
+
+    private data class HistoryDisplay(
+        val minDistanceM: Int,
+        val maxAccuracyM: Int,
+        val hideLowAccuracy: Boolean,
+    )
 
     companion object {
         private const val DAY_MS = 24 * 60 * 60 * 1000L

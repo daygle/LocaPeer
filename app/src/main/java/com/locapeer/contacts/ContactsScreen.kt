@@ -470,8 +470,26 @@ private fun ContactRow(
             }
         },
         supportingContent = {
+            // Show the age of the position, and say explicitly when the contact stopped
+            // sharing on purpose: a paused pin that simply stops moving is otherwise
+            // indistinguishable from an app that stopped receiving updates.
+            val label = when (item.updateState) {
+                ContactUpdateState.STOPPED_SHARING ->
+                    if (hb != null) {
+                        stringResource(R.string.contacts_last_updated_paused, formatLastSeen(hb.receivedAt))
+                    } else {
+                        stringResource(R.string.contacts_sharing_paused)
+                    }
+                ContactUpdateState.LAST_UPDATED ->
+                    if (hb != null) {
+                        stringResource(R.string.contacts_last_updated, formatLastSeen(hb.receivedAt))
+                    } else {
+                        stringResource(R.string.contacts_no_location_yet)
+                    }
+                ContactUpdateState.NO_UPDATE_YET -> stringResource(R.string.contacts_no_location_yet)
+            }
             Text(
-                if (hb != null) stringResource(R.string.contacts_last_seen, formatLastSeen(hb.timestamp)) else stringResource(R.string.contacts_no_location_yet),
+                label,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

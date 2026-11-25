@@ -65,13 +65,13 @@ class MigrationTest {
     @Throws(IOException::class)
     fun migrateAll() {
         // Earliest committed schema is v2; run every migration forward to the current
-        // latest (v17), validating the schema after the last one. This is the chain an
+        // latest (v18), validating the schema after the last one. This is the chain an
         // installed device actually walks, so it also proves no intermediate step leaves
         // a table or index missing.
         helper.createDatabase(TEST_DB, 2).apply {
             close()
         }
-        helper.runMigrationsAndValidate(TEST_DB, 17, true, *DatabaseModule.ALL_MIGRATIONS)
+        helper.runMigrationsAndValidate(TEST_DB, 18, true, *DatabaseModule.ALL_MIGRATIONS)
     }
 
     @Test
@@ -137,6 +137,20 @@ class MigrationTest {
             close()
         }
         helper.runMigrationsAndValidate(TEST_DB, 17, true, *DatabaseModule.ALL_MIGRATIONS)
+    }
+
+    /**
+     * v17 -> v18: the ingest-quality columns on `heartbeats` plus the hourly rejected-reading
+     * aggregate table, validated against schemas/.../18.json. Existing heartbeats become
+     * accepted readings, which is what they were under the old capture-time gate.
+     */
+    @Test
+    @Throws(IOException::class)
+    fun migrate17To18() {
+        helper.createDatabase(TEST_DB, 17).apply {
+            close()
+        }
+        helper.runMigrationsAndValidate(TEST_DB, 18, true, *DatabaseModule.ALL_MIGRATIONS)
     }
 
     /** v13 -> v14: index changes only, validated against schemas/.../14.json. */

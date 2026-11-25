@@ -196,6 +196,7 @@ class SettingsViewModel @Inject constructor(
     private val geofenceDao: GeofenceDao,
     private val geofenceAssignmentDao: com.locapeer.data.dao.GeofenceAssignmentDao,
     private val heartbeatDao: HeartbeatDao,
+    private val locationRejectAggregateDao: com.locapeer.data.dao.LocationRejectAggregateDao,
     private val messageDao: MessageDao,
     private val messageReactionDao: com.locapeer.data.dao.MessageReactionDao,
     private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
@@ -324,7 +325,12 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun clearLocationHistory() {
-        viewModelScope.launch { heartbeatDao.deleteOlderThan(System.currentTimeMillis()) }
+        viewModelScope.launch {
+            // "Clear all stored readings" includes the rejected attempts and their hourly
+            // summaries, not just the shared positions.
+            heartbeatDao.deleteOlderThan(System.currentTimeMillis())
+            locationRejectAggregateDao.deleteAll()
+        }
     }
 
     fun clearMessageHistory() {

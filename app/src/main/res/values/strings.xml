@@ -164,8 +164,8 @@
     <string name="settings_update_cadence_reset">Reset to Defaults</string>
     <string name="settings_min_distance_filtering">Minimum Distance Filtering</string>
     <string name="settings_min_distance_filtering_subtitle">Only show points that are at least this far from the previous one.</string>
-    <string name="settings_discard_low_accuracy">Discard Low-Accuracy Fixes</string>
-    <string name="settings_discard_low_accuracy_subtitle">Don\'t broadcast or record your own fixes with an accuracy radius larger than this. SOS is never skipped.</string>
+    <string name="settings_discard_low_accuracy">Share Only Accurate Fixes</string>
+    <string name="settings_discard_low_accuracy_subtitle">Don\'t share your own fixes with an accuracy radius larger than this. They are still stored in your history, marked as rejected, so a gap can be explained. SOS is never skipped.</string>
     <string name="settings_hide_low_accuracy">Hide Low-Accuracy Points</string>
     <string name="settings_hide_low_accuracy_subtitle">Hide history points with an accuracy radius larger than this. Nothing is deleted.</string>
     <string name="settings_low_battery" formatted="false">Low Battery (&lt; 20%)</string>
@@ -259,7 +259,7 @@
     <string name="settings_private_key_title">Your Identity Key</string>
     <string name="settings_private_key_warning">Treat this like a password. Anyone who has it can pretend to be you - never share it, and store it somewhere safe.</string>
     <string name="settings_clear_location_title">Clear Location History?</string>
-    <string name="settings_clear_location_message">All stored location pings will be permanently deleted.</string>
+    <string name="settings_clear_location_message">All stored location readings will be permanently deleted, including readings that were never shared.</string>
     <string name="settings_clear_messages_title">Clear Message History?</string>
     <string name="settings_clear_messages_message">All stored messages will be permanently deleted.</string>
     <string name="settings_encrypted_backup_title">Encrypted Backup</string>
@@ -312,6 +312,10 @@
     <string name="contacts_bulk_delete_locations">Delete Locations</string>
     <string name="contacts_last_seen">Last seen: %1$s</string>
     <string name="contacts_no_location_yet">No location data yet</string>
+    <!-- Staleness labels; translations pending (see the history_rejected note). -->
+    <string name="contacts_last_updated" tools:ignore="MissingTranslation">Last updated %1$s</string>
+    <string name="contacts_last_updated_paused" tools:ignore="MissingTranslation">Last updated %1$s · Sharing paused</string>
+    <string name="contacts_sharing_paused" tools:ignore="MissingTranslation">Sharing paused</string>
     <string name="contacts_view_sharing_settings">Sharing Settings</string>
     <string name="contacts_view_location_history">Location History</string>
     <string name="contacts_rename_contact">Rename Contact</string>
@@ -706,6 +710,17 @@
     <string name="history_within">Within ±%1$s</string>
     <string name="history_detail_movement">Movement</string>
     <string name="history_movement_desc">%1$s %2$s heading %3$s</string>
+    <!-- Retained low-accuracy readings. Translations pending; MissingTranslation is
+         suppressed per string rather than shipping English text as a translation. -->
+    <string name="history_rejected" tools:ignore="MissingTranslation">Rejected</string>
+    <string name="history_reject_reason" tools:ignore="MissingTranslation">Reject reason</string>
+    <string name="history_reject_too_imprecise" tools:ignore="MissingTranslation">Too imprecise</string>
+    <string name="history_reject_stale" tools:ignore="MissingTranslation">Stale fix</string>
+    <string name="history_reject_no_fix" tools:ignore="MissingTranslation">No fix</string>
+    <string name="history_reject_permission_denied" tools:ignore="MissingTranslation">Location permission denied</string>
+    <string name="history_reject_other" tools:ignore="MissingTranslation">Other</string>
+    <string name="history_fix_age" tools:ignore="MissingTranslation">Fix age</string>
+    <string name="history_fix_age_value" tools:ignore="MissingTranslation,PluralsCandidate">%1$d s</string>
 
     <string name="common_create">Create</string>
 

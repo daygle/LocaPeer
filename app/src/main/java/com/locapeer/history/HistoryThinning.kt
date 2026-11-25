@@ -11,6 +11,10 @@ import com.locapeer.util.GeoMath
  * Applied only when rendering - every ping stays stored, so liveness features
  * (missed-heartbeat alerts, overdue pins) and retention are untouched, and
  * changing the setting re-filters existing history retroactively.
+ *
+ * Rejected readings are passed through untouched and never become the distance
+ * anchor: they are kept as evidence of an attempt (the history view renders them
+ * dimmed), but they must not move or thin the accepted breadcrumb.
  */
 object HistoryThinning {
 
@@ -30,13 +34,22 @@ object HistoryThinning {
 
         val kept = ArrayList<HeartbeatEntity>(points.size)
         var anchor: HeartbeatEntity? = null
+        // The latest accepted point is the trail's live tip. A rejected attempt after it
+        // must not let that tip be thinned away as "just another point" inside the radius.
+        val lastAcceptedIndex = points.indexOfLast { it.isAccepted }
 
         for (i in points.indices) {
             val p = points[i]
-            val isLast = i == points.size - 1
-            
-            // SOS and the very last point (latest position) are always kept.
-            if (p.isSos || isLast) {
+
+            // Keep rejected attempts, but keep them out of the accepted trail's geometry.
+            if (!p.isAccepted) {
+                kept += p
+                continue
+            }
+            val isLatestAccepted = i == lastAcceptedIndex
+
+            // SOS and the latest accepted point are always kept.
+            if (p.isSos || isLatestAccepted) {
                 kept += p
                 anchor = p
                 continue
