@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">अलार्म और रिमाइंडर</string>
     <string name="perm_exact_alarm_granted">फ़ोन निष्क्रिय होने पर भी अपडेट समय पर होते हैं</string>
     <string name="perm_exact_alarm_denied">अनुमति देने के लिए टैप करें, ताकि फ़ोन निष्क्रिय होने पर भी अपडेट समय पर हों</string>
+    <string name="peer_supervise_awaiting">आमंत्रण भेजा गया। %1$s के अपने डिवाइस पर स्वीकार करने की प्रतीक्षा है</string>
 </resources>

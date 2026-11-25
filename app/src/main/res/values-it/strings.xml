@@ -1024,4 +1024,5 @@
     <string name="perm_exact_alarm_title">Sveglie e promemoria</string>
     <string name="perm_exact_alarm_granted">Gli aggiornamenti restano puntuali anche con il telefono inattivo</string>
     <string name="perm_exact_alarm_denied">Tocca per consentire, così gli aggiornamenti restano puntuali anche con il telefono inattivo</string>
+    <string name="peer_supervise_awaiting">Invito inviato. In attesa che %1$s lo accetti sul proprio dispositivo</string>
 </resources>

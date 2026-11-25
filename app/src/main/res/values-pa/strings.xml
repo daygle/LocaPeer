@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">ਅਲਾਰਮ ਅਤੇ ਰੀਮਾਈਂਡਰ</string>
     <string name="perm_exact_alarm_granted">ਫ਼ੋਨ ਵਿਹਲਾ ਹੋਣ \'ਤੇ ਵੀ ਅੱਪਡੇਟ ਸਮੇਂ ਸਿਰ ਰਹਿੰਦੇ ਹਨ</string>
     <string name="perm_exact_alarm_denied">ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ ਟੈਪ ਕਰੋ, ਤਾਂ ਜੋ ਫ਼ੋਨ ਵਿਹਲਾ ਹੋਣ \'ਤੇ ਵੀ ਅੱਪਡੇਟ ਸਮੇਂ ਸਿਰ ਰਹਿਣ</string>
+    <string name="peer_supervise_awaiting">ਸੱਦਾ ਭੇਜਿਆ ਗਿਆ। %1$s ਦੇ ਆਪਣੇ ਡਿਵਾਈਸ ਉੱਤੇ ਸਵੀਕਾਰ ਕਰਨ ਦੀ ਉਡੀਕ ਹੈ</string>
 </resources>

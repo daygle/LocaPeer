@@ -1029,4 +1029,5 @@
     <string name="perm_exact_alarm_title">Alarmlar ve hatırlatıcılar</string>
     <string name="perm_exact_alarm_granted">Telefon boştayken bile güncellemeler zamanında gelir</string>
     <string name="perm_exact_alarm_denied">İzin vermek için dokunun; böylece telefon boştayken bile güncellemeler zamanında gelir</string>
+    <string name="peer_supervise_awaiting">Davet gönderildi. %1$s kişisinin kendi cihazında kabul etmesi bekleniyor</string>
 </resources>

@@ -84,6 +84,27 @@ class SupervisedModeManagerTest {
         assertEquals(SupervisedModeManager.UnlockState.Approved, manager.unlockState.value)
     }
 
+    @Test fun `leaving a settings gate keeps a pending disable request`() = runBlocking {
+        val prefs = activePrefs()
+        val released = CompletableDeferred<Unit>()
+        doAnswer { _ -> released.complete(Unit); null }.`when`(prefs).clearSupervisedMode()
+        val published = CompletableDeferred<Unit>()
+        val relay = fakeRelay(onPublish = { published.complete(Unit) })
+        val manager = SupervisedModeManager(keyManager(), crypto(), relay, prefs)
+
+        manager.requestDisable()
+        withTimeout(2_000) { published.await() }
+        val requestId = (manager.disableState.value as SupervisedModeManager.DisableState.Requesting).requestId
+
+        // A gate disposing while the release is pending must not drop it...
+        manager.resetUnlock()
+        assertEquals(requestId, (manager.disableState.value as SupervisedModeManager.DisableState.Requesting).requestId)
+
+        // ...so the supervisor's approval still releases supervision.
+        manager.handleDisableResponse(requestId, true)
+        withTimeout(2_000) { released.await() }
+    }
+
     @Test fun `repeated unlock requests while one is pending publish only once`() = runBlocking {
         val published = AtomicInteger()
         val relay = fakeRelay(onPublish = { published.incrementAndGet() })

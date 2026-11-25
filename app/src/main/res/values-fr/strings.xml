@@ -1025,4 +1025,5 @@
     <string name="perm_exact_alarm_title">Alarmes et rappels</string>
     <string name="perm_exact_alarm_granted">Les mises à jour restent à l\'heure quand le téléphone est inactif</string>
     <string name="perm_exact_alarm_denied">Appuyez pour autoriser, afin que les mises à jour restent à l\'heure quand le téléphone est inactif</string>
+    <string name="peer_supervise_awaiting">Invitation envoyée. En attente de l\'acceptation de %1$s sur son appareil</string>
 </resources>

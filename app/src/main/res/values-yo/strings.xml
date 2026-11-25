@@ -1014,4 +1014,5 @@
     <string name="perm_exact_alarm_title">Àwọn aago ìdágìrì àti ìránnilétí</string>
     <string name="perm_exact_alarm_granted">Àwọn ìmúdójúìwọ̀n máa ń dé lásìkò kódà tí fóònù rẹ kò bá ṣiṣẹ́</string>
     <string name="perm_exact_alarm_denied">Tẹ̀ láti gbà, kí àwọn ìmúdójúìwọ̀n lè máa dé lásìkò kódà tí fóònù rẹ kò bá ṣiṣẹ́</string>
+    <string name="peer_supervise_awaiting">A ti fi ìpè ránṣẹ́. À ń dúró kí %1$s gbà á lórí ẹ̀rọ rẹ̀</string>
 </resources>

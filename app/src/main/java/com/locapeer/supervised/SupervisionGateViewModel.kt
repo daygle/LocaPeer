@@ -32,5 +32,5 @@ class SupervisionGateViewModel @Inject constructor(
     }
 
     fun requestAccess() = manager.requestAccess()
-    fun reset() = manager.reset()
+    fun reset() = manager.resetUnlock()
 }

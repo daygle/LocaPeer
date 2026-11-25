@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">Оятқыштар мен еске салғыштар</string>
     <string name="perm_exact_alarm_granted">Телефон әрекетсіз болғанда да жаңартулар уақытылы болады</string>
     <string name="perm_exact_alarm_denied">Рұқсат беру үшін түртіңіз, сонда телефон әрекетсіз болғанда да жаңартулар уақытылы болады</string>
+    <string name="peer_supervise_awaiting">Шақыру жіберілді. %1$s өз құрылғысында қабылдауын күтуде</string>
 </resources>

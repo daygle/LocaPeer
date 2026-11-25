@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">Mga alarm at paalala</string>
     <string name="perm_exact_alarm_granted">Nananatiling nasa oras ang mga update kahit naka-idle ang telepono</string>
     <string name="perm_exact_alarm_denied">I-tap para payagan, para manatiling nasa oras ang mga update kahit naka-idle ang telepono</string>
+    <string name="peer_supervise_awaiting">Naipadala ang imbitasyon. Hinihintay na tanggapin ito ni %1$s sa kanyang device</string>
 </resources>

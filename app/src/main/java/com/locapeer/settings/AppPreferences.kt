@@ -332,6 +332,7 @@ class AppPreferences @Inject constructor(
     private val KEY_QUIET_HOURS_START_MINUTE = intPreferencesKey("quiet_hours_start_minute")
     private val KEY_QUIET_HOURS_END_MINUTE = intPreferencesKey("quiet_hours_end_minute")
     private val KEY_MUTED_CONVERSATIONS = stringPreferencesKey("muted_conversations")
+    private val KEY_SUPERVISION_INVITES_AWAITING = stringPreferencesKey("supervision_invites_awaiting")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -987,6 +988,27 @@ class AppPreferences @Inject constructor(
                 ?: mutableSetOf()
             if (muted) current.add(muteKey) else current.remove(muteKey)
             prefs[KEY_MUTED_CONVERSATIONS] = current.joinToString(",")
+        }
+    }
+
+    /**
+     * Supervisor side: devices this user invited to be supervised (kind 1061) that have not yet
+     * accepted. The supervise switch turns on as soon as the invite is sent, so without this the
+     * supervisor could not tell an unanswered invite from supervision actually in force. Cleared
+     * when the device's registration arrives (it accepted), on a decline, or when the switch is
+     * turned off or the contact removed.
+     */
+    val supervisionInvitesAwaiting: Flow<Set<String>> = context.settingsStore.data
+        .catch { e -> if (e is IOException) emit(emptyPreferences()) else throw e }
+        .map { prefs -> prefs[KEY_SUPERVISION_INVITES_AWAITING]?.split(",")?.filter { it.isNotBlank() }?.toSet() ?: emptySet() }
+
+    suspend fun setSupervisionInviteAwaiting(deviceId: String, awaiting: Boolean) {
+        context.settingsStore.edit { prefs ->
+            val current = prefs[KEY_SUPERVISION_INVITES_AWAITING]?.split(",")?.filter { it.isNotBlank() }?.toMutableSet()
+                ?: mutableSetOf()
+            if (awaiting) current.add(deviceId) else current.remove(deviceId)
+            if (current.isEmpty()) prefs.remove(KEY_SUPERVISION_INVITES_AWAITING)
+            else prefs[KEY_SUPERVISION_INVITES_AWAITING] = current.joinToString(",")
         }
     }
 

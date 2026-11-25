@@ -1025,4 +1025,5 @@
     <string name="perm_exact_alarm_title">Alarm och påminnelser</string>
     <string name="perm_exact_alarm_granted">Uppdateringar kommer i tid även när telefonen är inaktiv</string>
     <string name="perm_exact_alarm_denied">Tryck för att tillåta, så att uppdateringar kommer i tid även när telefonen är inaktiv</string>
+    <string name="peer_supervise_awaiting">Inbjudan skickad. Väntar på att %1$s ska godkänna den på sin enhet</string>
 </resources>

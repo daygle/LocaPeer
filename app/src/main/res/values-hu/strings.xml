@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">Ébresztések és emlékeztetők</string>
     <string name="perm_exact_alarm_granted">A frissítések pontosak maradnak, amikor a telefon tétlen</string>
     <string name="perm_exact_alarm_denied">Koppintson az engedélyezéshez, hogy a frissítések tétlen telefonon is pontosak maradjanak</string>
+    <string name="peer_supervise_awaiting">Meghívó elküldve. Várakozás, hogy %1$s elfogadja a saját eszközén</string>
 </resources>

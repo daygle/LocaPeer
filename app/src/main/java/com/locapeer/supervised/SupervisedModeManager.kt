@@ -268,6 +268,20 @@ class SupervisedModeManager @Inject constructor(
         }
     }
 
+    /**
+     * Ends the settings-unlock session only. Called by every [SupervisionGate] as it leaves the
+     * screen, so it must not touch a pending disable request: losing that reservation made the
+     * device ignore the supervisor's approval, while the supervisor - having released it -
+     * then ignored every further request from the still-gated device.
+     */
+    fun resetUnlock() {
+        synchronized(requestLock) {
+            timeoutJob?.cancel()
+            _unlockState.value = UnlockState.Idle
+        }
+    }
+
+    /** Clears every request state: supervision ended, or a pending registration was withdrawn. */
     fun reset() {
         synchronized(requestLock) {
             timeoutJob?.cancel()

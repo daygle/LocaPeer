@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">অ্যালার্ম ও রিমাইন্ডার</string>
     <string name="perm_exact_alarm_granted">ফোন নিষ্ক্রিয় থাকলেও আপডেট সময়মতো হয়</string>
     <string name="perm_exact_alarm_denied">অনুমতি দিতে ট্যাপ করুন, যাতে ফোন নিষ্ক্রিয় থাকলেও আপডেট সময়মতো হয়</string>
+    <string name="peer_supervise_awaiting">আমন্ত্রণ পাঠানো হয়েছে। %1$s তাদের ডিভাইসে গ্রহণ করার অপেক্ষায়</string>
 </resources>

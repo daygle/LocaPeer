@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">ಅಲಾರಾಂಗಳು ಮತ್ತು ಜ್ಞಾಪನೆಗಳು</string>
     <string name="perm_exact_alarm_granted">ಫೋನ್ ನಿಷ್ಕ್ರಿಯವಾಗಿದ್ದರೂ ಅಪ್‌ಡೇಟ್‌ಗಳು ಸಮಯಕ್ಕೆ ಸರಿಯಾಗಿ ಬರುತ್ತವೆ</string>
     <string name="perm_exact_alarm_denied">ಅನುಮತಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ, ಇದರಿಂದ ಫೋನ್ ನಿಷ್ಕ್ರಿಯವಾಗಿದ್ದರೂ ಅಪ್‌ಡೇಟ್‌ಗಳು ಸಮಯಕ್ಕೆ ಸರಿಯಾಗಿ ಬರುತ್ತವೆ</string>
+    <string name="peer_supervise_awaiting">ಆಹ್ವಾನ ಕಳುಹಿಸಲಾಗಿದೆ. %1$s ಅವರು ತಮ್ಮ ಸಾಧನದಲ್ಲಿ ಸ್ವೀಕರಿಸಲು ಕಾಯಲಾಗುತ್ತಿದೆ</string>
 </resources>

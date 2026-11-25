@@ -486,6 +486,8 @@ fun PeerSecurityScreen(
     LaunchedEffect(peerId) { vm.init(peerId) }
     val state by vm.uiState.collectAsStateWithLifecycle()
     val isMySupervised = state.config?.isMySupervised ?: false
+    val superviseAwaiting by remember(peerId) { vm.observeSuperviseAwaiting(peerId) }
+        .collectAsStateWithLifecycle(initialValue = false)
     var showSuperviseEnableConfirm by remember { mutableStateOf(false) }
     var showSuperviseDisableConfirm by remember { mutableStateOf(false) }
 
@@ -496,7 +498,12 @@ fun PeerSecurityScreen(
         ) {
             SwitchRow(
                 title = stringResource(R.string.peer_supervise),
-                subtitle = if (isMySupervised) stringResource(R.string.peer_supervise_on, peerName) else stringResource(R.string.peer_supervise_off, peerName),
+                // An invite that hasn't been accepted yet isn't supervision in force: say so.
+                subtitle = when {
+                    isMySupervised && superviseAwaiting -> stringResource(R.string.peer_supervise_awaiting, peerName)
+                    isMySupervised -> stringResource(R.string.peer_supervise_on, peerName)
+                    else -> stringResource(R.string.peer_supervise_off, peerName)
+                },
                 checked = isMySupervised,
                 // Both directions are disruptive to the far device now (they must consent
                 // to being supervised, or lose their lock when this ends), so confirm them.

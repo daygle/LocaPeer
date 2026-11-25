@@ -44,7 +44,8 @@ class SupervisionApprovalManager @Inject constructor(
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient,
     private val prefs: AppPreferences,
-    private val sharingConfigDao: PeerSharingConfigDao
+    private val sharingConfigDao: PeerSharingConfigDao,
+    private val endedSender: SupervisionEndedSender,
 ) {
     /** What the supervised device is asking for: unlock its settings session, release
      *  supervised mode entirely, or add a new tracking destination. Same approval surface,
@@ -132,6 +133,12 @@ class SupervisionApprovalManager @Inject constructor(
     internal suspend fun applyApprovedRelease(request: PendingRequest, approved: Boolean) {
         if (approved && request.type == RequestType.DISABLE) {
             sharingConfigDao.clearSupervision(request.fromPubkey)
+            // The device acts on the 1065 approval only while it still holds that exact request
+            // (it times out after a minute, and is gone after a restart). If it missed it, it
+            // would stay gated while this side - now released - ignores its every request. The
+            // durable "supervision ended" notice releases it regardless; a device that already
+            // released itself has no supervisor recorded and ignores the notice.
+            endedSender.send(request.fromPubkey, "")
         }
     }
 

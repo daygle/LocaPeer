@@ -1014,4 +1014,5 @@
     <string name="perm_exact_alarm_title">Chuông báo và lời nhắc</string>
     <string name="perm_exact_alarm_granted">Cập nhật vẫn đúng giờ khi điện thoại ở chế độ chờ</string>
     <string name="perm_exact_alarm_denied">Nhấn để cho phép, để cập nhật vẫn đúng giờ khi điện thoại ở chế độ chờ</string>
+    <string name="peer_supervise_awaiting">Đã gửi lời mời. Đang chờ %1$s chấp nhận trên thiết bị của họ</string>
 </resources>

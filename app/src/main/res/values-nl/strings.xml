@@ -1025,4 +1025,5 @@
     <string name="perm_exact_alarm_title">Wekkers en herinneringen</string>
     <string name="perm_exact_alarm_granted">Updates blijven op tijd, ook als je telefoon inactief is</string>
     <string name="perm_exact_alarm_denied">Tik om toe te staan, zodat updates op tijd blijven als je telefoon inactief is</string>
+    <string name="peer_supervise_awaiting">Uitnodiging verstuurd. Wachten tot %1$s deze op het eigen apparaat accepteert</string>
 </resources>

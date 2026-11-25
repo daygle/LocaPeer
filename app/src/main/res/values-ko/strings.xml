@@ -1014,4 +1014,5 @@
     <string name="perm_exact_alarm_title">알람 및 리마인더</string>
     <string name="perm_exact_alarm_granted">휴대전화가 유휴 상태일 때도 업데이트가 제시간에 전송됩니다</string>
     <string name="perm_exact_alarm_denied">휴대전화가 유휴 상태일 때도 업데이트가 제시간에 전송되도록 탭하여 허용하세요</string>
+    <string name="peer_supervise_awaiting">초대를 보냈습니다. %1$s 님이 기기에서 수락하기를 기다리는 중</string>
 </resources>

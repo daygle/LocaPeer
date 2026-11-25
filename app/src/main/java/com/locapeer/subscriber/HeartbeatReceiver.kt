@@ -223,6 +223,16 @@ internal fun isCurrentSupervisionRegistrationResponse(
     eventCreatedAt >= now - (if (accepted) MAX_CATCHUP_SECONDS else SUPERVISION_EVENT_MAX_AGE_S)
 
 /**
+ * True when a supervision accept from [senderPubkey] matches nothing on this device: it is not the
+ * supervisor this device has requested (pending) or is under (active). A re-delivered accept from
+ * the current supervisor is not stray; an accept for a request since withdrawn, or from someone
+ * other than the current supervisor, is.
+ */
+internal fun isStraySupervisionAccept(
+    supervisorPubkey: String, pending: Boolean, active: Boolean, senderPubkey: String
+): Boolean = !(supervisorPubkey.isNotEmpty() && supervisorPubkey.equals(senderPubkey, ignoreCase = true) && (pending || active))
+
+/**
  * An answer may only decide the request it names. The supervisor echoes the request time it
  * saw, so Accept/Decline tapped on a notification for an earlier attempt cannot decide a
  * newer one (the answer's own createdAt is the tap time, which always passes the timing
@@ -387,6 +397,7 @@ class HeartbeatReceiver @Inject constructor(
     private val supervisionApprovalManager: SupervisionApprovalManager,
     private val contactAddApprovalManager: ContactAddApprovalManager,
     private val supervisionResponseSender: SupervisionResponseSender,
+    private val supervisionInviteResponder: com.locapeer.supervised.SupervisionInviteResponder,
     private val peerManager: PeerManager,
     private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry
 ) {
@@ -1591,6 +1602,8 @@ class HeartbeatReceiver @Inject constructor(
                 }.getOrNull()
             }
             autoAcceptRegistration(peer, requestedAt)
+            // The device accepted our invite (its register request is that acceptance).
+            prefs.setSupervisionInviteAwaiting(event.pubkey, false)
             return
         }
         // Suppress relay retransmissions if the notification is still active
@@ -1693,6 +1706,13 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processRegisterResponse(event: NostrEvent, accepted: Boolean) {
         val settings = prefs.settings.first()
+        if (accepted && isStraySupervisionAccept(
+                settings.supervisorPubkey, settings.supervisionPending, settings.supervisionActive, event.pubkey
+            )
+        ) {
+            releaseStraySupervisionAccept(event)
+            return
+        }
         if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
         if (!isCurrentSupervisionRegistrationResponse(
                 settings.supervisionPending, settings.supervisionRequestedAt,
@@ -1747,6 +1767,27 @@ class HeartbeatReceiver @Inject constructor(
                 .build()
             notificationManager.notify("supervised_register", NOTIF_ID_SUPERVISED_REGISTER, notification)
         }
+    }
+
+    /**
+     * A contact accepted a supervision request this device no longer has: it was withdrawn
+     * before they answered, or this device has since moved to another supervisor. Their app
+     * now treats the device as supervised (forced missed-update alerts, approval dialogs) while
+     * this side is not. Decline it in-band (kind 1062, accepted=false), which releases that
+     * claim on their side. Only a fresh accept naming this device, from a known contact, counts.
+     */
+    private suspend fun releaseStraySupervisionAccept(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - SUPERVISION_EVENT_MAX_AGE_S) return
+        peerDao.getPeer(event.pubkey) ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val payload = try {
+            json.decodeFromString<SupervisedRegisterResponsePayload>(
+                crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            )
+        } catch (e: Exception) { return }
+        if (payload.devicePubkeyHex != keyManager.ensureKeypair().second) return
+        Log.i(TAG, "Declining a supervision accept from ${event.pubkey}: no matching request")
+        supervisionInviteResponder.respond(event.pubkey, accepted = false)
     }
 
     // ── Supervised-mode state changes (kinds 1061-1066) ─────────────────────────────
@@ -1842,6 +1883,7 @@ class HeartbeatReceiver @Inject constructor(
         if (!payload.accepted) {
             sharingConfigDao.setIsMySupervised(event.pubkey, false)
             sharingConfigDao.setNotifyOnMissedHeartbeat(event.pubkey, false)
+            prefs.setSupervisionInviteAwaiting(event.pubkey, false)
             Log.i(TAG, "Supervision invite declined by ${event.pubkey}")
         }
     }

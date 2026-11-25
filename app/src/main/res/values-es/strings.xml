@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">Alarmas y recordatorios</string>
     <string name="perm_exact_alarm_granted">Las actualizaciones llegan a tiempo aunque el teléfono esté inactivo</string>
     <string name="perm_exact_alarm_denied">Toque para permitir que las actualizaciones lleguen a tiempo aunque el teléfono esté inactivo</string>
+    <string name="peer_supervise_awaiting">Invitación enviada. Esperando a que %1$s la acepte en su dispositivo</string>
 </resources>

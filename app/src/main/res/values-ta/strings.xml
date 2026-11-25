@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">அலாரங்களும் நினைவூட்டல்களும்</string>
     <string name="perm_exact_alarm_granted">மொபைல் செயலற்ற நிலையிலும் புதுப்பிப்புகள் சரியான நேரத்தில் வரும்</string>
     <string name="perm_exact_alarm_denied">அனுமதிக்கத் தட்டவும், அப்போது மொபைல் செயலற்ற நிலையிலும் புதுப்பிப்புகள் சரியான நேரத்தில் வரும்</string>
+    <string name="peer_supervise_awaiting">அழைப்பு அனுப்பப்பட்டது. %1$s தங்கள் சாதனத்தில் ஏற்கக் காத்திருக்கிறது</string>
 </resources>

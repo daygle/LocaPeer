@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">الارمونه او یادونه</string>
     <string name="perm_exact_alarm_granted">تازه معلومات حتی کله چې تلیفون بې کاره وي هم پر وخت رسېږي</string>
     <string name="perm_exact_alarm_denied">د اجازې لپاره ټک کړئ، څو تازه معلومات حتی کله چې تلیفون بې کاره وي هم پر وخت ورسېږي</string>
+    <string name="peer_supervise_awaiting">بلنه ولېږل شوه. د %1$s لخوا په خپل وسیله کې د منلو په تمه</string>
 </resources>

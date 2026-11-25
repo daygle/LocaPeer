@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">అలారాలు &amp; రిమైండర్‌లు</string>
     <string name="perm_exact_alarm_granted">ఫోన్ నిష్క్రియంగా ఉన్నా అప్‌డేట్‌లు సమయానికి వస్తాయి</string>
     <string name="perm_exact_alarm_denied">అనుమతించడానికి నొక్కండి, దాంతో ఫోన్ నిష్క్రియంగా ఉన్నా అప్‌డేట్‌లు సమయానికి వస్తాయి</string>
+    <string name="peer_supervise_awaiting">ఆహ్వానం పంపబడింది. %1$s తమ పరికరంలో అంగీకరించడానికి వేచి ఉంది</string>
 </resources>

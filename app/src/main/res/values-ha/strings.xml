@@ -1031,4 +1031,5 @@
     <string name="perm_exact_alarm_title">Ƙararrawa da masu tuni</string>
     <string name="perm_exact_alarm_granted">Sabuntawa suna kan lokaci ko da wayarku ba ta aiki</string>
     <string name="perm_exact_alarm_denied">Taɓa don ba da izini, don sabuntawa su kasance kan lokaci ko da wayarku ba ta aiki</string>
+    <string name="peer_supervise_awaiting">An aika gayyata. Ana jiran %1$s ya karɓa a na\'urarsa</string>
 </resources>

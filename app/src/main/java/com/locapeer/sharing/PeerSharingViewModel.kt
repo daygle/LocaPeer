@@ -86,6 +86,11 @@ class PeerSharingViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(PeerSharingUiState())
     val uiState: StateFlow<PeerSharingUiState> = _uiState.asStateFlow()
 
+    /** Supervisor side: an invite to supervise the current contact is still waiting for them to
+     *  accept (see [AppPreferences.supervisionInvitesAwaiting]). */
+    fun observeSuperviseAwaiting(peerId: String): Flow<Boolean> =
+        prefs.supervisionInvitesAwaiting.map { peerId in it }
+
     /** Whether location sharing is switched on at all. A temporary share overrides the
      *  schedule but not this switch, so the screen warns while it is off. */
     val locationSharingOn: StateFlow<Boolean> = prefs.settings.map { it.heartbeatEnabled }
@@ -219,6 +224,7 @@ class PeerSharingViewModel @Inject constructor(
                 // published yet: a retry sending it after the new invite would clear the
                 // supervision the two devices just re-established.
                 endedSender.cancel(peer.publicKeyHex)
+                prefs.setSupervisionInviteAwaiting(currentPeerId, true)
                 sendSupervisionInvite(peer)
             } else {
                 val existing = configDao.getForPeer(currentPeerId)
@@ -231,6 +237,7 @@ class PeerSharingViewModel @Inject constructor(
                 // Drop an invitation that has not been published yet. One already handed to
                 // the relay client is followed by the ended notice below, in order.
                 inviteSender.cancel(peer.publicKeyHex)
+                prefs.setSupervisionInviteAwaiting(currentPeerId, false)
                 sendSupervisionEnded(peer)
             }
         }

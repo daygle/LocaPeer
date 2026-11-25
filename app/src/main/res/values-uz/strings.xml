@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">Signallar va eslatmalar</string>
     <string name="perm_exact_alarm_granted">Telefon nofaol bo‘lganda ham yangilanishlar o‘z vaqtida keladi</string>
     <string name="perm_exact_alarm_denied">Ruxsat berish uchun bosing, shunda telefon nofaol bo‘lganda ham yangilanishlar o‘z vaqtida keladi</string>
+    <string name="peer_supervise_awaiting">Taklif yuborildi. %1$s o‘z qurilmasida qabul qilishi kutilmoqda</string>
 </resources>

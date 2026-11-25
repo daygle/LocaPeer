@@ -1045,4 +1045,5 @@
     <string name="perm_exact_alarm_title">שעונים מעוררים ותזכורות</string>
     <string name="perm_exact_alarm_granted">העדכונים נשארים בזמן גם כשהטלפון לא פעיל</string>
     <string name="perm_exact_alarm_denied">יש להקיש כדי לאשר, כך שהעדכונים יישארו בזמן גם כשהטלפון לא פעיל</string>
+    <string name="peer_supervise_awaiting">ההזמנה נשלחה. ממתין לאישור של %1$s במכשיר שלו</string>
 </resources>

@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">Kengele na vikumbusho</string>
     <string name="perm_exact_alarm_granted">Masasisho yanabaki kwa wakati hata simu ikiwa haitumiki</string>
     <string name="perm_exact_alarm_denied">Gusa ili kuruhusu, ili masasisho yabaki kwa wakati hata simu ikiwa haitumiki</string>
+    <string name="peer_supervise_awaiting">Mwaliko umetumwa. Inasubiri %1$s akubali kwenye kifaa chake</string>
 </resources>

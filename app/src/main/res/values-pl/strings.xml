@@ -1057,4 +1057,5 @@
     <string name="perm_exact_alarm_title">Alarmy i przypomnienia</string>
     <string name="perm_exact_alarm_granted">Aktualizacje docierają na czas, nawet gdy telefon jest bezczynny</string>
     <string name="perm_exact_alarm_denied">Kliknij, aby zezwolić – aktualizacje będą docierać na czas, nawet gdy telefon jest bezczynny</string>
+    <string name="peer_supervise_awaiting">Zaproszenie wysłane. Czekamy, aż %1$s zaakceptuje je na swoim urządzeniu</string>
 </resources>

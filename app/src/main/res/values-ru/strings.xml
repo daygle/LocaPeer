@@ -1057,4 +1057,5 @@
     <string name="perm_exact_alarm_title">Будильники и напоминания</string>
     <string name="perm_exact_alarm_granted">Обновления приходят вовремя, даже когда телефон неактивен</string>
     <string name="perm_exact_alarm_denied">Нажмите, чтобы разрешить, — тогда обновления будут приходить вовремя, даже когда телефон неактивен</string>
+    <string name="peer_supervise_awaiting">Приглашение отправлено. Ожидаем, пока %1$s примет его на своём устройстве</string>
 </resources>

@@ -1023,4 +1023,5 @@
     <string name="perm_exact_alarm_title">Alarmes e lembretes</string>
     <string name="perm_exact_alarm_granted">As atualizações chegam a horas mesmo com o telemóvel inativo</string>
     <string name="perm_exact_alarm_denied">Toque para permitir, para que as atualizações cheguem a horas mesmo com o telemóvel inativo</string>
+    <string name="peer_supervise_awaiting">Convite enviado. A aguardar que %1$s aceite no respetivo dispositivo</string>
 </resources>

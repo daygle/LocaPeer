@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">الارمز اور یاد دہانیاں</string>
     <string name="perm_exact_alarm_granted">فون غیر فعال ہونے پر بھی اپ ڈیٹس وقت پر رہتی ہیں</string>
     <string name="perm_exact_alarm_denied">اجازت دینے کے لیے تھپتھپائیں، تاکہ فون غیر فعال ہونے پر بھی اپ ڈیٹس وقت پر رہیں</string>
+    <string name="peer_supervise_awaiting">دعوت بھیج دی گئی۔ %1$s کے اپنے آلے پر قبول کرنے کا انتظار ہے</string>
 </resources>

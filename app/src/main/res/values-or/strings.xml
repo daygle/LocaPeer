@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">ଆଲାର୍ମ ଓ ରିମାଇଣ୍ଡର</string>
     <string name="perm_exact_alarm_granted">ଫୋନ ନିଷ୍କ୍ରିୟ ଥିଲେ ମଧ୍ୟ ଅପଡେଟ ସମୟରେ ରହେ</string>
     <string name="perm_exact_alarm_denied">ଅନୁମତି ଦେବାକୁ ଟାପ କରନ୍ତୁ, ଯାହାଦ୍ୱାରା ଫୋନ ନିଷ୍କ୍ରିୟ ଥିଲେ ମଧ୍ୟ ଅପଡେଟ ସମୟରେ ରହିବ</string>
+    <string name="peer_supervise_awaiting">ନିମନ୍ତ୍ରଣ ପଠାଗଲା। %1$s ସେମାନଙ୍କ ଡିଭାଇସରେ ଗ୍ରହଣ କରିବା ପାଇଁ ଅପେକ୍ଷା କରାଯାଉଛି</string>
 </resources>

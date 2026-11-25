@@ -1013,4 +1013,5 @@
     <string name="perm_exact_alarm_title">アラームとリマインダー</string>
     <string name="perm_exact_alarm_granted">スマートフォンがアイドル状態でも更新が時間どおりに届きます</string>
     <string name="perm_exact_alarm_denied">タップして許可すると、スマートフォンがアイドル状態でも更新が時間どおりに届きます</string>
+    <string name="peer_supervise_awaiting">招待を送信しました。%1$sが自分の端末で承認するのを待っています</string>
 </resources>

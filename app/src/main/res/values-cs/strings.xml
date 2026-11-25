@@ -1057,4 +1057,5 @@
     <string name="perm_exact_alarm_title">Budíky a připomenutí</string>
     <string name="perm_exact_alarm_granted">Aktualizace přicházejí včas i v režimu nečinnosti</string>
     <string name="perm_exact_alarm_denied">Klepnutím povolte, aby aktualizace přicházely včas i v režimu nečinnosti</string>
+    <string name="peer_supervise_awaiting">Pozvánka odeslána. Čeká se, až ji %1$s přijme na svém zařízení</string>
 </resources>

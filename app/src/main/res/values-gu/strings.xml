@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">અલાર્મ અને રિમાઇન્ડર</string>
     <string name="perm_exact_alarm_granted">ફોન નિષ્ક્રિય હોય ત્યારે પણ અપડેટ સમયસર રહે છે</string>
     <string name="perm_exact_alarm_denied">મંજૂરી આપવા ટૅપ કરો, જેથી ફોન નિષ્ક્રિય હોય ત્યારે પણ અપડેટ સમયસર રહે</string>
+    <string name="peer_supervise_awaiting">આમંત્રણ મોકલ્યું. %1$s તેમના ઉપકરણ પર સ્વીકારે તેની રાહ જોવાઈ રહી છે</string>
 </resources>

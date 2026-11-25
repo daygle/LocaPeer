@@ -1013,4 +1013,5 @@
     <string name="perm_exact_alarm_title">闹钟和提醒</string>
     <string name="perm_exact_alarm_granted">即使手机处于闲置状态，更新也能准时发送</string>
     <string name="perm_exact_alarm_denied">点按即可允许，让手机闲置时更新也能准时发送</string>
+    <string name="peer_supervise_awaiting">邀请已发送。正在等待 %1$s 在其设备上接受</string>
 </resources>

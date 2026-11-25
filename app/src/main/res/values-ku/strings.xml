@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">Alarm û bîrxistin</string>
     <string name="perm_exact_alarm_granted">Nûvekirin di dema bêkariya telefonê de jî di wextê xwe de dimînin</string>
     <string name="perm_exact_alarm_denied">Ji bo destûrê bitikîne, da ku nûvekirin di dema bêkariya telefonê de jî di wextê xwe de bimînin</string>
+    <string name="peer_supervise_awaiting">Vexwendin hat şandin. Li benda pejirandina %1$s li ser cîhaza wî/wê</string>
 </resources>

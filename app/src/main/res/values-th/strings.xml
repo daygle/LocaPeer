@@ -1014,4 +1014,5 @@
     <string name="perm_exact_alarm_title">การปลุกและการช่วยเตือน</string>
     <string name="perm_exact_alarm_granted">การอัปเดตยังคงตรงเวลาแม้โทรศัพท์ไม่ได้ใช้งาน</string>
     <string name="perm_exact_alarm_denied">แตะเพื่ออนุญาต เพื่อให้การอัปเดตตรงเวลาแม้โทรศัพท์ไม่ได้ใช้งาน</string>
+    <string name="peer_supervise_awaiting">ส่งคำเชิญแล้ว กำลังรอให้ %1$s ยอมรับบนอุปกรณ์ของตน</string>
 </resources>

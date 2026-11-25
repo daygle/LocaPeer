@@ -1010,4 +1010,5 @@
     <string name="perm_exact_alarm_title">鬧鐘與提醒</string>
     <string name="perm_exact_alarm_granted">即使手機處於閒置狀態，更新也能準時傳送</string>
     <string name="perm_exact_alarm_denied">輕觸即可允許，讓手機閒置時更新也能準時傳送</string>
+    <string name="peer_supervise_awaiting">邀請已傳送。正在等待 %1$s 在其裝置上接受</string>
 </resources>

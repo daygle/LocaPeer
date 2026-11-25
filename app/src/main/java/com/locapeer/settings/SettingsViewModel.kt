@@ -947,7 +947,7 @@ class SettingsViewModel @Inject constructor(
 
     fun requestSettingsUnlock() = supervisedModeManager.requestAccess()
 
-    fun resetUnlockState() = supervisedModeManager.reset()
+    fun resetUnlockState() = supervisedModeManager.resetUnlock()
 
     fun updateIntervals(
         stationary: Int? = null,

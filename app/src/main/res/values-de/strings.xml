@@ -1024,4 +1024,5 @@
     <string name="perm_exact_alarm_title">Wecker &amp; Erinnerungen</string>
     <string name="perm_exact_alarm_granted">Updates bleiben pünktlich, auch wenn das Telefon inaktiv ist</string>
     <string name="perm_exact_alarm_denied">Tippen Sie zum Erlauben, damit Updates auch im Ruhezustand pünktlich bleiben</string>
+    <string name="peer_supervise_awaiting">Einladung gesendet. Warten, bis %1$s sie auf dem eigenen Gerät annimmt</string>
 </resources>

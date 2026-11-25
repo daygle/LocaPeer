@@ -1014,4 +1014,5 @@
     <string name="perm_exact_alarm_title">နှိုးစက်နှင့် သတိပေးချက်များ</string>
     <string name="perm_exact_alarm_granted">ဖုန်းအသုံးမပြုချိန်တွင်ပင် အပ်ဒိတ်များ အချိန်မှန် ရောက်သည်</string>
     <string name="perm_exact_alarm_denied">ဖုန်းအသုံးမပြုချိန်တွင်ပင် အပ်ဒိတ်များ အချိန်မှန်ရောက်စေရန် ခွင့်ပြုရန် တို့ပါ</string>
+    <string name="peer_supervise_awaiting">ဖိတ်ကြားချက် ပို့ပြီးပါပြီ။ %1$s က ၎င်း၏စက်တွင် လက်ခံရန် စောင့်နေသည်</string>
 </resources>

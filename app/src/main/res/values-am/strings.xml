@@ -1031,4 +1031,5 @@
     <string name="perm_exact_alarm_title">ማንቂያዎች እና አስታዋሾች</string>
     <string name="perm_exact_alarm_granted">ስልክዎ ሥራ ፈት ሲሆን ዝማኔዎች በሰዓቱ ይቀጥላሉ</string>
     <string name="perm_exact_alarm_denied">ስልክዎ ሥራ ፈት ሲሆን ዝማኔዎች በሰዓቱ እንዲቀጥሉ ለመፍቀድ ይንኩ</string>
+    <string name="peer_supervise_awaiting">ግብዣ ተልኳል። %1$s በመሣሪያቸው ላይ እስኪቀበሉ በመጠበቅ ላይ</string>
 </resources>

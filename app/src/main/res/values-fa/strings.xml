@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">زنگ‌ها و یادآورها</string>
     <string name="perm_exact_alarm_granted">به‌روزرسانی‌ها حتی هنگام بیکاری تلفن به‌موقع می‌مانند</string>
     <string name="perm_exact_alarm_denied">برای اجازه دادن ضربه بزنید تا به‌روزرسانی‌ها هنگام بیکاری تلفن به‌موقع بمانند</string>
+    <string name="peer_supervise_awaiting">دعوت ارسال شد. در انتظار پذیرش %1$s در دستگاهش</string>
 </resources>

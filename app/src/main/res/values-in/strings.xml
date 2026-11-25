@@ -1014,4 +1014,5 @@
     <string name="perm_exact_alarm_title">Alarm &amp; pengingat</string>
     <string name="perm_exact_alarm_granted">Pembaruan tetap tepat waktu saat ponsel tidak aktif</string>
     <string name="perm_exact_alarm_denied">Ketuk untuk mengizinkan, agar pembaruan tetap tepat waktu saat ponsel tidak aktif</string>
+    <string name="peer_supervise_awaiting">Undangan terkirim. Menunggu %1$s menerimanya di perangkatnya</string>
 </resources>

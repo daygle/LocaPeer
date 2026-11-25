@@ -99,6 +99,7 @@ class PeerManager @Inject constructor(
         proximityAlertDao.deleteForPeer(deviceId)
         pendingRequestDao.deleteByPubkey(deviceId)
         com.locapeer.subscriber.PeerQuietPeriods.clear(context, deviceId)
+        prefs.setSupervisionInviteAwaiting(deviceId, false)
         // Their messages, alerts and requests would otherwise stay in the tray, opening a
         // contact that no longer exists.
         com.locapeer.util.AppNotifications.cancelForContact(context, deviceId)

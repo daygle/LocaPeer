@@ -1014,4 +1014,5 @@
     <string name="perm_exact_alarm_title">Mkpu na ihe ncheta</string>
     <string name="perm_exact_alarm_granted">Mmelite na-abịa n\'oge mgbe ekwentị gị anaghị arụ ọrụ</string>
     <string name="perm_exact_alarm_denied">Pịa ka ị kwe, ka mmelite na-abịa n\'oge mgbe ekwentị gị anaghị arụ ọrụ</string>
+    <string name="peer_supervise_awaiting">Ezitere òkù. Na-eche ka %1$s nabata ya na ngwaọrụ ya</string>
 </resources>

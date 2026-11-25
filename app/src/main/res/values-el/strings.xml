@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">Ξυπνητήρια και υπενθυμίσεις</string>
     <string name="perm_exact_alarm_granted">Οι ενημερώσεις παραμένουν στην ώρα τους όταν το τηλέφωνο είναι αδρανές</string>
     <string name="perm_exact_alarm_denied">Πατήστε για να επιτρέψετε, ώστε οι ενημερώσεις να παραμένουν στην ώρα τους όταν το τηλέφωνο είναι αδρανές</string>
+    <string name="peer_supervise_awaiting">Η πρόσκληση στάλθηκε. Αναμονή αποδοχής από τον/την %1$s στη συσκευή του/της</string>
 </resources>

@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">Iddoo dammaqsaa fi yaadachiistota</string>
     <string name="perm_exact_alarm_granted">Haaromsi yeroo bilbilli hojii malee jirus yeroodhaan ni dhufa</string>
     <string name="perm_exact_alarm_denied">Hayyamuuf tuqi, akka haaromsi yeroo bilbilli hojii malee jirus yeroodhaan dhufuuf</string>
+    <string name="peer_supervise_awaiting">Afeerraan ergameera. %1$s meeshaa isaa irratti akka fudhatu eegaa jira</string>
 </resources>

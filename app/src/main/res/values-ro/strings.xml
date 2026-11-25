@@ -1046,4 +1046,5 @@
     <string name="perm_exact_alarm_title">Alarme și mementouri</string>
     <string name="perm_exact_alarm_granted">Actualizările rămân la timp chiar și când telefonul este inactiv</string>
     <string name="perm_exact_alarm_denied">Atingeți pentru a permite, ca actualizările să rămână la timp când telefonul este inactiv</string>
+    <string name="peer_supervise_awaiting">Invitație trimisă. Se așteaptă ca %1$s să o accepte pe dispozitivul său</string>
 </resources>

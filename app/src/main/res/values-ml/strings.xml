@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">അലാറങ്ങളും റിമൈൻഡറുകളും</string>
     <string name="perm_exact_alarm_granted">ഫോൺ നിഷ്‌ക്രിയമായിരിക്കുമ്പോഴും അപ്‌ഡേറ്റുകൾ കൃത്യസമയത്ത് തുടരും</string>
     <string name="perm_exact_alarm_denied">അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക, അങ്ങനെ ഫോൺ നിഷ്‌ക്രിയമായിരിക്കുമ്പോഴും അപ്‌ഡേറ്റുകൾ കൃത്യസമയത്ത് തുടരും</string>
+    <string name="peer_supervise_awaiting">ക്ഷണം അയച്ചു. %1$s അവരുടെ ഉപകരണത്തിൽ അംഗീകരിക്കുന്നതിനായി കാത്തിരിക്കുന്നു</string>
 </resources>

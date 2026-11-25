@@ -1030,4 +1030,5 @@
     <string name="perm_exact_alarm_title">अलार्म आणि रिमाइंडर</string>
     <string name="perm_exact_alarm_granted">फोन निष्क्रिय असतानाही अपडेट वेळेवर राहतात</string>
     <string name="perm_exact_alarm_denied">परवानगी देण्यासाठी टॅप करा, म्हणजे फोन निष्क्रिय असतानाही अपडेट वेळेवर राहतील</string>
+    <string name="peer_supervise_awaiting">आमंत्रण पाठवले. %1$s त्यांच्या डिव्हाइसवर स्वीकारण्याची प्रतीक्षा आहे</string>
 </resources>

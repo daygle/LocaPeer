@@ -29,10 +29,11 @@ class SupervisionApprovalManagerTest {
 
     private fun prefs(store: Store): AppPreferences = mock(AppPreferences::class.java, Answer { invocation ->
         when (invocation.method.name) {
-            "getPendingSupervisionAnswersJson" -> store.json                "setPendingSupervisionAnswersJson" -> {
-                    store.json = invocation.arguments[0] as String?
-                    Unit
-                }
+            "getPendingSupervisionAnswersJson" -> store.json
+            "setPendingSupervisionAnswersJson" -> {
+                store.json = invocation.arguments[0] as String?
+                Unit
+            }
             else -> Mockito.RETURNS_DEFAULTS.answer(invocation)
         }
     })
@@ -87,7 +88,7 @@ class SupervisionApprovalManagerTest {
             published.incrementAndGet()
         })
         val manager = SupervisionApprovalManager(
-            keyManager(), crypto(), relay, prefs(store), configDao()
+            keyManager(), crypto(), relay, prefs(store), configDao(), mock(SupervisionEndedSender::class.java)
         )
 
         val request = unlockRequest("req-1")
@@ -116,7 +117,7 @@ class SupervisionApprovalManagerTest {
         val steps = java.util.Collections.synchronizedList(mutableListOf<String>())
         val manager = SupervisionApprovalManager(
             keyManager(), crypto(), relay(onPublish = { steps.add("publish") }), prefs(store),
-            configDao(steps)
+            configDao(steps), mock(SupervisionEndedSender::class.java)
         )
 
         val request = SupervisionApprovalManager.PendingRequest(
@@ -132,6 +133,44 @@ class SupervisionApprovalManagerTest {
         assertNull(store.json)
     }
 
+    @Test fun `an approved disable also sends the supervision-ended notice`() = runBlocking {
+        val store = Store()
+        val ended = mock(SupervisionEndedSender::class.java)
+        val manager = SupervisionApprovalManager(
+            keyManager(), crypto(), relay(), prefs(store), configDao(), ended
+        )
+        val request = SupervisionApprovalManager.PendingRequest(
+            supervised, "Device", "req-4", SupervisionApprovalManager.RequestType.DISABLE
+        )
+        manager.setPending(request)
+        manager.respond(request, true)
+
+        // The device may have dropped the request it is answered for (timed out, restarted), so
+        // the durable 1063 notice is what guarantees it is released along with this side.
+        fun sentTo(): List<Any?> = org.mockito.Mockito.mockingDetails(ended).invocations
+            .filter { it.method.name == "send" }.map { it.arguments.first() }
+        withTimeout(2_000) { while (sentTo().isEmpty()) delay(5) }
+        assertEquals(listOf<Any?>(supervised), sentTo())
+    }
+
+    @Test fun `a denied disable sends no supervision-ended notice`() = runBlocking {
+        val store = Store()
+        val ended = mock(SupervisionEndedSender::class.java)
+        val manager = SupervisionApprovalManager(
+            keyManager(), crypto(), relay(), prefs(store), configDao(), ended
+        )
+        val request = SupervisionApprovalManager.PendingRequest(
+            supervised, "Device", "req-5", SupervisionApprovalManager.RequestType.DISABLE
+        )
+        manager.setPending(request)
+        manager.respond(request, false)
+
+        // Once the answer has gone out its record is dropped; no release, so no notice.
+        withTimeout(2_000) { while (store.json?.contains("req-5") == true) delay(5) }
+        delay(50)
+        assertEquals(0, org.mockito.Mockito.mockingDetails(ended).invocations.count { it.method.name == "send" })
+    }
+
     @Test fun `an answer recorded before a crash is republished at start`() = runBlocking {
         val answer = SupervisionApprovalManager.StoredAnswer(
             SupervisionApprovalManager.PendingRequest(
@@ -145,7 +184,7 @@ class SupervisionApprovalManagerTest {
 
         SupervisionApprovalManager(
             keyManager(), crypto(), relay(onPublish = { steps.add("publish") }), prefs(store),
-            configDao(steps)
+            configDao(steps), mock(SupervisionEndedSender::class.java)
         )
 
         withTimeout(2_000) { while (steps.size < 2) delay(5) }
@@ -158,7 +197,7 @@ class SupervisionApprovalManagerTest {
 
     @Test fun `a resent request that was already answered opens no second dialog`() {
         val manager = SupervisionApprovalManager(
-            keyManager(), crypto(), relay(), prefs(Store()), configDao()
+            keyManager(), crypto(), relay(), prefs(Store()), configDao(), mock(SupervisionEndedSender::class.java)
         )
         val request = SupervisionApprovalManager.PendingRequest(supervised, "Phone", "req-1")
         manager.setPending(request)

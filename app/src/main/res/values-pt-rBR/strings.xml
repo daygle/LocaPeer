@@ -1023,5 +1023,6 @@
     <string name="perm_exact_alarm_title">Alarmes e lembretes</string>
     <string name="perm_exact_alarm_granted">As atualizações chegam no horário mesmo com o telefone ocioso</string>
     <string name="perm_exact_alarm_denied">Toque para permitir, para que as atualizações cheguem no horário mesmo com o telefone ocioso</string>
+    <string name="peer_supervise_awaiting">Convite enviado. Aguardando %1$s aceitar no dispositivo</string>
 </resources>
 

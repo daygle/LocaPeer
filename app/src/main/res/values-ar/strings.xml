@@ -1090,4 +1090,5 @@
     <string name="perm_exact_alarm_title">المنبّهات والتذكيرات</string>
     <string name="perm_exact_alarm_granted">تبقى التحديثات في موعدها أثناء خمول الهاتف</string>
     <string name="perm_exact_alarm_denied">انقر للسماح، كي تبقى التحديثات في موعدها أثناء خمول الهاتف</string>
+    <string name="peer_supervise_awaiting">تم إرسال الدعوة. في انتظار قبول %1$s على جهازه</string>
 </resources>
