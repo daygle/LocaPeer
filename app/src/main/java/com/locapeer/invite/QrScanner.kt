@@ -1,5 +1,7 @@
 package com.locapeer.invite
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.Size
 import androidx.camera.core.Camera
@@ -15,6 +17,7 @@ import androidx.camera.view.PreviewView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
@@ -35,6 +38,9 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 private const val TAG = "QrScanner"
 
+/** How long to wait before trying the camera again after an attempt failed. */
+private const val CAMERA_RETRY_DELAY_MS = 3_000L
+
 /**
  * Camera preview that reports the first readable QR payload it sees.
  *
@@ -46,6 +52,7 @@ private const val TAG = "QrScanner"
 internal fun QrScannerView(
     onQrCode: (String) -> Unit,
     onCameraUnavailable: () -> Unit,
+    onCameraAvailable: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -54,6 +61,7 @@ internal fun QrScannerView(
     // rather than capturing the callback from the composition that started the camera.
     val currentOnQrCode by rememberUpdatedState(onQrCode)
     val currentOnCameraUnavailable by rememberUpdatedState(onCameraUnavailable)
+    val currentOnCameraAvailable by rememberUpdatedState(onCameraAvailable)
     val previewView = remember {
         PreviewView(context).apply {
             // COMPATIBLE draws the preview through a TextureView, so it composites inside this
@@ -63,14 +71,27 @@ internal fun QrScannerView(
         }
     }
 
-    DisposableEffect(lifecycleOwner) {
+    // The camera another app holds right now is usually free a moment later, so a failed attempt
+    // schedules the next one instead of latching the unavailable message for good. Bumping the
+    // counter re-keys the effect below, which disposes this attempt and binds a fresh one.
+    val bindAttempt = remember { mutableStateOf(0) }
+
+    DisposableEffect(lifecycleOwner, bindAttempt.value) {
         val mainExecutor = ContextCompat.getMainExecutor(context)
         val analysisExecutor = Executors.newSingleThreadExecutor()
         val providerFuture = ProcessCameraProvider.getInstance(context)
+        val handler = Handler(Looper.getMainLooper())
         val disposed = AtomicBoolean(false)
         val reportedUnavailable = AtomicBoolean(false)
         var boundCamera: Camera? = null
         var cameraStateObserver: Observer<CameraState>? = null
+
+        fun retryLater() {
+            if (disposed.get()) return
+            handler.postDelayed({
+                if (!disposed.get()) bindAttempt.value += 1
+            }, CAMERA_RETRY_DELAY_MS)
+        }
 
         providerFuture.addListener({
             if (disposed.get()) return@addListener
@@ -79,6 +100,7 @@ internal fun QrScannerView(
             } catch (e: Exception) {
                 Log.w(TAG, "Camera provider unavailable", e)
                 mainExecutor.execute { currentOnCameraUnavailable() }
+                retryLater()
                 return@addListener
             }
 
@@ -121,6 +143,7 @@ internal fun QrScannerView(
             }.getOrElse {
                 Log.w(TAG, "QR camera unavailable", it)
                 mainExecutor.execute { currentOnCameraUnavailable() }
+                retryLater()
                 return@addListener
             }
 
@@ -130,9 +153,15 @@ internal fun QrScannerView(
             // and the user never learns why.
             val observer = Observer<CameraState> { state ->
                 val error = state.error
-                if (error != null && reportedUnavailable.compareAndSet(false, true)) {
-                    Log.w(TAG, "QR camera failed to open (code ${error.code})")
-                    currentOnCameraUnavailable()
+                if (error != null) {
+                    if (reportedUnavailable.compareAndSet(false, true)) {
+                        Log.w(TAG, "QR camera failed to open (code ${error.code})")
+                        currentOnCameraUnavailable()
+                        retryLater()
+                    }
+                } else if (state.type == CameraState.Type.OPEN) {
+                    // A later attempt got the camera, so the failure message no longer applies.
+                    currentOnCameraAvailable()
                 }
             }
             boundCamera = camera
@@ -144,6 +173,7 @@ internal fun QrScannerView(
             // The provider future can still be pending here; the flag stops it from binding a
             // camera for a screen that no longer exists.
             disposed.set(true)
+            handler.removeCallbacksAndMessages(null)
             cameraStateObserver?.let { observer ->
                 boundCamera?.cameraInfo?.cameraState?.removeObserver(observer)
             }

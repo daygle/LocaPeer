@@ -230,16 +230,19 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
         } else {
             if (cameraPermission.status.isGranted) {
                 Box(modifier = Modifier.height(300.dp).fillMaxWidth()) {
+                    // The scanner stays mounted while the message is up, so it keeps retrying in
+                    // the background and reports as soon as the camera comes back.
+                    QrScannerView(
+                        onQrCode = vm::processQrCode,
+                        onCameraUnavailable = { cameraUnavailable = true },
+                        onCameraAvailable = { cameraUnavailable = false },
+                        modifier = Modifier.fillMaxSize()
+                    )
                     if (cameraUnavailable) {
                         // Without this the failure is an empty black rectangle: another app
                         // holding the camera is the common cause, so name it.
                         CameraUnavailableView()
                     } else {
-                        QrScannerView(
-                            onQrCode = vm::processQrCode,
-                            onCameraUnavailable = { cameraUnavailable = true },
-                            modifier = Modifier.fillMaxSize()
-                        )
                         Surface(
                             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
                             shape = RoundedCornerShape(16.dp),
@@ -302,7 +305,12 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
 @Composable
 private fun CameraUnavailableView() {
     Column(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
+        // Opaque: the scanner underneath is still retrying, and a half-black preview behind
+        // this text would be unreadable.
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
