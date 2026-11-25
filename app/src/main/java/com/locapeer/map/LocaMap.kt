@@ -25,6 +25,7 @@ import org.maplibre.android.camera.CameraUpdateFactory
 import org.maplibre.android.geometry.LatLng
 import org.maplibre.android.geometry.LatLngBounds
 import org.maplibre.android.maps.MapLibreMap
+import org.maplibre.android.maps.MapLibreMapOptions
 import org.maplibre.android.maps.MapView
 import org.maplibre.android.maps.Style
 import org.maplibre.android.style.expressions.Expression
@@ -194,7 +195,14 @@ fun LocaMap(
 
     val mapView = remember {
         MapLibre.getInstance(context.applicationContext)
-        MapView(context).apply {
+        // Texture mode renders into a TextureView instead of the default GLSurfaceView. A
+        // SurfaceView is a separate window layer punched through the view hierarchy, so until
+        // the style has loaded and MapLibre has drawn its first frames the hole shows black - and
+        // because the map screen enters with a fade, that black surface is visible for the
+        // length of the animation. A TextureView is composited with the rest of the UI, so it
+        // fades, clips and transforms like any other view. The cost is some extra GPU memory
+        // and slightly slower drawing; four screens host a map, but only one at a time.
+        MapView(context, MapLibreMapOptions.createFromAttributes(context).textureMode(true)).apply {
             onCreate(null)
             configureView(this)
         }
