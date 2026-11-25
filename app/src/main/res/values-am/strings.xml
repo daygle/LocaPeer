@@ -1026,4 +1026,10 @@
     <string name="chat_react_with">በ%1$s ምላሽ ስጥ</string>
     <string name="chat_remove_reaction">ምላሹን አስወግድ</string>
     <string name="chat_cd_reaction_from_contact">ከእውቂያ ምላሽ</string>
+    <string name="peer_temp_share_sharing_off">የአካባቢ ማጋራት ጠፍቷል፣ ስለዚህ በጊዜያዊ ማጋራት ጊዜም ቢሆን ለ%1$s ምንም አይላክም።</string>
+    <string name="peer_send_needs_receive">%1$s በመተግበሪያቸው ውስጥ አካባቢዎን መቀበል መፍቀድ አለባቸው፣ ካልሆነ ዝማኔዎችዎ ችላ ይባላሉ።</string>
+    <string name="perm_exact_alarm_title">ማንቂያዎች እና አስታዋሾች</string>
+    <string name="perm_exact_alarm_granted">ስልክዎ ሥራ ፈት ሲሆን ዝማኔዎች በሰዓቱ ይቀጥላሉ</string>
+    <string name="perm_exact_alarm_denied">ስልክዎ ሥራ ፈት ሲሆን ዝማኔዎች በሰዓቱ እንዲቀጥሉ ለመፍቀድ ይንኩ</string>
+    <string name="peer_supervise_awaiting">ግብዣ ተልኳል። %1$s በመሣሪያቸው ላይ እስኪቀበሉ በመጠበቅ ላይ</string>
 </resources>

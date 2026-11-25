@@ -281,7 +281,7 @@ class ProximityEngine @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val notification = NotificationCompat.Builder(context, "locapeer_alerts")
+        val notification = NotificationCompat.Builder(context, com.locapeer.util.AppNotifications.CHANNEL_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_location)
             .setContentTitle(context.getString(R.string.notif_person_nearby, personName))
             .setContentText(context.getString(R.string.notif_distance_from_you, displayDistance))

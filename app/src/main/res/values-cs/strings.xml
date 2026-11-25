@@ -1052,4 +1052,10 @@
     <string name="chat_react_with">Reagovat pomocí %1$s</string>
     <string name="chat_remove_reaction">Odebrat reakci</string>
     <string name="chat_cd_reaction_from_contact">Reakce od kontaktu</string>
+    <string name="peer_temp_share_sharing_off">Sdílení polohy je vypnuté, takže se %1$s nic neodesílá, ani během dočasného sdílení.</string>
+    <string name="peer_send_needs_receive">%1$s musí ve své aplikaci také povolit příjem vaší polohy, jinak budou vaše aktualizace ignorovány.</string>
+    <string name="perm_exact_alarm_title">Budíky a připomenutí</string>
+    <string name="perm_exact_alarm_granted">Aktualizace přicházejí včas i v režimu nečinnosti</string>
+    <string name="perm_exact_alarm_denied">Klepnutím povolte, aby aktualizace přicházely včas i v režimu nečinnosti</string>
+    <string name="peer_supervise_awaiting">Pozvánka odeslána. Čeká se, až ji %1$s přijme na svém zařízení</string>
 </resources>

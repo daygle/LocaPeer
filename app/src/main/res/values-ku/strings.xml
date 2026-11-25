@@ -1025,4 +1025,10 @@
     <string name="chat_react_with">Bi %1$s bertek nîşan bide</string>
     <string name="chat_remove_reaction">Bertêkê rake</string>
     <string name="chat_cd_reaction_from_contact">Berteka ji têkiliyê</string>
+    <string name="peer_temp_share_sharing_off">Parvekirina cih girtî ye, ji ber vê yekê tiştek ji %1$s re nayê şandin, di dema parvekirina demkî de jî.</string>
+    <string name="peer_send_needs_receive">%1$s jî divê di sepana xwe de destûrê bide ku cihê we were wergirtin, wekî din nûvekirinên we têne paşguhkirin.</string>
+    <string name="perm_exact_alarm_title">Alarm û bîrxistin</string>
+    <string name="perm_exact_alarm_granted">Nûvekirin di dema bêkariya telefonê de jî di wextê xwe de dimînin</string>
+    <string name="perm_exact_alarm_denied">Ji bo destûrê bitikîne, da ku nûvekirin di dema bêkariya telefonê de jî di wextê xwe de bimînin</string>
+    <string name="peer_supervise_awaiting">Vexwendin hat şandin. Li benda pejirandina %1$s li ser cîhaza wî/wê</string>
 </resources>

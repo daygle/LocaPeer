@@ -36,7 +36,7 @@ class ContactAddApprovalTimeoutTest {
         `when`(relay.relayStatus).thenReturn(MutableStateFlow(emptyMap()))
         val manager = SupervisionApprovalManager(
             mock(KeyManager::class.java), mock(CryptoUtils::class.java), relay,
-            mock(AppPreferences::class.java), mock(PeerSharingConfigDao::class.java)
+            mock(AppPreferences::class.java), mock(PeerSharingConfigDao::class.java), mock(SupervisionEndedSender::class.java)
         )
         val first = SupervisionApprovalManager.PendingRequest("peer", "First", "1")
         val second = SupervisionApprovalManager.PendingRequest("peer", "Second", "2")
@@ -77,7 +77,7 @@ class ContactAddApprovalTimeoutTest {
             } else org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
         })
         val manager = SupervisionApprovalManager(
-            keyManager, crypto, relay, mock(AppPreferences::class.java), dao
+            keyManager, crypto, relay, mock(AppPreferences::class.java), dao, mock(SupervisionEndedSender::class.java)
         )
         val disable = SupervisionApprovalManager.PendingRequest(
             "peer", "Device", "1", SupervisionApprovalManager.RequestType.DISABLE
@@ -96,7 +96,7 @@ class ContactAddApprovalTimeoutTest {
         `when`(relay.relayStatus).thenReturn(MutableStateFlow(emptyMap()))
         val manager = SupervisionApprovalManager(
             mock(KeyManager::class.java), mock(CryptoUtils::class.java), relay,
-            mock(AppPreferences::class.java), dao
+            mock(AppPreferences::class.java), dao, mock(SupervisionEndedSender::class.java)
         )
         val disable = SupervisionApprovalManager.PendingRequest(
             "peer", "Device", "1", SupervisionApprovalManager.RequestType.DISABLE

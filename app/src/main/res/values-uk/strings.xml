@@ -1052,4 +1052,10 @@
     <string name="chat_react_with">Реакція %1$s</string>
     <string name="chat_remove_reaction">Видалити реакцію</string>
     <string name="chat_cd_reaction_from_contact">Реакція від контакту</string>
+    <string name="peer_temp_share_sharing_off">Надсилання місцезнаходження вимкнено, тому %1$s нічого не отримує, навіть під час тимчасового надсилання.</string>
+    <string name="peer_send_needs_receive">%1$s також має дозволити отримання вашого місцезнаходження у своєму застосунку, інакше ваші оновлення ігноруватимуться.</string>
+    <string name="perm_exact_alarm_title">Будильники й нагадування</string>
+    <string name="perm_exact_alarm_granted">Оновлення надходять вчасно, навіть коли телефон неактивний</string>
+    <string name="perm_exact_alarm_denied">Торкніться, щоб дозволити, — тоді оновлення надходитимуть вчасно, навіть коли телефон неактивний</string>
+    <string name="peer_supervise_awaiting">Запрошення надіслано. Очікуємо, поки %1$s прийме його на своєму пристрої</string>
 </resources>

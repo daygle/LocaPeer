@@ -1025,4 +1025,10 @@
     <string name="chat_react_with">د %1$s سره غبرګون</string>
     <string name="chat_remove_reaction">غبرګون لرې کول</string>
     <string name="chat_cd_reaction_from_contact">د اړیکې غبرګون</string>
+    <string name="peer_temp_share_sharing_off">د ځای شریکول بند دي، نو حتی د لنډمهاله شریکولو پر مهال هم %1$s ته هېڅ نه لېږل کېږي.</string>
+    <string name="peer_send_needs_receive">%1$s باید په خپل اپ کې ستاسو د ځای ترلاسه کولو ته هم اجازه ورکړي، که نه نو ستاسو تازه معلومات له پامه غورځول کېږي.</string>
+    <string name="perm_exact_alarm_title">الارمونه او یادونه</string>
+    <string name="perm_exact_alarm_granted">تازه معلومات حتی کله چې تلیفون بې کاره وي هم پر وخت رسېږي</string>
+    <string name="perm_exact_alarm_denied">د اجازې لپاره ټک کړئ، څو تازه معلومات حتی کله چې تلیفون بې کاره وي هم پر وخت ورسېږي</string>
+    <string name="peer_supervise_awaiting">بلنه ولېږل شوه. د %1$s لخوا په خپل وسیله کې د منلو په تمه</string>
 </resources>

@@ -190,6 +190,16 @@ fun PeerSharingControlsScreen(
                 onCheckedChange = { vm.setSendRole(it) },
                 enabled = !supervisorLocked
             )
+            if (isSend) {
+                // This switch only changes this device; the contact's app decides whether it
+                // accepts our location, and there is no way to see that from here.
+                Text(
+                    stringResource(R.string.peer_send_needs_receive, peerName),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp)
+                )
+            }
             CardDivider()
             SettingsRow(
                 title = stringResource(R.string.peer_receive_title, peerName),
@@ -205,11 +215,13 @@ fun PeerSharingControlsScreen(
                 } else null
             )
             CardDivider()
+            // Locked for the supervisor like the switch above: the sender ignores their schedule
+            // while supervised, so it reads as always sharing.
             SettingsRow(
                 title = stringResource(R.string.settings_sharing_schedule),
-                value = if (scheduleRules.isEmpty()) stringResource(R.string.peer_always_sharing)
+                value = if (scheduleRules.isEmpty() || supervisorLocked) stringResource(R.string.peer_always_sharing)
                 else pluralStringResource(R.plurals.peer_active_rules, scheduleRules.size, scheduleRules.size),
-                enabled = sharingEnabled,
+                enabled = sharingEnabled && !supervisorLocked,
                 onClick = onNavigateToSchedule
             )
         }
@@ -254,17 +266,19 @@ fun PeerPrivacyScreen(
             headerIcon = Icons.Default.PrivacyTip,
             headerTitle = stringResource(R.string.peer_section_privacy)
         ) {
+            // Locked for the supervisor while supervised: they always get the exact position.
             SettingsRow(
                 title = stringResource(R.string.peer_precision),
-                value = if (precisionMode == PrecisionMode.EXACT.name) stringResource(R.string.peer_precision_exact) else stringResource(R.string.peer_precision_suburb),
-                enabled = sharingEnabled,
+                value = if (precisionMode == PrecisionMode.EXACT.name || supervisorLocked) stringResource(R.string.peer_precision_exact) else stringResource(R.string.peer_precision_suburb),
+                enabled = sharingEnabled && !supervisorLocked,
                 onClick = { showPrecisionDialog = true }
             )
             CardDivider()
             SwitchRow(
                 title = stringResource(R.string.peer_pause_sharing),
                 subtitle = stringResource(R.string.peer_pause_sub, peerName),
-                checked = isPaused,
+                // A pause set before supervision began is not applied to the supervisor.
+                checked = isPaused && !supervisorLocked,
                 onCheckedChange = { vm.setSharingEnabled(!it) },
                 enabled = !supervisorLocked
             )
@@ -278,6 +292,16 @@ fun PeerPrivacyScreen(
             }
         }
 
+        val locationSharingOn by vm.locationSharingOn.collectAsStateWithLifecycle()
+        if (!locationSharingOn && (tempShareActive != null || sharingEnabled)) {
+            // A temporary share overrides the schedule, but not location sharing being off.
+            Text(
+                stringResource(R.string.peer_temp_share_sharing_off, peerName),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
+        }
         if (tempShareActive != null) {
             ActiveTempShareCard(
                 peerName = peerName,
@@ -462,6 +486,8 @@ fun PeerSecurityScreen(
     LaunchedEffect(peerId) { vm.init(peerId) }
     val state by vm.uiState.collectAsStateWithLifecycle()
     val isMySupervised = state.config?.isMySupervised ?: false
+    val superviseAwaiting by remember(peerId) { vm.observeSuperviseAwaiting(peerId) }
+        .collectAsStateWithLifecycle(initialValue = false)
     var showSuperviseEnableConfirm by remember { mutableStateOf(false) }
     var showSuperviseDisableConfirm by remember { mutableStateOf(false) }
 
@@ -472,7 +498,12 @@ fun PeerSecurityScreen(
         ) {
             SwitchRow(
                 title = stringResource(R.string.peer_supervise),
-                subtitle = if (isMySupervised) stringResource(R.string.peer_supervise_on, peerName) else stringResource(R.string.peer_supervise_off, peerName),
+                // An invite that hasn't been accepted yet isn't supervision in force: say so.
+                subtitle = when {
+                    isMySupervised && superviseAwaiting -> stringResource(R.string.peer_supervise_awaiting, peerName)
+                    isMySupervised -> stringResource(R.string.peer_supervise_on, peerName)
+                    else -> stringResource(R.string.peer_supervise_off, peerName)
+                },
                 checked = isMySupervised,
                 // Both directions are disruptive to the far device now (they must consent
                 // to being supervised, or lose their lock when this ends), so confirm them.

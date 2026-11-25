@@ -1009,4 +1009,10 @@
     <string name="chat_react_with">%1$s ဖြင့် တုံ့ပြန်ရန်</string>
     <string name="chat_remove_reaction">တုံ့ပြန်မှု ဖယ်ရှားရန်</string>
     <string name="chat_cd_reaction_from_contact">အဆက်အသွယ်မှ တုံ့ပြန်မှု</string>
+    <string name="peer_temp_share_sharing_off">တည်နေရာမျှဝေခြင်းကို ပိတ်ထားသောကြောင့် ယာယီမျှဝေနေစဉ်တွင်ပင် %1$s ထံ ဘာမှ မပို့ပါ။</string>
+    <string name="peer_send_needs_receive">%1$s ကလည်း ၎င်း၏အက်ပ်တွင် သင့်တည်နေရာကို လက်ခံရန် ခွင့်ပြုထားရမည်၊ မဟုတ်ပါက သင့်အပ်ဒိတ်များကို လျစ်လျူရှုပါမည်။</string>
+    <string name="perm_exact_alarm_title">နှိုးစက်နှင့် သတိပေးချက်များ</string>
+    <string name="perm_exact_alarm_granted">ဖုန်းအသုံးမပြုချိန်တွင်ပင် အပ်ဒိတ်များ အချိန်မှန် ရောက်သည်</string>
+    <string name="perm_exact_alarm_denied">ဖုန်းအသုံးမပြုချိန်တွင်ပင် အပ်ဒိတ်များ အချိန်မှန်ရောက်စေရန် ခွင့်ပြုရန် တို့ပါ</string>
+    <string name="peer_supervise_awaiting">ဖိတ်ကြားချက် ပို့ပြီးပါပြီ။ %1$s က ၎င်း၏စက်တွင် လက်ခံရန် စောင့်နေသည်</string>
 </resources>

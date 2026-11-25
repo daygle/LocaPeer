@@ -1025,4 +1025,10 @@
     <string name="chat_react_with">%1$s से प्रतिक्रिया दें</string>
     <string name="chat_remove_reaction">प्रतिक्रिया हटाएँ</string>
     <string name="chat_cd_reaction_from_contact">संपर्क की प्रतिक्रिया</string>
+    <string name="peer_temp_share_sharing_off">स्थान साझाकरण बंद है, इसलिए अस्थायी साझाकरण के दौरान भी %1$s को कुछ नहीं भेजा जाता।</string>
+    <string name="peer_send_needs_receive">%1$s को भी अपने ऐप में आपका स्थान प्राप्त करने की अनुमति देनी होगी, वरना आपके अपडेट अनदेखे कर दिए जाएंगे।</string>
+    <string name="perm_exact_alarm_title">अलार्म और रिमाइंडर</string>
+    <string name="perm_exact_alarm_granted">फ़ोन निष्क्रिय होने पर भी अपडेट समय पर होते हैं</string>
+    <string name="perm_exact_alarm_denied">अनुमति देने के लिए टैप करें, ताकि फ़ोन निष्क्रिय होने पर भी अपडेट समय पर हों</string>
+    <string name="peer_supervise_awaiting">आमंत्रण भेजा गया। %1$s के अपने डिवाइस पर स्वीकार करने की प्रतीक्षा है</string>
 </resources>

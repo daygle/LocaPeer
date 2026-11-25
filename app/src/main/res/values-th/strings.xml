@@ -1009,4 +1009,10 @@
     <string name="chat_react_with">ตอบสนองด้วย %1$s</string>
     <string name="chat_remove_reaction">ลบรีแอ็กชัน</string>
     <string name="chat_cd_reaction_from_contact">รีแอ็กชันจากผู้ติดต่อ</string>
+    <string name="peer_temp_share_sharing_off">การแชร์ตำแหน่งปิดอยู่ จึงไม่มีการส่งข้อมูลใดไปยัง %1$s แม้ในระหว่างการแชร์ชั่วคราว</string>
+    <string name="peer_send_needs_receive">%1$s ต้องอนุญาตให้รับตำแหน่งของคุณในแอปของตนด้วย มิฉะนั้นการอัปเดตของคุณจะถูกละเว้น</string>
+    <string name="perm_exact_alarm_title">การปลุกและการช่วยเตือน</string>
+    <string name="perm_exact_alarm_granted">การอัปเดตยังคงตรงเวลาแม้โทรศัพท์ไม่ได้ใช้งาน</string>
+    <string name="perm_exact_alarm_denied">แตะเพื่ออนุญาต เพื่อให้การอัปเดตตรงเวลาแม้โทรศัพท์ไม่ได้ใช้งาน</string>
+    <string name="peer_supervise_awaiting">ส่งคำเชิญแล้ว กำลังรอให้ %1$s ยอมรับบนอุปกรณ์ของตน</string>
 </resources>

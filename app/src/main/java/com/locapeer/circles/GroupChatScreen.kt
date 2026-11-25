@@ -32,6 +32,11 @@ import com.locapeer.ui.theme.bubbleContent
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.flatMapLatest
+import com.locapeer.messaging.CHAT_PAGE_SIZE
+import com.locapeer.messaging.LoadOlderMessagesAtTop
+import com.locapeer.messaging.withMedia
+import com.locapeer.ui.components.VisibleConversation
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,7 +66,7 @@ import com.locapeer.messaging.VoiceMessageContent
 import com.locapeer.messaging.detectLocationPin
 import android.widget.Toast
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 @Composable
 fun GroupChatScreen(
     circleId: String,
@@ -72,7 +77,10 @@ fun GroupChatScreen(
     circlesVm: CirclesViewModel = hiltViewModel()
 ) {
     val circle by remember(circleId) { vm.observeCircle(circleId) }.collectAsStateWithLifecycle(initialValue = null)
-    val messages by remember(circleId) { vm.getGroupMessages(circleId) }.collectAsStateWithLifecycle(initialValue = emptyList())
+    // Paged like the 1:1 chat: newest page first, older ones as the user scrolls to the top.
+    val messageLimit = remember(circleId) { kotlinx.coroutines.flow.MutableStateFlow(CHAT_PAGE_SIZE) }
+    val messages by remember(circleId) { messageLimit.flatMapLatest { vm.getGroupMessages(circleId, it) } }
+        .collectAsStateWithLifecycle(initialValue = emptyList())
     val members by remember(circleId) { circlesVm.observeMembers(circleId) }.collectAsStateWithLifecycle(initialValue = emptyList())
     val peers by vm.peers.collectAsStateWithLifecycle()
     val myPub by vm.myPubkeyHex.collectAsStateWithLifecycle()
@@ -161,11 +169,12 @@ fun GroupChatScreen(
         ImageViewerDialog(base64 = b64, onDismiss = { fullscreenImage = null })
     }
 
+    VisibleConversation(circleId)
     LaunchedEffect(circleId) { vm.markReadGroup(circleId) }
-    // Count from the previous emission, so the first load can jump straight to the newest
-    // message while later arrivals only follow when the user is already at the bottom.
-    var previousMessageCount by remember(circleId) { mutableIntStateOf(0) }
-    LaunchedEffect(messages.size) {
+    // Keyed on the newest message, not the list size: loading an older page grows the list at
+    // the top, and following that as an "arrival" would yank the reader to the bottom.
+    var previousNewestId by remember(circleId) { mutableStateOf<String?>(null) }
+    LaunchedEffect(messages.lastOrNull()?.id) {
         if (messages.isEmpty()) return@LaunchedEffect
         // Also mark messages arriving while the screen is open, otherwise a circle the user is
         // actively reading still accrues an unread badge for later.
@@ -175,13 +184,14 @@ fun GroupChatScreen(
         val nearBottom = listState.layoutInfo.visibleItemsInfo.lastOrNull()
             ?.let { it.index >= messages.size - 3 } ?: false
         // A message the user just sent always brings them to the bottom, wherever they were.
-        val sentByMe = messages.size > previousMessageCount && messages.last().isMine
+        val sentByMe = previousNewestId != null && messages.last().isMine
         when {
-            previousMessageCount == 0 -> listState.scrollToItem(messages.size - 1)
+            previousNewestId == null -> listState.scrollToItem(messages.size - 1)
             nearBottom || sentByMe -> listState.animateScrollToItem(messages.size - 1)
         }
-        previousMessageCount = messages.size
+        previousNewestId = messages.last().id
     }
+    LoadOlderMessagesAtTop(listState, messages.size, messageLimit, ready = previousNewestId != null)
 
     // Owner delete: choose between removing the circle on this device only (the original
     // behaviour) and disbanding it for every member. Non-owners never reach this dialog - they
@@ -433,7 +443,9 @@ fun GroupChatScreen(
             verticalArrangement = Arrangement.spacedBy(4.dp),
             contentPadding = PaddingValues(vertical = 8.dp)
         ) {
-            items(messages, key = { it.id }) { msg ->
+            items(messages, key = { it.id }) { row ->
+                // Rows arrive without media bytes; the bubble's own are loaded on demand.
+                val msg = withMedia(row, vm::cachedMedia, vm::loadMedia)
                 SwipeToDeleteGroupMessage(
                     msg = msg,
                     senderName = nameByPubkey[msg.senderPublicKeyHex] ?: stringResource(R.string.fallback_unknown),

@@ -1020,4 +1020,10 @@
     <string name="chat_react_with">Reagera med %1$s</string>
     <string name="chat_remove_reaction">Ta bort reaktion</string>
     <string name="chat_cd_reaction_from_contact">Reaktion från kontakt</string>
+    <string name="peer_temp_share_sharing_off">Platsdelning är avstängd, så inget skickas till %1$s, inte ens under en tillfällig delning.</string>
+    <string name="peer_send_needs_receive">%1$s måste också tillåta att din plats tas emot i sin app, annars ignoreras dina uppdateringar.</string>
+    <string name="perm_exact_alarm_title">Alarm och påminnelser</string>
+    <string name="perm_exact_alarm_granted">Uppdateringar kommer i tid även när telefonen är inaktiv</string>
+    <string name="perm_exact_alarm_denied">Tryck för att tillåta, så att uppdateringar kommer i tid även när telefonen är inaktiv</string>
+    <string name="peer_supervise_awaiting">Inbjudan skickad. Väntar på att %1$s ska godkänna den på sin enhet</string>
 </resources>

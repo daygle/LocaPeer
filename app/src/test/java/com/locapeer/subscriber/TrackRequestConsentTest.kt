@@ -101,4 +101,23 @@ class TrackRequestConsentTest {
         assertEquals(PeerEntity.ROLE_RECEIVE, roleAfterTrackAccept(PeerEntity.ROLE_NONE, PeerEntity.ROLE_SEND))
         assertEquals(PeerEntity.ROLE_SEND_RECEIVE, roleAfterTrackAccept(PeerEntity.ROLE_SEND, PeerEntity.ROLE_SEND_RECEIVE))
     }
+
+    @Test
+    fun `a supervision accept matching nothing on this device is stray`() {
+        val s = "a".repeat(64)
+        val other = "b".repeat(64)
+        // Withdrawn before the supervisor answered: nothing pending, no supervisor.
+        assertTrue(isStraySupervisionAccept("", pending = false, active = false, senderPubkey = s))
+        // From someone other than the supervisor this device requested or is under.
+        assertTrue(isStraySupervisionAccept(other, pending = true, active = false, senderPubkey = s))
+        assertTrue(isStraySupervisionAccept(other, pending = false, active = true, senderPubkey = s))
+    }
+
+    @Test
+    fun `an accept from the requested or current supervisor is not stray`() {
+        val s = "a".repeat(64)
+        assertFalse(isStraySupervisionAccept(s, pending = true, active = false, senderPubkey = s))
+        // A re-delivered accept after supervision began must not be declined.
+        assertFalse(isStraySupervisionAccept(s, pending = false, active = true, senderPubkey = s.uppercase()))
+    }
 }

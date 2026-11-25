@@ -16,32 +16,46 @@ import androidx.core.location.LocationManagerCompat
 
 object PermissionManager {
 
-    /** Exposed as an immutable List: a public mutable list lets any caller add to it and
-     *  silently change what other screens request. */
-    val REQUIRED_PERMISSIONS: List<String> = mutableListOf(
+    /**
+     * The location permissions, always requested together: Android 12+ ignores a request for
+     * fine location on its own, and the user may grant either precise or approximate. Either
+     * grant is enough for the app to work (see [hasLocationPermission]), so that is all
+     * onboarding requires.
+     */
+    val LOCATION_PERMISSIONS: List<String> = listOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION
-    ).apply {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            add(Manifest.permission.POST_NOTIFICATIONS)
-        }
-    }
+    )
 
     /**
-     * Permissions we request alongside the required set but do not gate on: the app
-     * works without them. CAMERA is only needed to scan QR invites (the invite screen
-     * re-checks and asks for it on demand), ACTIVITY_RECOGNITION (Android 10+) lets
-     * Activity Recognition refine motion classification with a GPS-only fallback.
-     * Below API 29 ACTIVITY_RECOGNITION is an install-time permission and needs no
-     * runtime request.
+     * Permissions we request alongside location but do not gate on: the app works without
+     * them. POST_NOTIFICATIONS (Android 13+) only affects whether alerts are shown, CAMERA is
+     * only needed to scan QR invites (the invite screen asks for it on demand), and
+     * ACTIVITY_RECOGNITION (Android 10+) refines motion classification with a GPS-only
+     * fallback. Below API 29 ACTIVITY_RECOGNITION is an install-time permission and needs no
+     * runtime request. Exposed as immutable lists so no caller can change what others request.
      */
-    val OPTIONAL_PERMISSIONS: List<String> =
-        (listOf(Manifest.permission.CAMERA) +
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                listOf(Manifest.permission.ACTIVITY_RECOGNITION)
-            } else {
-                emptyList()
-            })
+    val OPTIONAL_PERMISSIONS: List<String> = buildList {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) add(Manifest.permission.POST_NOTIFICATIONS)
+        add(Manifest.permission.CAMERA)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) add(Manifest.permission.ACTIVITY_RECOGNITION)
+    }
+
+    /** Whether exact alarms may be scheduled. They keep the heartbeat on time through Doze and
+     *  let the watchdog restart a stopped service; pre-granted below Android 14, user-granted
+     *  ("Alarms & reminders") from Android 14 on. Always true below Android 12. */
+    fun canScheduleExactAlarms(context: Context): Boolean =
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.S ||
+            context.getSystemService(android.app.AlarmManager::class.java)?.canScheduleExactAlarms() == true
+
+    /** Opens the system "Alarms & reminders" screen for this app (Android 12+). */
+    @androidx.annotation.RequiresApi(Build.VERSION_CODES.S)
+    fun openExactAlarmSettings(context: Context) {
+        startSettings(
+            context,
+            Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, "package:${context.packageName}".toUri())
+        )
+    }
 
     fun hasBackgroundLocation(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {

@@ -83,6 +83,13 @@ object NostrEventKind {
      *  The content is a NIP-44 encrypted [com.locapeer.circles.CircleDisbandPayload]; recipients
      *  drop their local copy and record the removal so a straggler can't re-create the circle. */
     const val CIRCLE_DISBAND = 1071
+
+    /** Contact -> contact (kind 1072): this device deliberately stopped (or resumed) sending its
+     *  location to the recipient - a per-contact pause or location sharing switched off. The
+     *  content is a NIP-44 encrypted [com.locapeer.sharing.SharingPausePayload]; the recipient
+     *  holds back "missed update" alerts for that contact meanwhile. Older versions don't
+     *  subscribe to this kind and simply never see it. */
+    const val SHARING_PAUSED = 1072
 }
 
 @Serializable

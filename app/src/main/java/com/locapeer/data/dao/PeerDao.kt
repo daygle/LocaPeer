@@ -29,6 +29,15 @@ interface PeerDao {
     @Query("UPDATE peers SET displayName = :displayName WHERE deviceId = :deviceId")
     suspend fun rename(deviceId: String, displayName: String)
 
+    /** Targeted, like [rename]: a contact-settings toggle must not write back a stale role,
+     *  relay or archive state that a background event changed meanwhile. */
+    @Query("UPDATE peers SET messagingEnabled = :enabled WHERE deviceId = :deviceId")
+    suspend fun setMessagingEnabled(deviceId: String, enabled: Boolean)
+
+    /** Targeted, like [rename]; see [setMessagingEnabled]. */
+    @Query("UPDATE peers SET locationRole = :role WHERE deviceId = :deviceId")
+    suspend fun setLocationRole(deviceId: String, role: String)
+
     @Query("DELETE FROM peers WHERE deviceId = :deviceId")
     suspend fun deletePeerById(deviceId: String)
 

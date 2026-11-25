@@ -1009,4 +1009,10 @@
     <string name="chat_react_with">Reaksi dengan %1$s</string>
     <string name="chat_remove_reaction">Hapus reaksi</string>
     <string name="chat_cd_reaction_from_contact">Reaksi dari kontak</string>
+    <string name="peer_temp_share_sharing_off">Berbagi lokasi dinonaktifkan, jadi tidak ada yang dikirim ke %1$s, bahkan selama berbagi sementara.</string>
+    <string name="peer_send_needs_receive">%1$s juga harus mengizinkan penerimaan lokasi Anda di aplikasinya. Jika tidak, pembaruan Anda akan diabaikan.</string>
+    <string name="perm_exact_alarm_title">Alarm &amp; pengingat</string>
+    <string name="perm_exact_alarm_granted">Pembaruan tetap tepat waktu saat ponsel tidak aktif</string>
+    <string name="perm_exact_alarm_denied">Ketuk untuk mengizinkan, agar pembaruan tetap tepat waktu saat ponsel tidak aktif</string>
+    <string name="peer_supervise_awaiting">Undangan terkirim. Menunggu %1$s menerimanya di perangkatnya</string>
 </resources>

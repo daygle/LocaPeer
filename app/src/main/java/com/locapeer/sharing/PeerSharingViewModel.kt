@@ -71,7 +71,9 @@ class PeerSharingViewModel @Inject constructor(
     private val heartbeatDao: com.locapeer.data.dao.HeartbeatDao,
     private val changeReporter: SupervisionChangeReporter,
     private val endedSender: SupervisionEndedSender,
-    private val inviteSender: SupervisionInviteSender
+    private val inviteSender: SupervisionInviteSender,
+    private val pauseNotifier: SharingPauseNotifier,
+    private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry,
 ) : ViewModel() {
 
     /** Display name of the peer this VM is bound to (for change summaries). */
@@ -83,6 +85,16 @@ class PeerSharingViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(PeerSharingUiState())
     val uiState: StateFlow<PeerSharingUiState> = _uiState.asStateFlow()
+
+    /** Supervisor side: an invite to supervise the current contact is still waiting for them to
+     *  accept (see [AppPreferences.supervisionInvitesAwaiting]). */
+    fun observeSuperviseAwaiting(peerId: String): Flow<Boolean> =
+        prefs.supervisionInvitesAwaiting.map { peerId in it }
+
+    /** Whether location sharing is switched on at all. A temporary share overrides the
+     *  schedule but not this switch, so the screen warns while it is off. */
+    val locationSharingOn: StateFlow<Boolean> = prefs.settings.map { it.heartbeatEnabled }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), true)
 
     private val _lastPurgeResult = MutableStateFlow<PurgeResult?>(null)
     val lastPurgeResult: StateFlow<PurgeResult?> = _lastPurgeResult.asStateFlow()
@@ -122,6 +134,18 @@ class PeerSharingViewModel @Inject constructor(
             val existing = configDao.getForPeer(currentPeerId)
             if (existing != null) configDao.setSharingEnabled(currentPeerId, enabled)
             else configDao.upsert(defaultConfig().copy(sharingEnabled = enabled))
+            // Pausing outranks a temporary share, so end it rather than keep counting down
+            // (here and in Settings' active-shares list) while nothing is being sent.
+            if (!enabled) {
+                endTemporaryShare(existing)
+                // Stop any live session for them now rather than when its lease lapses.
+                peerDao.getPeer(currentPeerId)?.let { liveViewRegistry.revoke(it.publicKeyHex) }
+            }
+            // Let the contact's app hold back its missed-update alert while paused.
+            pauseNotifier.notify(
+                listOf(currentPeerId),
+                if (enabled) 0L else SharingSchedule.QUIET_INDEFINITELY
+            )
             // Visibility: the supervisor sees pause/resume of a destination.
             changeReporter.report(
                 if (enabled) SupervisionChangeReporter.Areas.RESUME else SupervisionChangeReporter.Areas.PAUSE,
@@ -140,8 +164,8 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setMessagingEnabled(enabled: Boolean) {
         viewModelScope.launch {
-            val peer = peerDao.getPeer(currentPeerId) ?: return@launch
-            peerDao.upsertPeer(peer.copy(messagingEnabled = enabled))
+            peerDao.getPeer(currentPeerId) ?: return@launch
+            peerDao.setMessagingEnabled(currentPeerId, enabled)
             if (enabled) messageDao.unblockMessagesFromPeer(currentPeerId)
             // Messaging is not location visibility; no summary entry.
         }
@@ -149,6 +173,8 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setPrecisionMode(mode: PrecisionMode) {
         viewModelScope.launch {
+            // The supervisor always gets the exact position while supervised (see supervisorLocked).
+            if (mode != PrecisionMode.EXACT && isSupervisorLocked()) return@launch
             val existing = configDao.getForPeer(currentPeerId)
             if (existing != null) configDao.setPrecisionMode(currentPeerId, mode.name)
             else configDao.upsert(defaultConfig().copy(precisionMode = mode.name))
@@ -192,12 +218,13 @@ class PeerSharingViewModel @Inject constructor(
                 }
                 val promotedRole = PeerEntity.roleWithReceive(peer.locationRole)
                 if (promotedRole != peer.locationRole) {
-                    peerDao.upsertPeer(peer.copy(locationRole = promotedRole))
+                    peerDao.setLocationRole(currentPeerId, promotedRole)
                 }
                 // Turning supervision back on drops an ended notice that has not been
                 // published yet: a retry sending it after the new invite would clear the
                 // supervision the two devices just re-established.
                 endedSender.cancel(peer.publicKeyHex)
+                prefs.setSupervisionInviteAwaiting(currentPeerId, true)
                 sendSupervisionInvite(peer)
             } else {
                 val existing = configDao.getForPeer(currentPeerId)
@@ -210,6 +237,7 @@ class PeerSharingViewModel @Inject constructor(
                 // Drop an invitation that has not been published yet. One already handed to
                 // the relay client is followed by the ended notice below, in order.
                 inviteSender.cancel(peer.publicKeyHex)
+                prefs.setSupervisionInviteAwaiting(currentPeerId, false)
                 sendSupervisionEnded(peer)
             }
         }
@@ -311,12 +339,14 @@ class PeerSharingViewModel @Inject constructor(
                 PeerEntity.ROLE_SEND_RECEIVE -> if (enabled) PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
                 else -> peer.locationRole
             }
-            peerDao.upsertPeer(peer.copy(locationRole = newRole))
+            peerDao.setLocationRole(currentPeerId, newRole)
             val nowSharing = newRole == PeerEntity.ROLE_SEND || newRole == PeerEntity.ROLE_SEND_RECEIVE
             // Immediately command the peer to clear our stored location data when we revoke access,
             // so they don't continue to see a stale pin until heartbeat timeout.
             if (wasSharing && !nowSharing) {
                 peerManager.sendDeleteMyLocation(currentPeerId)
+                endTemporaryShare(configDao.getForPeer(currentPeerId))
+                liveViewRegistry.revoke(peer.publicKeyHex)
             }
             changeReporter.report(SupervisionChangeReporter.Areas.ROLE, peerName())
         }
@@ -435,6 +465,13 @@ class PeerSharingViewModel @Inject constructor(
             )
             changeReporter.report(SupervisionChangeReporter.Areas.TEMP_SHARE_START, peerName())
         }
+    }
+
+    /** Ends a running temporary share as a side effect of pausing or no longer sharing. */
+    private suspend fun endTemporaryShare(existing: PeerSharingConfig?) {
+        if (existing?.temporaryShareEndsAtEpochSeconds == null) return
+        configDao.setTemporaryShareEndsAt(currentPeerId, null)
+        workManager.cancelUniqueWork(TempShareExpiryWorker.workNameFor(currentPeerId))
     }
 
     /**

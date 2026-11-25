@@ -18,6 +18,7 @@ import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.dao.PendingRequestDao
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.messaging.MediaCache
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
@@ -52,8 +53,16 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val settings = prefs.settings.first()
-        val configs = configDao.getAll()
-        val peerMap = peerDao.getAllPeers().first().associateBy { it.deviceId }
+        val peers = peerDao.getAllPeers().first()
+        // Every contact, not only those with a stored settings row: the row is created the
+        // first time any per-contact setting is changed, so a contact never touched has none.
+        // The screens show the entity defaults (location kept 30 days) for such a contact, and
+        // looping over stored rows alone meant that default was never actually enforced.
+        val storedConfigs = configDao.getAll().associateBy { it.peerDeviceId }
+        val configs = peers.map { peer ->
+            storedConfigs[peer.deviceId] ?: PeerSharingConfig(peerDeviceId = peer.deviceId)
+        }
+        val peerMap = peers.associateBy { it.deviceId }
 
         // Age out stale incoming track requests (never actioned) regardless of retention
         // settings, so the table and its notifications can't grow without bound from a
@@ -121,7 +130,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
                     )
                 }
             }
-            Log.d(TAG, "Remote purge requests sent to ${configs.size} peers")
+            Log.d(TAG, "Remote purge requests checked for ${configs.size} peers")
 
             Result.success()
         } catch (e: Exception) {

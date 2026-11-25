@@ -98,6 +98,11 @@ class PeerManager @Inject constructor(
         geofenceAssignmentDao.deleteForTrackedDevice(deviceId)
         proximityAlertDao.deleteForPeer(deviceId)
         pendingRequestDao.deleteByPubkey(deviceId)
+        com.locapeer.subscriber.PeerQuietPeriods.clear(context, deviceId)
+        prefs.setSupervisionInviteAwaiting(deviceId, false)
+        // Their messages, alerts and requests would otherwise stay in the tray, opening a
+        // contact that no longer exists.
+        com.locapeer.util.AppNotifications.cancelForContact(context, deviceId)
         // Drop any decrypted media we cached to view/play from this contact.
         MediaCache.clearDecryptedMedia(context)
         // Purge the engines' in-memory mirrors (inside/outside, nearby state,

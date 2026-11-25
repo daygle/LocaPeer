@@ -1025,4 +1025,10 @@
     <string name="chat_react_with">%1$s உடன் எதிர்வினையாற்று</string>
     <string name="chat_remove_reaction">எதிர்வினையை நீக்கு</string>
     <string name="chat_cd_reaction_from_contact">தொடர்பிலிருந்து எதிர்வினை</string>
+    <string name="peer_temp_share_sharing_off">இருப்பிடப் பகிர்வு முடக்கப்பட்டுள்ளது, எனவே தற்காலிகப் பகிர்வின்போதும் %1$s-க்கு எதுவும் அனுப்பப்படாது.</string>
+    <string name="peer_send_needs_receive">%1$s அவர்களின் ஆப்ஸில் உங்கள் இருப்பிடத்தைப் பெற அனுமதிக்க வேண்டும், இல்லையெனில் உங்கள் புதுப்பிப்புகள் புறக்கணிக்கப்படும்.</string>
+    <string name="perm_exact_alarm_title">அலாரங்களும் நினைவூட்டல்களும்</string>
+    <string name="perm_exact_alarm_granted">மொபைல் செயலற்ற நிலையிலும் புதுப்பிப்புகள் சரியான நேரத்தில் வரும்</string>
+    <string name="perm_exact_alarm_denied">அனுமதிக்கத் தட்டவும், அப்போது மொபைல் செயலற்ற நிலையிலும் புதுப்பிப்புகள் சரியான நேரத்தில் வரும்</string>
+    <string name="peer_supervise_awaiting">அழைப்பு அனுப்பப்பட்டது. %1$s தங்கள் சாதனத்தில் ஏற்கக் காத்திருக்கிறது</string>
 </resources>

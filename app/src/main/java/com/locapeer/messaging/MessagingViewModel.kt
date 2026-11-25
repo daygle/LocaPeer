@@ -166,7 +166,6 @@ class MessagingViewModel @Inject constructor(
     private val lastTypingSentAt = mutableMapOf<String, Long>()
     private var myListeningPubkey: String? = null
     private var eventsJob: Job? = null
-    private var okEventsJob: Job? = null
 
     @SuppressLint("MissingPermission")
     fun sendLocation(peerId: String) {
@@ -381,11 +380,13 @@ class MessagingViewModel @Inject constructor(
     }
 
     /** Group messages share the 1:1 thread query because peerId holds the circle id. */
-    fun getGroupMessages(circleId: String) = messageDao.getMessagesForPeer(circleId)
+    fun getGroupMessages(circleId: String, limit: Int) = messageDao.getRecentMessagesForPeer(circleId, limit)
 
     fun observeCircle(circleId: String): Flow<CircleEntity?> = circleDao.observeCircle(circleId)
 
     fun markReadGroup(circleId: String) {
+        // Read on screen, so the system notification for it is done with too.
+        com.locapeer.util.AppNotifications.cancelConversation(context, circleId)
         viewModelScope.launch { messageDao.markAllReadForGroup(circleId) }
     }
 
@@ -607,7 +608,25 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
-    fun getMessages(peerId: String) = messageDao.getMessagesForPeer(peerId)
+    /** The newest [limit] messages of a 1:1 thread, without media bytes (see [loadMedia]). */
+    fun getMessages(peerId: String, limit: Int) = messageDao.getRecentMessagesForPeer(peerId, limit)
+
+    /**
+     * Media bytes of recently shown bubbles, keyed by message id and bounded by size (characters
+     * of Base64), so scrolling back over a photo doesn't re-read it from the database each time.
+     * Entries for deleted messages are dropped with them; the whole cache goes with the screen.
+     */
+    private val mediaCache = object : android.util.LruCache<String, String>(MEDIA_CACHE_CHARS) {
+        override fun sizeOf(key: String, value: String): Int = value.length
+    }
+
+    /** Synchronous cache peek for a bubble's first frame. */
+    fun cachedMedia(messageId: String): String? = mediaCache.get(messageId)
+
+    /** A message's media bytes: from the cache, else read once from the database. */
+    suspend fun loadMedia(messageId: String): String? =
+        mediaCache.get(messageId) ?: withContext(Dispatchers.IO) { messageDao.getMediaBase64(messageId) }
+            ?.also { mediaCache.put(messageId, it) }
 
     /**
      * Set (or clear, when [emoji] is null) this user's reaction on a message. The row updates
@@ -695,6 +714,7 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun deleteMessage(msg: MessageEntity) {
+        mediaCache.remove(msg.id)
         viewModelScope.launch {
             messageDao.delete(msg)
             // Reactions on the deleted row would otherwise linger as orphans.
@@ -762,6 +782,8 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun deleteConversation(peerId: String) {
+        com.locapeer.util.AppNotifications.cancelConversation(context, peerId)
+        mediaCache.evictAll()
         viewModelScope.launch {
             messageDao.deleteAllForPeer(peerId)
             // No reaction sweep here: `message_reactions` only ever holds circle rows, and a 1:1
@@ -782,6 +804,8 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun markRead(peerId: String) {
+        // Read on screen, so the system notification for it is done with too.
+        com.locapeer.util.AppNotifications.cancelConversation(context, peerId)
         viewModelScope.launch {
             val unread = messageDao.getUnreadFromPeer(peerId)
             messageDao.markAllReadForPeer(peerId)
@@ -796,6 +820,7 @@ class MessagingViewModel @Inject constructor(
      * that their messages were read - only opening the chat ([markRead]) sends receipts.
      */
     fun markReadMultiple(peerIds: List<String>) {
+        peerIds.forEach { com.locapeer.util.AppNotifications.cancelConversation(context, it) }
         viewModelScope.launch {
             peerIds.forEach { messageDao.markAllReadForPeer(it) }
         }
@@ -1133,12 +1158,13 @@ class MessagingViewModel @Inject constructor(
      * bytes are missing/corrupt or no installed app can open the type.
      */
     fun openFile(msg: MessageEntity) {
-        val base64 = msg.mediaBase64
-        if (base64.isNullOrBlank()) {
-            _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
-            return
-        }
         viewModelScope.launch {
+            // Chat rows are listed without their media bytes; fetch them for this file.
+            val base64 = msg.mediaBase64 ?: loadMedia(msg.id)
+            if (base64.isNullOrBlank()) {
+                _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
+                return@launch
+            }
             try {
                 val bytes = MediaUtils.decodeBase64(base64)
                 if (bytes == null) {
@@ -1255,12 +1281,8 @@ class MessagingViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
 
-        // Relay OK → SENDING → SENT (relay confirmed it received the event). Never regresses a
-        // message a recipient already acknowledged: see MessageDao.markSentByNostrEventId.
-        okEventsJob?.cancel()
-        okEventsJob = relayClient.okEvents
-            .onEach { confirmedEventId -> messageDao.markSentByNostrEventId(confirmedEventId) }
-            .launchIn(viewModelScope)
+        // Relay OKs (SENDING -> SENT) are applied by the always-on HeartbeatReceiver, so they
+        // land even when this screen is gone by the time a queued message is flushed.
     }
 
     private fun processTypingEvent(event: NostrEvent) {
@@ -1326,6 +1348,7 @@ class MessagingViewModel @Inject constructor(
     }
 
     override fun onCleared() {
+        mediaCache.evictAll()
         // Discards (and deletes) an in-progress recording instead of leaking its temp file.
         cancelRecording()
         releaseRecorder()
@@ -1335,6 +1358,9 @@ class MessagingViewModel @Inject constructor(
         }
     }
 }
+
+/** Media cache bound for [MessagingViewModel], in Base64 characters (about 8 MB of memory). */
+private const val MEDIA_CACHE_CHARS = 4_000_000
 
 /** How old (by the sender's clock) a typing event may be and still show the indicator. */
 private const val TYPING_FRESHNESS_S = 30L

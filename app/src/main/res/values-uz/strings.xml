@@ -1025,4 +1025,10 @@
     <string name="chat_react_with">%1$s bilan reaksiya bildirish</string>
     <string name="chat_remove_reaction">Reaksiyani olib tashlash</string>
     <string name="chat_cd_reaction_from_contact">Kontakt reaksiyasi</string>
+    <string name="peer_temp_share_sharing_off">Joylashuvni ulashish o‘chirilgan, shuning uchun vaqtinchalik ulashish paytida ham %1$s ga hech narsa yuborilmaydi.</string>
+    <string name="peer_send_needs_receive">%1$s ham o‘z ilovasida joylashuvingizni qabul qilishga ruxsat berishi kerak, aks holda yangilanishlaringiz e’tiborsiz qoldiriladi.</string>
+    <string name="perm_exact_alarm_title">Signallar va eslatmalar</string>
+    <string name="perm_exact_alarm_granted">Telefon nofaol bo‘lganda ham yangilanishlar o‘z vaqtida keladi</string>
+    <string name="perm_exact_alarm_denied">Ruxsat berish uchun bosing, shunda telefon nofaol bo‘lganda ham yangilanishlar o‘z vaqtida keladi</string>
+    <string name="peer_supervise_awaiting">Taklif yuborildi. %1$s o‘z qurilmasida qabul qilishi kutilmoqda</string>
 </resources>

@@ -204,7 +204,8 @@ class SettingsViewModel @Inject constructor(
     private val changeReporter: com.locapeer.supervised.SupervisionChangeReporter,
     private val workManager: WorkManager,
     private val appDatabase: com.locapeer.data.AppDatabase,
-    private val proximityStateStore: com.locapeer.proximity.ProximityStateStore
+    private val proximityStateStore: com.locapeer.proximity.ProximityStateStore,
+    private val pauseNotifier: com.locapeer.sharing.SharingPauseNotifier,
 ) : ViewModel() {
 
     val unlockState = supervisedModeManager.unlockState
@@ -273,6 +274,13 @@ class SettingsViewModel @Inject constructor(
 
     fun setHeartbeatEnabled(enabled: Boolean) {
         viewModelScope.launch {
+            // While supervised, location must keep reaching the supervisor: pause, the share
+            // switch, the schedule and precision toward them are locked, and this switch stops
+            // location to everyone, so it is locked the same way (a restored backup included).
+            if (!enabled && prefs.settings.first().supervisionActive) {
+                Log.w(TAG, "Refusing to turn location sharing off while supervised")
+                return@launch
+            }
             if (enabled) {
                 val hasLocation = context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
                                  context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED
@@ -283,6 +291,13 @@ class SettingsViewModel @Inject constructor(
             }
 
             prefs.setHeartbeatEnabled(enabled)
+            // Contacts we share with (paused ones already know) can hold back their
+            // missed-update alerts while sharing is off.
+            val paused = sharingConfigDao.getAll().filter { !it.sharingEnabled }.mapTo(HashSet()) { it.peerDeviceId }
+            pauseNotifier.notify(
+                peerDao.getPeersReceivingMyLocation().first().map { it.deviceId }.filter { it !in paused },
+                if (enabled) 0L else com.locapeer.sharing.SharingSchedule.QUIET_INDEFINITELY
+            )
             if (enabled) {
                 val intent = Intent(context, HeartbeatService::class.java)
                 context.startForegroundService(intent)
@@ -932,7 +947,7 @@ class SettingsViewModel @Inject constructor(
 
     fun requestSettingsUnlock() = supervisedModeManager.requestAccess()
 
-    fun resetUnlockState() = supervisedModeManager.reset()
+    fun resetUnlockState() = supervisedModeManager.resetUnlock()
 
     fun updateIntervals(
         stationary: Int? = null,

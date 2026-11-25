@@ -61,3 +61,13 @@ class AdaptiveIntervalManager @Inject constructor(
         MotionState.UNKNOWN -> settings.walkingIntervalMinutes * 60_000L
     }
 }
+
+/**
+ * How long until the next normal (cadence) heartbeat is due, given when the last one was
+ * written ([lastCadenceElapsedMs], 0 = none yet). 0 when it is due now or overdue. The pulse
+ * loop uses it so a pulse that lands early - e.g. the one that finds a live-view session just
+ * ended - waits out the remainder instead of sending every contact an off-cadence heartbeat.
+ */
+internal fun remainingCadenceMs(lastCadenceElapsedMs: Long, nowElapsedMs: Long, cadenceMs: Long): Long =
+    if (lastCadenceElapsedMs == 0L) 0L
+    else (cadenceMs - (nowElapsedMs - lastCadenceElapsedMs)).coerceAtLeast(0L)

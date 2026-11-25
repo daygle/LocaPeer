@@ -1,6 +1,5 @@
 package com.locapeer.subscriber
 
-import android.app.NotificationChannel
 import com.locapeer.util.backgroundScope
 import com.locapeer.util.normalizeHexColor
 import android.app.NotificationManager
@@ -94,8 +93,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val TAG = "HeartbeatReceiver"
-private const val CHANNEL_ID_ALERTS = "locapeer_alerts"
-private const val CHANNEL_ID_MESSAGES = "locapeer_messages"
+private const val CHANNEL_ID_ALERTS = com.locapeer.util.AppNotifications.CHANNEL_ALERTS
+private const val CHANNEL_ID_MESSAGES = com.locapeer.util.AppNotifications.CHANNEL_MESSAGES
 private const val SUB_ID = "lp-hb"
 private const val SUB_ID_CONTROL = "lp-ctrl"
 private const val SUB_ID_HB_CATCHUP = "lp-hb-catchup"
@@ -194,7 +193,7 @@ private const val UNKNOWN_REGISTER_NOTIF_TAG = "supervised_register_unknown"
 // peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
 // overwrite each other's notification.
 private const val NOTIF_ID_SOS = 1
-private const val NOTIF_ID_MESSAGE = 10000
+private const val NOTIF_ID_MESSAGE = com.locapeer.util.AppNotifications.ID_MESSAGE
 const val NOTIF_ID_TRACK_REQUEST = 20000
 private const val NOTIF_ID_ACCEPT = 30000
 private const val NOTIF_ID_DECLINE = 40000
@@ -222,6 +221,16 @@ internal fun isCurrentSupervisionRegistrationResponse(
 ): Boolean = pending &&
     eventCreatedAt >= requestedAt - SUPERVISION_RESPONSE_SKEW_S &&
     eventCreatedAt >= now - (if (accepted) MAX_CATCHUP_SECONDS else SUPERVISION_EVENT_MAX_AGE_S)
+
+/**
+ * True when a supervision accept from [senderPubkey] matches nothing on this device: it is not the
+ * supervisor this device has requested (pending) or is under (active). A re-delivered accept from
+ * the current supervisor is not stray; an accept for a request since withdrawn, or from someone
+ * other than the current supervisor, is.
+ */
+internal fun isStraySupervisionAccept(
+    supervisorPubkey: String, pending: Boolean, active: Boolean, senderPubkey: String
+): Boolean = !(supervisorPubkey.isNotEmpty() && supervisorPubkey.equals(senderPubkey, ignoreCase = true) && (pending || active))
 
 /**
  * An answer may only decide the request it names. The supervisor echoes the request time it
@@ -363,6 +372,7 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACKING_ALERT,
     NostrEventKind.CIRCLE_LEAVE,
     NostrEventKind.CIRCLE_DISBAND,
+    NostrEventKind.SHARING_PAUSED,
     NostrEventKind.EVENT_DELETION
 )
 
@@ -387,6 +397,7 @@ class HeartbeatReceiver @Inject constructor(
     private val supervisionApprovalManager: SupervisionApprovalManager,
     private val contactAddApprovalManager: ContactAddApprovalManager,
     private val supervisionResponseSender: SupervisionResponseSender,
+    private val supervisionInviteResponder: com.locapeer.supervised.SupervisionInviteResponder,
     private val peerManager: PeerManager,
     private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry
 ) {
@@ -473,11 +484,24 @@ class HeartbeatReceiver @Inject constructor(
     private var flushFailures = 0
 
     fun start() {
-        createAlertChannel()
-        createMessageChannel()
+        com.locapeer.util.AppNotifications.ensureChannels(context)
+        // Relay OK -> a sent 1:1 message moves SENDING -> SENT (never regressing a delivered or
+        // read one; see MessageDao.markSentByNostrEventId). Collected here, always on, rather than
+        // only while a chat screen is alive: a message sent offline is usually flushed from the
+        // outbox in the background, and its OK (a non-replayed flow) would otherwise be dropped,
+        // leaving the message on "sending" for good.
+        relayClient.okEvents
+            .onEach { eventId ->
+                try {
+                    messageDao.markSentByNostrEventId(eventId)
+                } catch (e: Exception) {
+                    Log.w(TAG, "Failed to mark message sent", e)
+                }
+            }
+            .launchIn(scope)
         // Channel names are user-visible: rebuild them when the app language changes.
         com.locapeer.util.AppLocale.changes.drop(1)
-            .onEach { createAlertChannel(); createMessageChannel() }
+            .onEach { com.locapeer.util.AppNotifications.ensureChannels(context) }
             .launchIn(scope)
         // Keep the left-circle cache warm so the DM hot path can suppress left circles without a
         // DataStore read per message.
@@ -557,6 +581,7 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.CIRCLE_LEAVE,
                         NostrEventKind.CIRCLE_DISBAND,
                         NostrEventKind.LIVE_VIEW_REQUEST,
+                        NostrEventKind.SHARING_PAUSED,
                         NostrEventKind.EVENT_DELETION
                     ),
                     pTags = listOf(pubHex),
@@ -658,6 +683,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.CIRCLE_LEAVE -> processCircleLeave(event)
                     NostrEventKind.CIRCLE_DISBAND -> processCircleDisband(event)
                     NostrEventKind.LIVE_VIEW_REQUEST -> scope.launch { processLiveViewRequest(event) }
+                    NostrEventKind.SHARING_PAUSED -> processSharingPaused(event)
                     NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }
               } catch (e: Exception) {
@@ -725,7 +751,6 @@ class HeartbeatReceiver @Inject constructor(
         // live updates can flow, so there is no lease to grant - and nothing to tell the
         // user ("watched live") that wouldn't be false.
         if (!settings.heartbeatEnabled) return
-        if (!com.locapeer.sharing.SharingSchedule.isActive(settings.globalScheduleRules)) return
         val peer = peerDao.getPeer(event.pubkey) ?: return
         // Only meaningful for a contact we send location to; boosting for anyone else
         // would change nothing they can see.
@@ -735,8 +760,17 @@ class HeartbeatReceiver @Inject constructor(
         // A per-contact pause or inactive per-contact schedule overrides everything, exactly
         // as it does for heartbeats (which would skip this contact anyway).
         val cfg = sharingConfigDao.getForPeer(peer.deviceId)
-        if (cfg?.sharingEnabled == false) return
-        if (cfg != null) {
+        // Outside the overall schedule only a running temporary share keeps location flowing
+        // to this contact, matching the heartbeat sender.
+        val nowSec = System.currentTimeMillis() / 1000
+        val tempShareRunning = cfg?.temporaryShareEndsAtEpochSeconds?.let { it > nowSec } == true
+        if (!tempShareRunning && !com.locapeer.sharing.SharingSchedule.isActive(settings.globalScheduleRules)) return
+        // The supervisor is exempt from both, matching the heartbeat sender.
+        val toSupervisor = com.locapeer.sharing.isActiveSupervisor(
+            settings.supervisionActive, settings.supervisorPubkey, peer.publicKeyHex
+        )
+        if (!toSupervisor && cfg?.sharingEnabled == false) return
+        if (!toSupervisor && cfg != null) {
             val (dayIndex, minute) = com.locapeer.sharing.SharingSchedule.nowDayMinute()
             val active = com.locapeer.sharing.SharingSchedule.isPeerSharingActive(
                 cfg.scheduleRules(), dayIndex, minute,
@@ -934,7 +968,12 @@ class HeartbeatReceiver @Inject constructor(
             // Buffer the insert; the batch flusher persists it transactionally so a
             // catch-up burst produces a handful of Room invalidations, not hundreds.
             enqueueHeartbeat(entity)
+            // A planned gap the sender announced (0 = none, also from older senders), for the
+            // missed-update alert. Older catch-up heartbeats can't overwrite a newer entry.
+            PeerQuietPeriods.record(context, canonicalDeviceId, payload.quietUntilMs, timestampMs)
             if (isFresh) {
+                // They're updating again: a "hasn't updated" alert for them is now wrong.
+                notificationManager.cancel(canonicalDeviceId, NOTIF_ID_MISSED_HEARTBEAT)
                 if (isSos) sendSosNotification(canonicalDeviceId, broadcaster.displayName, payload)
                 // Alerts name the contact as saved locally, not by the payload's
                 // self-reported (peer-controlled) display name.
@@ -1083,10 +1122,19 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private fun sendSosNotification(senderPubkey: String, name: String, payload: HeartbeatPayload) {
+        // Opens the map on the person in trouble, not the app's start screen. The unique data
+        // URI keeps each sender's PendingIntent separate (extras don't take part in matching).
         val intent = Intent(context, MainActivity::class.java).apply {
             setPackage(context.packageName)
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            data = "locapeer-notif://sos/$senderPubkey".toUri()
+            putExtra("navigateTo", "map")
+            putExtra("highlightPeer", senderPubkey)
         }
-        val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pi = PendingIntent.getActivity(
+            context, "sos:$senderPubkey".hashCode(), intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
         // Public (device-lock-screen) version: keep the urgency - who is in trouble - but
         // drop the raw coordinates from the private text, which the full notification below
         // still carries once the phone is unlocked.
@@ -1429,13 +1477,32 @@ class HeartbeatReceiver @Inject constructor(
         messageDao.markDeliveredForPeer(payload.eventId, event.pubkey)
     }
 
+    /** Kind 1072: the contact stopped (or resumed) sending us their location on purpose. */
+    private suspend fun processSharingPaused(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<com.locapeer.sharing.SharingPausePayload>(plaintext)
+        } catch (e: Exception) { return }
+        if (payload.deviceId != event.pubkey) return
+        // The signed created_at orders this against heartbeats; clamped like other sender clocks.
+        val announcedAtMs = minOf(event.createdAt * 1000L, System.currentTimeMillis())
+        PeerQuietPeriods.record(context, event.pubkey, payload.quietUntilMs, announcedAtMs)
+    }
+
     /**
      * Emoji reaction (kind 1070). Only a known contact may react, a circle reaction only applies
      * while the sender is still a member of that circle, and the target row must belong to the
      * thread the payload claims. An empty emoji clears the reaction.
      */
     private suspend fun processReaction(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return
+        val sender = peerDao.getPeer(event.pubkey) ?: return
+        // A contact with messaging turned off has their messages hidden and their circle
+        // messages dropped; their reactions must not show up either.
+        if (!sender.messagingEnabled) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -1535,6 +1602,8 @@ class HeartbeatReceiver @Inject constructor(
                 }.getOrNull()
             }
             autoAcceptRegistration(peer, requestedAt)
+            // The device accepted our invite (its register request is that acceptance).
+            prefs.setSupervisionInviteAwaiting(event.pubkey, false)
             return
         }
         // Suppress relay retransmissions if the notification is still active
@@ -1637,6 +1706,13 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processRegisterResponse(event: NostrEvent, accepted: Boolean) {
         val settings = prefs.settings.first()
+        if (accepted && isStraySupervisionAccept(
+                settings.supervisorPubkey, settings.supervisionPending, settings.supervisionActive, event.pubkey
+            )
+        ) {
+            releaseStraySupervisionAccept(event)
+            return
+        }
         if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
         if (!isCurrentSupervisionRegistrationResponse(
                 settings.supervisionPending, settings.supervisionRequestedAt,
@@ -1691,6 +1767,27 @@ class HeartbeatReceiver @Inject constructor(
                 .build()
             notificationManager.notify("supervised_register", NOTIF_ID_SUPERVISED_REGISTER, notification)
         }
+    }
+
+    /**
+     * A contact accepted a supervision request this device no longer has: it was withdrawn
+     * before they answered, or this device has since moved to another supervisor. Their app
+     * now treats the device as supervised (forced missed-update alerts, approval dialogs) while
+     * this side is not. Decline it in-band (kind 1062, accepted=false), which releases that
+     * claim on their side. Only a fresh accept naming this device, from a known contact, counts.
+     */
+    private suspend fun releaseStraySupervisionAccept(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - SUPERVISION_EVENT_MAX_AGE_S) return
+        peerDao.getPeer(event.pubkey) ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val payload = try {
+            json.decodeFromString<SupervisedRegisterResponsePayload>(
+                crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            )
+        } catch (e: Exception) { return }
+        if (payload.devicePubkeyHex != keyManager.ensureKeypair().second) return
+        Log.i(TAG, "Declining a supervision accept from ${event.pubkey}: no matching request")
+        supervisionInviteResponder.respond(event.pubkey, accepted = false)
     }
 
     // ── Supervised-mode state changes (kinds 1061-1066) ─────────────────────────────
@@ -1786,6 +1883,7 @@ class HeartbeatReceiver @Inject constructor(
         if (!payload.accepted) {
             sharingConfigDao.setIsMySupervised(event.pubkey, false)
             sharingConfigDao.setNotifyOnMissedHeartbeat(event.pubkey, false)
+            prefs.setSupervisionInviteAwaiting(event.pubkey, false)
             Log.i(TAG, "Supervision invite declined by ${event.pubkey}")
         }
     }
@@ -2033,6 +2131,8 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun sendGroupMessageNotification(circleName: String, senderName: String, preview: String, circleId: String) {
         if (!shouldSendAnyMessageNotification()) return
         if (prefs.mutedConversationIds.first().contains(AppPreferences.circleMuteKey(circleId))) return
+        // The circle's chat is on screen: the message is already visible (and marked read).
+        if (com.locapeer.util.AppNotifications.visibleConversation == circleId) return
         // Deep-link straight into the circle chat (not the Messages list) so tapping a circle
         // message opens the group thread - where a reply routes through the circle fan-out to
         // every member - and never the 1:1 chat with the sender. "openCircle" carries the circle
@@ -2043,6 +2143,9 @@ class HeartbeatReceiver @Inject constructor(
             putExtra("openCircle", circleId)
             putExtra("circleName", circleName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            // Unique per circle: extras don't take part in PendingIntent matching, so a request
+            // code collision alone would route one circle's tap into another.
+            data = "locapeer-notif://groupchat/$circleId".toUri()
         }
         val pi = PendingIntent.getActivity(
             context, circleId.hashCode(), intent,
@@ -2067,12 +2170,16 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun sendBackgroundMessageNotification(senderName: String, preview: String, peerId: String) {
         if (!shouldSendAnyMessageNotification()) return
         if (prefs.mutedConversationIds.first().contains(AppPreferences.peerMuteKey(peerId))) return
+        // The chat is on screen: the message is already visible (and marked read).
+        if (com.locapeer.util.AppNotifications.visibleConversation == peerId) return
         val intent = Intent(context, MainActivity::class.java).apply {
             setPackage(context.packageName)
             putExtra("navigateTo", "chat")
             putExtra("openChat", peerId)
             putExtra("peerName", senderName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            // Unique per contact; see sendGroupMessageNotification.
+            data = "locapeer-notif://chat/$peerId".toUri()
         }
         val pi = PendingIntent.getActivity(context, peerId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_MESSAGES)
@@ -2543,34 +2650,5 @@ class HeartbeatReceiver @Inject constructor(
             .setAutoCancel(true)
             .build()
         notificationManager.notify(pubkey, NOTIF_ID_DECLINE, notification)
-    }
-
-    private fun createAlertChannel() {
-        val channel = NotificationChannel(
-            CHANNEL_ID_ALERTS,
-            context.getString(R.string.channel_name_alerts),
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply {
-            description = context.getString(R.string.channel_desc_alerts)
-            // Redact contact names / coordinates on the device lock screen by default.
-            // Takes effect on new installs (Android ignores channel-property changes after
-            // creation); the per-notification setVisibility on the sensitive alerts covers
-            // existing installs too. A locked phone showing a peer's location or an SOS's
-            // coordinates is exactly what a location app must not do.
-            lockscreenVisibility = android.app.Notification.VISIBILITY_PRIVATE
-        }
-        notificationManager.createNotificationChannel(channel)
-    }
-
-    private fun createMessageChannel() {
-        val channel = NotificationChannel(
-            CHANNEL_ID_MESSAGES,
-            context.getString(R.string.channel_name_messages),
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply {
-            description = context.getString(R.string.channel_desc_messages)
-            lockscreenVisibility = android.app.Notification.VISIBILITY_PRIVATE
-        }
-        notificationManager.createNotificationChannel(channel)
     }
 }

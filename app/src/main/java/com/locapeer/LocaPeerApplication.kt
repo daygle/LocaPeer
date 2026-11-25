@@ -80,6 +80,10 @@ class LocaPeerApplication : Application(), Configuration.Provider {
         // Re-register the Application itself rather than its base context, so later lookups
         // hold an application-scoped context.
         AppLocale.attach(this)
+        // Before anything can post: a worker or receiver running ahead of the background
+        // start-up below would otherwise post to a channel that doesn't exist yet, which
+        // Android drops silently.
+        com.locapeer.util.AppNotifications.ensureChannels(this)
         // Initialise the lock state from the persisted snapshot and start the
         // ProcessLifecycleOwner observer so the foreground/background book-keeping
         // works for BiometricPrompt re-locking. Done synchronously here so the first
