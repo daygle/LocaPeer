@@ -25,6 +25,12 @@ import org.robolectric.annotation.GraphicsMode
  *
  * Re-record after an intended layout change with
  * `./gradlew :app:testDebugUnitTest -Proborazzi.test.record=true`, then review the changed PNGs.
+ *
+ * The goldens were recorded on Linux x86_64 (JDK 25, Robolectric 4.18.1), which is what CI runs, so
+ * an exact match is expected there. Robolectric rasterises through its own bundled Skia build, and
+ * those builds are not pixel-identical across operating systems: a failure on macOS points at the
+ * renderer rather than at the layout. Compare the diff Roborazzi writes under
+ * app/build/outputs/roborazzi/ before re-recording, and re-record only for an intended change.
  */
 @RunWith(AndroidJUnit4::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
