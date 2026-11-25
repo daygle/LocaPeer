@@ -2,7 +2,9 @@ package com.locapeer.invite
 
 import android.util.Log
 import android.util.Size
+import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.CameraState
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
@@ -19,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.BinaryBitmap
@@ -65,6 +68,9 @@ internal fun QrScannerView(
         val analysisExecutor = Executors.newSingleThreadExecutor()
         val providerFuture = ProcessCameraProvider.getInstance(context)
         val disposed = AtomicBoolean(false)
+        val reportedUnavailable = AtomicBoolean(false)
+        var boundCamera: Camera? = null
+        var cameraStateObserver: Observer<CameraState>? = null
 
         providerFuture.addListener({
             if (disposed.get()) return@addListener
@@ -104,7 +110,7 @@ internal fun QrScannerView(
                     )
                 }
 
-            runCatching {
+            val camera = runCatching {
                 provider.unbindAll()
                 provider.bindToLifecycle(
                     lifecycleOwner,
@@ -112,16 +118,35 @@ internal fun QrScannerView(
                     preview,
                     analysis
                 )
-            }.onFailure {
+            }.getOrElse {
                 Log.w(TAG, "QR camera unavailable", it)
                 mainExecutor.execute { currentOnCameraUnavailable() }
+                return@addListener
             }
+
+            // bindToLifecycle only throws for synchronous configuration problems. A camera that
+            // another app already holds, or that the device refuses to open, fails later and is
+            // reported as a camera-state error; without watching for it the preview stays black
+            // and the user never learns why.
+            val observer = Observer<CameraState> { state ->
+                val error = state.error
+                if (error != null && reportedUnavailable.compareAndSet(false, true)) {
+                    Log.w(TAG, "QR camera failed to open (code ${error.code})")
+                    currentOnCameraUnavailable()
+                }
+            }
+            boundCamera = camera
+            cameraStateObserver = observer
+            camera.cameraInfo.cameraState.observeForever(observer)
         }, mainExecutor)
 
         onDispose {
             // The provider future can still be pending here; the flag stops it from binding a
             // camera for a screen that no longer exists.
             disposed.set(true)
+            cameraStateObserver?.let { observer ->
+                boundCamera?.cameraInfo?.cameraState?.removeObserver(observer)
+            }
             if (providerFuture.isDone) runCatching { providerFuture.get().unbindAll() }
             analysisExecutor.shutdown()
         }
