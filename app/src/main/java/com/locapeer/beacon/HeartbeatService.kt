@@ -91,6 +91,9 @@ private const val PULSE_BACKSTOP_SLACK_MS = 90_000L
  * keeps exact alarms firing at short cadence indefinitely.
  */
 private const val DOZE_BACKSTOP_MIN_DELAY_MS = 300_000L
+/** A pulse due within this much of the cadence still goes out, rather than re-posting a
+ *  near-instant wait for the last couple of seconds (timer and scheduling jitter). */
+private const val CADENCE_EARLY_TOLERANCE_MS = 2_000L
 /** Re-check cadence while suspended when the schedule can never match (all-empty
  *  day masks), where there is no next-window time to sleep towards. */
 private const val NEVER_ACTIVE_RECHECK_MS = 3_600_000L
@@ -215,6 +218,9 @@ class HeartbeatService : LifecycleService() {
     // changes only the stationary poll (not the cadence) still rebuilds the request.
     private var appliedArConfirmsStill = false
     @Volatile private var lastPulseElapsedMs = 0L
+    /** Set by [pulseNow]: the next pulse is a deliberate early one (first fix, confirmed
+     *  departure, SOS, fresh fix after a schedule gap) and must not wait out the cadence. */
+    @Volatile private var forcePulse = false
     /** Elapsed time of the last heartbeat written to local history (0 = none yet). While a
      *  contact is watching live, pulses run every few seconds but history is only written
      *  once the user's normal cadence has elapsed since this point. */
@@ -547,6 +553,9 @@ class HeartbeatService : LifecycleService() {
             // callbacks before this could be re-posted): without it one stale post
             // re-arms the self-rescheduling loop in a destroyed service.
             if (!isStarted) return
+            // Consumed by every run, so a forced pulse that ends early can't leak the flag.
+            val forced = forcePulse
+            forcePulse = false
 
             // Re-sample the inputs that can go stale with no event of their own, BEFORE
             // any early return: battery (previously only sampled deep inside a successful
@@ -608,6 +617,23 @@ class HeartbeatService : LifecycleService() {
             // GPS was stopped while off-schedule (restarting it arms the fresh-fix hold),
             // or its profile inputs changed above; rebuild the request either way.
             if (gpsSuspendedBySchedule || requestStale) updateLocationRequest()
+
+            // Keep normal heartbeats on the user's cadence. While a contact watches live the
+            // loop runs every few seconds, so the pulse that finds the last lease lapsed lands
+            // well inside the cadence interval; broadcasting it would send every contact (and
+            // history) an extra off-cadence heartbeat each time someone stops watching. Wait
+            // out the remainder instead. Deliberate early pulses (pulseNow) are exempt.
+            if (!forced && !isSos && !liveNow) {
+                val remaining = remainingCadenceMs(
+                    lastHistoryElapsedMs, SystemClock.elapsedRealtime(),
+                    intervalManager.cadenceIntervalMillis(currentSettings)
+                )
+                if (remaining > CADENCE_EARLY_TOLERANCE_MS) {
+                    handler.postDelayed(this, remaining)
+                    if (remaining >= DOZE_BACKSTOP_MIN_DELAY_MS) armDozeBackstop(remaining)
+                    return
+                }
+            }
 
             // While the fresh-fix hold is set the cached position predates the schedule
             // window and must not be broadcast; the location callback pulses as soon as
@@ -1147,6 +1173,7 @@ class HeartbeatService : LifecycleService() {
 
     /** Fire a heartbeat now and restart the pulse schedule from this moment. */
     private fun pulseNow() {
+        forcePulse = true
         handler.removeCallbacks(heartbeatRunnable)
         handler.post(heartbeatRunnable)
     }

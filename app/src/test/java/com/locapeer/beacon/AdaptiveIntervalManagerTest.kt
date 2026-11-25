@@ -187,4 +187,38 @@ class AdaptiveIntervalManagerTest {
             assertEquals(setOf("sam"), liveViewRegistry.viewersFlow().first())
         }
     }
+
+    @Test
+    fun `revoking the only viewer ends live mode at once`() {
+        liveViewRegistry.grant("viewer-pubkey")
+        assertTrue(manager.isLiveViewActive(allowBoost = true))
+        liveViewRegistry.revoke("viewer-pubkey")
+        assertFalse(manager.isLiveViewActive(allowBoost = true))
+        assertEquals(manager.cadenceIntervalMillis(settings), manager.getIntervalMillis(settings))
+    }
+
+    @Test
+    fun `revoking one viewer keeps another's live session`() {
+        liveViewRegistry.grant("a")
+        liveViewRegistry.grant("b")
+        liveViewRegistry.revoke("a")
+        assertEquals(setOf("b"), liveViewRegistry.activeViewers())
+    }
+
+    @Test
+    fun `a pulse landing early waits out the rest of the cadence`() {
+        // Last cadence heartbeat at t=100s, cadence 5 min, live session ended at t=160s.
+        assertEquals(240_000L, remainingCadenceMs(100_000L, 160_000L, 300_000L))
+    }
+
+    @Test
+    fun `a due or overdue cadence pulse goes out immediately`() {
+        assertEquals(0L, remainingCadenceMs(100_000L, 400_000L, 300_000L))
+        assertEquals(0L, remainingCadenceMs(100_000L, 900_000L, 300_000L))
+    }
+
+    @Test
+    fun `no cadence heartbeat yet means none is pending`() {
+        assertEquals(0L, remainingCadenceMs(0L, 5_000L, 300_000L))
+    }
 }

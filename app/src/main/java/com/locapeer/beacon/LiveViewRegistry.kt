@@ -76,6 +76,15 @@ class LiveViewRegistry @Inject constructor() {
             }
         }.distinctUntilChanged()
 
+    /**
+     * Ends [viewerPubkey]'s lease at once, for when we stop sharing with them (pause, share
+     * switched off): their live pulses would be withheld anyway, so the fast, high-accuracy
+     * GPS profile must not keep running until the lease would have lapsed on its own.
+     */
+    fun revoke(viewerPubkey: String) {
+        leases.remove(viewerPubkey)
+    }
+
     /** True when [viewerPubkey] holds an unexpired lease (is watching right now). */
     fun isViewing(viewerPubkey: String, now: Long = SystemClock.elapsedRealtime()): Boolean =
         (leases[viewerPubkey] ?: return false) > now

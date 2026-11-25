@@ -73,6 +73,7 @@ class PeerSharingViewModel @Inject constructor(
     private val endedSender: SupervisionEndedSender,
     private val inviteSender: SupervisionInviteSender,
     private val pauseNotifier: SharingPauseNotifier,
+    private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry,
 ) : ViewModel() {
 
     /** Display name of the peer this VM is bound to (for change summaries). */
@@ -130,7 +131,11 @@ class PeerSharingViewModel @Inject constructor(
             else configDao.upsert(defaultConfig().copy(sharingEnabled = enabled))
             // Pausing outranks a temporary share, so end it rather than keep counting down
             // (here and in Settings' active-shares list) while nothing is being sent.
-            if (!enabled) endTemporaryShare(existing)
+            if (!enabled) {
+                endTemporaryShare(existing)
+                // Stop any live session for them now rather than when its lease lapses.
+                peerDao.getPeer(currentPeerId)?.let { liveViewRegistry.revoke(it.publicKeyHex) }
+            }
             // Let the contact's app hold back its missed-update alert while paused.
             pauseNotifier.notify(
                 listOf(currentPeerId),
@@ -334,6 +339,7 @@ class PeerSharingViewModel @Inject constructor(
             if (wasSharing && !nowSharing) {
                 peerManager.sendDeleteMyLocation(currentPeerId)
                 endTemporaryShare(configDao.getForPeer(currentPeerId))
+                liveViewRegistry.revoke(peer.publicKeyHex)
             }
             changeReporter.report(SupervisionChangeReporter.Areas.ROLE, peerName())
         }
