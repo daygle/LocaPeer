@@ -697,7 +697,7 @@
     <string name="about_lib_room_desc">Lokalna baza danych</string>
     <string name="about_lib_sqlcipher_desc">Szyfrowanie bazy danych</string>
     <string name="about_lib_bouncycastle_desc">Kryptografia</string>
-    <string name="about_lib_secp256k1_desc">Podpisy na krzywych eliptycznych</string>
+    <string name="about_lib_secp256k1_desc">Podpisy krzywych eliptycznych</string>
     <string name="about_lib_zxing_desc">Skanowanie kodów QR</string>
     <string name="about_map_attribution">Dane mapy © autorzy OpenStreetMap</string>
 

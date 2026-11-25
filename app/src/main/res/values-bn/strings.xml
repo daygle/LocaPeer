@@ -671,7 +671,7 @@
     <string name="about_lib_room_desc">স্থানীয় ডেটাবেস</string>
     <string name="about_lib_sqlcipher_desc">ডেটাবেস এনক্রিপশন</string>
     <string name="about_lib_bouncycastle_desc">ক্রিপ্টোগ্রাফি</string>
-    <string name="about_lib_secp256k1_desc">উপবৃত্তীয় বক্ররেখার স্বাক্ষর</string>
+    <string name="about_lib_secp256k1_desc">উপবৃত্তীয় বক্র স্বাক্ষর</string>
     <string name="about_lib_zxing_desc">QR কোড স্ক্যানিং</string>
     <string name="about_map_attribution">ম্যাপ ডেটা © OpenStreetMap অবদানকারী</string>
 

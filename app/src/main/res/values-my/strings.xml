@@ -658,7 +658,7 @@
     <string name="about_lib_room_desc">စက်တွင်း ဒေတာဘေ့စ်</string>
     <string name="about_lib_sqlcipher_desc">ဒေတာဘေ့စ် စာဝှက်ခြင်း</string>
     <string name="about_lib_bouncycastle_desc">ကုဒ်ဝှက်ပညာ</string>
-    <string name="about_lib_secp256k1_desc">ဘဲဥပုံမျဉ်းကွေ့ လက်မှတ်များ</string>
+    <string name="about_lib_secp256k1_desc">ဘဲဥပုံမျဉ်းကွေ့ လက်မှတ်</string>
     <string name="about_lib_zxing_desc">QR ကုဒ် စကင်န်ဖတ်ခြင်း</string>
     <string name="about_map_attribution">မြေပုံဒေတာ © OpenStreetMap ပါဝင်ကူညီသူများ</string>
 
