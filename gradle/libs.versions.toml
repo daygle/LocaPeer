@@ -48,6 +48,8 @@ junit = "4.13.2"
 mockito = "5.24.0"
 androidxTestJunit = "1.3.0"
 androidxTestRunner = "1.7.0"
+robolectric = "4.18.1"
+roborazzi = "1.79.0"
 
 [libraries]
 # Hardened transitives
@@ -120,6 +122,13 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxTestJunit" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
+# JVM screenshot tests (AboutScreenScreenshotTest): Robolectric draws the real Compose screen
+# with its native graphics backend and Roborazzi compares the result with the golden PNGs.
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+roborazzi = { group = "io.github.takahirom.roborazzi", name = "roborazzi", version.ref = "roborazzi" }
+roborazzi-compose = { group = "io.github.takahirom.roborazzi", name = "roborazzi-compose", version.ref = "roborazzi" }
+compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
