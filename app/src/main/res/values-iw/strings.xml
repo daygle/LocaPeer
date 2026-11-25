@@ -682,6 +682,10 @@
     <string name="about_lib_compose_desc">מסגרת ממשק משתמש</string>
     <string name="about_lib_hilt_desc">הזרקת תלויות</string>
     <string name="about_lib_room_desc">מסד נתונים מקומי</string>
+    <string name="about_lib_sqlcipher_desc">הצפנת מסד הנתונים</string>
+    <string name="about_lib_bouncycastle_desc">קריפטוגרפיה</string>
+    <string name="about_lib_secp256k1_desc">חתימות בעקומה אליפטית</string>
+    <string name="about_lib_zxing_desc">סריקת קודי QR</string>
     <string name="about_map_attribution">נתוני מפה © תורמי OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

@@ -695,6 +695,10 @@
     <string name="about_lib_compose_desc">Фреймворк інтерфейсу</string>
     <string name="about_lib_hilt_desc">Впровадження залежностей</string>
     <string name="about_lib_room_desc">Локальна база даних</string>
+    <string name="about_lib_sqlcipher_desc">Шифрування бази даних</string>
+    <string name="about_lib_bouncycastle_desc">Криптографія</string>
+    <string name="about_lib_secp256k1_desc">Підписи на еліптичних кривих</string>
+    <string name="about_lib_zxing_desc">Сканування QR-кодів</string>
     <string name="about_map_attribution">Дані мап © учасники OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

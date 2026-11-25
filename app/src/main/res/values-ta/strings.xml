@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI கட்டமைப்பு</string>
     <string name="about_lib_hilt_desc">சார்பு ஊசி</string>
     <string name="about_lib_room_desc">உள்ளூர் தரவுத்தளம்</string>
+    <string name="about_lib_sqlcipher_desc">தரவுத்தள மறையாக்கம்</string>
+    <string name="about_lib_bouncycastle_desc">மறைகுறியியல்</string>
+    <string name="about_lib_secp256k1_desc">நீள்வட்ட வளைவு கையொப்பங்கள்</string>
+    <string name="about_lib_zxing_desc">QR குறியீடு ஸ்கேனிங்</string>
     <string name="about_map_attribution">வரைபடத் தரவு © OpenStreetMap பங்களிப்பாளர்கள்</string>
 
     <!-- ── அறிவிப்புகள் ──────────────────────────────────────────────────── -->

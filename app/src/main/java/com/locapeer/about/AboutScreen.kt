@@ -107,7 +107,11 @@ fun AboutScreen(
                         "OkHttp" to stringResource(R.string.about_lib_okhttp_desc),
                         "Jetpack Compose" to stringResource(R.string.about_lib_compose_desc),
                         "Hilt" to stringResource(R.string.about_lib_hilt_desc),
-                        "Room" to stringResource(R.string.about_lib_room_desc)
+                        "Room" to stringResource(R.string.about_lib_room_desc),
+                        "SQLCipher" to stringResource(R.string.about_lib_sqlcipher_desc),
+                        "Bouncy Castle" to stringResource(R.string.about_lib_bouncycastle_desc),
+                        "secp256k1" to stringResource(R.string.about_lib_secp256k1_desc),
+                        "ZXing" to stringResource(R.string.about_lib_zxing_desc)
                     ).forEach { (lib, desc) ->
                         Row(
                             modifier = Modifier.fillMaxWidth(),

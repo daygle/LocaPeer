@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI ಫ್ರೇಮ್‌ವರ್ಕ್</string>
     <string name="about_lib_hilt_desc">ಡಿಪೆಂಡೆನ್ಸಿ ಇಂಜೆಕ್ಷನ್</string>
     <string name="about_lib_room_desc">ಸ್ಥಳೀಯ ಡೇಟಾಬೇಸ್</string>
+    <string name="about_lib_sqlcipher_desc">ಡೇಟಾಬೇಸ್ ಎನ್‌ಕ್ರಿಪ್ಷನ್</string>
+    <string name="about_lib_bouncycastle_desc">ಕ್ರಿಪ್ಟೋಗ್ರಫಿ</string>
+    <string name="about_lib_secp256k1_desc">ಎಲಿಪ್ಟಿಕ್ ಕರ್ವ್ ಸಹಿಗಳು</string>
+    <string name="about_lib_zxing_desc">QR ಕೋಡ್ ಸ್ಕ್ಯಾನಿಂಗ್</string>
     <string name="about_map_attribution">ನಕ್ಷೆ ಡೇಟಾ © OpenStreetMap ಕೊಡುಗೆದಾರರು</string>
 
     <!-- ── ಅಧಿಸೂಚನೆಗಳು ──────────────────────────────────────────────────── -->

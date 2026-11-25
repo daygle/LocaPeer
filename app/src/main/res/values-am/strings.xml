@@ -670,6 +670,10 @@
     <string name="about_lib_compose_desc">የUI መዋቅር</string>
     <string name="about_lib_hilt_desc">የጥገኝነት መርፌ</string>
     <string name="about_lib_room_desc">የአካባቢ የውሂብ ጎታ</string>
+    <string name="about_lib_sqlcipher_desc">የውሂብ ጎታ ምስጠራ</string>
+    <string name="about_lib_bouncycastle_desc">ክሪፕቶግራፊ</string>
+    <string name="about_lib_secp256k1_desc">የኤሊፕቲክ ኩርቭ ፊርማዎች</string>
+    <string name="about_lib_zxing_desc">QR ኮድ ስካን</string>
     <string name="about_map_attribution">የካርታ ውሂብ © OpenStreetMap አስተዋጽዖ አድራጊዎች</string>
 
     <!-- ── ማሳወቂያዎች ──────────────────────────────────────────────────── -->

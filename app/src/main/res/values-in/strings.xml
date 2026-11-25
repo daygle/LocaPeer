@@ -656,6 +656,10 @@
     <string name="about_lib_compose_desc">Kerangka kerja UI</string>
     <string name="about_lib_hilt_desc">Injeksi dependensi</string>
     <string name="about_lib_room_desc">Basis data lokal</string>
+    <string name="about_lib_sqlcipher_desc">Enkripsi basis data</string>
+    <string name="about_lib_bouncycastle_desc">Kriptografi</string>
+    <string name="about_lib_secp256k1_desc">Tanda tangan kurva eliptik</string>
+    <string name="about_lib_zxing_desc">Pemindaian kode QR</string>
     <string name="about_map_attribution">Data peta © kontributor OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

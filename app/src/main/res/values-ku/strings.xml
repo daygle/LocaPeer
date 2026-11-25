@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">Çarçoweya UI</string>
     <string name="about_lib_hilt_desc">Derzîkirina pêwendiyan</string>
     <string name="about_lib_room_desc">Danegira herêmî</string>
+    <string name="about_lib_sqlcipher_desc">Şîfrekirina danegirê</string>
+    <string name="about_lib_bouncycastle_desc">Krîptografî</string>
+    <string name="about_lib_secp256k1_desc">Îmzeyên kerika elîptîk</string>
+    <string name="about_lib_zxing_desc">Xwendina koda QR</string>
     <string name="about_map_attribution">Daneyên nexşeyê © Beşdarên OpenStreetMap</string>
 
     <!-- ── Agahdarkirin ──────────────────────────────────────────────────── -->

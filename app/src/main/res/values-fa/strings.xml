@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">چارچوب رابط کاربری</string>
     <string name="about_lib_hilt_desc">تزریق وابستگی</string>
     <string name="about_lib_room_desc">پایگاه‌داده محلی</string>
+    <string name="about_lib_sqlcipher_desc">رمزگذاری پایگاه‌داده</string>
+    <string name="about_lib_bouncycastle_desc">رمزنگاری</string>
+    <string name="about_lib_secp256k1_desc">امضاهای منحنی بیضوی</string>
+    <string name="about_lib_zxing_desc">اسکن کدهای QR</string>
     <string name="about_map_attribution">داده‌های نقشه © مشارکت‌کنندگان OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

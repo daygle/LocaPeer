@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">Tsarin UI</string>
     <string name="about_lib_hilt_desc">Shigar da dogaro</string>
     <string name="about_lib_room_desc">Rumbun bayanai na gida</string>
+    <string name="about_lib_sqlcipher_desc">Encryption na rumbun bayanai</string>
+    <string name="about_lib_bouncycastle_desc">Kripto</string>
+    <string name="about_lib_secp256k1_desc">Sa hannu na elliptic curve</string>
+    <string name="about_lib_zxing_desc">Duba lambar QR</string>
     <string name="about_map_attribution">Bayanin taswira © masu ba da gudummawa ga OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI freymvorki</string>
     <string name="about_lib_hilt_desc">Bog‘liqlik inyeksiyasi</string>
     <string name="about_lib_room_desc">Mahalliy ma’lumotlar bazasi</string>
+    <string name="about_lib_sqlcipher_desc">Ma’lumotlar bazasini shifrlash</string>
+    <string name="about_lib_bouncycastle_desc">Kriptografiya</string>
+    <string name="about_lib_secp256k1_desc">Elliptik egri chiziq imzolari</string>
+    <string name="about_lib_zxing_desc">QR kodni skanerlash</string>
     <string name="about_map_attribution">Xarita ma’lumotlari © OpenStreetMap hissa qo‘shuvchilari</string>
 
     <!-- ── Bildirishnomalar ──────────────────────────────────────────────────── -->

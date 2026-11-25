@@ -656,6 +656,10 @@
     <string name="about_lib_compose_desc">UIフレームワーク</string>
     <string name="about_lib_hilt_desc">依存関係注入</string>
     <string name="about_lib_room_desc">ローカルデータベース</string>
+    <string name="about_lib_sqlcipher_desc">データベースの暗号化</string>
+    <string name="about_lib_bouncycastle_desc">暗号技術</string>
+    <string name="about_lib_secp256k1_desc">楕円曲線署名</string>
+    <string name="about_lib_zxing_desc">QRコードのスキャン</string>
     <string name="about_map_attribution">地図データ © OpenStreetMap の貢献者</string>
 
     <!-- ── 通知 ──────────────────────────────────────────────────── -->

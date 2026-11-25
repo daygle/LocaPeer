@@ -721,6 +721,10 @@
     <string name="about_lib_compose_desc">إطار عمل الواجهة</string>
     <string name="about_lib_hilt_desc">حقن التبعيات</string>
     <string name="about_lib_room_desc">قاعدة بيانات محلية</string>
+    <string name="about_lib_sqlcipher_desc">تشفير قاعدة البيانات</string>
+    <string name="about_lib_bouncycastle_desc">التشفير</string>
+    <string name="about_lib_secp256k1_desc">توقيعات المنحنى الإهليلجي</string>
+    <string name="about_lib_zxing_desc">مسح رمز QR</string>
     <string name="about_map_attribution">بيانات الخريطة © مساهمو OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

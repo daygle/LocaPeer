@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">Caasaa UI</string>
     <string name="about_lib_hilt_desc">Injekshiniin hirkii</string>
     <string name="about_lib_room_desc">Data base meeshaa kanaa</string>
+    <string name="about_lib_sqlcipher_desc">Iccitii data base</string>
+    <string name="about_lib_bouncycastle_desc">Kiiroptogiraafii</string>
+    <string name="about_lib_secp256k1_desc">Mallattoo kurvee eliiptikii</string>
+    <string name="about_lib_zxing_desc">Sakatta\'aa koodii QR</string>
     <string name="about_map_attribution">Data kaartaa © gumaachitoota OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

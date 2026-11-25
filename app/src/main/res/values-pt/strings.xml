@@ -668,6 +668,10 @@
     <string name="about_lib_compose_desc">Framework de UI</string>
     <string name="about_lib_hilt_desc">Injeção de dependência</string>
     <string name="about_lib_room_desc">Banco de dados local</string>
+    <string name="about_lib_sqlcipher_desc">Cifragem do banco de dados</string>
+    <string name="about_lib_bouncycastle_desc">Criptografia</string>
+    <string name="about_lib_secp256k1_desc">Assinaturas de curva elíptica</string>
+    <string name="about_lib_zxing_desc">Escaneamento de códigos QR</string>
     <string name="about_map_attribution">Dados do mapa © colaboradores do OpenStreetMap</string>
 
     <!-- ── Notificações ────────────────────────────────────────────────────── -->

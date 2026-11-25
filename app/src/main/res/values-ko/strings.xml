@@ -656,6 +656,10 @@
     <string name="about_lib_compose_desc">UI 프레임워크</string>
     <string name="about_lib_hilt_desc">의존성 주입</string>
     <string name="about_lib_room_desc">로컬 데이터베이스</string>
+    <string name="about_lib_sqlcipher_desc">데이터베이스 암호화</string>
+    <string name="about_lib_bouncycastle_desc">암호화 기술</string>
+    <string name="about_lib_secp256k1_desc">타원 곡선 서명</string>
+    <string name="about_lib_zxing_desc">QR 코드 스캔</string>
     <string name="about_map_attribution">지도 데이터 © OpenStreetMap 기여자</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

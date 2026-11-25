@@ -656,6 +656,10 @@
     <string name="about_lib_compose_desc">เฟรมเวิร์ก UI</string>
     <string name="about_lib_hilt_desc">การฉีดพึ่งพา</string>
     <string name="about_lib_room_desc">ฐานข้อมูลในเครื่อง</string>
+    <string name="about_lib_sqlcipher_desc">การเข้ารหัสฐานข้อมูล</string>
+    <string name="about_lib_bouncycastle_desc">การเข้ารหัสลับ</string>
+    <string name="about_lib_secp256k1_desc">ลายเซ็นเส้นโค้งเชิงวงรี</string>
+    <string name="about_lib_zxing_desc">การสแกนรหัส QR</string>
     <string name="about_map_attribution">ข้อมูลแผนที่ © ผู้มีส่วนร่วม OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

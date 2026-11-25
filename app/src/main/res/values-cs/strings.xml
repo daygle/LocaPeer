@@ -695,6 +695,10 @@
     <string name="about_lib_compose_desc">Rámec uživatelského rozhraní</string>
     <string name="about_lib_hilt_desc">Vkládání závislostí</string>
     <string name="about_lib_room_desc">Lokální databáze</string>
+    <string name="about_lib_sqlcipher_desc">Šifrování databáze</string>
+    <string name="about_lib_bouncycastle_desc">Kryptografie</string>
+    <string name="about_lib_secp256k1_desc">Podpisy na eliptických křivkách</string>
+    <string name="about_lib_zxing_desc">Skenování QR kódů</string>
     <string name="about_map_attribution">Mapová data © přispěvatelé OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

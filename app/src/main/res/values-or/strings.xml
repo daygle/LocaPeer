@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">UI ଫ୍ରେମୱାର୍କ</string>
     <string name="about_lib_hilt_desc">ଡିପେଣ୍ଡେନ୍ସି ଇଞ୍ଜେକ୍ସନ୍</string>
     <string name="about_lib_room_desc">ସ୍ଥାନୀୟ ଡାଟାବେସ୍</string>
+    <string name="about_lib_sqlcipher_desc">ଡାଟାବେସ୍ ଏନକ୍ରିପ୍ଶନ</string>
+    <string name="about_lib_bouncycastle_desc">କ୍ରିପ୍ଟୋଗ୍ରାଫି</string>
+    <string name="about_lib_secp256k1_desc">ଉପବୃତ୍ତୀୟ ବକ୍ର ସ୍ୱାକ୍ଷର</string>
+    <string name="about_lib_zxing_desc">QR କୋଡ୍ ସ୍କାନିଂ</string>
     <string name="about_map_attribution">ମାନଚିତ୍ର ଡାଟା © OpenStreetMap ଅବଦାନକାରୀ</string>
 
     <!-- ── ବିଜ୍ଞପ୍ତି ──────────────────────────────────────────────────── -->

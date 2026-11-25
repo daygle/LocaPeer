@@ -656,6 +656,10 @@
     <string name="about_lib_compose_desc">Khung giao diện</string>
     <string name="about_lib_hilt_desc">Tiêm phụ thuộc</string>
     <string name="about_lib_room_desc">Cơ sở dữ liệu cục bộ</string>
+    <string name="about_lib_sqlcipher_desc">Mã hóa cơ sở dữ liệu</string>
+    <string name="about_lib_bouncycastle_desc">Mật mã học</string>
+    <string name="about_lib_secp256k1_desc">Chữ ký đường cong elliptic</string>
+    <string name="about_lib_zxing_desc">Quét mã QR</string>
     <string name="about_map_attribution">Dữ liệu bản đồ © cộng tác viên OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

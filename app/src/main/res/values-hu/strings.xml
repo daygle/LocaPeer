@@ -669,6 +669,10 @@
     <string name="about_lib_compose_desc">Felületi keretrendszer</string>
     <string name="about_lib_hilt_desc">Függőséginjektálás</string>
     <string name="about_lib_room_desc">Helyi adatbázis</string>
+    <string name="about_lib_sqlcipher_desc">Adatbázis-titkosítás</string>
+    <string name="about_lib_bouncycastle_desc">Kriptográfia</string>
+    <string name="about_lib_secp256k1_desc">Elliptikus görbe aláírások</string>
+    <string name="about_lib_zxing_desc">QR-kódok beolvasása</string>
     <string name="about_map_attribution">Térképadatok © OpenStreetMap közreműködők</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->
