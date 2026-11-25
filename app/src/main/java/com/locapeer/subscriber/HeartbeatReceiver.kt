@@ -474,6 +474,20 @@ class HeartbeatReceiver @Inject constructor(
 
     fun start() {
         com.locapeer.util.AppNotifications.ensureChannels(context)
+        // Relay OK -> a sent 1:1 message moves SENDING -> SENT (never regressing a delivered or
+        // read one; see MessageDao.markSentByNostrEventId). Collected here, always on, rather than
+        // only while a chat screen is alive: a message sent offline is usually flushed from the
+        // outbox in the background, and its OK (a non-replayed flow) would otherwise be dropped,
+        // leaving the message on "sending" for good.
+        relayClient.okEvents
+            .onEach { eventId ->
+                try {
+                    messageDao.markSentByNostrEventId(eventId)
+                } catch (e: Exception) {
+                    Log.w(TAG, "Failed to mark message sent", e)
+                }
+            }
+            .launchIn(scope)
         // Channel names are user-visible: rebuild them when the app language changes.
         com.locapeer.util.AppLocale.changes.drop(1)
             .onEach { com.locapeer.util.AppNotifications.ensureChannels(context) }

@@ -166,7 +166,6 @@ class MessagingViewModel @Inject constructor(
     private val lastTypingSentAt = mutableMapOf<String, Long>()
     private var myListeningPubkey: String? = null
     private var eventsJob: Job? = null
-    private var okEventsJob: Job? = null
 
     @SuppressLint("MissingPermission")
     fun sendLocation(peerId: String) {
@@ -764,6 +763,7 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun deleteConversation(peerId: String) {
+        com.locapeer.util.AppNotifications.cancelConversation(context, peerId)
         viewModelScope.launch {
             messageDao.deleteAllForPeer(peerId)
             // No reaction sweep here: `message_reactions` only ever holds circle rows, and a 1:1
@@ -1260,12 +1260,8 @@ class MessagingViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
 
-        // Relay OK → SENDING → SENT (relay confirmed it received the event). Never regresses a
-        // message a recipient already acknowledged: see MessageDao.markSentByNostrEventId.
-        okEventsJob?.cancel()
-        okEventsJob = relayClient.okEvents
-            .onEach { confirmedEventId -> messageDao.markSentByNostrEventId(confirmedEventId) }
-            .launchIn(viewModelScope)
+        // Relay OKs (SENDING -> SENT) are applied by the always-on HeartbeatReceiver, so they
+        // land even when this screen is gone by the time a queued message is flushed.
     }
 
     private fun processTypingEvent(event: NostrEvent) {

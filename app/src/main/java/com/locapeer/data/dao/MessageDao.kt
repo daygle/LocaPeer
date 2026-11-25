@@ -20,15 +20,25 @@ interface MessageDao {
     @Query("SELECT * FROM messages WHERE peerId = :peerId AND isBlocked = 0 ORDER BY timestamp ASC")
     fun getMessagesForPeer(peerId: String): Flow<List<MessageEntity>>
 
+    /**
+     * Latest visible message per 1:1 conversation, newest first. The "latest row" lookup runs
+     * once per conversation (over the distinct thread keys), not once per message row: the
+     * per-row form re-sorted each thread for every one of its messages, and this Flow re-runs on
+     * every messages-table write (send, receive, delivery and read updates). Circle threads are
+     * excluded; they have their own summary query.
+     */
     @Query(
-        "SELECT * FROM messages m1 WHERE isBlocked = 0 AND id = (" +
-            "SELECT m2.id FROM messages m2 WHERE m2.peerId = m1.peerId AND m2.isBlocked = 0 " +
-            "ORDER BY m2.timestamp DESC, m2.id DESC LIMIT 1" +
+        "SELECT * FROM messages WHERE id IN (" +
+            "SELECT (SELECT m2.id FROM messages m2 WHERE m2.peerId = p.peerId AND m2.isBlocked = 0 " +
+            "ORDER BY m2.timestamp DESC, m2.id DESC LIMIT 1) " +
+            "FROM (SELECT DISTINCT peerId FROM messages WHERE isBlocked = 0 AND groupId IS NULL) p" +
             ") ORDER BY timestamp DESC"
     )
     fun getConversationSummaries(): Flow<List<MessageEntity>>
 
-    @Query("SELECT peerId, COUNT(*) as cnt FROM messages WHERE isRead = 0 AND isMine = 0 AND isBlocked = 0 GROUP BY peerId")
+    /** Unread per 1:1 conversation. Circle rows (which reuse peerId as the circle id) are counted
+     *  by [getUnreadCountsPerGroup] instead; counting them here put circle unread on the Chats badge. */
+    @Query("SELECT peerId, COUNT(*) as cnt FROM messages WHERE isRead = 0 AND isMine = 0 AND isBlocked = 0 AND groupId IS NULL GROUP BY peerId")
     fun getUnreadCountsPerPeer(): Flow<List<UnreadCountRow>>
 
     @Query("UPDATE messages SET isRead = 1 WHERE peerId = :peerId AND isMine = 0 AND isBlocked = 0")
@@ -99,11 +109,13 @@ interface MessageDao {
     // --- Group / circle conversations. A group message stores the circle id in both peerId
     // (thread key, so getMessagesForPeer works unchanged) and groupId (marker). ---
 
-    /** Latest message per circle, newest first. Used to build the group conversation list. */
+    /** Latest message per circle, newest first. Used to build the group conversation list. The
+     *  lookup runs once per circle, not once per message row (see [getConversationSummaries]). */
     @Query(
-        "SELECT * FROM messages m1 WHERE groupId IS NOT NULL AND id = (" +
-            "SELECT m2.id FROM messages m2 WHERE m2.groupId = m1.groupId " +
-            "ORDER BY m2.timestamp DESC, m2.id DESC LIMIT 1" +
+        "SELECT * FROM messages WHERE id IN (" +
+            "SELECT (SELECT m2.id FROM messages m2 WHERE m2.groupId = g.groupId " +
+            "ORDER BY m2.timestamp DESC, m2.id DESC LIMIT 1) " +
+            "FROM (SELECT DISTINCT groupId FROM messages WHERE groupId IS NOT NULL) g" +
             ") ORDER BY timestamp DESC"
     )
     fun getGroupConversationSummaries(): Flow<List<MessageEntity>>
