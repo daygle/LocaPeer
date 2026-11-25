@@ -8,6 +8,24 @@ import org.junit.Test
 class GeoMathTest {
 
     @Test
+    fun `valid coordinates include the range bounds`() {
+        assertTrue(GeoMath.isValidCoordinate(-33.8688, 151.2093))
+        assertTrue(GeoMath.isValidCoordinate(90.0, 180.0))
+        assertTrue(GeoMath.isValidCoordinate(-90.0, -180.0))
+    }
+
+    @Test
+    fun `non-finite or out-of-range coordinates are rejected`() {
+        // Each parses from text with toDoubleOrNull, and each would make MapLibre's LatLng throw.
+        assertFalse(GeoMath.isValidCoordinate(Double.NaN, 0.0))
+        assertFalse(GeoMath.isValidCoordinate(0.0, Double.NaN))
+        assertFalse(GeoMath.isValidCoordinate(Double.POSITIVE_INFINITY, 0.0))
+        assertFalse(GeoMath.isValidCoordinate(0.0, Double.NEGATIVE_INFINITY))
+        assertFalse(GeoMath.isValidCoordinate(90.0001, 0.0))
+        assertFalse(GeoMath.isValidCoordinate(0.0, -180.0001))
+    }
+
+    @Test
     fun `zero distance for identical points`() {
         assertEquals(0.0, GeoMath.haversineMetres(-33.8688, 151.2093, -33.8688, 151.2093), 0.001)
     }

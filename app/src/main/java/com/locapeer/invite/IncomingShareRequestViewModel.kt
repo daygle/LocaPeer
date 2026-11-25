@@ -18,7 +18,7 @@ sealed class IncomingRequestState {
     object Done : IncomingRequestState()
     /** Supervised: the accept went out as a per-action request (kind 1067); the screen
      *  stays up showing a waiting indicator until the supervisor's decision completes
-     *  the accept (or the user backs out). */
+     *  the accept, or the user cancels it ([IncomingShareRequestViewModel.cancelWaiting]). */
     object WaitingApproval : IncomingRequestState()
 }
 
@@ -59,6 +59,19 @@ class IncomingShareRequestViewModel @Inject constructor(
                     if (current == request) actions.accept(current, locationRole, messagingEnabled)
                 }
             }
+        }
+    }
+
+    /** Withdraws the accept sent to the supervisor and returns to the request's choices. */
+    fun cancelWaiting(request: PendingRequestEntity) {
+        if (_state.value != IncomingRequestState.WaitingApproval) return
+        viewModelScope.launch {
+            try {
+                actions.cancelAccept(request.senderPubkey)
+            } catch (e: Exception) {
+                Log.e("IncomingShareRequestVM", "Withdrawing the contact-add request failed", e)
+            }
+            _state.value = IncomingRequestState.Idle
         }
     }
 

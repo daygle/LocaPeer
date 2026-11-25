@@ -756,7 +756,7 @@ class MessagingViewModel @Inject constructor(
                     relayClient.publishEvent(event)
                 }
             } catch (e: Exception) {
-                android.util.Log.e("MessagingViewModel", "deleteMessageFromRemote failed", e)
+                Log.e("MessagingViewModel", "deleteMessageFromRemote failed", e)
             }
         }
     }
@@ -868,7 +868,7 @@ class MessagingViewModel @Inject constructor(
                 peerDao.unarchive(peerId)
                 relayClient.publishEvent(event)
             } catch (e: Exception) {
-                android.util.Log.e("MessagingViewModel", "sendMessage failed", e)
+                Log.e("MessagingViewModel", "sendMessage failed", e)
             }
         }
     }
@@ -983,8 +983,11 @@ class MessagingViewModel @Inject constructor(
     fun startRecording(target: RecordTarget) {
         if (_isRecording.value) return
         val file = File(context.cacheDir, "voice_${System.currentTimeMillis()}.m4a")
+        // Held outside the try: [recorder] is only assigned once start() succeeds, so a failure
+        // in setup/prepare/start must release this instance itself or its native side leaks.
+        var rec: MediaRecorder? = null
         try {
-            val rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(context)
+            rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(context)
                 else @Suppress("DEPRECATION") MediaRecorder()
             rec.setAudioSource(MediaRecorder.AudioSource.MIC)
             rec.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
@@ -1006,6 +1009,9 @@ class MessagingViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.e("MessagingViewModel", "startRecording failed", e)
+            if (recorder !== rec) {
+                try { rec?.release() } catch (_: Exception) {}
+            }
             releaseRecorder()
             file.delete()
             _isRecording.value = false

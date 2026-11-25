@@ -181,8 +181,12 @@ fun IncomingShareRequestScreen(
                         CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                         Text(
                             stringResource(R.string.incoming_awaiting_approval),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.weight(1f)
                         )
+                        TextButton(onClick = { vm.cancelWaiting(request) }) {
+                            Text(stringResource(R.string.common_cancel))
+                        }
                     }
                 }
             }

@@ -52,6 +52,15 @@ class PendingRequestActions @Inject constructor(
         executor.completeInboundAccept(request, locationRole, messagingEnabled)
     }
 
+    /**
+     * Withdraws an accept still waiting for the supervisor's approval. The stored request is
+     * left in place, so it can still be accepted again or declined. An accept the supervisor
+     * already approved and that is now completing is not stopped.
+     */
+    suspend fun cancelAccept(senderPubkey: String) {
+        contactAddApprovalManager.cancelPending(senderPubkey)
+    }
+
     /** Answers with a TRACK_DECLINE and clears the request. */
     suspend fun decline(request: PendingRequestEntity) {
         // Consume the request FIRST, with the same compare-and-delete the accept transaction

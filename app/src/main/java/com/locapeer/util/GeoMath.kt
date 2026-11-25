@@ -9,6 +9,11 @@ import kotlin.math.sqrt
 /** Pure geodesic math shared by the geofence and proximity engines. */
 object GeoMath {
 
+    /** True for a finite WGS84 coordinate. Peer-supplied coordinates must pass this before they
+     *  reach MapLibre, whose `LatLng` throws for NaN or out-of-range values. */
+    fun isValidCoordinate(lat: Double, lng: Double): Boolean =
+        lat.isFinite() && lng.isFinite() && lat in -90.0..90.0 && lng in -180.0..180.0
+
     private const val EARTH_RADIUS_M = 6_371_000.0
 
     fun haversineMetres(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {

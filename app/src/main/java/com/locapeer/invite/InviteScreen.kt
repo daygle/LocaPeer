@@ -208,7 +208,7 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
         if (scanState.success) {
             SuccessView(scanState.addedName, onDone, vm)
         } else if (scanState.pendingName != null) {
-            ConfirmView(scanState.pendingName!!, vm)
+            ConfirmView(scanState.pendingName.orEmpty(), vm)
         } else if (scanState.awaitingSupervisor) {
             // Supervised devices: the add is a per-action decision. The supervisor sees
             // THIS contact's name and approves or denies it before anything is stored.
@@ -229,6 +229,9 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
                 )
+                TextButton(onClick = { vm.cancelSupervisorRequest() }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
             }
         } else {
             if (cameraPermission.status.isGranted) {
@@ -284,8 +287,8 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
                     Spacer(Modifier.width(8.dp))
                     Text(stringResource(R.string.invite_process_link))
                 }
-                if (scanState.error != null) {
-                    Text(scanState.error!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                scanState.error?.let { error ->
+                    Text(error, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
                 }
             }
         }

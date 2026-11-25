@@ -1,11 +1,7 @@
 package com.locapeer.settings
 
 import android.Manifest
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
-import android.provider.Settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -118,7 +114,7 @@ fun PermissionsScreen(onNavigateBack: () -> Unit) {
                         granted = backgroundLocationGranted,
                         grantedText = stringResource(R.string.perm_background_location_granted),
                         deniedText = stringResource(R.string.perm_background_location_denied),
-                        onClick = { openAppDetailsSettings(context) }
+                        onClick = { PermissionManager.openAppDetailsSettings(context) }
                     )
                 }
                 CardDivider()
@@ -182,8 +178,8 @@ private fun RuntimePermissionRow(
         statusText = if (granted) grantedText else deniedText,
         onClick = {
             when {
-                granted -> openAppDetailsSettings(context)
-                asked && !permission.status.shouldShowRationale -> openAppDetailsSettings(context)
+                granted -> PermissionManager.openAppDetailsSettings(context)
+                asked && !permission.status.shouldShowRationale -> PermissionManager.openAppDetailsSettings(context)
                 else -> {
                     asked = true
                     permission.launchPermissionRequest()
@@ -258,12 +254,4 @@ private fun PermissionStatusRow(
             )
         }
     }
-}
-
-private fun openAppDetailsSettings(context: Context) {
-    val intent = Intent(
-        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-        Uri.fromParts("package", context.packageName, null)
-    ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    context.startActivity(intent)
 }

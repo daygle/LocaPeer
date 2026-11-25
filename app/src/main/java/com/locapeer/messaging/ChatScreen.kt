@@ -843,6 +843,9 @@ private fun LinkifiedText(
     onNavigateToMap: (Double, Double) -> Unit
 ) {
     val context = LocalContext.current
+    // The annotated string is remembered across recompositions; read the latest callback at
+    // click time rather than the one captured when the string was first built.
+    val currentOnNavigateToMap by rememberUpdatedState(onNavigateToMap)
     val annotatedString = remember(text, style.color) {
         buildAnnotatedString {
             val matcher = Patterns.WEB_URL.matcher(text)
@@ -850,20 +853,17 @@ private fun LinkifiedText(
             while (matcher.find()) {
                 append(text.substring(lastIndex, matcher.start()))
                 val url = text.substring(matcher.start(), matcher.end())
-                
+
                 val linkInteractionListener = { _: LinkAnnotation ->
-                    val uri = url.toUri()
-                    val mlat = uri.getQueryParameter("mlat")?.toDoubleOrNull()
-                    val mlon = uri.getQueryParameter("mlon")?.toDoubleOrNull()
-                    
-                    if (mlat != null && mlon != null) {
-                        onNavigateToMap(mlat, mlon)
+                    val uri = withWebScheme(url).toUri()
+                    val coordinates = mapCoordinatesOf(uri)
+                    if (coordinates != null) {
+                        currentOnNavigateToMap(coordinates.first, coordinates.second)
                     } else {
                         try {
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            context.startActivity(intent)
-                        } catch (e: Exception) {
-                            // ignore
+                            context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+                        } catch (_: Exception) {
+                            // No app can open it; nothing useful to do from a text span.
                         }
                     }
                 }
@@ -871,8 +871,10 @@ private fun LinkifiedText(
                 val link = LinkAnnotation.Clickable(
                     tag = "URL",
                     styles = TextLinkStyles(
+                        // Underlined in the bubble's own text colour: a fixed blue was unreadable
+                        // on dark-theme and primary-coloured bubbles.
                         style = SpanStyle(
-                            color = Color(0xFF0000EE),
+                            color = style.color,
                             textDecoration = TextDecoration.Underline
                         )
                     ),
@@ -1147,13 +1149,27 @@ internal fun detectLocationPin(content: String): Pair<Double, Double>? {
     val matcher = Patterns.WEB_URL.matcher(content)
     while (matcher.find()) {
         val url = content.substring(matcher.start(), matcher.end())
-        val uri = try { url.toUri() } catch (e: Exception) { continue }
-        val lat = uri.getQueryParameter("mlat")?.toDoubleOrNull()
-        val lng = uri.getQueryParameter("mlon")?.toDoubleOrNull()
-        if (lat != null && lng != null) return lat to lng
+        val uri = try { withWebScheme(url).toUri() } catch (_: Exception) { continue }
+        mapCoordinatesOf(uri)?.let { return it }
     }
     return null
 }
+
+/**
+ * The `mlat`/`mlon` pair of a map link, or null when absent or not a real coordinate. The text is
+ * peer-controlled and `toDoubleOrNull` accepts "NaN", "Infinity" and out-of-range values, all of
+ * which make MapLibre's `LatLng` throw - so tapping such a "location" would crash the map.
+ */
+private fun mapCoordinatesOf(uri: android.net.Uri): Pair<Double, Double>? {
+    val lat = uri.getQueryParameter("mlat")?.toDoubleOrNull() ?: return null
+    val lng = uri.getQueryParameter("mlon")?.toDoubleOrNull() ?: return null
+    return if (com.locapeer.util.GeoMath.isValidCoordinate(lat, lng)) lat to lng else null
+}
+
+/** [Patterns.WEB_URL] also matches bare domains ("example.com"), which no app can open without a
+ *  scheme; give those https. Anything that already names a scheme is left as it is. */
+private fun withWebScheme(url: String): String =
+    if (url.contains("://")) url else "https://$url"
 
 /** Compact tappable "shared location" card used for location-pin messages in 1:1 and group chats. */
 @Composable

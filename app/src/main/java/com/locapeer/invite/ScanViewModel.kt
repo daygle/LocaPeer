@@ -45,6 +45,10 @@ class ScanViewModel @Inject constructor(
     /** Parsed invite held between scan/deep-link and the user's explicit confirmation. */
     private var pendingInvite: InviteData? = null
 
+    /** The invite whose add is waiting for the supervisor, or null once it is decided or the user
+     *  withdraws it. Written on the main thread, read by the manager's decision callback. */
+    @Volatile private var awaitingInvite: InviteData? = null
+
     /**
      * Parse and validate an invite, then stage it for explicit confirmation instead of
      * adding the contact immediately. Establishing two-way location sharing must be a
@@ -85,7 +89,10 @@ class ScanViewModel @Inject constructor(
                     ?: context.getString(com.locapeer.R.string.scan_fallback_contact)
             )
         } catch (e: Exception) {
-            _scanState.value = ScanState(error = e.message ?: context.getString(com.locapeer.R.string.scan_error_unknown))
+            // The input is untrusted (a deep link can carry anything) and parser messages echo
+            // it back verbatim, so log the detail and show the localised message instead.
+            Log.w("ScanViewModel", "Invite could not be parsed", e)
+            _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_invalid_link))
             processed = false
         }
     }
@@ -110,11 +117,19 @@ class ScanViewModel @Inject constructor(
                     // Set waiting first: requestAdd may finish synchronously if supervision
                     // ended since the check, or if sending the request fails.
                     _scanState.value = ScanState(awaitingSupervisor = true)
+                    awaitingInvite = invite
                     contactAddApprovalManager.requestAdd(
                         contactPubkeyHex = invite.publicKeyHex,
                         contactName = invite.displayName,
                         action = ContactAddApprovalManager.AddAction.OutboundScan(invite),
                     ) { result ->
+                        // Withdrawing reports DENIED for the dropped request; the user cancelled,
+                        // so don't show it as the supervisor's answer. A completed add still
+                        // counts: the supervisor approved it before the cancel landed.
+                        if (awaitingInvite !== invite && result != ContactAddApprovalManager.AddResult.COMPLETED) {
+                            return@requestAdd
+                        }
+                        awaitingInvite = null
                         // The manager reports completion only after the physical add finishes.
                         if (result == ContactAddApprovalManager.AddResult.COMPLETED) {
                             pendingInvite = null
@@ -145,7 +160,8 @@ class ScanViewModel @Inject constructor(
                     _scanState.value = ScanState(success = true, addedName = invite.displayName)
                 }
             } catch (e: Exception) {
-                _scanState.value = ScanState(error = e.message ?: context.getString(com.locapeer.R.string.scan_error_unknown))
+                Log.e("ScanViewModel", "Adding the contact failed", e)
+                _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_unknown))
                 processed = false
             }
         }
@@ -169,6 +185,23 @@ class ScanViewModel @Inject constructor(
         } catch (e: Exception) {
             Log.e("ScanViewModel", "Invite link processing failed", e)
             _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_invalid_link))
+        }
+    }
+
+    /** Withdraws the add sent to the supervisor and returns to the confirmation step. */
+    fun cancelSupervisorRequest() {
+        val invite = awaitingInvite ?: return
+        awaitingInvite = null
+        _scanState.value = ScanState(
+            pendingName = invite.displayName.ifBlank { null }
+                ?: context.getString(com.locapeer.R.string.scan_fallback_contact)
+        )
+        viewModelScope.launch {
+            try {
+                contactAddApprovalManager.cancelPending(invite.publicKeyHex)
+            } catch (e: Exception) {
+                Log.e("ScanViewModel", "Withdrawing the contact-add request failed", e)
+            }
         }
     }
 
