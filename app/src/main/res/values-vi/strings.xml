@@ -351,6 +351,8 @@
     <string name="invite_encryption_note">Vị trí của bạn sẽ được mã hóa riêng cho thiết bị của người quét.</string>
     <string name="invite_camera_required_title">Cần quyền máy ảnh</string>
     <string name="invite_camera_required_message">Cấp quyền máy ảnh để quét mã QR.</string>
+    <string name="invite_camera_unavailable_title">Không thể dùng camera</string>
+    <string name="invite_camera_unavailable_message">Ứng dụng khác có thể đang dùng camera. Hãy đóng ứng dụng đó và thử lại.</string>
     <string name="invite_point_camera">Hướng máy ảnh vào mã QR LocaPeer</string>
     <string name="invite_paste_title">Hoặc dán liên kết mời</string>
     <string name="invite_process_link">Xử lý liên kết</string>

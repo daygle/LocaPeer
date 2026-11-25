@@ -351,6 +351,8 @@
     <string name="invite_encryption_note">Lokasi anda akan disulitkan khusus untuk peranti pengimbas.</string>
     <string name="invite_camera_required_title">Akses Kamera Diperlukan</string>
     <string name="invite_camera_required_message">Berikan kebenaran kamera untuk mengimbas kod QR.</string>
+    <string name="invite_camera_unavailable_title">Kamera tidak tersedia</string>
+    <string name="invite_camera_unavailable_message">Aplikasi lain mungkin menggunakan kamera. Tutupnya dan cuba lagi.</string>
     <string name="invite_point_camera">Halakan kamera ke QR LocaPeer</string>
     <string name="invite_paste_title">Atau Tampal Pautan Jemputan</string>
     <string name="invite_process_link">Proses Pautan</string>

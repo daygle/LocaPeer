@@ -358,6 +358,8 @@
     <string name="invite_encryption_note">Sua localização será criptografada especificamente para o dispositivo de quem escanear.</string>
     <string name="invite_camera_required_title">Acesso à Câmera Necessário</string>
     <string name="invite_camera_required_message">Conceda permissão de câmera para escanear um código QR.</string>
+    <string name="invite_camera_unavailable_title">Câmera indisponível</string>
+    <string name="invite_camera_unavailable_message">Outro aplicativo pode estar usando a câmera. Feche-o e tente novamente.</string>
     <string name="invite_point_camera">Aponte a câmera para um QR LocaPeer</string>
     <string name="invite_paste_title">Ou Cole Link de Convite</string>
     <string name="invite_process_link">Processar Link</string>

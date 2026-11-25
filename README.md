@@ -169,7 +169,7 @@ Custom application events (kinds 1040-1069) are tagged with the recipient's publ
 | **Location** | Google Play services: FusedLocationProviderClient + Activity Recognition |
 | **Motion Classification** | Custom GPS speed engine (MotionMath) fused with Activity Recognition (MotionFusion) |
 | **Background Work** | WorkManager (retention enforcement, missed-heartbeat watchdog, temporary-share expiry) + boot receiver |
-| **QR Codes** | ZXing (generation and scanning via `zxing-android-embedded`) |
+| **QR Codes** | ZXing core for generation and decoding, with CameraX supplying the scanner frames |
 | **Localization** | AppCompat per-app locales (`AppCompatDelegate.setApplicationLocales`) |
 
 ## Building

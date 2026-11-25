@@ -351,6 +351,8 @@
     <string name="invite_encryption_note">あなたの位置情報は、スキャンした人のデバイス専用に暗号化されます。</string>
     <string name="invite_camera_required_title">カメラアクセスが必要</string>
     <string name="invite_camera_required_message">QRコードをスキャンするためにカメラの権限を許可してください。</string>
+    <string name="invite_camera_unavailable_title">カメラを利用できません</string>
+    <string name="invite_camera_unavailable_message">別のアプリがカメラを使用している可能性があります。閉じてから再試行してください。</string>
     <string name="invite_point_camera">カメラをLocaPeerのQRに向けてください</string>
     <string name="invite_paste_title">または招待リンクを貼り付け</string>
     <string name="invite_process_link">リンクを処理</string>

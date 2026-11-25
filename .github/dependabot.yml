@@ -68,7 +68,6 @@ updates:
           - "fr.acinq.secp256k1*"
           - "com.squareup.okhttp3*"
           - "com.google.zxing*"
-          - "com.journeyapps*"
           - "org.maplibre*"
           - "net.zetetic*"
 

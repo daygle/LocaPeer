@@ -351,6 +351,8 @@
     <string name="invite_encryption_note">您的位置將專門為掃描者的裝置加密。</string>
     <string name="invite_camera_required_title">需要相機存取</string>
     <string name="invite_camera_required_message">請授予相機權限以掃描 QR 碼。</string>
+    <string name="invite_camera_unavailable_title">相機無法使用</string>
+    <string name="invite_camera_unavailable_message">其他應用程式可能正在使用相機。請關閉該應用程式後再試一次。</string>
     <string name="invite_point_camera">將相機對準 LocaPeer QR 碼</string>
     <string name="invite_paste_title">或貼上邀請連結</string>
     <string name="invite_process_link">處理連結</string>

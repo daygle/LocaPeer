@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">آپ کا مقام خاص طور پر اسکین کرنے والے کے آلے کے لیے خفیہ کیا جائے گا۔</string>
     <string name="invite_camera_required_title">کیمرے کی رسائی درکار</string>
     <string name="invite_camera_required_message">QR کوڈ اسکین کرنے کے لیے کیمرے کی اجازت دیں۔</string>
+    <string name="invite_camera_unavailable_title">کیمرہ دستیاب نہیں</string>
+    <string name="invite_camera_unavailable_message">ہو سکتا ہے کوئی دوسری ایپ کیمرہ استعمال کر رہی ہو۔ اسے بند کریں اور دوبارہ کوشش کریں۔</string>
     <string name="invite_point_camera">کیمرے کو LocaPeer QR کی طرف کریں</string>
     <string name="invite_paste_title">یا دعوتی لنک پیسٹ کریں</string>
     <string name="invite_process_link">لنک پروسیس کریں</string>

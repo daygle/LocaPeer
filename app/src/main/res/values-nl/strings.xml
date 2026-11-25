@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Je locatie wordt specifiek versleuteld voor het apparaat van de scanner.</string>
     <string name="invite_camera_required_title">Cameratoegang vereist</string>
     <string name="invite_camera_required_message">Verleen cameramachtiging om een QR-code te scannen.</string>
+    <string name="invite_camera_unavailable_title">Camera niet beschikbaar</string>
+    <string name="invite_camera_unavailable_message">Mogelijk gebruikt een andere app de camera. Sluit die app en probeer het opnieuw.</string>
     <string name="invite_point_camera">Richt de camera op een LocaPeer-QR</string>
     <string name="invite_paste_title">Of plak een uitnodigingslink</string>
     <string name="invite_process_link">Link verwerken</string>

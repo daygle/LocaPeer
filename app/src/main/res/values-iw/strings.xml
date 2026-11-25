@@ -363,6 +363,8 @@
     <string name="invite_encryption_note">המיקום שלך יוצפן במיוחד עבור המכשיר של הסורק.</string>
     <string name="invite_camera_required_title">נדרשת גישת מצלמה</string>
     <string name="invite_camera_required_message">הענק הרשאת מצלמה כדי לסרוק קוד QR.</string>
+    <string name="invite_camera_unavailable_title">המצלמה אינה זמינה</string>
+    <string name="invite_camera_unavailable_message">ייתכן שאפליקציה אחרת משתמשת במצלמה. סגרו אותה ונסו שוב.</string>
     <string name="invite_point_camera">כוון את המצלמה לקוד QR של LocaPeer</string>
     <string name="invite_paste_title">או הדבק קישור הזמנה</string>
     <string name="invite_process_link">עבד קישור</string>

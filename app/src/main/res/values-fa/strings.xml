@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">موقعیت شما به‌طور اختصاصی برای دستگاه اسکن‌کننده رمزگذاری خواهد شد.</string>
     <string name="invite_camera_required_title">دسترسی به دوربین لازم است</string>
     <string name="invite_camera_required_message">برای اسکن کد QR، مجوز دوربین را بدهید.</string>
+    <string name="invite_camera_unavailable_title">دوربین در دسترس نیست</string>
+    <string name="invite_camera_unavailable_message">ممکن است برنامه دیگری از دوربین استفاده کند. آن را ببندید و دوباره تلاش کنید.</string>
     <string name="invite_point_camera">دوربین را به‌سوی کد QR لوکاپیر بگیرید</string>
     <string name="invite_paste_title">یا پیوند دعوت را جای‌گذاری کنید</string>
     <string name="invite_process_link">پردازش پیوند</string>

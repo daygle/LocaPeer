@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Bakki keessan meeshaa nama sakatta\'uuf jedhamee icciteeffama.</string>
     <string name="invite_camera_required_title">Gihîştina Kämeree Hewce ye</string>
     <string name="invite_camera_required_message">Koodii QR sakatta\'uuf hayyama kämeree kennaa.</string>
+    <string name="invite_camera_unavailable_title">Kämereen hin argamne</string>
+    <string name="invite_camera_unavailable_message">Appii biraa kämeree fayyadamaa ta\'a. Isaa cufii irra deebi\'ii yaali.</string>
     <string name="invite_point_camera">Kämeree gara QR LocaPeer qabaa</string>
     <string name="invite_paste_title">Ykn Liinkii Afeerraa Galchaa</string>
     <string name="invite_process_link">Liinkii Hojjedhu</string>

@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Орналасқан жеріңіз сканерлеуші құрылғы үшін арнайы шифрланады.</string>
     <string name="invite_camera_required_title">Камераға рұқсат қажет</string>
     <string name="invite_camera_required_message">QR кодын сканерлеу үшін камераға рұқсат беріңіз.</string>
+    <string name="invite_camera_unavailable_title">Камера қолжетімсіз</string>
+    <string name="invite_camera_unavailable_message">Басқа қолданба камераны пайдаланып жатқан болуы мүмкін. Оны жауып, қайталап көріңіз.</string>
     <string name="invite_point_camera">Камераны LocaPeer QR-ына бағыттаңыз</string>
     <string name="invite_paste_title">Немесе шақыру сілтемесін қойыңыз</string>
     <string name="invite_process_link">Сілтемені өңдеу</string>

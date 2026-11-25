@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">ستاسو ځای به په ځانګړي ډول د سکین کونکي وسیلې لپاره شفر شي.</string>
     <string name="invite_camera_required_title">کمرې ته لاسرسی اړین دی</string>
     <string name="invite_camera_required_message">د QR کوډ سکین کولو لپاره د کمرې اجازه ورکړئ.</string>
+    <string name="invite_camera_unavailable_title">کمره نشته</string>
+    <string name="invite_camera_unavailable_message">کیدای شي بله اپلیکیشن کمره کاروي. هغه بنده کړئ او بیا هڅه وکړئ.</string>
     <string name="invite_point_camera">کمره د LocaPeer QR په لور ونیسئ</string>
     <string name="invite_paste_title">یا د بلنې لینک واچوئ</string>
     <string name="invite_process_link">لینک پروسس کړئ</string>

@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">Eneo lako litasimbwa haswa kwa kifaa cha anayeichanganua.</string>
     <string name="invite_camera_required_title">Ufikiaji wa Kamera Unahitajika</string>
     <string name="invite_camera_required_message">Toa ruhusa ya kamera ili kuchanganua nambari ya QR.</string>
+    <string name="invite_camera_unavailable_title">Kamera haipatikani</string>
+    <string name="invite_camera_unavailable_message">Huenda programu nyingine inatumia kamera. Ifunge na ujaribu tena.</string>
     <string name="invite_point_camera">Elekeza kamera kwenye QR ya LocaPeer</string>
     <string name="invite_paste_title">Au Bandika Kiungo cha Mwaliko</string>
     <string name="invite_process_link">Mchakato wa Kiungo</string>

@@ -369,6 +369,8 @@
     <string name="invite_encryption_note">Ваше местоположение будет зашифровано специально для устройства сканирующего.</string>
     <string name="invite_camera_required_title">Нужен доступ к камере</string>
     <string name="invite_camera_required_message">Разрешите доступ к камере, чтобы отсканировать QR-код.</string>
+    <string name="invite_camera_unavailable_title">Камера недоступна</string>
+    <string name="invite_camera_unavailable_message">Возможно, камеру использует другое приложение. Закройте его и повторите попытку.</string>
     <string name="invite_point_camera">Наведите камеру на QR-код LocaPeer</string>
     <string name="invite_paste_title">Или вставьте ссылку-приглашение</string>
     <string name="invite_process_link">Обработать ссылку</string>

@@ -357,6 +357,8 @@
     <string name="invite_encryption_note">አካባቢዎ በተለይ ለፈታሹ መሣሪያ ይመሰጠራል።</string>
     <string name="invite_camera_required_title">የካሜራ ፈቃድ ያስፈልጋል</string>
     <string name="invite_camera_required_message">QR ኮድ ለመፈተሽ የካሜራ ፈቃድ ይስጡ።</string>
+    <string name="invite_camera_unavailable_title">ካሜራ አይገኝም</string>
+    <string name="invite_camera_unavailable_message">ሌላ መተግበሪያ ካሜራውን እየተጠቀመ ሊሆን ይችላል። ይዝጉት እና እንደገና ይሞክሩ።</string>
     <string name="invite_point_camera">ካሜራውን ወደ LocaPeer QR ያዙሩት</string>
     <string name="invite_paste_title">ወይም የግብዣ ሊንክ ይለጥፉ</string>
     <string name="invite_process_link">ሊንክን አከናውን</string>

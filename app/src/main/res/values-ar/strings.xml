@@ -381,6 +381,8 @@
     <string name="invite_encryption_note">سيُشفَّر موقعك خصيصًا لجهاز الشخص الذي يمسح الرمز.</string>
     <string name="invite_camera_required_title">الوصول إلى الكاميرا مطلوب</string>
     <string name="invite_camera_required_message">امنح إذن الكاميرا لمسح رمز QR.</string>
+    <string name="invite_camera_unavailable_title">الكاميرا غير متاحة</string>
+    <string name="invite_camera_unavailable_message">قد يكون تطبيق آخر يستخدم الكاميرا. أغلقه ثم حاول مرة أخرى.</string>
     <string name="invite_point_camera">وجّه الكاميرا نحو رمز QR الخاص بـ LocaPeer</string>
     <string name="invite_paste_title">أو الصق رابط الدعوة</string>
     <string name="invite_process_link">معالجة الرابط</string>

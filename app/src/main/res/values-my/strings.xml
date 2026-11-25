@@ -351,6 +351,8 @@
     <string name="invite_encryption_note">သင့်တည်နေရာကို စကင်န်ဖတ်သူ၏ စက်ပစ္စည်းအတွက်သာ သီးသန့် စာဝှက်ထားပါမည်။</string>
     <string name="invite_camera_required_title">ကင်မရာ ဝင်ရောက်ခွင့် လိုအပ်သည်</string>
     <string name="invite_camera_required_message">QR ကုဒ် စကင်န်ဖတ်ရန် ကင်မရာ ခွင့်ပြုချက် ပေးပါ။</string>
+    <string name="invite_camera_unavailable_title">ကင်မရာ မရရှိနိုင်ပါ</string>
+    <string name="invite_camera_unavailable_message">အခြားအက်ပ်က ကင်မရာကို အသုံးပြုနေနိုင်သည်။ ၎င်းကို ပိတ်ပြီး ထပ်စမ်းကြည့်ပါ။</string>
     <string name="invite_point_camera">ကင်မရာကို LocaPeer QR ဆီသို့ ချိန်ပါ</string>
     <string name="invite_paste_title">သို့မဟုတ် ဖိတ်ကြားချက်လင့်ခ်ကို ထည့်ပါ</string>
     <string name="invite_process_link">လင့်ခ်ကို စစ်ဆေးရန်</string>

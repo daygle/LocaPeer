@@ -351,6 +351,8 @@
     <string name="invite_encryption_note">A óò pa ipò rẹ mọ́ ní àṣírí fún ẹ̀rọ ẹni tí ó ń ṣàyẹ̀wò rẹ̀.</string>
     <string name="invite_camera_required_title">Achọrọ ohere kámẹ́rà</string>
     <string name="invite_camera_required_message">Gba ìgbàníláyè kámẹ́rà láti ṣàyẹ̀wò koodu QR.</string>
+    <string name="invite_camera_unavailable_title">Kámẹ́rà kò sí</string>
+    <string name="invite_camera_unavailable_message">Ṣe é lè jẹ́ pé áàpù mìíràn ń lo kámẹ́rà náà. Pa á dé kí o sì gbìyànjú lẹ́ẹ̀kan sí i.</string>
     <string name="invite_point_camera">Tuo kámẹ́rà sí QR LocaPeer</string>
     <string name="invite_paste_title">Ma ọ bụ Tapawa Link Ìpè</string>
     <string name="invite_process_link">Nhazi Link</string>

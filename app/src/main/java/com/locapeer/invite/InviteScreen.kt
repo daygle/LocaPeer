@@ -26,16 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.compose.ui.viewinterop.AndroidView
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import com.journeyapps.barcodescanner.BarcodeCallback
-import com.journeyapps.barcodescanner.BarcodeResult
-import com.journeyapps.barcodescanner.CompoundBarcodeView
 import com.locapeer.R
 
 private enum class InviteTab { MY_INVITE, ADD_CONTACT }
@@ -200,6 +193,7 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
     val cameraPermission = rememberPermissionState(android.Manifest.permission.CAMERA)
     val scanState by vm.scanState.collectAsStateWithLifecycle()
     var pasteText by remember { mutableStateOf("") }
+    var cameraUnavailable by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
@@ -236,13 +230,26 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
         } else {
             if (cameraPermission.status.isGranted) {
                 Box(modifier = Modifier.height(300.dp).fillMaxWidth()) {
-                    ScannerView(vm)
-                    Surface(
-                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
-                    ) {
-                        Text(stringResource(R.string.invite_point_camera), modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp), style = MaterialTheme.typography.labelMedium)
+                    // The scanner stays mounted while the message is up, so it keeps retrying in
+                    // the background and reports as soon as the camera comes back.
+                    QrScannerView(
+                        onQrCode = vm::processQrCode,
+                        onCameraUnavailable = { cameraUnavailable = true },
+                        onCameraAvailable = { cameraUnavailable = false },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    if (cameraUnavailable) {
+                        // Without this the failure is an empty black rectangle: another app
+                        // holding the camera is the common cause, so name it.
+                        CameraUnavailableView()
+                    } else {
+                        Surface(
+                            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
+                        ) {
+                            Text(stringResource(R.string.invite_point_camera), modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp), style = MaterialTheme.typography.labelMedium)
+                        }
                     }
                 }
             } else {
@@ -296,36 +303,38 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
 }
 
 @Composable
-private fun ScannerView(vm: ScanViewModel) {
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val barcodeViewRef = remember { mutableStateOf<CompoundBarcodeView?>(null) }
-
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) barcodeViewRef.value?.resume()
-            else if (event == Lifecycle.Event.ON_PAUSE) barcodeViewRef.value?.pause()
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-            barcodeViewRef.value?.pause()
-        }
+private fun CameraUnavailableView() {
+    Column(
+        // Opaque: the scanner underneath is still retrying, and a half-black preview behind
+        // this text would be unreadable.
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            Icons.Default.CameraAlt,
+            null,
+            modifier = Modifier.size(36.dp),
+            tint = MaterialTheme.colorScheme.error
+        )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            stringResource(R.string.invite_camera_unavailable_title),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
+        )
+        Spacer(Modifier.height(4.dp))
+        Text(
+            stringResource(R.string.invite_camera_unavailable_message),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center
+        )
     }
-
-    AndroidView(
-        factory = { ctx ->
-            CompoundBarcodeView(ctx).apply {
-                decodeContinuous(object : BarcodeCallback {
-                    override fun barcodeResult(result: BarcodeResult) {
-                        vm.processQrCode(result.text)
-                    }
-                })
-                barcodeViewRef.value = this
-                resume()
-            }
-        },
-        modifier = Modifier.fillMaxSize()
-    )
 }
 
 @Composable
