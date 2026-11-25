@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">இருப்பிடங்களை நீக்கு</string>
     <string name="contacts_last_seen">கடைசியாகப் பார்த்தது: %1$s</string>
     <string name="contacts_no_location_yet">இன்னும் இருப்பிடத் தரவு இல்லை</string>
+    <string name="contacts_last_updated">கடைசியாகப் புதுப்பிக்கப்பட்டது: %1$s</string>
+    <string name="contacts_last_updated_paused">கடைசியாகப் புதுப்பிக்கப்பட்டது: %1$s · பகிர்வு இடைநிறுத்தப்பட்டது</string>
+    <string name="contacts_sharing_paused">பகிர்வு இடைநிறுத்தப்பட்டது</string>
     <string name="contacts_view_sharing_settings">பகிர்வு அமைப்புகள்</string>
     <string name="contacts_view_location_history">இருப்பிட வரலாறு</string>
     <string name="contacts_rename_contact">தொடர்புக்கு மறுபெயரிடு</string>
@@ -554,6 +557,16 @@
     <string name="history_within">±%1$s-க்குள்</string>
     <string name="history_detail_movement">இயக்கம்</string>
     <string name="history_movement_desc">%1$s %2$s திசையில் %3$s</string>
+    <string name="history_rejected">நிராகரிக்கப்பட்டது</string>
+    <string name="history_reject_reason">நிராகரிப்புக் காரணம்</string>
+    <string name="history_reject_too_imprecise">மிகவும் துல்லியமற்றது</string>
+    <string name="history_reject_stale">பழைய நிலை</string>
+    <string name="history_reject_no_fix">நிலை இல்லை</string>
+    <string name="history_reject_permission_denied">இருப்பிட அனுமதி மறுக்கப்பட்டது</string>
+    <string name="history_reject_other">மற்றவை</string>
+    <string name="history_fix_age">நிலையின் வயது</string>
+    <string name="history_fix_age_value">%1$d வி</string>
+    <string name="history_hide_rejected">நிராகரிக்கப்பட்ட அளவீடுகளை மறை</string>
 
     <string name="common_create">உருவாக்கு</string>
 

@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">ቦታዎችን አጥፋ</string>
     <string name="contacts_last_seen">ለመጨረሻ ጊዜ የታየው፡ %1$s</string>
     <string name="contacts_no_location_yet">እስካሁን ምንም የአካባቢ ውሂብ የለም</string>
+    <string name="contacts_last_updated">መጨረሻ የዘመነው: %1$s</string>
+    <string name="contacts_last_updated_paused">መጨረሻ የዘመነው: %1$s · ማጋራት ቆሟል</string>
+    <string name="contacts_sharing_paused">ማጋራት ቆሟል</string>
     <string name="contacts_view_sharing_settings">የማጋሪያ ቅንብሮች</string>
     <string name="contacts_view_location_history">የአካባቢ ታሪክ</string>
     <string name="contacts_rename_contact">እውቂያውን እንደገና ይሰይሙ</string>
@@ -554,6 +557,16 @@
     <string name="history_within">በ ±%1$s ውስጥ</string>
     <string name="history_detail_movement">እንቅስቃሴ</string>
     <string name="history_movement_desc">%1$s %2$s ወደ %3$s እየሄደ</string>
+    <string name="history_rejected">ውድቅ የተደረገ</string>
+    <string name="history_reject_reason">ውድቅ የተደረገበት ምክንያት</string>
+    <string name="history_reject_too_imprecise">በጣም ትክክል ያልሆነ</string>
+    <string name="history_reject_stale">ያረጀ ቦታ</string>
+    <string name="history_reject_no_fix">ቦታ የለም</string>
+    <string name="history_reject_permission_denied">የአካባቢ ፈቃድ ተከልክሏል</string>
+    <string name="history_reject_other">ሌላ</string>
+    <string name="history_fix_age">የቦታው ዕድሜ</string>
+    <string name="history_fix_age_value">%1$d ሰ</string>
+    <string name="history_hide_rejected">ውድቅ የተደረጉ ንባቦችን ደብቅ</string>
 
     <string name="common_create">ፍጠር</string>
 

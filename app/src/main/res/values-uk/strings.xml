@@ -269,6 +269,9 @@
     <string name="contacts_bulk_delete_locations">Видалити місцезнаходження</string>
     <string name="contacts_last_seen">Востаннє в мережі: %1$s</string>
     <string name="contacts_no_location_yet">Даних про місцезнаходження поки немає</string>
+    <string name="contacts_last_updated">Останнє оновлення: %1$s</string>
+    <string name="contacts_last_updated_paused">Останнє оновлення: %1$s · Передавання призупинено</string>
+    <string name="contacts_sharing_paused">Передавання призупинено</string>
     <string name="contacts_view_sharing_settings">Налаштування обміну</string>
     <string name="contacts_view_location_history">Історія місцезнаходжень</string>
     <string name="contacts_rename_contact">Перейменувати контакт</string>
@@ -574,6 +577,16 @@
     <string name="history_within">у межах ±%1$s</string>
     <string name="history_detail_movement">Рух</string>
     <string name="history_movement_desc">%1$s %2$s, курс %3$s</string>
+    <string name="history_rejected">Відхилено</string>
+    <string name="history_reject_reason">Причина відхилення</string>
+    <string name="history_reject_too_imprecise">Надто неточно</string>
+    <string name="history_reject_stale">Застаріле місцезнаходження</string>
+    <string name="history_reject_no_fix">Немає місцезнаходження</string>
+    <string name="history_reject_permission_denied">Доступ до геолокації заборонено</string>
+    <string name="history_reject_other">Інше</string>
+    <string name="history_fix_age">Вік даних</string>
+    <string name="history_fix_age_value">%1$d с</string>
+    <string name="history_hide_rejected">Приховати відхилені записи</string>
 
     <string name="common_create">Створити</string>
 

@@ -77,7 +77,7 @@ fun HistoryReportScreen(
     val startTimeOffset by vm.startTimeOffset.collectAsStateWithLifecycle()
     val endTimeOffset by vm.endTimeOffset.collectAsStateWithLifecycle()
     val heartbeats by vm.heartbeats.collectAsStateWithLifecycle()
-    val hideLowAccuracy by vm.hideLowAccuracy.collectAsStateWithLifecycle()
+    val hideRejected by vm.hideRejected.collectAsStateWithLifecycle()
     val addresses by vm.addresses.collectAsStateWithLifecycle()
     val selfDisplayName by vm.selfDisplayName.collectAsStateWithLifecycle()
 
@@ -260,11 +260,11 @@ fun HistoryReportScreen(
                             // Display-only: rejected readings stay stored either way, and
                             // turning this back off reveals them again immediately.
                             FilterChip(
-                                selected = hideLowAccuracy,
-                                onClick = { vm.setHideLowAccuracy(!hideLowAccuracy) },
+                                selected = hideRejected,
+                                onClick = { vm.setHideRejected(!hideRejected) },
                                 label = {
                                     Text(
-                                        stringResource(R.string.settings_hide_low_accuracy),
+                                        stringResource(R.string.history_hide_rejected),
                                         style = MaterialTheme.typography.labelMedium
                                     )
                                 }

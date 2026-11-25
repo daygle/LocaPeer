@@ -134,14 +134,24 @@ class HistoryThinningTest {
     }
 
     @Test
-    fun `rejected readings are not dropped by the accuracy filter`() {
+    fun `accuracy filter also hides coarse rejected readings`() {
         val points = listOf(
             point(1, 0.0),
             point(2, 50.0, accuracy = 900f, accepted = false),
-            point(3, 400.0)
+            point(3, 60.0, accuracy = 40f, accepted = false),
+            point(4, 400.0)
         )
-        // The coarse rejected attempt is evidence, not a trail point: the accuracy filter
-        // does not remove it (the history view decides that with its own toggle).
+        // "Hide low-accuracy points" promises to hide every point coarser than the threshold,
+        // rejected or not; a sharp-enough rejected reading is still listed.
+        assertEquals(listOf(1L, 3L, 4L), ids(HistoryThinning.process(points, 100, 0)))
+    }
+
+    @Test
+    fun `accuracy filter keeps rejected attempts that have no position`() {
+        val noFix = point(2, 0.0, accuracy = 900f, accepted = false)
+            .copy(rejectReason = RejectReason.NO_FIX.code)
+        val points = listOf(point(1, 0.0), noFix, point(3, 400.0))
+        // A no-fix row's accuracy is a placeholder, so the threshold says nothing about it.
         assertEquals(listOf(1L, 2L, 3L), ids(HistoryThinning.process(points, 100, 0)))
     }
 

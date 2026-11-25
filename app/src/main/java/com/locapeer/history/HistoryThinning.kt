@@ -1,6 +1,7 @@
 package com.locapeer.history
 
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.data.entity.RejectReason
 import com.locapeer.util.GeoMath
 
 /**
@@ -12,9 +13,10 @@ import com.locapeer.util.GeoMath
  * (missed-heartbeat alerts, overdue pins) and retention are untouched, and
  * changing the setting re-filters existing history retroactively.
  *
- * Rejected readings are passed through untouched and never become the distance
+ * Rejected readings are never distance-thinned and never become the distance
  * anchor: they are kept as evidence of an attempt (the history view renders them
- * dimmed), but they must not move or thin the accepted breadcrumb.
+ * dimmed), but they must not move or thin the accepted breadcrumb. The accuracy
+ * threshold does apply to them, as it promises to hide every coarse point.
  */
 object HistoryThinning {
 
@@ -42,7 +44,12 @@ object HistoryThinning {
             val p = points[i]
 
             // Keep rejected attempts, but keep them out of the accepted trail's geometry.
+            // The user's "hide low-accuracy points" threshold still applies to a rejected
+            // reading that carries a position: that setting promises to hide every coarse
+            // point, and a too-imprecise rejection is exactly such a point. Attempts with no
+            // position (no fix, permission withdrawn) have no meaningful radius and stay.
             if (!p.isAccepted) {
+                if (filterAcc && p.hasOwnPosition() && p.accuracy > maxAccuracyM) continue
                 kept += p
                 continue
             }
@@ -68,5 +75,11 @@ object HistoryThinning {
             anchor = p
         }
         return kept
+    }
+
+    /** False for a rejected attempt whose coordinates are only a placeholder. */
+    private fun HeartbeatEntity.hasOwnPosition(): Boolean = when (parsedRejectReason) {
+        RejectReason.NO_FIX, RejectReason.PERMISSION_DENIED -> false
+        else -> true
     }
 }

@@ -64,12 +64,12 @@ class HistoryReportViewModel @Inject constructor(
     val endTimeOffset: StateFlow<Long> = _endTimeOffset
 
     /**
-     * Display-only toggle for rejected/low-accuracy readings. Off by default: the point of
+     * Display-only toggle for rejected readings (never shared). Off by default: the point of
      * retention is that the user can see the attempts that were not shared. It never deletes
      * anything, so turning it off brings the readings straight back.
      */
-    private val _hideLowAccuracy = MutableStateFlow(false)
-    val hideLowAccuracy: StateFlow<Boolean> = _hideLowAccuracy
+    private val _hideRejected = MutableStateFlow(false)
+    val hideRejected: StateFlow<Boolean> = _hideRejected
 
     val heartbeats: StateFlow<List<HeartbeatEntity>> =
         combine(_selectedPeerId, _selectedDayStart, _startTimeOffset, _endTimeOffset) { peerId, dayStart, startOff, endOff ->
@@ -90,17 +90,17 @@ class HistoryReportViewModel @Inject constructor(
         }
             .flatMapLatest { it }
             .combine(
-                combine(prefs.settings, _hideLowAccuracy) { settings, hide ->
+                combine(prefs.settings, _hideRejected) { settings, hide ->
                     HistoryDisplay(
                         minDistanceM = settings.historyMinDistanceMeters,
                         maxAccuracyM = settings.historyMaxAccuracyMeters,
-                        hideLowAccuracy = hide,
+                        hideRejected = hide,
                     )
                 }.distinctUntilChanged()
             ) { pings, display ->
                 // History is the user's own view: every reading is shown unless the user
-                // explicitly asks to hide the low-accuracy/rejected ones.
-                val visible = if (display.hideLowAccuracy) pings.filter { it.isAccepted } else pings
+                // explicitly asks to hide the rejected ones (the accuracy setting still applies).
+                val visible = if (display.hideRejected) pings.filter { it.isAccepted } else pings
                 HistoryThinning.process(visible, display.maxAccuracyM, display.minDistanceM)
             }
             // A full day of pings is thinned with distance math per point; keep it off Main.
@@ -151,8 +151,8 @@ class HistoryReportViewModel @Inject constructor(
         _addresses.value = emptyMap()
     }
 
-    fun setHideLowAccuracy(hide: Boolean) {
-        _hideLowAccuracy.value = hide
+    fun setHideRejected(hide: Boolean) {
+        _hideRejected.value = hide
     }
 
     fun selectDay(dayStartMs: Long) {
@@ -190,7 +190,7 @@ class HistoryReportViewModel @Inject constructor(
     private data class HistoryDisplay(
         val minDistanceM: Int,
         val maxAccuracyM: Int,
-        val hideLowAccuracy: Boolean,
+        val hideRejected: Boolean,
     )
 
     companion object {

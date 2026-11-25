@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Radera platser</string>
     <string name="contacts_last_seen">Senast sedd: %1$s</string>
     <string name="contacts_no_location_yet">Ingen platsdata ännu</string>
+    <string name="contacts_last_updated">Senast uppdaterad: %1$s</string>
+    <string name="contacts_last_updated_paused">Senast uppdaterad: %1$s · Delning pausad</string>
+    <string name="contacts_sharing_paused">Delning pausad</string>
     <string name="contacts_view_sharing_settings">Delningsinställningar</string>
     <string name="contacts_view_location_history">Platshistorik</string>
     <string name="contacts_rename_contact">Byt namn på kontakt</string>
@@ -554,6 +557,16 @@
     <string name="history_within">inom ±%1$s</string>
     <string name="history_detail_movement">Rörelse</string>
     <string name="history_movement_desc">%1$s %2$s kurs %3$s</string>
+    <string name="history_rejected">Avvisad</string>
+    <string name="history_reject_reason">Orsak till avvisning</string>
+    <string name="history_reject_too_imprecise">För oexakt</string>
+    <string name="history_reject_stale">Inaktuell position</string>
+    <string name="history_reject_no_fix">Ingen position</string>
+    <string name="history_reject_permission_denied">Platsbehörighet nekad</string>
+    <string name="history_reject_other">Annat</string>
+    <string name="history_fix_age">Positionens ålder</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_hide_rejected">Dölj avvisade mätningar</string>
 
     <string name="common_create">Skapa</string>
 

@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Орындарды жою</string>
     <string name="contacts_last_seen">Соңғы рет көрінді: %1$s</string>
     <string name="contacts_no_location_yet">Орын деректері әлі жоқ</string>
+    <string name="contacts_last_updated">Соңғы жаңарту: %1$s</string>
+    <string name="contacts_last_updated_paused">Соңғы жаңарту: %1$s · Бөлісу кідіртілген</string>
+    <string name="contacts_sharing_paused">Бөлісу кідіртілген</string>
     <string name="contacts_view_sharing_settings">Бөлісу параметрлері</string>
     <string name="contacts_view_location_history">Орын тарихы</string>
     <string name="contacts_rename_contact">Контакт атын өзгерту</string>
@@ -554,6 +557,16 @@
     <string name="history_within">±%1$s ішінде</string>
     <string name="history_detail_movement">Қозғалыс</string>
     <string name="history_movement_desc">%1$s %2$s, бағыты %3$s</string>
+    <string name="history_rejected">Қабылданбады</string>
+    <string name="history_reject_reason">Қабылдамау себебі</string>
+    <string name="history_reject_too_imprecise">Тым дәл емес</string>
+    <string name="history_reject_stale">Ескірген орын</string>
+    <string name="history_reject_no_fix">Орын жоқ</string>
+    <string name="history_reject_permission_denied">Орынға рұқсат берілмеді</string>
+    <string name="history_reject_other">Басқа</string>
+    <string name="history_fix_age">Орынның жасы</string>
+    <string name="history_fix_age_value">%1$d с</string>
+    <string name="history_hide_rejected">Қабылданбаған өлшемдерді жасыру</string>
 
     <string name="common_create">Жасау</string>
 

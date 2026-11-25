@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Cihan Jê Bibe</string>
     <string name="contacts_last_seen">Cara dawî hat dîtin: %1$s</string>
     <string name="contacts_no_location_yet">Hîna daneyên cih tune</string>
+    <string name="contacts_last_updated">Dawî nûkirin: %1$s</string>
+    <string name="contacts_last_updated_paused">Dawî nûkirin: %1$s · Parvekirin rawestiyaye</string>
+    <string name="contacts_sharing_paused">Parvekirin rawestiyaye</string>
     <string name="contacts_view_sharing_settings">Sazkirinên Parvekirinê</string>
     <string name="contacts_view_location_history">Dîroka Cih</string>
     <string name="contacts_rename_contact">Têkiliyê Ji Nû Ve Nav Bike</string>
@@ -554,6 +557,16 @@
     <string name="history_within">di nav ±%1$s de</string>
     <string name="history_detail_movement">Tevger</string>
     <string name="history_movement_desc">%1$s %2$s ber bi %3$s ve</string>
+    <string name="history_rejected">Hat redkirin</string>
+    <string name="history_reject_reason">Sedema redkirinê</string>
+    <string name="history_reject_too_imprecise">Pir ne rast e</string>
+    <string name="history_reject_stale">Cihê kevn</string>
+    <string name="history_reject_no_fix">Cih tune</string>
+    <string name="history_reject_permission_denied">Destûra cihê hat redkirin</string>
+    <string name="history_reject_other">Yên din</string>
+    <string name="history_fix_age">Temenê cihê</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_hide_rejected">Xwendinên redkirî veşêre</string>
 
     <string name="common_create">Çêbike</string>
 

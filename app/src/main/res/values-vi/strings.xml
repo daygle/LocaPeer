@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">Xóa vị trí</string>
     <string name="contacts_last_seen">Hoạt động gần nhất: %1$s</string>
     <string name="contacts_no_location_yet">Chưa có dữ liệu vị trí</string>
+    <string name="contacts_last_updated">Cập nhật lần cuối: %1$s</string>
+    <string name="contacts_last_updated_paused">Cập nhật lần cuối: %1$s · Đã tạm dừng chia sẻ</string>
+    <string name="contacts_sharing_paused">Đã tạm dừng chia sẻ</string>
     <string name="contacts_view_sharing_settings">Cài đặt chia sẻ</string>
     <string name="contacts_view_location_history">Lịch sử vị trí</string>
     <string name="contacts_rename_contact">Đổi tên liên hệ</string>
@@ -544,6 +547,16 @@
     <string name="history_within">trong phạm vi ±%1$s</string>
     <string name="history_detail_movement">Chuyển động</string>
     <string name="history_movement_desc">%1$s %2$s hướng %3$s</string>
+    <string name="history_rejected">Bị từ chối</string>
+    <string name="history_reject_reason">Lý do từ chối</string>
+    <string name="history_reject_too_imprecise">Quá thiếu chính xác</string>
+    <string name="history_reject_stale">Vị trí cũ</string>
+    <string name="history_reject_no_fix">Không có vị trí</string>
+    <string name="history_reject_permission_denied">Quyền vị trí bị từ chối</string>
+    <string name="history_reject_other">Khác</string>
+    <string name="history_fix_age">Tuổi của vị trí</string>
+    <string name="history_fix_age_value">%1$d giây</string>
+    <string name="history_hide_rejected">Ẩn các lần đọc bị từ chối</string>
 
     <string name="common_create">Tạo</string>
 

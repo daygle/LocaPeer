@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">ସ୍ଥାନ ଡିଲିଟ୍ କରନ୍ତୁ</string>
     <string name="contacts_last_seen">ଶେଷ ଥର ଦେଖାଯାଇଥିଲା: %1$s</string>
     <string name="contacts_no_location_yet">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ସ୍ଥାନ ଡାଟା ନାହିଁ</string>
+    <string name="contacts_last_updated">ଶେଷ ଅପଡେଟ୍: %1$s</string>
+    <string name="contacts_last_updated_paused">ଶେଷ ଅପଡେଟ୍: %1$s · ସେୟାରିଂ ବିରତ</string>
+    <string name="contacts_sharing_paused">ସେୟାରିଂ ବିରତ</string>
     <string name="contacts_view_sharing_settings">ଅଂଶୀଦାର ସେଟିଂସମୂହ</string>
     <string name="contacts_view_location_history">ସ୍ଥାନ ଇତିହାସ</string>
     <string name="contacts_rename_contact">ସମ୍ପର୍କର ନାମ ବଦଳାନ୍ତୁ</string>
@@ -554,6 +557,16 @@
     <string name="history_within">±%1$s ମଧ୍ୟରେ</string>
     <string name="history_detail_movement">ଗତିବିଧି</string>
     <string name="history_movement_desc">%1$s %2$s ଅଭିମୁଖେ %3$s</string>
+    <string name="history_rejected">ପ୍ରତ୍ୟାଖ୍ୟାତ</string>
+    <string name="history_reject_reason">ପ୍ରତ୍ୟାଖ୍ୟାନର କାରଣ</string>
+    <string name="history_reject_too_imprecise">ଅତ୍ୟଧିକ ଅସଠିକ୍</string>
+    <string name="history_reject_stale">ପୁରୁଣା ସ୍ଥିତି</string>
+    <string name="history_reject_no_fix">ସ୍ଥିତି ନାହିଁ</string>
+    <string name="history_reject_permission_denied">ଲୋକେସନ୍ ଅନୁମତି ପ୍ରତ୍ୟାଖ୍ୟାତ</string>
+    <string name="history_reject_other">ଅନ୍ୟ</string>
+    <string name="history_fix_age">ସ୍ଥିତିର ବୟସ</string>
+    <string name="history_fix_age_value">%1$d ସେ</string>
+    <string name="history_hide_rejected">ପ୍ରତ୍ୟାଖ୍ୟାତ ରିଡିଂ ଲୁଚାନ୍ତୁ</string>
 
     <string name="common_create">ତିଆରି କରନ୍ତୁ</string>
 

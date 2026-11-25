@@ -312,10 +312,9 @@
     <string name="contacts_bulk_delete_locations">Delete Locations</string>
     <string name="contacts_last_seen">Last seen: %1$s</string>
     <string name="contacts_no_location_yet">No location data yet</string>
-    <!-- Staleness labels; translations pending (see the history_rejected note). -->
-    <string name="contacts_last_updated" tools:ignore="MissingTranslation">Last updated %1$s</string>
-    <string name="contacts_last_updated_paused" tools:ignore="MissingTranslation">Last updated %1$s · Sharing paused</string>
-    <string name="contacts_sharing_paused" tools:ignore="MissingTranslation">Sharing paused</string>
+    <string name="contacts_last_updated">Last updated %1$s</string>
+    <string name="contacts_last_updated_paused">Last updated %1$s · Sharing paused</string>
+    <string name="contacts_sharing_paused">Sharing paused</string>
     <string name="contacts_view_sharing_settings">Sharing Settings</string>
     <string name="contacts_view_location_history">Location History</string>
     <string name="contacts_rename_contact">Rename Contact</string>
@@ -712,17 +711,18 @@
     <string name="history_within">Within ±%1$s</string>
     <string name="history_detail_movement">Movement</string>
     <string name="history_movement_desc">%1$s %2$s heading %3$s</string>
-    <!-- Retained low-accuracy readings. Translations pending; MissingTranslation is
-         suppressed per string rather than shipping English text as a translation. -->
-    <string name="history_rejected" tools:ignore="MissingTranslation">Rejected</string>
-    <string name="history_reject_reason" tools:ignore="MissingTranslation">Reject reason</string>
-    <string name="history_reject_too_imprecise" tools:ignore="MissingTranslation">Too imprecise</string>
-    <string name="history_reject_stale" tools:ignore="MissingTranslation">Stale fix</string>
-    <string name="history_reject_no_fix" tools:ignore="MissingTranslation">No fix</string>
-    <string name="history_reject_permission_denied" tools:ignore="MissingTranslation">Location permission denied</string>
-    <string name="history_reject_other" tools:ignore="MissingTranslation">Other</string>
-    <string name="history_fix_age" tools:ignore="MissingTranslation">Fix age</string>
-    <string name="history_fix_age_value" tools:ignore="MissingTranslation,PluralsCandidate">%1$d s</string>
+    <!-- Retained low-accuracy readings. -->
+    <string name="history_rejected">Rejected</string>
+    <string name="history_reject_reason">Reject reason</string>
+    <string name="history_reject_too_imprecise">Too imprecise</string>
+    <string name="history_reject_stale">Stale fix</string>
+    <string name="history_reject_no_fix">No fix</string>
+    <string name="history_reject_permission_denied">Location permission denied</string>
+    <string name="history_reject_other">Other</string>
+    <string name="history_fix_age">Fix age</string>
+    <string name="history_fix_age_value" tools:ignore="PluralsCandidate">%1$d s</string>
+    <!-- History screen chip: hides readings that were not shared, display-only. -->
+    <string name="history_hide_rejected">Hide Rejected Readings</string>
 
     <string name="common_create">Create</string>
 

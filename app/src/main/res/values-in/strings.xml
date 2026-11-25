@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">Hapus Lokasi</string>
     <string name="contacts_last_seen">Terakhir terlihat: %1$s</string>
     <string name="contacts_no_location_yet">Belum ada data lokasi</string>
+    <string name="contacts_last_updated">Terakhir diperbarui: %1$s</string>
+    <string name="contacts_last_updated_paused">Terakhir diperbarui: %1$s · Berbagi dijeda</string>
+    <string name="contacts_sharing_paused">Berbagi dijeda</string>
     <string name="contacts_view_sharing_settings">Setelan Berbagi</string>
     <string name="contacts_view_location_history">Riwayat Lokasi</string>
     <string name="contacts_rename_contact">Ganti Nama Kontak</string>
@@ -544,6 +547,16 @@
     <string name="history_within">dalam ±%1$s</string>
     <string name="history_detail_movement">Pergerakan</string>
     <string name="history_movement_desc">%1$s %2$s arah %3$s</string>
+    <string name="history_rejected">Ditolak</string>
+    <string name="history_reject_reason">Alasan penolakan</string>
+    <string name="history_reject_too_imprecise">Terlalu tidak akurat</string>
+    <string name="history_reject_stale">Posisi usang</string>
+    <string name="history_reject_no_fix">Tidak ada posisi</string>
+    <string name="history_reject_permission_denied">Izin lokasi ditolak</string>
+    <string name="history_reject_other">Lainnya</string>
+    <string name="history_fix_age">Usia posisi</string>
+    <string name="history_fix_age_value">%1$d dtk</string>
+    <string name="history_hide_rejected">Sembunyikan bacaan yang ditolak</string>
 
     <string name="common_create">Buat</string>
 

@@ -39,6 +39,18 @@ class RejectedReadingRetentionTest {
     }
 
     @Test
+    fun `detail cutoff lands on an hour boundary so buckets are never split`() {
+        // "now" is 37 minutes past an hour: the cutoff must drop back to that hour's start,
+        // or a daily run would aggregate a partial bucket and later overwrite it.
+        val now = 1_000L * day + 5 * hour + 37 * 60_000L
+        assertEquals(1_000L * day + 5 * hour - 7 * day, RejectedReadingRetention.fullDetailCutoff(now))
+        assertEquals(
+            RejectedReadingRetention.fullDetailCutoff(now),
+            RejectedReadingRetention.hourStart(RejectedReadingRetention.fullDetailCutoff(now))
+        )
+    }
+
+    @Test
     fun `hour bucket is the start of the UTC hour`() {
         assertEquals(0L, RejectedReadingRetention.hourStart(0L))
         assertEquals(0L, RejectedReadingRetention.hourStart(hour - 1))

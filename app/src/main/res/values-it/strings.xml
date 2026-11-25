@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Elimina posizioni</string>
     <string name="contacts_last_seen">Ultimo avvistamento: %1$s</string>
     <string name="contacts_no_location_yet">Ancora nessun dato sulla posizione</string>
+    <string name="contacts_last_updated">Ultimo aggiornamento: %1$s</string>
+    <string name="contacts_last_updated_paused">Ultimo aggiornamento: %1$s · Condivisione in pausa</string>
+    <string name="contacts_sharing_paused">Condivisione in pausa</string>
     <string name="contacts_view_sharing_settings">Visualizza impostazioni di condivisione</string>
     <string name="contacts_view_location_history">Visualizza cronologia posizioni</string>
     <string name="contacts_rename_contact">Rinomina contatto</string>
@@ -554,6 +557,16 @@
     <string name="history_within">entro ±%1$s</string>
     <string name="history_detail_movement">Movimento</string>
     <string name="history_movement_desc">%1$s %2$s direzione %3$s</string>
+    <string name="history_rejected">Rifiutata</string>
+    <string name="history_reject_reason">Motivo del rifiuto</string>
+    <string name="history_reject_too_imprecise">Troppo imprecisa</string>
+    <string name="history_reject_stale">Posizione obsoleta</string>
+    <string name="history_reject_no_fix">Nessuna posizione</string>
+    <string name="history_reject_permission_denied">Autorizzazione alla posizione negata</string>
+    <string name="history_reject_other">Altro</string>
+    <string name="history_fix_age">Età della posizione</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_hide_rejected">Nascondi rilevamenti rifiutati</string>
 
     <string name="common_create">Crea</string>
 

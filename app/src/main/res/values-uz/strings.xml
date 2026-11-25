@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Joylashuvlarni o‘chirish</string>
     <string name="contacts_last_seen">Oxirgi marta ko‘rilgan: %1$s</string>
     <string name="contacts_no_location_yet">Joylashuv ma’lumotlari hali yo‘q</string>
+    <string name="contacts_last_updated">Oxirgi yangilanish: %1$s</string>
+    <string name="contacts_last_updated_paused">Oxirgi yangilanish: %1$s · Ulashish to‘xtatilgan</string>
+    <string name="contacts_sharing_paused">Ulashish to‘xtatilgan</string>
     <string name="contacts_view_sharing_settings">Baham ko‘rish sozlamalari</string>
     <string name="contacts_view_location_history">Joylashuv tarixi</string>
     <string name="contacts_rename_contact">Kontakt nomini o‘zgartirish</string>
@@ -554,6 +557,16 @@
     <string name="history_within">±%1$s ichida</string>
     <string name="history_detail_movement">Harakat</string>
     <string name="history_movement_desc">%1$s %2$s, yo‘nalishi %3$s</string>
+    <string name="history_rejected">Rad etilgan</string>
+    <string name="history_reject_reason">Rad etish sababi</string>
+    <string name="history_reject_too_imprecise">Juda noaniq</string>
+    <string name="history_reject_stale">Eskirgan joylashuv</string>
+    <string name="history_reject_no_fix">Joylashuv yo‘q</string>
+    <string name="history_reject_permission_denied">Joylashuv ruxsati rad etildi</string>
+    <string name="history_reject_other">Boshqa</string>
+    <string name="history_fix_age">Joylashuv yoshi</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_hide_rejected">Rad etilgan o‘lchovlarni yashirish</string>
 
     <string name="common_create">Yaratish</string>
 

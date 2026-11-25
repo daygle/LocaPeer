@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Futa Maeneo</string>
     <string name="contacts_last_seen">Imeonekana mara ya mwisho: %1$s</string>
     <string name="contacts_no_location_yet">Bado hakuna data ya eneo</string>
+    <string name="contacts_last_updated">Ilisasishwa mwisho: %1$s</string>
+    <string name="contacts_last_updated_paused">Ilisasishwa mwisho: %1$s · Kushiriki kumesitishwa</string>
+    <string name="contacts_sharing_paused">Kushiriki kumesitishwa</string>
     <string name="contacts_view_sharing_settings">Mipangilio ya Kushiriki</string>
     <string name="contacts_view_location_history">Historia ya Mahali</string>
     <string name="contacts_rename_contact">Badilisha Jina la Anwani</string>
@@ -554,6 +557,16 @@
     <string name="history_within">ndani ya ±%1$s</string>
     <string name="history_detail_movement">Mwendo</string>
     <string name="history_movement_desc">%1$s %2$s kuelekea %3$s</string>
+    <string name="history_rejected">Imekataliwa</string>
+    <string name="history_reject_reason">Sababu ya kukataliwa</string>
+    <string name="history_reject_too_imprecise">Si sahihi vya kutosha</string>
+    <string name="history_reject_stale">Mahali pa zamani</string>
+    <string name="history_reject_no_fix">Hakuna mahali</string>
+    <string name="history_reject_permission_denied">Ruhusa ya mahali imekataliwa</string>
+    <string name="history_reject_other">Nyingine</string>
+    <string name="history_fix_age">Umri wa mahali</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_hide_rejected">Ficha usomaji uliokataliwa</string>
 
     <string name="common_create">Tengeneza</string>
 

@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">ലൊക്കേഷനുകൾ ഇല്ലാതാക്കുക</string>
     <string name="contacts_last_seen">അവസാനമായി കണ്ടത്: %1$s</string>
     <string name="contacts_no_location_yet">ലൊക്കേഷൻ ഡാറ്റ ലഭ്യമല്ല</string>
+    <string name="contacts_last_updated">അവസാനം അപ്‌ഡേറ്റ് ചെയ്തത്: %1$s</string>
+    <string name="contacts_last_updated_paused">അവസാനം അപ്‌ഡേറ്റ് ചെയ്തത്: %1$s · പങ്കിടൽ താൽക്കാലികമായി നിർത്തി</string>
+    <string name="contacts_sharing_paused">പങ്കിടൽ താൽക്കാലികമായി നിർത്തി</string>
     <string name="contacts_view_sharing_settings">പങ്കിടൽ ക്രമീകരണങ്ങൾ</string>
     <string name="contacts_view_location_history">ലൊക്കേഷൻ ചരിത്രം</string>
     <string name="contacts_rename_contact">പേര് മാറ്റുക</string>
@@ -554,6 +557,16 @@
     <string name="history_within">±%1$s ഉള്ളിൽ</string>
     <string name="history_detail_movement">ചലനം</string>
     <string name="history_movement_desc">%1$s %2$s ദിശയിൽ %3$s</string>
+    <string name="history_rejected">നിരസിച്ചു</string>
+    <string name="history_reject_reason">നിരസിക്കാനുള്ള കാരണം</string>
+    <string name="history_reject_too_imprecise">വളരെ കൃത്യതയില്ല</string>
+    <string name="history_reject_stale">പഴയ സ്ഥാനം</string>
+    <string name="history_reject_no_fix">സ്ഥാനമില്ല</string>
+    <string name="history_reject_permission_denied">ലൊക്കേഷൻ അനുമതി നിരസിച്ചു</string>
+    <string name="history_reject_other">മറ്റുള്ളവ</string>
+    <string name="history_fix_age">സ്ഥാനത്തിന്റെ പഴക്കം</string>
+    <string name="history_fix_age_value">%1$d സെ</string>
+    <string name="history_hide_rejected">നിരസിച്ച റീഡിംഗുകൾ മറയ്ക്കുക</string>
 
     <string name="common_create">സൃഷ്ടിക്കുക</string>
 

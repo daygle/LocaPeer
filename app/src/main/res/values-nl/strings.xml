@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Locaties verwijderen</string>
     <string name="contacts_last_seen">Laatst gezien: %1$s</string>
     <string name="contacts_no_location_yet">Nog geen locatiegegevens</string>
+    <string name="contacts_last_updated">Laatst bijgewerkt: %1$s</string>
+    <string name="contacts_last_updated_paused">Laatst bijgewerkt: %1$s · Delen gepauzeerd</string>
+    <string name="contacts_sharing_paused">Delen gepauzeerd</string>
     <string name="contacts_view_sharing_settings">Deelinstellingen</string>
     <string name="contacts_view_location_history">Locatiegeschiedenis</string>
     <string name="contacts_rename_contact">Contact hernoemen</string>
@@ -554,6 +557,16 @@
     <string name="history_within">binnen ±%1$s</string>
     <string name="history_detail_movement">Beweging</string>
     <string name="history_movement_desc">%1$s %2$s richting %3$s</string>
+    <string name="history_rejected">Afgewezen</string>
+    <string name="history_reject_reason">Reden van afwijzing</string>
+    <string name="history_reject_too_imprecise">Te onnauwkeurig</string>
+    <string name="history_reject_stale">Verouderde positie</string>
+    <string name="history_reject_no_fix">Geen positie</string>
+    <string name="history_reject_permission_denied">Locatietoestemming geweigerd</string>
+    <string name="history_reject_other">Overig</string>
+    <string name="history_fix_age">Leeftijd van positie</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_hide_rejected">Afgewezen metingen verbergen</string>
 
     <string name="common_create">Aanmaken</string>
 

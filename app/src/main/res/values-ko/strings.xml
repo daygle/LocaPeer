@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">위치 삭제</string>
     <string name="contacts_last_seen">마지막 확인: %1$s</string>
     <string name="contacts_no_location_yet">아직 위치 데이터 없음</string>
+    <string name="contacts_last_updated">마지막 업데이트: %1$s</string>
+    <string name="contacts_last_updated_paused">마지막 업데이트: %1$s · 공유 일시중지됨</string>
+    <string name="contacts_sharing_paused">공유 일시중지됨</string>
     <string name="contacts_view_sharing_settings">공유 설정</string>
     <string name="contacts_view_location_history">위치 기록</string>
     <string name="contacts_rename_contact">연락처 이름 바꾸기</string>
@@ -544,6 +547,16 @@
     <string name="history_within">±%1$s 이내</string>
     <string name="history_detail_movement">이동</string>
     <string name="history_movement_desc">%1$s %2$s, 방향 %3$s</string>
+    <string name="history_rejected">거부됨</string>
+    <string name="history_reject_reason">거부 사유</string>
+    <string name="history_reject_too_imprecise">정확도 부족</string>
+    <string name="history_reject_stale">오래된 위치</string>
+    <string name="history_reject_no_fix">위치 없음</string>
+    <string name="history_reject_permission_denied">위치 권한 거부됨</string>
+    <string name="history_reject_other">기타</string>
+    <string name="history_fix_age">위치 경과 시간</string>
+    <string name="history_fix_age_value">%1$d초</string>
+    <string name="history_hide_rejected">거부된 기록 숨기기</string>
 
     <string name="common_create">만들기</string>
 

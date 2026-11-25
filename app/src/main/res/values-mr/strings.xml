@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">स्थाने हटवा</string>
     <string name="contacts_last_seen">शेवटचे पाहिले: %1$s</string>
     <string name="contacts_no_location_yet">अद्याप कोणताही स्थान डेटा नाही</string>
+    <string name="contacts_last_updated">शेवटचे अपडेट: %1$s</string>
+    <string name="contacts_last_updated_paused">शेवटचे अपडेट: %1$s · शेअरिंग थांबवले</string>
+    <string name="contacts_sharing_paused">शेअरिंग थांबवले</string>
     <string name="contacts_view_sharing_settings">शेअरिंग सेटिंग्ज</string>
     <string name="contacts_view_location_history">स्थान इतिहास</string>
     <string name="contacts_rename_contact">संपर्काचे नाव बदला</string>
@@ -554,6 +557,16 @@
     <string name="history_within">±%1$s च्या आत</string>
     <string name="history_detail_movement">हालचाल</string>
     <string name="history_movement_desc">%1$s %2$s कडे जात आहे %3$s</string>
+    <string name="history_rejected">नाकारले</string>
+    <string name="history_reject_reason">नाकारण्याचे कारण</string>
+    <string name="history_reject_too_imprecise">खूप अचूक नाही</string>
+    <string name="history_reject_stale">जुने स्थान</string>
+    <string name="history_reject_no_fix">स्थान नाही</string>
+    <string name="history_reject_permission_denied">स्थान परवानगी नाकारली</string>
+    <string name="history_reject_other">इतर</string>
+    <string name="history_fix_age">स्थानाचे वय</string>
+    <string name="history_fix_age_value">%1$d से</string>
+    <string name="history_hide_rejected">नाकारलेली रीडिंग लपवा</string>
 
     <string name="common_create">तयार करा</string>
 

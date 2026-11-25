@@ -266,6 +266,9 @@
     <string name="contacts_bulk_delete_locations">Supprimer les localisations</string>
     <string name="contacts_last_seen">Vu pour la dernière fois : %1$s</string>
     <string name="contacts_no_location_yet">Pas encore de données de localisation</string>
+    <string name="contacts_last_updated">Dernière mise à jour : %1$s</string>
+    <string name="contacts_last_updated_paused">Dernière mise à jour : %1$s · Partage en pause</string>
+    <string name="contacts_sharing_paused">Partage en pause</string>
     <string name="contacts_view_sharing_settings">Voir les paramètres de partage</string>
     <string name="contacts_view_location_history">Voir l\'historique des localisations</string>
     <string name="contacts_rename_contact">Renommer le contact</string>
@@ -555,6 +558,16 @@
     <string name="history_within">à ±%1$s près</string>
     <string name="history_detail_movement">Mouvement</string>
     <string name="history_movement_desc">%1$s %2$s direction %3$s</string>
+    <string name="history_rejected">Rejetée</string>
+    <string name="history_reject_reason">Motif du rejet</string>
+    <string name="history_reject_too_imprecise">Trop imprécise</string>
+    <string name="history_reject_stale">Position périmée</string>
+    <string name="history_reject_no_fix">Aucune position</string>
+    <string name="history_reject_permission_denied">Autorisation de localisation refusée</string>
+    <string name="history_reject_other">Autre</string>
+    <string name="history_fix_age">Âge de la position</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_hide_rejected">Masquer les relevés rejetés</string>
 
     <string name="common_create">Créer</string>
 

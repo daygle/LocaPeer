@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">刪除位置</string>
     <string name="contacts_last_seen">上次上線：%1$s</string>
     <string name="contacts_no_location_yet">還沒有位置資料</string>
+    <string name="contacts_last_updated">上次更新：%1$s</string>
+    <string name="contacts_last_updated_paused">上次更新：%1$s · 已暫停分享</string>
+    <string name="contacts_sharing_paused">已暫停分享</string>
     <string name="contacts_view_sharing_settings">分享設定</string>
     <string name="contacts_view_location_history">位置紀錄</string>
     <string name="contacts_rename_contact">重新命名聯絡人</string>
@@ -544,6 +547,16 @@
     <string name="history_within">±%1$s 以內</string>
     <string name="history_detail_movement">移動</string>
     <string name="history_movement_desc">%1$s %2$s，方向 %3$s</string>
+    <string name="history_rejected">已拒絕</string>
+    <string name="history_reject_reason">拒絕原因</string>
+    <string name="history_reject_too_imprecise">精確度不足</string>
+    <string name="history_reject_stale">過時的位置</string>
+    <string name="history_reject_no_fix">無位置</string>
+    <string name="history_reject_permission_denied">位置權限遭拒</string>
+    <string name="history_reject_other">其他</string>
+    <string name="history_fix_age">位置時長</string>
+    <string name="history_fix_age_value">%1$d 秒</string>
+    <string name="history_hide_rejected">隱藏遭拒絕的紀錄</string>
 
     <string name="common_create">建立</string>
 

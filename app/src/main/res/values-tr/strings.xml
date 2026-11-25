@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Konumları Sil</string>
     <string name="contacts_last_seen">Son görülme: %1$s</string>
     <string name="contacts_no_location_yet">Henüz konum verisi yok</string>
+    <string name="contacts_last_updated">Son güncelleme: %1$s</string>
+    <string name="contacts_last_updated_paused">Son güncelleme: %1$s · Paylaşım duraklatıldı</string>
+    <string name="contacts_sharing_paused">Paylaşım duraklatıldı</string>
     <string name="contacts_view_sharing_settings">Paylaşım Ayarları</string>
     <string name="contacts_view_location_history">Konum Geçmişi</string>
     <string name="contacts_rename_contact">Kişiyi Yeniden Adlandır</string>
@@ -554,6 +557,16 @@
     <string name="history_within">±%1$s içinde</string>
     <string name="history_detail_movement">Hareket</string>
     <string name="history_movement_desc">%1$s %2$s, yön %3$s</string>
+    <string name="history_rejected">Reddedildi</string>
+    <string name="history_reject_reason">Reddetme nedeni</string>
+    <string name="history_reject_too_imprecise">Çok hassas değil</string>
+    <string name="history_reject_stale">Eski konum</string>
+    <string name="history_reject_no_fix">Konum yok</string>
+    <string name="history_reject_permission_denied">Konum izni reddedildi</string>
+    <string name="history_reject_other">Diğer</string>
+    <string name="history_fix_age">Konumun yaşı</string>
+    <string name="history_fix_age_value">%1$d sn</string>
+    <string name="history_hide_rejected">Reddedilen ölçümleri gizle</string>
 
     <string name="common_create">Oluştur</string>
 

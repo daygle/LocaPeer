@@ -25,8 +25,15 @@ object RejectedReadingRetention {
     private const val DAY_MS = 86_400_000L
     private const val HOUR_MS = 3_600_000L
 
-    /** Age cutoff for rows that should be downsampled or deleted from the detail table. */
-    fun fullDetailCutoff(nowMs: Long): Long = nowMs - FULL_DETAIL_DAYS * DAY_MS
+    /**
+     * Age cutoff for rows that should be downsampled or deleted from the detail table.
+     *
+     * Rounded down to the start of an hour so every run aggregates whole hour buckets. With
+     * a mid-hour cutoff a run would summarise and delete only part of that hour, and the
+     * next run's REPLACE of the same bucket would overwrite that partial count with the
+     * remainder - silently losing the first part.
+     */
+    fun fullDetailCutoff(nowMs: Long): Long = hourStart(nowMs - FULL_DETAIL_DAYS * DAY_MS)
 
     /** Age cutoff for hourly aggregate rows, which expire after the aggregate window. */
     fun aggregateCutoff(nowMs: Long): Long = nowMs - AGGREGATE_DAYS * DAY_MS

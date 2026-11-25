@@ -263,6 +263,9 @@
     <string name="contacts_bulk_delete_locations">တည်နေရာများ ဖျက်ရန်</string>
     <string name="contacts_last_seen">နောက်ဆုံးတွေ့ရှိမှု- %1$s</string>
     <string name="contacts_no_location_yet">တည်နေရာဒေတာ မရှိသေးပါ</string>
+    <string name="contacts_last_updated">နောက်ဆုံး အပ်ဒိတ်: %1$s</string>
+    <string name="contacts_last_updated_paused">နောက်ဆုံး အပ်ဒိတ်: %1$s · မျှဝေမှု ခေတ္တရပ်ထားသည်</string>
+    <string name="contacts_sharing_paused">မျှဝေမှု ခေတ္တရပ်ထားသည်</string>
     <string name="contacts_view_sharing_settings">မျှဝေမှု ဆက်တင်များ</string>
     <string name="contacts_view_location_history">တည်နေရာ မှတ်တမ်း</string>
     <string name="contacts_rename_contact">အမည်ပြောင်းရန်</string>
@@ -544,6 +547,16 @@
     <string name="history_within">±%1$s အတွင်း</string>
     <string name="history_detail_movement">လှုပ်ရှားမှု</string>
     <string name="history_movement_desc">%1$s %2$s၊ ဦးတည်ချက် %3$s</string>
+    <string name="history_rejected">ငြင်းပယ်ထားသည်</string>
+    <string name="history_reject_reason">ငြင်းပယ်ရသည့် အကြောင်းရင်း</string>
+    <string name="history_reject_too_imprecise">တိကျမှု မလုံလောက်</string>
+    <string name="history_reject_stale">ဟောင်းနေသော တည်နေရာ</string>
+    <string name="history_reject_no_fix">တည်နေရာ မရှိ</string>
+    <string name="history_reject_permission_denied">တည်နေရာ ခွင့်ပြုချက် ငြင်းပယ်ခံရသည်</string>
+    <string name="history_reject_other">အခြား</string>
+    <string name="history_fix_age">တည်နေရာ သက်တမ်း</string>
+    <string name="history_fix_age_value">%1$d စက္ကန့်</string>
+    <string name="history_hide_rejected">ငြင်းပယ်ထားသော ဖတ်ရှုမှုများကို ဖျောက်ရန်</string>
 
     <string name="common_create">ဖန်တီးရန်</string>
 

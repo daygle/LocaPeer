@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">ځایونه پاک کړئ</string>
     <string name="contacts_last_seen">وروستی ځل لیدل شوی: %1$s</string>
     <string name="contacts_no_location_yet">لا تر اوسه د ځای معلومات نشته</string>
+    <string name="contacts_last_updated">وروستی تازه‌کول: %1$s</string>
+    <string name="contacts_last_updated_paused">وروستی تازه‌کول: %1$s · شریکول ودرول شوي</string>
+    <string name="contacts_sharing_paused">شریکول ودرول شوي</string>
     <string name="contacts_view_sharing_settings">د شریکولو ترتیبات</string>
     <string name="contacts_view_location_history">د ځای تاریخچه</string>
     <string name="contacts_rename_contact">د اړیکې نوم بدلول</string>
@@ -554,6 +557,16 @@
     <string name="history_within">په ±%1$s کې</string>
     <string name="history_detail_movement">حرکت</string>
     <string name="history_movement_desc">%1$s %2$s د %3$s په لور</string>
+    <string name="history_rejected">رد شوی</string>
+    <string name="history_reject_reason">د ردولو لامل</string>
+    <string name="history_reject_too_imprecise">ډېر ناسم</string>
+    <string name="history_reject_stale">زوړ موقعیت</string>
+    <string name="history_reject_no_fix">موقعیت نشته</string>
+    <string name="history_reject_permission_denied">د موقعیت اجازه رد شوه</string>
+    <string name="history_reject_other">نور</string>
+    <string name="history_fix_age">د موقعیت عمر</string>
+    <string name="history_fix_age_value">%1$d ث</string>
+    <string name="history_hide_rejected">رد شوي لوستنې پټې کړئ</string>
 
     <string name="common_create">جوړول</string>
 

@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Share Wurare</string>
     <string name="contacts_last_seen">Lokaci na ƙarshe da aka gani: %1$s</string>
     <string name="contacts_no_location_yet">Babu bayanan wuri tukuna</string>
+    <string name="contacts_last_updated">Sabuntawa ta ƙarshe: %1$s</string>
+    <string name="contacts_last_updated_paused">Sabuntawa ta ƙarshe: %1$s · An dakatar da rabawa</string>
+    <string name="contacts_sharing_paused">An dakatar da rabawa</string>
     <string name="contacts_view_sharing_settings">Saitunan Rabawa</string>
     <string name="contacts_view_location_history">Tarihin Wuri</string>
     <string name="contacts_rename_contact">Canza Sunan Lamba</string>
@@ -554,6 +557,16 @@
     <string name="history_within">a cikin ±%1$s</string>
     <string name="history_detail_movement">Motsi</string>
     <string name="history_movement_desc">%1$s %2$s na tafiya %3$s</string>
+    <string name="history_rejected">An ƙi</string>
+    <string name="history_reject_reason">Dalilin ƙi</string>
+    <string name="history_reject_too_imprecise">Bai yi daidai sosai ba</string>
+    <string name="history_reject_stale">Tsohon wuri</string>
+    <string name="history_reject_no_fix">Babu wuri</string>
+    <string name="history_reject_permission_denied">An hana izinin wuri</string>
+    <string name="history_reject_other">Wani</string>
+    <string name="history_fix_age">Shekarun wurin</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_hide_rejected">Ɓoye karatun da aka ƙi</string>
 
     <string name="common_create">Ƙirƙira</string>
 

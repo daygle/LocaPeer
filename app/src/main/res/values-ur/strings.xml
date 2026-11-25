@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">مقامات حذف کریں</string>
     <string name="contacts_last_seen">آخری بار دیکھا گیا: %1$s</string>
     <string name="contacts_no_location_yet">ابھی کوئی مقام کا ڈیٹا نہیں</string>
+    <string name="contacts_last_updated">آخری اپ ڈیٹ: %1$s</string>
+    <string name="contacts_last_updated_paused">آخری اپ ڈیٹ: %1$s · شیئرنگ موقوف</string>
+    <string name="contacts_sharing_paused">شیئرنگ موقوف</string>
     <string name="contacts_view_sharing_settings">اشتراک کی ترتیبات</string>
     <string name="contacts_view_location_history">مقام کی تاریخ</string>
     <string name="contacts_rename_contact">رابطے کا نام بدلیں</string>
@@ -554,6 +557,16 @@
     <string name="history_within">±%1$s کے اندر</string>
     <string name="history_detail_movement">حرکت</string>
     <string name="history_movement_desc">%1$s %2$s سمت %3$s</string>
+    <string name="history_rejected">مسترد</string>
+    <string name="history_reject_reason">مسترد کرنے کی وجہ</string>
+    <string name="history_reject_too_imprecise">بہت غیر درست</string>
+    <string name="history_reject_stale">پرانا مقام</string>
+    <string name="history_reject_no_fix">کوئی مقام نہیں</string>
+    <string name="history_reject_permission_denied">مقام کی اجازت مسترد</string>
+    <string name="history_reject_other">دیگر</string>
+    <string name="history_fix_age">مقام کی عمر</string>
+    <string name="history_fix_age_value">%1$d سیکنڈ</string>
+    <string name="history_hide_rejected">مسترد شدہ ریڈنگز چھپائیں</string>
 
     <string name="common_create">بنائیں</string>
 

@@ -265,6 +265,9 @@
     <string name="contacts_bulk_delete_locations">Διαγραφή τοποθεσιών</string>
     <string name="contacts_last_seen">Τελευταία εμφάνιση: %1$s</string>
     <string name="contacts_no_location_yet">Δεν υπάρχουν ακόμη δεδομένα τοποθεσίας</string>
+    <string name="contacts_last_updated">Τελευταία ενημέρωση: %1$s</string>
+    <string name="contacts_last_updated_paused">Τελευταία ενημέρωση: %1$s · Η κοινοποίηση σε παύση</string>
+    <string name="contacts_sharing_paused">Η κοινοποίηση σε παύση</string>
     <string name="contacts_view_sharing_settings">Ρυθμίσεις κοινοποίησης</string>
     <string name="contacts_view_location_history">Ιστορικό τοποθεσίας</string>
     <string name="contacts_rename_contact">Μετονομασία επαφής</string>
@@ -554,6 +557,16 @@
     <string name="history_within">εντός ±%1$s</string>
     <string name="history_detail_movement">Κίνηση</string>
     <string name="history_movement_desc">%1$s %2$s με πορεία %3$s</string>
+    <string name="history_rejected">Απορρίφθηκε</string>
+    <string name="history_reject_reason">Αιτία απόρριψης</string>
+    <string name="history_reject_too_imprecise">Πολύ ανακριβές</string>
+    <string name="history_reject_stale">Παλιά θέση</string>
+    <string name="history_reject_no_fix">Χωρίς θέση</string>
+    <string name="history_reject_permission_denied">Η άδεια τοποθεσίας απορρίφθηκε</string>
+    <string name="history_reject_other">Άλλο</string>
+    <string name="history_fix_age">Ηλικία θέσης</string>
+    <string name="history_fix_age_value">%1$d δ</string>
+    <string name="history_hide_rejected">Απόκρυψη απορριφθεισών μετρήσεων</string>
 
     <string name="common_create">Δημιουργία</string>
 

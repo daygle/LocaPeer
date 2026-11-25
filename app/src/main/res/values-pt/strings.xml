@@ -266,6 +266,9 @@
     <string name="contacts_bulk_delete_locations">Excluir Localizações</string>
     <string name="contacts_last_seen">Visto por último: %1$s</string>
     <string name="contacts_no_location_yet">Ainda sem dados de localização</string>
+    <string name="contacts_last_updated">Última atualização: %1$s</string>
+    <string name="contacts_last_updated_paused">Última atualização: %1$s · Partilha em pausa</string>
+    <string name="contacts_sharing_paused">Partilha em pausa</string>
     <string name="contacts_view_sharing_settings">Ver Configurações de Compartilhamento</string>
     <string name="contacts_view_location_history">Ver Histórico de Localização</string>
     <string name="contacts_rename_contact">Renomear Contato</string>
@@ -555,6 +558,16 @@
     <string name="history_within">dentro de ±%1$s</string>
     <string name="history_detail_movement">Movimento</string>
     <string name="history_movement_desc">%1$s %2$s rumo a %3$s</string>
+    <string name="history_rejected">Rejeitada</string>
+    <string name="history_reject_reason">Motivo da rejeição</string>
+    <string name="history_reject_too_imprecise">Demasiado imprecisa</string>
+    <string name="history_reject_stale">Posição desatualizada</string>
+    <string name="history_reject_no_fix">Sem posição</string>
+    <string name="history_reject_permission_denied">Permissão de localização negada</string>
+    <string name="history_reject_other">Outro</string>
+    <string name="history_fix_age">Idade da posição</string>
+    <string name="history_fix_age_value">%1$d s</string>
+    <string name="history_hide_rejected">Ocultar leituras rejeitadas</string>
 
     <!-- ── Telas de geocerca ──────────────────────────────────────────────── -->
     <string name="geo_cd_add_area">Adicionar área de geocerca</string>

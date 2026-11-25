@@ -273,6 +273,9 @@
     <string name="contacts_bulk_delete_locations">حذف المواقع</string>
     <string name="contacts_last_seen">آخر ظهور: %1$s</string>
     <string name="contacts_no_location_yet">لا توجد بيانات موقع بعد</string>
+    <string name="contacts_last_updated">آخر تحديث: %1$s</string>
+    <string name="contacts_last_updated_paused">آخر تحديث: %1$s · المشاركة متوقفة مؤقتًا</string>
+    <string name="contacts_sharing_paused">المشاركة متوقفة مؤقتًا</string>
     <string name="contacts_view_sharing_settings">إعدادات المشاركة</string>
     <string name="contacts_view_location_history">سجلّ المواقع</string>
     <string name="contacts_rename_contact">إعادة تسمية جهة الاتصال</string>
@@ -594,6 +597,16 @@
     <string name="history_within">ضمن ±%1$s</string>
     <string name="history_detail_movement">الحركة</string>
     <string name="history_movement_desc">%1$s %2$s باتجاه %3$s</string>
+    <string name="history_rejected">مرفوضة</string>
+    <string name="history_reject_reason">سبب الرفض</string>
+    <string name="history_reject_too_imprecise">غير دقيقة بما يكفي</string>
+    <string name="history_reject_stale">موقع قديم</string>
+    <string name="history_reject_no_fix">لا يوجد موقع</string>
+    <string name="history_reject_permission_denied">تم رفض إذن الموقع</string>
+    <string name="history_reject_other">أخرى</string>
+    <string name="history_fix_age">عمر الموقع</string>
+    <string name="history_fix_age_value">%1$d ث</string>
+    <string name="history_hide_rejected">إخفاء القراءات المرفوضة</string>
 
     <string name="common_create">إنشاء</string>
 
