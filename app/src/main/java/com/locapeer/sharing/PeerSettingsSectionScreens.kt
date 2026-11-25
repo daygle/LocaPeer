@@ -190,6 +190,16 @@ fun PeerSharingControlsScreen(
                 onCheckedChange = { vm.setSendRole(it) },
                 enabled = !supervisorLocked
             )
+            if (isSend) {
+                // This switch only changes this device; the contact's app decides whether it
+                // accepts our location, and there is no way to see that from here.
+                Text(
+                    stringResource(R.string.peer_send_needs_receive, peerName),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp)
+                )
+            }
             CardDivider()
             SettingsRow(
                 title = stringResource(R.string.peer_receive_title, peerName),
@@ -256,10 +266,11 @@ fun PeerPrivacyScreen(
             headerIcon = Icons.Default.PrivacyTip,
             headerTitle = stringResource(R.string.peer_section_privacy)
         ) {
+            // Locked for the supervisor while supervised: they always get the exact position.
             SettingsRow(
                 title = stringResource(R.string.peer_precision),
-                value = if (precisionMode == PrecisionMode.EXACT.name) stringResource(R.string.peer_precision_exact) else stringResource(R.string.peer_precision_suburb),
-                enabled = sharingEnabled,
+                value = if (precisionMode == PrecisionMode.EXACT.name || supervisorLocked) stringResource(R.string.peer_precision_exact) else stringResource(R.string.peer_precision_suburb),
+                enabled = sharingEnabled && !supervisorLocked,
                 onClick = { showPrecisionDialog = true }
             )
             CardDivider()
@@ -281,6 +292,16 @@ fun PeerPrivacyScreen(
             }
         }
 
+        val locationSharingOn by vm.locationSharingOn.collectAsStateWithLifecycle()
+        if (!locationSharingOn && (tempShareActive != null || sharingEnabled)) {
+            // A temporary share overrides the schedule, but not location sharing being off.
+            Text(
+                stringResource(R.string.peer_temp_share_sharing_off, peerName),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
+        }
         if (tempShareActive != null) {
             ActiveTempShareCard(
                 peerName = peerName,

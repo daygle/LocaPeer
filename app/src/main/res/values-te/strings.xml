@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">%1$s తో ప్రతిస్పందించు</string>
     <string name="chat_remove_reaction">ప్రతిస్పందనను తీసివేయి</string>
     <string name="chat_cd_reaction_from_contact">పరిచయం నుండి ప్రతిస్పందన</string>
+    <string name="peer_temp_share_sharing_off">స్థానం భాగస్వామ్యం ఆఫ్‌లో ఉంది, కాబట్టి తాత్కాలిక భాగస్వామ్యం సమయంలో కూడా %1$sకి ఏమీ పంపబడదు.</string>
+    <string name="peer_send_needs_receive">%1$s కూడా తమ యాప్‌లో మీ స్థానాన్ని స్వీకరించడానికి అనుమతించాలి, లేదంటే మీ అప్‌డేట్‌లు విస్మరించబడతాయి.</string>
 </resources>

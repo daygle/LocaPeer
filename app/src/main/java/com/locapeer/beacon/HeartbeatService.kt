@@ -55,6 +55,7 @@ import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppSettings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.drop
@@ -165,6 +166,20 @@ class HeartbeatService : LifecycleService() {
     @Volatile private var lastBearing = 0f
     @Volatile private var lastAltitude = 0.0
     private var currentSettings = AppSettings()
+
+    /**
+     * Latest end (epoch seconds) of a temporary share with a contact we actually send to (share
+     * role, not paused), or 0. A temporary share overrides the overall schedule, so while one
+     * runs the service keeps location on and sends to that contact even off-schedule.
+     */
+    @Volatile private var tempShareEndsAtSec = 0L
+
+    private fun tempShareRunning(): Boolean = tempShareEndsAtSec > System.currentTimeMillis() / 1000L
+
+    /** Whether location should be collected at all right now: SOS, the overall schedule, or a
+     *  running temporary share. */
+    private fun sharingWindowOpen(): Boolean =
+        isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules) || tempShareRunning()
     @Volatile private var isSos = false
     /** True once an explicit SOS on/off command arrived; blocks the persisted-state
      *  restore, which could otherwise read a stale flag mid-write and undo the command. */
@@ -570,8 +585,7 @@ class HeartbeatService : LifecycleService() {
                     diagnostics.summarizeAndReset(),
             )
 
-            val scheduleActive = isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules)
-            if (!scheduleActive) {
+            if (!sharingWindowOpen()) {
                 Log.d(TAG, "Heartbeat suppressed: outside global schedule. Suspending GPS.")
                 // Stop GPS to save battery during off-hours, then sleep until the window
                 // actually opens instead of re-checking at the motion cadence: the rules
@@ -719,6 +733,22 @@ class HeartbeatService : LifecycleService() {
 
                 if (needsRequestUpdate) updateLocationRequest()
                 if (needsReschedule) reschedulePulse()
+            }
+        }
+        lifecycleScope.launch {
+            // Track running temporary shares: starting one off-schedule must wake the service
+            // (it may be asleep until the schedule opens), and the end time drives the window.
+            combine(peerDao.getPeersReceivingMyLocation(), sharingConfigDao.observeAll()) { peers, configs ->
+                val sendTo = peers.mapTo(HashSet()) { it.deviceId }
+                configs.filter { it.peerDeviceId in sendTo && it.sharingEnabled }
+                    .maxOfOrNull { it.temporaryShareEndsAtEpochSeconds ?: 0L } ?: 0L
+            }.distinctUntilChanged().collect { endsAt ->
+                val wasRunning = tempShareRunning()
+                tempShareEndsAtSec = endsAt
+                if (isStarted && tempShareRunning() != wasRunning) {
+                    updateLocationRequest()
+                    reschedulePulse()
+                }
             }
         }
         lifecycleScope.launch {
@@ -972,7 +1002,7 @@ class HeartbeatService : LifecycleService() {
     private fun updateLocationRequest() {
         // If the global schedule is inactive, don't start location updates.
         // The heartbeatRunnable will re-check and resume them when the schedule re-opens.
-        if (!isSos && !SharingSchedule.isActive(currentSettings.globalScheduleRules)) {
+        if (!sharingWindowOpen()) {
             Log.d(TAG, "updateLocationRequest suppressed: outside global schedule")
             suspendLocationUpdatesForSchedule()
             return
@@ -1286,7 +1316,10 @@ class HeartbeatService : LifecycleService() {
 
                 val (dayIndex, currentMinute) = SharingSchedule.nowDayMinute()
 
-                if (!isSos && !SharingSchedule.isActive(settings.globalScheduleRules, dayIndex, currentMinute)) {
+                // Outside the overall schedule only contacts with a running temporary share get
+                // this heartbeat (a temporary share overrides the schedule; see tempShareEndsAtSec).
+                val globalOpen = isSos || SharingSchedule.isActive(settings.globalScheduleRules, dayIndex, currentMinute)
+                if (!globalOpen && !tempShareRunning()) {
                     Log.d(TAG, "Heartbeat suppressed: outside global schedule")
                     return@launch
                 }
@@ -1331,6 +1364,8 @@ class HeartbeatService : LifecycleService() {
                 withContext(Dispatchers.Default) {
                     targetRecipients.forEach { recipient ->
                         val cfg = configMap[recipient.deviceId]
+                        val recipientTempShare = cfg?.temporaryShareEndsAtEpochSeconds?.let { it > nowSec } == true
+                        if (!globalOpen && !recipientTempShare) return@forEach
 
                         if (!isSos && cfg != null &&
                             !isActiveSupervisor(settings.supervisionActive, settings.supervisorPubkey, recipient.publicKeyHex) &&
@@ -1344,7 +1379,22 @@ class HeartbeatService : LifecycleService() {
                         // position AND drop the fine-grained fields that would otherwise undo it:
                         // exact altitude is a strong location discriminator, and exact speed/bearing
                         // let a recipient dead-reckon a finer track than the ~1 km grid implies.
-                        val suburb = cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
+                        val toSupervisor = isActiveSupervisor(
+                            settings.supervisionActive, settings.supervisorPubkey, recipient.publicKeyHex
+                        )
+                        // The supervisor always gets the exact position while supervised.
+                        val suburb = cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos && !toSupervisor
+                        // Tell the recipient if updates stop on purpose before the next one is due
+                        // (their missed-update alert fires after twice the interval), so a schedule
+                        // window closing isn't mistaken for this device going dark.
+                        val quietUntil = if (isSos) 0L else SharingSchedule.quietUntilMs(
+                            globalRules = settings.globalScheduleRules,
+                            peerRules = if (toSupervisor) emptyList() else cfg?.scheduleRules().orEmpty(),
+                            tempEndsAtEpochSeconds = cfg?.temporaryShareEndsAtEpochSeconds,
+                            nowMs = nowMs,
+                            horizonMs = 2 * (cadenceIntervalSec * 1000L).coerceAtLeast(60_000L) + 60_000L,
+                            zone = java.time.ZoneId.systemDefault(),
+                        )
                         val (sendLat, sendLng) = if (suburb) {
                             SharingSchedule.toSuburbPrecision(fixLat, fixLng)
                         } else {
@@ -1367,7 +1417,8 @@ class HeartbeatService : LifecycleService() {
                             bearing = if (suburb) 0f else fixBearing,
                             altitude = if (suburb) 0.0 else fixAltitude,
                             expectedIntervalSeconds = cadenceIntervalSec,
-                            live = !cadencePulse
+                            live = !cadencePulse,
+                            quietUntilMs = quietUntil
                         )
                         val payloadJson = Json.encodeToString(payload)
 

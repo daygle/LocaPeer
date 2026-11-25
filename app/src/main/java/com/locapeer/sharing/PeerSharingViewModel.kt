@@ -71,7 +71,8 @@ class PeerSharingViewModel @Inject constructor(
     private val heartbeatDao: com.locapeer.data.dao.HeartbeatDao,
     private val changeReporter: SupervisionChangeReporter,
     private val endedSender: SupervisionEndedSender,
-    private val inviteSender: SupervisionInviteSender
+    private val inviteSender: SupervisionInviteSender,
+    private val pauseNotifier: SharingPauseNotifier,
 ) : ViewModel() {
 
     /** Display name of the peer this VM is bound to (for change summaries). */
@@ -83,6 +84,11 @@ class PeerSharingViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(PeerSharingUiState())
     val uiState: StateFlow<PeerSharingUiState> = _uiState.asStateFlow()
+
+    /** Whether location sharing is switched on at all. A temporary share overrides the
+     *  schedule but not this switch, so the screen warns while it is off. */
+    val locationSharingOn: StateFlow<Boolean> = prefs.settings.map { it.heartbeatEnabled }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), true)
 
     private val _lastPurgeResult = MutableStateFlow<PurgeResult?>(null)
     val lastPurgeResult: StateFlow<PurgeResult?> = _lastPurgeResult.asStateFlow()
@@ -125,6 +131,11 @@ class PeerSharingViewModel @Inject constructor(
             // Pausing outranks a temporary share, so end it rather than keep counting down
             // (here and in Settings' active-shares list) while nothing is being sent.
             if (!enabled) endTemporaryShare(existing)
+            // Let the contact's app hold back its missed-update alert while paused.
+            pauseNotifier.notify(
+                listOf(currentPeerId),
+                if (enabled) 0L else SharingSchedule.QUIET_INDEFINITELY
+            )
             // Visibility: the supervisor sees pause/resume of a destination.
             changeReporter.report(
                 if (enabled) SupervisionChangeReporter.Areas.RESUME else SupervisionChangeReporter.Areas.PAUSE,
@@ -152,6 +163,8 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setPrecisionMode(mode: PrecisionMode) {
         viewModelScope.launch {
+            // The supervisor always gets the exact position while supervised (see supervisorLocked).
+            if (mode != PrecisionMode.EXACT && isSupervisorLocked()) return@launch
             val existing = configDao.getForPeer(currentPeerId)
             if (existing != null) configDao.setPrecisionMode(currentPeerId, mode.name)
             else configDao.upsert(defaultConfig().copy(precisionMode = mode.name))

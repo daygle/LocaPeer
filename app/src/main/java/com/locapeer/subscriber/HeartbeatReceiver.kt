@@ -363,6 +363,7 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACKING_ALERT,
     NostrEventKind.CIRCLE_LEAVE,
     NostrEventKind.CIRCLE_DISBAND,
+    NostrEventKind.SHARING_PAUSED,
     NostrEventKind.EVENT_DELETION
 )
 
@@ -557,6 +558,7 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.CIRCLE_LEAVE,
                         NostrEventKind.CIRCLE_DISBAND,
                         NostrEventKind.LIVE_VIEW_REQUEST,
+                        NostrEventKind.SHARING_PAUSED,
                         NostrEventKind.EVENT_DELETION
                     ),
                     pTags = listOf(pubHex),
@@ -658,6 +660,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.CIRCLE_LEAVE -> processCircleLeave(event)
                     NostrEventKind.CIRCLE_DISBAND -> processCircleDisband(event)
                     NostrEventKind.LIVE_VIEW_REQUEST -> scope.launch { processLiveViewRequest(event) }
+                    NostrEventKind.SHARING_PAUSED -> processSharingPaused(event)
                     NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }
               } catch (e: Exception) {
@@ -725,7 +728,6 @@ class HeartbeatReceiver @Inject constructor(
         // live updates can flow, so there is no lease to grant - and nothing to tell the
         // user ("watched live") that wouldn't be false.
         if (!settings.heartbeatEnabled) return
-        if (!com.locapeer.sharing.SharingSchedule.isActive(settings.globalScheduleRules)) return
         val peer = peerDao.getPeer(event.pubkey) ?: return
         // Only meaningful for a contact we send location to; boosting for anyone else
         // would change nothing they can see.
@@ -735,6 +737,11 @@ class HeartbeatReceiver @Inject constructor(
         // A per-contact pause or inactive per-contact schedule overrides everything, exactly
         // as it does for heartbeats (which would skip this contact anyway).
         val cfg = sharingConfigDao.getForPeer(peer.deviceId)
+        // Outside the overall schedule only a running temporary share keeps location flowing
+        // to this contact, matching the heartbeat sender.
+        val nowSec = System.currentTimeMillis() / 1000
+        val tempShareRunning = cfg?.temporaryShareEndsAtEpochSeconds?.let { it > nowSec } == true
+        if (!tempShareRunning && !com.locapeer.sharing.SharingSchedule.isActive(settings.globalScheduleRules)) return
         // The supervisor is exempt from both, matching the heartbeat sender.
         val toSupervisor = com.locapeer.sharing.isActiveSupervisor(
             settings.supervisionActive, settings.supervisorPubkey, peer.publicKeyHex
@@ -938,6 +945,9 @@ class HeartbeatReceiver @Inject constructor(
             // Buffer the insert; the batch flusher persists it transactionally so a
             // catch-up burst produces a handful of Room invalidations, not hundreds.
             enqueueHeartbeat(entity)
+            // A planned gap the sender announced (0 = none, also from older senders), for the
+            // missed-update alert. Older catch-up heartbeats can't overwrite a newer entry.
+            PeerQuietPeriods.record(context, canonicalDeviceId, payload.quietUntilMs, timestampMs)
             if (isFresh) {
                 if (isSos) sendSosNotification(canonicalDeviceId, broadcaster.displayName, payload)
                 // Alerts name the contact as saved locally, not by the payload's
@@ -1431,6 +1441,22 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
         messageDao.markDeliveredForPeer(payload.eventId, event.pubkey)
+    }
+
+    /** Kind 1072: the contact stopped (or resumed) sending us their location on purpose. */
+    private suspend fun processSharingPaused(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<com.locapeer.sharing.SharingPausePayload>(plaintext)
+        } catch (e: Exception) { return }
+        if (payload.deviceId != event.pubkey) return
+        // The signed created_at orders this against heartbeats; clamped like other sender clocks.
+        val announcedAtMs = minOf(event.createdAt * 1000L, System.currentTimeMillis())
+        PeerQuietPeriods.record(context, event.pubkey, payload.quietUntilMs, announcedAtMs)
     }
 
     /**

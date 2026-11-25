@@ -1052,4 +1052,6 @@
     <string name="chat_react_with">Zareaguj za pomocą %1$s</string>
     <string name="chat_remove_reaction">Usuń reakcję</string>
     <string name="chat_cd_reaction_from_contact">Reakcja od kontaktu</string>
+    <string name="peer_temp_share_sharing_off">Udostępnianie lokalizacji jest wyłączone, więc do %1$s nic nie jest wysyłane, nawet podczas tymczasowego udostępniania.</string>
+    <string name="peer_send_needs_receive">%1$s musi też zezwolić w swojej aplikacji na odbieranie Twojej lokalizacji, inaczej Twoje aktualizacje są ignorowane.</string>
 </resources>

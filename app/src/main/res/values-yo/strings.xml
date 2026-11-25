@@ -1009,4 +1009,6 @@
     <string name="chat_react_with">Fi %1$s dáhùn</string>
     <string name="chat_remove_reaction">Yọ èsì kúrò</string>
     <string name="chat_cd_reaction_from_contact">Èsì láti ọ̀dọ̀ olùbáṣepọ̀</string>
+    <string name="peer_temp_share_sharing_off">Pínpín ipò ti wà ní pípa, nítorí náà kò sí ohun tí a fi ránṣẹ́ sí %1$s, kódà nígbà pínpín fún ìgbà díẹ̀.</string>
+    <string name="peer_send_needs_receive">%1$s gbọ́dọ̀ gbà láti gba ipò rẹ nínú áàpù wọn pẹ̀lú, bí bẹ́ẹ̀ kọ́ a ó fojú fo àwọn ìmúdójúìwọ̀n rẹ.</string>
 </resources>

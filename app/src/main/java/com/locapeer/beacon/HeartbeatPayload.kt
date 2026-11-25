@@ -35,5 +35,12 @@ data class HeartbeatPayload(
      * contact, so a watched stretch doesn't fill history with a point every few seconds.
      * Absent (false) from older senders and on every cadence heartbeat.
      */
-    val live: Boolean = false
+    val live: Boolean = false,
+    /**
+     * Set when sending to this recipient stops on purpose before the next heartbeat is due
+     * (outside the sender's schedule): the epoch ms it resumes, or
+     * [com.locapeer.sharing.SharingSchedule.QUIET_INDEFINITELY]. 0 (and absent, from older
+     * senders) means updates continue. Lets the recipient hold back a missed-update alert.
+     */
+    val quietUntilMs: Long = 0L
 )

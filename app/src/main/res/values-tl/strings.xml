@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">Mag-react gamit ang %1$s</string>
     <string name="chat_remove_reaction">Alisin ang reaksyon</string>
     <string name="chat_cd_reaction_from_contact">Reaksyon mula sa contact</string>
+    <string name="peer_temp_share_sharing_off">Naka-off ang pagbabahagi ng lokasyon, kaya walang ipinapadala kay %1$s, kahit habang may pansamantalang pagbabahagi.</string>
+    <string name="peer_send_needs_receive">Kailangan ding payagan ni %1$s ang pagtanggap ng iyong lokasyon sa kanyang app, kung hindi ay hindi papansinin ang iyong mga update.</string>
 </resources>

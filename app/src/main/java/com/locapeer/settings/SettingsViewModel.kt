@@ -204,7 +204,8 @@ class SettingsViewModel @Inject constructor(
     private val changeReporter: com.locapeer.supervised.SupervisionChangeReporter,
     private val workManager: WorkManager,
     private val appDatabase: com.locapeer.data.AppDatabase,
-    private val proximityStateStore: com.locapeer.proximity.ProximityStateStore
+    private val proximityStateStore: com.locapeer.proximity.ProximityStateStore,
+    private val pauseNotifier: com.locapeer.sharing.SharingPauseNotifier,
 ) : ViewModel() {
 
     val unlockState = supervisedModeManager.unlockState
@@ -283,6 +284,13 @@ class SettingsViewModel @Inject constructor(
             }
 
             prefs.setHeartbeatEnabled(enabled)
+            // Contacts we share with (paused ones already know) can hold back their
+            // missed-update alerts while sharing is off.
+            val paused = sharingConfigDao.getAll().filter { !it.sharingEnabled }.mapTo(HashSet()) { it.peerDeviceId }
+            pauseNotifier.notify(
+                peerDao.getPeersReceivingMyLocation().first().map { it.deviceId }.filter { it !in paused },
+                if (enabled) 0L else com.locapeer.sharing.SharingSchedule.QUIET_INDEFINITELY
+            )
             if (enabled) {
                 val intent = Intent(context, HeartbeatService::class.java)
                 context.startForegroundService(intent)

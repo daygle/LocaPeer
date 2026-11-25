@@ -1018,4 +1018,6 @@
     <string name="chat_react_with">Reagir com %1$s</string>
     <string name="chat_remove_reaction">Remover reação</string>
     <string name="chat_cd_reaction_from_contact">Reação do contacto</string>
+    <string name="peer_temp_share_sharing_off">A partilha de localização está desativada, por isso nada é enviado para %1$s, nem mesmo durante uma partilha temporária.</string>
+    <string name="peer_send_needs_receive">%1$s também tem de permitir a receção da sua localização na respetiva aplicação; caso contrário, as suas atualizações são ignoradas.</string>
 </resources>

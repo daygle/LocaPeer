@@ -1019,4 +1019,6 @@
     <string name="chat_react_with">Reagisci con %1$s</string>
     <string name="chat_remove_reaction">Rimuovi reazione</string>
     <string name="chat_cd_reaction_from_contact">Reazione dal contatto</string>
+    <string name="peer_temp_share_sharing_off">La condivisione della posizione è disattivata, quindi a %1$s non viene inviato nulla, nemmeno durante una condivisione temporanea.</string>
+    <string name="peer_send_needs_receive">Anche %1$s deve consentire la ricezione della tua posizione nella sua app, altrimenti i tuoi aggiornamenti vengono ignorati.</string>
 </resources>

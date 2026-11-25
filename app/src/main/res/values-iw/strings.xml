@@ -1040,4 +1040,6 @@
     <string name="chat_react_with">הגב עם %1$s</string>
     <string name="chat_remove_reaction">הסר תגובה</string>
     <string name="chat_cd_reaction_from_contact">תגובה מהאיש קשר</string>
+    <string name="peer_temp_share_sharing_off">שיתוף המיקום כבוי, ולכן שום דבר לא נשלח אל %1$s, גם לא במהלך שיתוף זמני.</string>
+    <string name="peer_send_needs_receive">גם %1$s צריך לאשר קבלת המיקום שלך באפליקציה שלו, אחרת העדכונים שלך לא יתקבלו.</string>
 </resources>

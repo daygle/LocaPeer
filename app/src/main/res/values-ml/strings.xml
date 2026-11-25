@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">%1$s ഉപയോഗിച്ച് പ്രതികരിക്കുക</string>
     <string name="chat_remove_reaction">പ്രതികരണം നീക്കുക</string>
     <string name="chat_cd_reaction_from_contact">കോൺടാക്റ്റിൽ നിന്നുള്ള പ്രതികരണം</string>
+    <string name="peer_temp_share_sharing_off">ലൊക്കേഷൻ പങ്കിടൽ ഓഫാണ്, അതിനാൽ താൽക്കാലിക പങ്കിടലിനിടയിലും %1$s-ന് ഒന്നും അയയ്‌ക്കില്ല.</string>
+    <string name="peer_send_needs_receive">%1$s അവരുടെ ആപ്പിൽ നിങ്ങളുടെ ലൊക്കേഷൻ സ്വീകരിക്കാൻ അനുവദിക്കണം, അല്ലെങ്കിൽ നിങ്ങളുടെ അപ്‌ഡേറ്റുകൾ അവഗണിക്കപ്പെടും.</string>
 </resources>

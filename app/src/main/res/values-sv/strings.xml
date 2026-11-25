@@ -1020,4 +1020,6 @@
     <string name="chat_react_with">Reagera med %1$s</string>
     <string name="chat_remove_reaction">Ta bort reaktion</string>
     <string name="chat_cd_reaction_from_contact">Reaktion från kontakt</string>
+    <string name="peer_temp_share_sharing_off">Platsdelning är avstängd, så inget skickas till %1$s, inte ens under en tillfällig delning.</string>
+    <string name="peer_send_needs_receive">%1$s måste också tillåta att din plats tas emot i sin app, annars ignoreras dina uppdateringar.</string>
 </resources>

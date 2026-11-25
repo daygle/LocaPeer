@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">%1$s ನೊಂದಿಗೆ ಪ್ರತಿಕ್ರಿಯಿಸಿ</string>
     <string name="chat_remove_reaction">ಪ್ರತಿಕ್ರಿಯೆ ತೆಗೆದುಹಾಕಿ</string>
     <string name="chat_cd_reaction_from_contact">ಸಂಪರ್ಕದಿಂದ ಪ್ರತಿಕ್ರಿಯೆ</string>
+    <string name="peer_temp_share_sharing_off">ಸ್ಥಳ ಹಂಚಿಕೆ ಆಫ್ ಆಗಿದೆ, ಆದ್ದರಿಂದ ತಾತ್ಕಾಲಿಕ ಹಂಚಿಕೆಯ ಸಮಯದಲ್ಲೂ %1$s ಅವರಿಗೆ ಏನನ್ನೂ ಕಳುಹಿಸಲಾಗುವುದಿಲ್ಲ.</string>
+    <string name="peer_send_needs_receive">%1$s ಅವರು ಸಹ ತಮ್ಮ ಆ್ಯಪ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಸ್ವೀಕರಿಸಲು ಅನುಮತಿಸಬೇಕು, ಇಲ್ಲದಿದ್ದರೆ ನಿಮ್ಮ ಅಪ್‌ಡೇಟ್‌ಗಳನ್ನು ನಿರ್ಲಕ್ಷಿಸಲಾಗುತ್ತದೆ.</string>
 </resources>

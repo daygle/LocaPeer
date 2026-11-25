@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">%1$s арқылы реакция қосу</string>
     <string name="chat_remove_reaction">Реакцияны жою</string>
     <string name="chat_cd_reaction_from_contact">Байланыс реакциясы</string>
+    <string name="peer_temp_share_sharing_off">Орынды бөлісу өшірулі, сондықтан уақытша бөлісу кезінде де %1$s үшін ештеңе жіберілмейді.</string>
+    <string name="peer_send_needs_receive">%1$s өз қолданбасында сіздің орналасқан жеріңізді қабылдауға рұқсат беруі керек, әйтпесе жаңартуларыңыз еленбейді.</string>
 </resources>

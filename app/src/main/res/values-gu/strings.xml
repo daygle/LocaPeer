@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">%1$s સાથે પ્રતિક્રિયા આપો</string>
     <string name="chat_remove_reaction">પ્રતિક્રિયા દૂર કરો</string>
     <string name="chat_cd_reaction_from_contact">સંપર્ક તરફથી પ્રતિક્રિયા</string>
+    <string name="peer_temp_share_sharing_off">સ્થાન શેરિંગ બંધ છે, તેથી અસ્થાયી શેરિંગ દરમિયાન પણ %1$s ને કંઈ મોકલવામાં આવતું નથી.</string>
+    <string name="peer_send_needs_receive">%1$s એ પણ તેમની ઍપમાં તમારું સ્થાન મેળવવાની મંજૂરી આપવી પડશે, નહીં તો તમારા અપડેટ્સ અવગણવામાં આવશે.</string>
 </resources>

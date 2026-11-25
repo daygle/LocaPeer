@@ -101,6 +101,57 @@ object SharingSchedule {
         return null
     }
 
+    /** [quietUntilMs] result for a stop with no resume within a week (e.g. a schedule with no days). */
+    const val QUIET_INDEFINITELY = Long.MAX_VALUE
+
+    /**
+     * Whether sending to one contact stops within [horizonMs] of [nowMs], and if so when it
+     * resumes, so the contact's app can hold back its "missed update" alert for a gap that is
+     * planned rather than a device going dark. Returns 0 when sending continues throughout the
+     * horizon, [QUIET_INDEFINITELY] when it doesn't resume within a week, and otherwise the
+     * epoch ms of the first minute sending is allowed again.
+     *
+     * Sending at a minute needs the overall schedule ([globalRules]) and the contact's own
+     * schedule ([peerRules]) to allow it, unless a temporary share ending at
+     * [tempEndsAtEpochSeconds] is running, which overrides both. Pass empty [peerRules] for a
+     * contact whose own schedule doesn't apply (the active supervisor).
+     */
+    fun quietUntilMs(
+        globalRules: List<ScheduleRule>,
+        peerRules: List<ScheduleRule>,
+        tempEndsAtEpochSeconds: Long?,
+        nowMs: Long,
+        horizonMs: Long,
+        zone: java.time.ZoneId,
+    ): Long {
+        if (globalRules.isEmpty() && peerRules.isEmpty()) return 0L
+        fun sendingAt(epochMs: Long): Boolean {
+            if (tempEndsAtEpochSeconds != null && epochMs / 1000L < tempEndsAtEpochSeconds) return true
+            val local = java.time.Instant.ofEpochMilli(epochMs).atZone(zone)
+            val dayIndex = local.dayOfWeek.value - 1 // Monday = 0, matching nowDayMinute()
+            val minute = local.hour * 60 + local.minute
+            return isActive(globalRules, dayIndex, minute) && isActive(peerRules, dayIndex, minute)
+        }
+        val minuteMs = 60_000L
+        // Minute boundaries from the next one, so "now" itself (already being sent) doesn't count.
+        val firstMinute = (nowMs / minuteMs + 1) * minuteMs
+        var t = firstMinute
+        val horizonEnd = nowMs + horizonMs
+        var stopAt = -1L
+        while (t <= horizonEnd) {
+            if (!sendingAt(t)) { stopAt = t; break }
+            t += minuteMs
+        }
+        if (stopAt < 0) return 0L
+        val searchEnd = stopAt + 7 * 1440 * minuteMs
+        t = stopAt + minuteMs
+        while (t <= searchEnd) {
+            if (sendingAt(t)) return t
+            t += minuteMs
+        }
+        return QUIET_INDEFINITELY
+    }
+
     /**
      * Formats a minute-of-day schedule boundary via the app's central time formatter, so the
      * labels honour the user's 12/24-hour setting and match the locale-aware AM/PM strings used

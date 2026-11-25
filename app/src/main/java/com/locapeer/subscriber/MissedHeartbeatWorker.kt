@@ -82,6 +82,14 @@ class MissedHeartbeatWorker @AssistedInject constructor(
             // Use receivedAt (stamped by the receiver's own clock at insertion) rather than
             // timestamp (the sender's clock) to avoid false alerts from inter-device clock skew.
             val elapsed = now - latest.receivedAt
+            // The contact's app said updates stop on purpose (paused, or outside their schedule):
+            // not a missed update. Skipped without recording, so an alert can still follow if the
+            // gap ends and nothing arrives within the usual window. Not for a device we supervise:
+            // its alert is forced on because it's the signal that the device went dark, and the
+            // device itself must not be able to switch that off by announcing a pause.
+            if (alertConfigs[peer.deviceId]?.isMySupervised != true &&
+                isInPlannedGap(PeerQuietPeriods.quietUntil(applicationContext, peer.deviceId), now, expected * 2)
+            ) continue
             // Already alerted for this exact last-known ping: the contact is still silent, so
             // don't re-alert. A newer ping (they came back, then went quiet again) differs.
             if (elapsed > expected * 2 && alertState.getLong(peer.deviceId, -1L) != latest.id) {

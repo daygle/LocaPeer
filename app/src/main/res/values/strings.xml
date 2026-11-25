@@ -1049,4 +1049,6 @@
     <string name="geo_import_empty">No geofence areas found in that file</string>
     <string name="geo_import_done" tools:ignore="PluralsCandidate">Imported %1$d areas</string>
     <string name="geo_file_failed">Could not read or write that file</string>
+    <string name="peer_temp_share_sharing_off">Location sharing is turned off, so nothing is sent to %1$s, even during a temporary share.</string>
+    <string name="peer_send_needs_receive">%1$s also has to allow receiving your location in their app, otherwise your updates are ignored.</string>
 </resources>

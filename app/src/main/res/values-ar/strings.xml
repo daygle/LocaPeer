@@ -1085,4 +1085,6 @@
     <string name="chat_react_with">تفاعل باستخدام %1$s</string>
     <string name="chat_remove_reaction">إزالة التفاعل</string>
     <string name="chat_cd_reaction_from_contact">تفاعل من جهة اتصال</string>
+    <string name="peer_temp_share_sharing_off">مشاركة الموقع متوقفة، لذا لا يُرسَل أي شيء إلى %1$s حتى أثناء المشاركة المؤقتة.</string>
+    <string name="peer_send_needs_receive">يجب أن يسمح %1$s أيضًا باستلام موقعك في تطبيقه، وإلا فسيتم تجاهل تحديثاتك.</string>
 </resources>

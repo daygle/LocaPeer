@@ -1009,4 +1009,6 @@
     <string name="chat_react_with">%1$s(으)로 반응</string>
     <string name="chat_remove_reaction">반응 삭제</string>
     <string name="chat_cd_reaction_from_contact">연락처의 반응</string>
+    <string name="peer_temp_share_sharing_off">위치 공유가 꺼져 있어 임시 공유 중에도 %1$s 님에게 아무것도 전송되지 않습니다.</string>
+    <string name="peer_send_needs_receive">%1$s 님도 앱에서 내 위치 수신을 허용해야 합니다. 그렇지 않으면 업데이트가 무시됩니다.</string>
 </resources>

@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">%1$s দিয়ে প্রতিক্রিয়া জানান</string>
     <string name="chat_remove_reaction">প্রতিক্রিয়া সরান</string>
     <string name="chat_cd_reaction_from_contact">পরিচিতির প্রতিক্রিয়া</string>
+    <string name="peer_temp_share_sharing_off">অবস্থান শেয়ারিং বন্ধ আছে, তাই অস্থায়ী শেয়ারের সময়ও %1$s-কে কিছু পাঠানো হয় না।</string>
+    <string name="peer_send_needs_receive">%1$s-কেও তাদের অ্যাপে আপনার অবস্থান গ্রহণের অনুমতি দিতে হবে, নইলে আপনার আপডেট উপেক্ষা করা হবে।</string>
 </resources>

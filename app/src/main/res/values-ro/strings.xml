@@ -1041,4 +1041,6 @@
     <string name="chat_react_with">Reacționează cu %1$s</string>
     <string name="chat_remove_reaction">Elimină reacția</string>
     <string name="chat_cd_reaction_from_contact">Reacție de la contact</string>
+    <string name="peer_temp_share_sharing_off">Partajarea locației este dezactivată, deci nu se trimite nimic către %1$s, nici măcar în timpul unei partajări temporare.</string>
+    <string name="peer_send_needs_receive">%1$s trebuie să permită și primirea locației dvs. în aplicația sa, altfel actualizările dvs. sunt ignorate.</string>
 </resources>

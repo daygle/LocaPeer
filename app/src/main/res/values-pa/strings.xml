@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">%1$s ਨਾਲ ਪ੍ਰਤੀਕਿਰਿਆ ਦਿਓ</string>
     <string name="chat_remove_reaction">ਪ੍ਰਤੀਕਿਰਿਆ ਹਟਾਓ</string>
     <string name="chat_cd_reaction_from_contact">ਸੰਪਰਕ ਤੋਂ ਪ੍ਰਤੀਕਿਰਿਆ</string>
+    <string name="peer_temp_share_sharing_off">ਟਿਕਾਣਾ ਸਾਂਝਾਕਰਨ ਬੰਦ ਹੈ, ਇਸ ਲਈ ਅਸਥਾਈ ਸਾਂਝਾਕਰਨ ਦੌਰਾਨ ਵੀ %1$s ਨੂੰ ਕੁਝ ਨਹੀਂ ਭੇਜਿਆ ਜਾਂਦਾ।</string>
+    <string name="peer_send_needs_receive">%1$s ਨੂੰ ਵੀ ਆਪਣੀ ਐਪ ਵਿੱਚ ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਪ੍ਰਾਪਤ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣੀ ਪਵੇਗੀ, ਨਹੀਂ ਤਾਂ ਤੁਹਾਡੇ ਅੱਪਡੇਟ ਅਣਡਿੱਠੇ ਕੀਤੇ ਜਾਣਗੇ।</string>
 </resources>

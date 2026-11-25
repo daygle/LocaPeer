@@ -1008,4 +1008,6 @@
     <string name="chat_react_with">%1$s でリアクション</string>
     <string name="chat_remove_reaction">リアクションを削除</string>
     <string name="chat_cd_reaction_from_contact">連絡先からのリアクション</string>
+    <string name="peer_temp_share_sharing_off">位置情報の共有がオフのため、一時的な共有中でも%1$sには何も送信されません。</string>
+    <string name="peer_send_needs_receive">%1$sのアプリでもあなたの位置情報の受信を許可する必要があります。許可されていない場合、更新は無視されます。</string>
 </resources>

@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">%1$s کے ساتھ ردعمل دیں</string>
     <string name="chat_remove_reaction">ردعمل ہٹائیں</string>
     <string name="chat_cd_reaction_from_contact">رابطے کی طرف سے ردعمل</string>
+    <string name="peer_temp_share_sharing_off">مقام کا اشتراک بند ہے، اس لیے عارضی اشتراک کے دوران بھی %1$s کو کچھ نہیں بھیجا جاتا۔</string>
+    <string name="peer_send_needs_receive">%1$s کو بھی اپنی ایپ میں آپ کا مقام وصول کرنے کی اجازت دینی ہوگی، ورنہ آپ کی اپ ڈیٹس نظر انداز کر دی جائیں گی۔</string>
 </resources>

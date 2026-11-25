@@ -1025,4 +1025,6 @@
     <string name="chat_react_with">%1$s ने प्रतिक्रिया द्या</string>
     <string name="chat_remove_reaction">प्रतिक्रिया काढा</string>
     <string name="chat_cd_reaction_from_contact">संपर्काकडून प्रतिक्रिया</string>
+    <string name="peer_temp_share_sharing_off">स्थान शेअरिंग बंद आहे, त्यामुळे तात्पुरत्या शेअरिंगदरम्यानही %1$s यांना काहीही पाठवले जात नाही.</string>
+    <string name="peer_send_needs_receive">%1$s यांनीही त्यांच्या अ‍ॅपमध्ये तुमचे स्थान स्वीकारण्याची परवानगी द्यायला हवी, नाहीतर तुमची अपडेट्स दुर्लक्षित केली जातील.</string>
 </resources>

@@ -1009,4 +1009,6 @@
     <string name="chat_react_with">Jiri %1$s meghachi omume</string>
     <string name="chat_remove_reaction">Wepu mmeghachi omume</string>
     <string name="chat_cd_reaction_from_contact">Mmeghachi omume site na kọntaktị</string>
+    <string name="peer_temp_share_sharing_off">Agbanyụọla ịkekọrịta ebe ị nọ, ya mere ọ dịghị ihe a na-ezigara %1$s, ọbụlagodi n\'oge ịkekọrịta nwa oge.</string>
+    <string name="peer_send_needs_receive">%1$s ga-ekwerekwa ịnata ebe ị nọ n\'ngwa ya, ma ọ bụghị ya, a ga-eleghara mmelite gị anya.</string>
 </resources>

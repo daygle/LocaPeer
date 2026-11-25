@@ -1005,4 +1005,6 @@
     <string name="chat_react_with">以 %1$s 回應</string>
     <string name="chat_remove_reaction">移除回應</string>
     <string name="chat_cd_reaction_from_contact">來自聯絡人的回應</string>
+    <string name="peer_temp_share_sharing_off">位置分享已關閉，因此即使在臨時分享期間也不會傳送任何內容給 %1$s。</string>
+    <string name="peer_send_needs_receive">%1$s 也必須在其應用程式中允許接收您的位置，否則您的更新會被忽略。</string>
 </resources>
