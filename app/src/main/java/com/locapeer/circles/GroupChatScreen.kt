@@ -32,6 +32,7 @@ import com.locapeer.ui.theme.bubbleContent
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.locapeer.ui.components.VisibleConversation
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -161,6 +162,7 @@ fun GroupChatScreen(
         ImageViewerDialog(base64 = b64, onDismiss = { fullscreenImage = null })
     }
 
+    VisibleConversation(circleId)
     LaunchedEffect(circleId) { vm.markReadGroup(circleId) }
     // Count from the previous emission, so the first load can jump straight to the newest
     // message while later arrivals only follow when the user is already at the bottom.

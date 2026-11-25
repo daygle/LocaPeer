@@ -386,6 +386,8 @@ class MessagingViewModel @Inject constructor(
     fun observeCircle(circleId: String): Flow<CircleEntity?> = circleDao.observeCircle(circleId)
 
     fun markReadGroup(circleId: String) {
+        // Read on screen, so the system notification for it is done with too.
+        com.locapeer.util.AppNotifications.cancelConversation(context, circleId)
         viewModelScope.launch { messageDao.markAllReadForGroup(circleId) }
     }
 
@@ -782,6 +784,8 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun markRead(peerId: String) {
+        // Read on screen, so the system notification for it is done with too.
+        com.locapeer.util.AppNotifications.cancelConversation(context, peerId)
         viewModelScope.launch {
             val unread = messageDao.getUnreadFromPeer(peerId)
             messageDao.markAllReadForPeer(peerId)
@@ -796,6 +800,7 @@ class MessagingViewModel @Inject constructor(
      * that their messages were read - only opening the chat ([markRead]) sends receipts.
      */
     fun markReadMultiple(peerIds: List<String>) {
+        peerIds.forEach { com.locapeer.util.AppNotifications.cancelConversation(context, it) }
         viewModelScope.launch {
             peerIds.forEach { messageDao.markAllReadForPeer(it) }
         }

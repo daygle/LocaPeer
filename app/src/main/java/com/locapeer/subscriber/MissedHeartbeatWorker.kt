@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit
 
 // Paired with a per-peer tag (notify(tag, id, ...)) since two peers' deviceId hashCodes can
 // collide and silently overwrite each other's notification.
-private const val NOTIF_ID_MISSED_HEARTBEAT = 5000
+internal const val NOTIF_ID_MISSED_HEARTBEAT = 5000
 // Remembers, per contact, the heartbeat row an alert was already raised for, so one silence
 // episode alerts once instead of on every 15-minute run until the contact reappears.
 private const val ALERT_STATE_PREFS = "missed_heartbeat_alerts"
@@ -98,22 +98,28 @@ class MissedHeartbeatWorker @AssistedInject constructor(
                 // Unique data URI: extras don't participate in PendingIntent matching
                 // (Intent.filterEquals), so without it a requestCode hash collision
                 // between two peers would silently share one PendingIntent.
+                // Opens the map on the contact's last known position, like the proximity and
+                // geofence alerts, rather than the app's start screen.
                 val intent = Intent(applicationContext, MainActivity::class.java).apply {
                     setPackage(applicationContext.packageName)
+                    flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     data = "locapeer-notif://missed/${peer.deviceId}".toUri()
+                    putExtra("navigateTo", "map")
+                    putExtra("highlightPeer", peer.deviceId)
                 }
                 val pi = PendingIntent.getActivity(
-                    applicationContext, peer.deviceId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE
+                    applicationContext, peer.deviceId.hashCode(), intent,
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                 )
                 // Lock-screen version keeps the "who went quiet" title but drops the
                 // last-seen detail carried in the private text.
-                val publicVersion = NotificationCompat.Builder(applicationContext, "locapeer_alerts")
+                val publicVersion = NotificationCompat.Builder(applicationContext, com.locapeer.util.AppNotifications.CHANNEL_ALERTS)
                     .setSmallIcon(R.drawable.ic_notif_alert)
                     .setContentTitle(applicationContext.getString(R.string.notif_missed_title, peer.displayName))
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .build()
-                val notification = NotificationCompat.Builder(applicationContext, "locapeer_alerts")
+                val notification = NotificationCompat.Builder(applicationContext, com.locapeer.util.AppNotifications.CHANNEL_ALERTS)
                     .setSmallIcon(R.drawable.ic_notif_alert)
                     .setContentTitle(applicationContext.getString(R.string.notif_missed_title, peer.displayName))
                     .setContentText(applicationContext.getString(R.string.notif_missed_text, minutesAgo.toString()))

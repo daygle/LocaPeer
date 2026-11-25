@@ -1,6 +1,5 @@
 package com.locapeer.subscriber
 
-import android.app.NotificationChannel
 import com.locapeer.util.backgroundScope
 import com.locapeer.util.normalizeHexColor
 import android.app.NotificationManager
@@ -94,8 +93,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val TAG = "HeartbeatReceiver"
-private const val CHANNEL_ID_ALERTS = "locapeer_alerts"
-private const val CHANNEL_ID_MESSAGES = "locapeer_messages"
+private const val CHANNEL_ID_ALERTS = com.locapeer.util.AppNotifications.CHANNEL_ALERTS
+private const val CHANNEL_ID_MESSAGES = com.locapeer.util.AppNotifications.CHANNEL_MESSAGES
 private const val SUB_ID = "lp-hb"
 private const val SUB_ID_CONTROL = "lp-ctrl"
 private const val SUB_ID_HB_CATCHUP = "lp-hb-catchup"
@@ -194,7 +193,7 @@ private const val UNKNOWN_REGISTER_NOTIF_TAG = "supervised_register_unknown"
 // peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
 // overwrite each other's notification.
 private const val NOTIF_ID_SOS = 1
-private const val NOTIF_ID_MESSAGE = 10000
+private const val NOTIF_ID_MESSAGE = com.locapeer.util.AppNotifications.ID_MESSAGE
 const val NOTIF_ID_TRACK_REQUEST = 20000
 private const val NOTIF_ID_ACCEPT = 30000
 private const val NOTIF_ID_DECLINE = 40000
@@ -474,11 +473,10 @@ class HeartbeatReceiver @Inject constructor(
     private var flushFailures = 0
 
     fun start() {
-        createAlertChannel()
-        createMessageChannel()
+        com.locapeer.util.AppNotifications.ensureChannels(context)
         // Channel names are user-visible: rebuild them when the app language changes.
         com.locapeer.util.AppLocale.changes.drop(1)
-            .onEach { createAlertChannel(); createMessageChannel() }
+            .onEach { com.locapeer.util.AppNotifications.ensureChannels(context) }
             .launchIn(scope)
         // Keep the left-circle cache warm so the DM hot path can suppress left circles without a
         // DataStore read per message.
@@ -949,6 +947,8 @@ class HeartbeatReceiver @Inject constructor(
             // missed-update alert. Older catch-up heartbeats can't overwrite a newer entry.
             PeerQuietPeriods.record(context, canonicalDeviceId, payload.quietUntilMs, timestampMs)
             if (isFresh) {
+                // They're updating again: a "hasn't updated" alert for them is now wrong.
+                notificationManager.cancel(canonicalDeviceId, NOTIF_ID_MISSED_HEARTBEAT)
                 if (isSos) sendSosNotification(canonicalDeviceId, broadcaster.displayName, payload)
                 // Alerts name the contact as saved locally, not by the payload's
                 // self-reported (peer-controlled) display name.
@@ -1097,10 +1097,19 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private fun sendSosNotification(senderPubkey: String, name: String, payload: HeartbeatPayload) {
+        // Opens the map on the person in trouble, not the app's start screen. The unique data
+        // URI keeps each sender's PendingIntent separate (extras don't take part in matching).
         val intent = Intent(context, MainActivity::class.java).apply {
             setPackage(context.packageName)
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            data = "locapeer-notif://sos/$senderPubkey".toUri()
+            putExtra("navigateTo", "map")
+            putExtra("highlightPeer", senderPubkey)
         }
-        val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pi = PendingIntent.getActivity(
+            context, "sos:$senderPubkey".hashCode(), intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
         // Public (device-lock-screen) version: keep the urgency - who is in trouble - but
         // drop the raw coordinates from the private text, which the full notification below
         // still carries once the phone is unlocked.
@@ -2066,6 +2075,8 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun sendGroupMessageNotification(circleName: String, senderName: String, preview: String, circleId: String) {
         if (!shouldSendAnyMessageNotification()) return
         if (prefs.mutedConversationIds.first().contains(AppPreferences.circleMuteKey(circleId))) return
+        // The circle's chat is on screen: the message is already visible (and marked read).
+        if (com.locapeer.util.AppNotifications.visibleConversation == circleId) return
         // Deep-link straight into the circle chat (not the Messages list) so tapping a circle
         // message opens the group thread - where a reply routes through the circle fan-out to
         // every member - and never the 1:1 chat with the sender. "openCircle" carries the circle
@@ -2076,6 +2087,9 @@ class HeartbeatReceiver @Inject constructor(
             putExtra("openCircle", circleId)
             putExtra("circleName", circleName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            // Unique per circle: extras don't take part in PendingIntent matching, so a request
+            // code collision alone would route one circle's tap into another.
+            data = "locapeer-notif://groupchat/$circleId".toUri()
         }
         val pi = PendingIntent.getActivity(
             context, circleId.hashCode(), intent,
@@ -2100,12 +2114,16 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun sendBackgroundMessageNotification(senderName: String, preview: String, peerId: String) {
         if (!shouldSendAnyMessageNotification()) return
         if (prefs.mutedConversationIds.first().contains(AppPreferences.peerMuteKey(peerId))) return
+        // The chat is on screen: the message is already visible (and marked read).
+        if (com.locapeer.util.AppNotifications.visibleConversation == peerId) return
         val intent = Intent(context, MainActivity::class.java).apply {
             setPackage(context.packageName)
             putExtra("navigateTo", "chat")
             putExtra("openChat", peerId)
             putExtra("peerName", senderName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            // Unique per contact; see sendGroupMessageNotification.
+            data = "locapeer-notif://chat/$peerId".toUri()
         }
         val pi = PendingIntent.getActivity(context, peerId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_MESSAGES)
@@ -2576,34 +2594,5 @@ class HeartbeatReceiver @Inject constructor(
             .setAutoCancel(true)
             .build()
         notificationManager.notify(pubkey, NOTIF_ID_DECLINE, notification)
-    }
-
-    private fun createAlertChannel() {
-        val channel = NotificationChannel(
-            CHANNEL_ID_ALERTS,
-            context.getString(R.string.channel_name_alerts),
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply {
-            description = context.getString(R.string.channel_desc_alerts)
-            // Redact contact names / coordinates on the device lock screen by default.
-            // Takes effect on new installs (Android ignores channel-property changes after
-            // creation); the per-notification setVisibility on the sensitive alerts covers
-            // existing installs too. A locked phone showing a peer's location or an SOS's
-            // coordinates is exactly what a location app must not do.
-            lockscreenVisibility = android.app.Notification.VISIBILITY_PRIVATE
-        }
-        notificationManager.createNotificationChannel(channel)
-    }
-
-    private fun createMessageChannel() {
-        val channel = NotificationChannel(
-            CHANNEL_ID_MESSAGES,
-            context.getString(R.string.channel_name_messages),
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply {
-            description = context.getString(R.string.channel_desc_messages)
-            lockscreenVisibility = android.app.Notification.VISIBILITY_PRIVATE
-        }
-        notificationManager.createNotificationChannel(channel)
     }
 }

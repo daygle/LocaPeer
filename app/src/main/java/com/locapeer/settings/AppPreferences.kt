@@ -900,6 +900,10 @@ class AppPreferences @Inject constructor(
         .distinctUntilChanged()
 
     suspend fun addLeftCircle(circleId: String, creatorPubkey: String) {
+        // Every way a circle leaves this device (delete, leave, disband, a received disband)
+        // records it here, so its message notification is cleared here too: tapping it would
+        // open a circle that no longer exists.
+        com.locapeer.util.AppNotifications.cancelConversation(context, circleId)
         context.settingsStore.edit {
             val current = decodeLeftCircles(it[KEY_LEFT_CIRCLE_IDS]).toMutableMap()
             current[circleId] = LeftCircle(
