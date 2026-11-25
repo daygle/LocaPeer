@@ -212,6 +212,17 @@ ksp {
     arg("room.schemaLocation", "${layout.projectDirectory.dir("schemas").asFile.path}")
 }
 
+// Both build types export the same canonical schema JSON, because the app has no flavors and
+// the database is identical in debug and release. With org.gradle.parallel=true the two KSP
+// tasks can export a NEW version at the same time, and Room truncates <version>.json before
+// filling it, so the other task can read it back empty and fail with
+// "JsonDecodingException: Expected start of the object '{', but had 'EOF'" (this is what broke
+// the first clean build of version 18). Sequence the exports instead of forking the schema
+// history into per-variant directories: the second task simply finds the file the first wrote.
+tasks.configureEach {
+    if (name == "kspReleaseKotlin") mustRunAfter("kspDebugKotlin")
+}
+
 dependencies {
     // Compose
     implementation(platform(libs.androidx.compose.bom))
