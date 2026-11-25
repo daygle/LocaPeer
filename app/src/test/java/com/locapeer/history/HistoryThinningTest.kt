@@ -147,6 +147,12 @@ class HistoryThinningTest {
     }
 
     @Test
+    fun `a lone coarse rejected reading is hidden by the accuracy filter`() {
+        val points = listOf(point(1, 50.0, accuracy = 900f, accepted = false))
+        assertEquals(emptyList<Long>(), ids(HistoryThinning.process(points, 100, 0)))
+    }
+
+    @Test
     fun `accuracy filter keeps rejected attempts that have no position`() {
         val noFix = point(2, 0.0, accuracy = 900f, accepted = false)
             .copy(rejectReason = RejectReason.NO_FIX.code)

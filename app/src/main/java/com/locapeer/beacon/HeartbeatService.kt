@@ -345,7 +345,8 @@ class HeartbeatService : LifecycleService() {
                 // fixes would wobble the resting pin (and could push lastAccuracy past
                 // the send gate, silencing heartbeats for the whole stay).
                 val stationaryHold = currentMotionState == MotionState.STATIONARY
-                if (fixSelector.select(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos, stationaryHold)) {
+                val selected = fixSelector.select(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos, stationaryHold)
+                if (selected) {
                     lastLat = loc.latitude
                     lastLng = loc.longitude
                     lastAccuracy = loc.accuracy
@@ -374,8 +375,10 @@ class HeartbeatService : LifecycleService() {
                 // broadcast was held for a fresh fix. Gate on the accuracy of the fix
                 // actually being reported (lastAccuracy, i.e. post-selector): a blocked
                 // pulse would only be withheld again, re-triggering on every fix until
-                // GPS sharpens.
-                if (isStarted && (lastPulseElapsedMs == 0L || awaitingFreshFix) &&
+                // GPS sharpens. The fresh-fix hold only lifts when this fix actually became
+                // the reported position: a fix the selector held back leaves the pre-gap
+                // position in place, which must not be released as current.
+                if (isStarted && (lastPulseElapsedMs == 0L || (awaitingFreshFix && selected)) &&
                     !sharingRejects(lastAccuracy)
                 ) {
                     awaitingFreshFix = false
@@ -1075,6 +1078,9 @@ class HeartbeatService : LifecycleService() {
             // until a live fix lands (cleared in the location callback) - except in
             // SOS, where a stale position still beats none.
             if (!isSos) awaitingFreshFix = true
+            // The held fix predates the gap too: drop the selector's baseline so the first
+            // live fix replaces it instead of being held against an old, sharper reading.
+            fixSelector.reset()
             gpsSuspendedBySchedule = false
         }
         try {

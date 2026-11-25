@@ -28,10 +28,13 @@ object HistoryThinning {
         maxAccuracyM: Int,
         minDistanceM: Int
     ): List<HeartbeatEntity> {
-        if (points.size <= 1) return points
+        if (points.isEmpty()) return points
         val filterAcc = maxAccuracyM > 0
         val filterDist = minDistanceM > 0
         if (!filterAcc && !filterDist) return points
+        // A lone accepted point is the latest position and always kept. A lone rejected one
+        // still goes through the loop, so the accuracy threshold can hide it.
+        if (points.size == 1 && points[0].isAccepted) return points
 
         val kept = ArrayList<HeartbeatEntity>(points.size)
         var anchor: HeartbeatEntity? = null
