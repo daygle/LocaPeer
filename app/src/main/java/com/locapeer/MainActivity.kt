@@ -63,6 +63,16 @@ const val EXTRA_CANCEL_NOTIF_ID = "cancelNotifId"
 const val EXTRA_CANCEL_NOTIF_TOKEN = "cancelNotifToken"
 
 /**
+ * Debug-only opt-out of [WindowManager.LayoutParams.FLAG_SECURE] for a single launch, so the
+ * store-screenshot harness can capture the real map screens with `adb exec-out screencap`.
+ * Release builds ignore it (see [MainActivity.onCreate]); debug builds need it because
+ * MapLibre's native renderer cannot be rasterised by the JVM screenshot tests.
+ *
+ *     adb shell am start -n com.locapeer/.MainActivity --ez allowScreenshots true
+ */
+const val EXTRA_ALLOW_SCREENSHOTS = "allowScreenshots"
+
+/**
  * The notification ids an intent may ask MainActivity to dismiss. MainActivity is exported,
  * so any installed app can send the cancel extras. The request must also carry the install's
  * [com.locapeer.util.NotificationCancelToken], which only our own notification actions hold;
@@ -92,7 +102,11 @@ class MainActivity : AppCompatActivity() {
         // existed: below API 33 AppCompat keeps it in its own store, which is restored by
         // the time an Activity is created.
         AppLocale.adoptStoredAppLocale(this)
-        window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
+        // Screenshot protection stays on everywhere except an explicitly-marked debug launch:
+        // the emulator screenshot route needs it off to read the MapLibre-rendered screens.
+        val allowScreenshots = BuildConfig.DEBUG &&
+            intent.getBooleanExtra(EXTRA_ALLOW_SCREENSHOTS, false)
+        if (!allowScreenshots) window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         handleIntent(intent)
         enableEdgeToEdge()
 
