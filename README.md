@@ -2,6 +2,15 @@
 
 A private, peer-to-peer location sharing Android app built on the [Nostr](https://nostr.com) protocol. No accounts, no proprietary servers, and no tracking. A Nostr relay routes events between devices, but all location data, messages, and control payloads are end-to-end encrypted before they leave your device - the relay sees only opaque ciphertext for application events.
 
+## Closed testing on Google Play
+
+LocaPeer is in **closed testing** on Google Play while it works towards its public release. Testers receive the current build through Play and help decide what ships. Joining takes two steps, both with the Google account you use on your Android device:
+
+1. **Join the tester group** - <https://groups.google.com/g/locapeer>. Anyone can join; set the group subscription to *No email* if you only want access.
+2. **Become a tester** - open <https://play.google.com/apps/testing/com.locapeer> and tap the opt-in button, then install LocaPeer from Google Play (or from the link on the opt-in page).
+
+Being in the group is not enough on its own, and Google sends no invitation email. The same account must be joined to the group, opted in, and signed in to the Play Store on the device, and the test is only offered in the countries selected for the track - anything else looks like the app not being found. Feedback belongs in [GitHub Issues](https://github.com/daygle/LocaPeer/issues); testers cannot leave public Play reviews.
+
 ## Features
 
 - **Real-time Location Sharing** - Broadcast your location on a configurable schedule or continuously; contacts see your live position on an interactive map. "Live View" (kind 1060) automatically boosts your update cadence when a contact is actively viewing the map. Both sending and requesting these boosts can be toggled in Settings.
