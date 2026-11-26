@@ -17,7 +17,7 @@ import androidx.camera.view.PreviewView
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
@@ -74,9 +74,9 @@ internal fun QrScannerView(
     // The camera another app holds right now is usually free a moment later, so a failed attempt
     // schedules the next one instead of latching the unavailable message for good. Bumping the
     // counter re-keys the effect below, which disposes this attempt and binds a fresh one.
-    val bindAttempt = remember { mutableStateOf(0) }
+    val bindAttempt = remember { mutableIntStateOf(0) }
 
-    DisposableEffect(lifecycleOwner, bindAttempt.value) {
+    DisposableEffect(lifecycleOwner, bindAttempt.intValue) {
         val mainExecutor = ContextCompat.getMainExecutor(context)
         val analysisExecutor = Executors.newSingleThreadExecutor()
         val providerFuture = ProcessCameraProvider.getInstance(context)
@@ -89,7 +89,7 @@ internal fun QrScannerView(
         fun retryLater() {
             if (disposed.get()) return
             handler.postDelayed({
-                if (!disposed.get()) bindAttempt.value += 1
+                if (!disposed.get()) bindAttempt.intValue += 1
             }, CAMERA_RETRY_DELAY_MS)
         }
 
