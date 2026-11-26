@@ -76,7 +76,7 @@ internal fun QrScannerView(
     // counter re-keys the effect below, which disposes this attempt and binds a fresh one.
     val bindAttempt = remember { mutableIntStateOf(0) }
 
-    DisposableEffect(lifecycleOwner, bindAttempt.value) {
+    DisposableEffect(lifecycleOwner, bindAttempt.intValue) {
         val mainExecutor = ContextCompat.getMainExecutor(context)
         val analysisExecutor = Executors.newSingleThreadExecutor()
         val providerFuture = ProcessCameraProvider.getInstance(context)
@@ -89,7 +89,7 @@ internal fun QrScannerView(
         fun retryLater() {
             if (disposed.get()) return
             handler.postDelayed({
-                if (!disposed.get()) bindAttempt.value += 1
+                if (!disposed.get()) bindAttempt.intValue += 1
             }, CAMERA_RETRY_DELAY_MS)
         }
 
